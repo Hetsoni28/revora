@@ -1,238 +1,221 @@
+'use client';
+
+import { useRef } from 'react';
 import Link from 'next/link';
-import { MapPin, Mail, Phone, ExternalLink, ShieldCheck, Award, Globe, AlertCircle, Building2 } from 'lucide-react';
-import { RevoraLogo } from '@/components/ui/revora-logo';
+import Image from 'next/image';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { AlertCircle, ArrowUpRight, Award, Building2, Globe, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
+import { AnchorLink, Magnetic, Tick } from '@/components/ui/primitives';
+
+const COLUMNS: { title: string; href?: string; links: [string, string][] }[] = [
+  {
+    title: 'Therapeutic Areas',
+    href: '/our-offerings',
+    links: [
+      ['Anti-Infective & Anti-Inflammatory', '/our-offerings/anti-infectives'],
+      ['Dry Eye & Tear Substitutes', '/our-offerings/dry-eye-lubricants'],
+      ['Ophthalmic NSAIDs & Cataract', '/our-offerings/nsaids-surgical'],
+      ['Retinal Vitality & Nutrition', '/our-offerings/retinal-nutrition'],
+      ['View All Products & Formularies', '/our-offerings'],
+    ],
+  },
+  {
+    title: 'Quality & Compliance',
+    links: [
+      ['WHO-GMP Certified Facility', '/#plant'],
+      ['Sterile Formulation Suites', '/#plant'],
+      ['Analytical Testing & Stability', '/#plant'],
+      ['ICH Q1 Compliance', '/#plant'],
+      ['Cold-Chain Logistics', '/#plant'],
+    ],
+  },
+  {
+    title: 'Corporate & Trade',
+    links: [
+      ['Ahmedabad Headquarters', '/our-presence#ahmedabad'],
+      ['Our Presence Across India', '/our-presence#domestic'],
+      ['Careers at Revora', '/careers'],
+      ['Distribution Partnerships', '/#contact'],
+      ['Institutional Inquiries', '/#contact'],
+    ],
+  },
+];
+
+const BADGES = [
+  { icon: ShieldCheck, label: 'WHO-GMP' },
+  { icon: Award, label: 'ISO 9001:2015' },
+  { icon: Globe, label: 'Serving Across India' },
+];
+
+const LEGAL = ['Privacy Policy', 'Terms of Use', 'Pharmacovigilance Policy'];
+
+function FooterLink({ label, href }: { label: string; href: string }) {
+  const cls = 'group -my-1.5 inline-flex min-h-9 items-center gap-2 text-white/70 transition-colors hover:text-white';
+  const inner = (
+    <>
+      <Tick className="h-2.5 w-3 -translate-x-2 text-revora-crimson opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+      {label}
+    </>
+  );
+  return href.startsWith('mailto:') ? (
+    <a href={href} className={cls}>
+      {inner}
+    </a>
+  ) : (
+    <AnchorLink href={href} className={cls}>
+      {inner}
+    </AnchorLink>
+  );
+}
 
 export function Footer() {
-  return (
-    <footer className="bg-[#14181B] text-white pt-16 pb-12 border-t border-white/10 font-sans">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end end'] });
+  const wordY = useTransform(scrollYProgress, [0, 0.9], ['30%', '0%']);
 
-        {/* ── Section 1: Pre-footer Patient Safety & Pharmacovigilance Notice ── */}
-        <div className="bg-white/[0.03] border border-white/10 rounded-xl p-4 sm:p-5 mb-14 flex flex-col tablet:flex-row items-start tablet:items-center justify-between gap-4">
-          <div className="flex items-start gap-3">
-            <AlertCircle size={18} className="text-[#D7262E] shrink-0 mt-0.5" />
-            <div className="text-xs text-white/75 leading-relaxed">
-              <span className="font-semibold text-white">Pharmacovigilance &amp; Patient Safety: </span>
+  return (
+    <footer ref={ref} className="relative overflow-hidden bg-revora-slate text-white">
+      <div className="mx-auto max-w-330 px-5 pt-16 tablet:px-8 tablet:pt-24">
+        {/* ── pharmacovigilance & patient safety ── */}
+        <div className="flex flex-col gap-4 rounded-[28px] border border-white/10 bg-white/4 p-6 tablet:flex-row tablet:items-center tablet:justify-between tablet:p-7">
+          <div className="flex items-start gap-4">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-revora-crimson/15 text-revora-crimson-light">
+              <AlertCircle className="h-5 w-5" />
+            </span>
+            <p className="max-w-3xl font-sans text-[14px] leading-[1.7] text-white/70">
+              <span className="font-semibold text-white">Pharmacovigilance &amp; Patient Safety. </span>
               To report an adverse drug reaction (ADR) or product quality issue, please contact our Drug Safety Team at{' '}
-              <a href="mailto:safety@revorahealthcare.com" className="text-[#3A82C8] hover:underline font-medium">
+              <a href="mailto:safety@revorahealthcare.com" className="font-medium text-revora-cobalt-light hover:underline">
                 safety@revorahealthcare.com
               </a>{' '}
               or call our 24/7 dedicated safety desk.
-            </div>
+            </p>
           </div>
-          <div className="w-full tablet:w-auto tablet:shrink-0 flex items-center justify-center sm:justify-start gap-2 text-xs font-semibold text-white/90">
-            <span className="w-full tablet:w-auto text-center px-3 py-1.5 rounded bg-white/10 border border-white/15">
-              Toll-Free ADR Line: 1800-489-REVORA
-            </span>
-          </div>
+          <span className="shrink-0 rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-center font-sans text-[13px] font-semibold">
+            Toll-Free ADR Line: 1800-489-REVORA
+          </span>
         </div>
 
-        {/* ── Section 2: 5-Column Institutional Navigation Grid ── */}
-        <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-5 gap-10 pb-14 border-b border-white/10">
-
-          {/* Column 1: Corporate Entity & Identity */}
-          <div className="desktop:col-span-2 flex flex-col gap-4">
-            <Link
-              href="/"
-              className="flex items-center gap-3 select-none w-fit"
-              aria-label="Revora Healthcare Private Limited"
-            >
-              <RevoraLogo variant="color" className="h-8 w-auto object-contain" />
-              <div className="flex items-center gap-2.5 translate-y-[4.5px]">
-                <span className="w-px h-4 bg-white/25" aria-hidden="true" />
-                <span className="font-sans text-[11px] uppercase tracking-[0.22em] text-[#0B4A8F] font-semibold leading-none">
-                  Healthcare
-                </span>
-              </div>
-            </Link>
-
-            <p className="text-xs text-white/65 max-w-sm leading-relaxed mt-1">
-              Revora Healthcare Private Limited is a trusted pharmaceutical enterprise based in Ahmedabad, Gujarat,
-              specializing in ophthalmic pharmaceuticals, surgical formulations, and specialty healthcare solutions.
+        {/* ── company + link columns ── */}
+        <div className="mt-16 grid gap-12 tablet:grid-cols-2 desktop:grid-cols-[1.5fr_1fr_1fr_1fr]">
+          <div>
+            {/* logo stays in its original colours on a white tile */}
+            <span className="inline-block rounded-2xl bg-white px-5 py-3.5">
+              <Image src="/logo.png" alt="Revora" width={1024} height={341} className="h-8 w-auto" />
+            </span>
+            <p className="mt-6 max-w-sm font-sans text-[14.5px] leading-[1.7] text-white/65">
+              Revora Healthcare Private Limited is a trusted pharmaceutical company in Ahmedabad, Gujarat, specializing in ophthalmic
+              pharmaceuticals and expanding into specialty healthcare products and medical devices — reliable solutions for doctors, hospitals,
+              pharmacies, and distributors.
             </p>
 
-            {/* Corporate identification details */}
-            <div className="flex flex-col gap-2 pt-2 text-xs text-white/60">
-              <div className="flex items-start gap-2.5">
-                <Building2 size={14} className="text-[#0B4A8F] shrink-0 mt-0.5" />
-                <span className="font-mono text-[11px] text-white/70">CIN: U24239GJ2009PTC058921</span>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <MapPin size={14} className="text-[#D7262E] shrink-0 mt-0.5" />
-                <span className="text-white/70">
-                  Registered Office: 3rd Floor, S G Business Hub, S.G. Highway, Ahmedabad - 380054, Gujarat, India.
-                </span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Phone size={14} className="text-[#0B4A8F] shrink-0" />
-                <a href="tel:+919876543210" className="text-white/70 hover:text-white transition-colors">
+            <ul className="mt-6 space-y-3 font-sans text-[13.5px] leading-[1.6] text-white/70">
+              <li className="flex gap-3">
+                <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
+                <span className="font-mono text-[12.5px]">CIN: U21000GJ2026PTC174674</span>
+              </li>
+              <li className="flex gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
+                Registered Office: 3rd Floor, S.G. Business Hub, A/303, Sarkhej–Gandhinagar Highway, near Gota Overbridge, Ognaj, Ahmedabad,
+                Gujarat 380060, India.
+              </li>
+              <li className="flex gap-3">
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
+                <a href="tel:+919876543210" className="hover:text-white">
                   Boardline: +91 (079) 4890-REVORA
                 </a>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Mail size={14} className="text-[#0B4A8F] shrink-0" />
-                <a href="mailto:info@revorahealthcare.com" className="text-white/70 hover:text-white transition-colors">
+              </li>
+              <li className="flex gap-3">
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
+                <a href="mailto:info@revorahealthcare.com" className="hover:text-white">
                   info@revorahealthcare.com
                 </a>
-              </div>
+              </li>
+            </ul>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              {BADGES.map((b) => (
+                <span
+                  key={b.label}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-sans text-[12px] text-white/80"
+                >
+                  <b.icon className="h-3.5 w-3.5 text-revora-cobalt-light" />
+                  {b.label}
+                </span>
+              ))}
             </div>
 
-            {/* Accreditation Badges */}
-            <div className="flex items-center gap-2 pt-3 flex-wrap">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/5 border border-white/10 text-[10.5px] text-white/80">
-                <ShieldCheck size={12} className="text-[#0B4A8F]" /> WHO-GMP
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/5 border border-white/10 text-[10.5px] text-white/80">
-                <Award size={12} className="text-[#D7262E]" /> ISO 9001:2015
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/5 border border-white/10 text-[10.5px] text-white/80">
-                <Globe size={12} className="text-[#0B4A8F]" /> 47+ Countries
-              </span>
+            <Magnetic className="mt-8">
+              <AnchorLink
+                href="/#contact"
+                className="group inline-flex items-center gap-3 rounded-full bg-revora-crimson py-3 pl-6 pr-3 font-sans text-[14px] font-semibold text-white"
+              >
+                Partner with Revora
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/15 transition-transform duration-500 group-hover:rotate-45">
+                  <ArrowUpRight className="h-4 w-4" />
+                </span>
+              </AnchorLink>
+            </Magnetic>
+          </div>
+
+          {COLUMNS.map((col) => (
+            <div key={col.title}>
+              {col.href ? (
+                <Link
+                  href={col.href}
+                  className="-my-3 flex h-10 w-fit items-center gap-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45 transition-colors hover:text-white"
+                >
+                  {col.title} <ArrowUpRight className="h-3 w-3" />
+                </Link>
+              ) : (
+                <p className="flex h-4 items-center font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45">{col.title}</p>
+              )}
+              <ul className="mt-5 space-y-3 font-sans text-[14.5px]">
+                {col.links.map(([label, href]) => (
+                  <li key={label}>
+                    <FooterLink label={label} href={href} />
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-
-          {/* Column 2: Therapeutic & Product Solutions */}
-          <div className="flex flex-col gap-3">
-            <h3 className="font-heading font-semibold text-xs uppercase tracking-wider text-white border-b border-white/10 pb-2">
-              <Link href="/our-offerings" className="hover:text-[#3A82C8] transition-colors flex items-center gap-1">
-                Therapeutic Areas <ExternalLink size={11} className="opacity-60" />
-              </Link>
-            </h3>
-            <ul className="flex flex-col gap-2 text-xs text-white/65">
-              <li>
-                <Link href="/our-offerings/anti-infectives" className="hover:text-white transition-colors">
-                  Anti-Infective &amp; Anti-Inflammatory
-                </Link>
-              </li>
-              <li>
-                <Link href="/our-offerings/dry-eye-lubricants" className="hover:text-white transition-colors">
-                  Dry Eye &amp; Tear Substitutes
-                </Link>
-              </li>
-              <li>
-                <Link href="/our-offerings/nsaids-surgical" className="hover:text-white transition-colors">
-                  Ophthalmic NSAIDs &amp; Cataract
-                </Link>
-              </li>
-              <li>
-                <Link href="/our-offerings/retinal-nutrition" className="hover:text-white transition-colors">
-                  Retinal Vitality &amp; Nutrition
-                </Link>
-              </li>
-              <li>
-                <Link href="/our-offerings" className="hover:text-[#3A82C8] transition-colors font-medium">
-                  View All Products &amp; Formularies &rarr;
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Quality & Manufacturing */}
-          <div className="flex flex-col gap-3">
-            <h3 className="font-heading font-semibold text-xs uppercase tracking-wider text-white border-b border-white/10 pb-2">
-              Quality &amp; Compliance
-            </h3>
-            <ul className="flex flex-col gap-2 text-xs text-white/65">
-              <li>
-                <Link href="/#about" className="hover:text-white transition-colors">
-                  WHO-GMP Certified Facility
-                </Link>
-              </li>
-              <li>
-                <Link href="/#process" className="hover:text-white transition-colors">
-                  Sterile Formulation Suites
-                </Link>
-              </li>
-              <li>
-                <Link href="/#process" className="hover:text-white transition-colors">
-                  Analytical Testing &amp; Stability
-                </Link>
-              </li>
-              <li>
-                <Link href="/#process" className="hover:text-white transition-colors">
-                  ICH Q1 Compliance
-                </Link>
-              </li>
-              <li>
-                <Link href="/#process" className="hover:text-white transition-colors">
-                  Cold-Chain Logistics
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: Corporate & Commercial Contacts */}
-          <div className="flex flex-col gap-3">
-            <h3 className="font-heading font-semibold text-xs uppercase tracking-wider text-white border-b border-white/10 pb-2">
-              Corporate &amp; Trade
-            </h3>
-            <ul className="flex flex-col gap-2 text-xs text-white/65">
-              <li>
-                <Link href="/our-presence" className="hover:text-white transition-colors">
-                  Ahmedabad Headquarters
-                </Link>
-              </li>
-              <li>
-                <Link href="/our-presence#global" className="hover:text-white transition-colors">
-                  Global Footprint (47+ Countries)
-                </Link>
-              </li>
-              <li>
-                <Link href="/careers" className="hover:text-white transition-colors">
-                  Careers at Revora
-                </Link>
-              </li>
-              <li>
-                <a href="mailto:exports@revorahealthcare.com" className="hover:text-white transition-colors">
-                  Export &amp; Trade Desk
-                </a>
-              </li>
-              <li>
-                <Link href="/#contact" className="hover:text-white transition-colors">
-                  Institutional Inquiries
-                </Link>
-              </li>
-            </ul>
-          </div>
+          ))}
         </div>
 
-        {/* ── Section 3: Statutory Pharmaceutical Disclaimer ── */}
-        <div className="py-6 border-b border-white/10 text-[11px] text-white/45 leading-relaxed">
-          <p>
-            <strong className="text-white/60">Statutory Notice: </strong>
-            The information contained on this website is intended solely for healthcare professionals, registered medical practitioners, and authorized distribution partners. It is provided for informational and educational purposes only and should not be construed as medical diagnosis, prescription advice, or a treatment recommendation. All pharmaceutical products mentioned herein are subject to regulatory clearance in their respective jurisdictions and must be administered strictly in compliance with applicable laws and physician guidance.
-          </p>
-        </div>
+        {/* ── statutory notice ── */}
+        <p className="mt-16 border-t border-white/10 pt-8 font-sans text-[12px] leading-[1.75] text-white/45">
+          <span className="font-semibold text-white/60">Statutory Notice: </span>
+          The information contained on this website is intended solely for healthcare professionals, registered medical practitioners, and
+          authorized distribution partners. It is provided for informational and educational purposes only and should not be construed as medical
+          diagnosis, prescription advice, or a treatment recommendation. All pharmaceutical products mentioned herein are subject to regulatory
+          clearance in their respective jurisdictions and must be administered strictly in compliance with applicable laws and physician guidance.
+        </p>
 
-        {/* ── Section 4: Bottom Compliance & Copyright Bar ── */}
-        <div className="pt-6 flex flex-col tablet:flex-row items-center justify-between gap-4 text-xs text-white/50">
-          <p>
-            &copy; 2026 Revora Healthcare Private Limited. All rights reserved. S G Business Hub, Ahmedabad, Gujarat, India.
-          </p>
-
-          <div className="flex items-center gap-5 flex-wrap">
-            <Link href="/our-offerings" className="hover:text-white transition-colors">
-              Products
-            </Link>
-            <Link href="/our-presence" className="hover:text-white transition-colors">
-              Presence
-            </Link>
-            <Link href="/careers" className="hover:text-white transition-colors">
-              Careers
-            </Link>
+        {/* ── bottom bar ── */}
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-x-10 gap-y-4 border-t border-white/10 py-6 font-sans text-[12px] text-white/45">
+          <p>© 2026 Revora Healthcare Private Limited. All rights reserved. S.G. Business Hub, Ognaj, Ahmedabad, Gujarat, India.</p>
+          <div className="-my-2 flex flex-wrap items-center gap-x-5 [&_a]:inline-flex [&_a]:min-h-10 [&_a]:items-center">
+            <Link href="/our-offerings" className="transition-colors hover:text-white">Products</Link>
+            <Link href="/our-presence" className="transition-colors hover:text-white">Presence</Link>
+            <Link href="/careers" className="transition-colors hover:text-white">Careers</Link>
             <span className="text-white/20">|</span>
-            <a href="#" className="hover:text-white transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              Terms of Use
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              Pharmacovigilance Policy
-            </a>
+            {LEGAL.map((l) => (
+              <a key={l} href="#" className="transition-colors hover:text-white">
+                {l}
+              </a>
+            ))}
           </div>
         </div>
+      </div>
 
+      {/* oversized wordmark rising into view */}
+      <div aria-hidden className="pointer-events-none select-none overflow-hidden">
+        <motion.p
+          style={reduce ? undefined : { y: wordY }}
+          className="-mt-[0.1em] pb-[0.08em] text-center font-heading text-[clamp(5.5rem,21vw,20rem)] font-extrabold leading-[0.9] tracking-[-0.04em] text-white/5"
+        >
+          revora
+        </motion.p>
       </div>
     </footer>
   );

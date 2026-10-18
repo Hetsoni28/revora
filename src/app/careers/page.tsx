@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
-import { Briefcase, MapPin, Clock, ArrowRight, CheckCircle2, Send, Sparkles, HeartHandshake, Microscope, Award } from 'lucide-react';
+import { Briefcase, MapPin, ArrowRight, Send, Sparkles, HeartHandshake, Microscope, Award } from 'lucide-react';
 import { toast } from 'sonner';
 
 const OPEN_POSITIONS = [
@@ -125,13 +124,12 @@ export default function CareersPage() {
     <div className="min-h-screen flex flex-col bg-[#F8F9FA]">
       <Navbar />
 
-      <main className="flex-1 pt-24 tablet:pt-32 pb-24">
+      <main className="flex-1 pb-24">
         {/* Hero Section */}
-        <section className="relative px-6 py-16 tablet:py-24 bg-gradient-to-b from-[#08356A] to-[#0B4A8F] text-white overflow-hidden">
-          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#E8F1F9_1px,transparent_1px)] [background-size:24px_24px]" />
+        <section className="relative px-6 pt-32 pb-16 tablet:pt-40 tablet:pb-24 bg-gradient-to-b from-revora-cobalt-dark to-revora-cobalt text-white overflow-hidden">
 
           <div className="relative max-w-7xl mx-auto">
-            <span className="font-sans font-semibold text-xs uppercase tracking-[0.25em] text-[#D7262E] bg-white/10 px-3 py-1 rounded-full border border-white/15">
+            <span className="font-sans font-semibold text-xs uppercase tracking-[0.25em] text-revora-crimson bg-white/10 px-3 py-1 rounded-full border border-white/15">
               Join Our Talent Network
             </span>
             <h1 className="font-heading font-bold text-4xl sm:text-5xl tablet:text-6xl text-white mt-4 tracking-tight max-w-3xl">
@@ -144,13 +142,13 @@ export default function CareersPage() {
             <div className="flex flex-wrap items-center gap-4 mt-8">
               <a
                 href="#openings"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#D7262E] hover:bg-[#A01C22] text-white font-semibold text-sm transition-all shadow-lg"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-revora-crimson hover:bg-revora-crimson-dark text-white font-semibold text-sm transition-all shadow-lg"
               >
                 View 5 Open Positions <ArrowRight size={16} />
               </a>
               <a
                 href="#apply"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-white/80 hover:bg-white hover:text-[#0B4A8F] text-white font-semibold text-sm transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-white/80 hover:bg-white hover:text-revora-cobalt text-white font-semibold text-sm transition-all"
               >
                 Direct Application Form
               </a>
@@ -161,10 +159,10 @@ export default function CareersPage() {
         {/* Culture / Perks Grid */}
         <section id="culture" className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="font-sans font-semibold text-xs uppercase tracking-[0.25em] text-[#0B4A8F]">
+            <span className="font-sans font-semibold text-xs uppercase tracking-[0.25em] text-revora-cobalt">
               Life at Revora
             </span>
-            <h2 className="font-heading font-bold text-3xl tablet:text-4xl text-[#1E2428] mt-2 tracking-tight">
+            <h2 className="font-heading font-bold text-3xl tablet:text-4xl text-revora-slate mt-2 tracking-tight">
               Why Leaders and Scientists Choose Revora
             </h2>
           </div>
@@ -175,15 +173,15 @@ export default function CareersPage() {
               return (
                 <div
                   key={perk.title}
-                  className="bg-white rounded-2xl border border-[#D9DFE8] p-6 hover:shadow-lg hover:border-[#0B4A8F] transition-all"
+                  className="bg-white rounded-2xl border border-[#D9DFE8] p-6 hover:shadow-lg hover:border-revora-cobalt transition-all"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-[#E8F1F9] text-[#0B4A8F] flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-revora-sky text-revora-cobalt flex items-center justify-center mb-4">
                     <Icon size={24} />
                   </div>
-                  <h3 className="font-heading font-bold text-lg text-[#1E2428]">
+                  <h3 className="font-heading font-bold text-lg text-revora-slate">
                     {perk.title}
                   </h3>
-                  <p className="font-sans text-xs text-[#1E2428]/70 mt-2 leading-relaxed">
+                  <p className="font-sans text-xs text-revora-slate/70 mt-2 leading-relaxed">
                     {perk.desc}
                   </p>
                 </div>
@@ -197,14 +195,14 @@ export default function CareersPage() {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col tablet:flex-row tablet:items-end justify-between gap-6 mb-12">
               <div>
-                <span className="font-sans font-semibold text-xs uppercase tracking-[0.25em] text-[#D7262E]">
+                <span className="font-sans font-semibold text-xs uppercase tracking-[0.25em] text-revora-crimson">
                   Current Opportunities
                 </span>
-                <h2 className="font-heading font-bold text-3xl tablet:text-4xl text-[#1E2428] mt-2 tracking-tight">
+                <h2 className="font-heading font-bold text-3xl tablet:text-4xl text-revora-slate mt-2 tracking-tight">
                   Open Career Roles in Ahmedabad &amp; Gujarat
                 </h2>
               </div>
-              <p className="font-sans text-sm text-[#1E2428]/70 max-w-md">
+              <p className="font-sans text-sm text-revora-slate/70 max-w-md">
                 Click any role below to pre-select it in the application form and submit your curriculum vitae.
               </p>
             </div>
@@ -213,32 +211,32 @@ export default function CareersPage() {
               {OPEN_POSITIONS.map((job) => (
                 <div
                   key={job.id}
-                  className="bg-[#F8F9FA] rounded-2xl border border-[#D9DFE8] p-8 hover:border-[#0B4A8F] hover:shadow-md transition-all flex flex-col desktop:flex-row desktop:items-center justify-between gap-6"
+                  className="bg-[#F8F9FA] rounded-2xl border border-[#D9DFE8] p-5 sm:p-8 hover:border-revora-cobalt hover:shadow-md transition-all flex flex-col desktop:flex-row desktop:items-center justify-between gap-6"
                 >
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#E8F1F9] text-[#0B4A8F]">
+                      <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-revora-sky text-revora-cobalt">
                         {job.department}
                       </span>
-                      <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white border border-[#D9DFE8] text-[#1E2428]/70">
+                      <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white border border-[#D9DFE8] text-revora-slate/70">
                         {job.type}
                       </span>
                     </div>
 
-                    <h3 className="font-heading font-bold text-xl tablet:text-2xl text-[#1E2428] tracking-tight">
+                    <h3 className="font-heading font-bold text-xl tablet:text-2xl text-revora-slate tracking-tight">
                       {job.title}
                     </h3>
 
-                    <div className="flex flex-wrap items-center gap-4 mt-3 text-xs text-[#1E2428]/60">
+                    <div className="flex flex-wrap items-center gap-4 mt-3 text-xs text-revora-slate/60">
                       <span className="flex items-center gap-1.5">
-                        <MapPin size={14} className="text-[#D7262E]" /> {job.location}
+                        <MapPin size={14} className="text-revora-crimson" /> {job.location}
                       </span>
                       <span className="flex items-center gap-1.5">
-                        <Briefcase size={14} className="text-[#0B4A8F]" /> {job.experience}
+                        <Briefcase size={14} className="text-revora-cobalt" /> {job.experience}
                       </span>
                     </div>
 
-                    <p className="font-sans text-sm text-[#1E2428]/75 mt-3 leading-relaxed max-w-3xl">
+                    <p className="font-sans text-sm text-revora-slate/75 mt-3 leading-relaxed max-w-3xl">
                       {job.description}
                     </p>
                   </div>
@@ -246,7 +244,7 @@ export default function CareersPage() {
                   <a
                     href="#apply"
                     onClick={() => setSelectedJob(job.title)}
-                    className="shrink-0 px-6 py-3 rounded-full bg-[#0B4A8F] hover:bg-[#08356A] text-white font-semibold text-sm transition-all text-center"
+                    className="shrink-0 px-6 py-3 rounded-full bg-revora-cobalt hover:bg-revora-cobalt-dark text-white font-semibold text-sm transition-all text-center"
                   >
                     Apply for Role →
                   </a>
@@ -257,29 +255,29 @@ export default function CareersPage() {
         </section>
 
         {/* Application Form */}
-        <section id="apply" className="max-w-4xl mx-auto px-6 py-20">
-          <div className="bg-white rounded-3xl border border-[#D9DFE8] p-8 tablet:p-14 shadow-lg">
+        <section id="apply" className="max-w-4xl mx-auto px-4 sm:px-6 py-20">
+          <div className="bg-white rounded-3xl border border-[#D9DFE8] p-5 sm:p-8 tablet:p-14 shadow-lg">
             <div className="text-center max-w-xl mx-auto mb-10">
-              <span className="font-sans font-semibold text-xs uppercase tracking-[0.25em] text-[#D7262E]">
+              <span className="font-sans font-semibold text-xs uppercase tracking-[0.25em] text-revora-crimson">
                 Direct Talent Submission
               </span>
-              <h2 className="font-heading font-bold text-3xl text-[#1E2428] mt-2 tracking-tight">
+              <h2 className="font-heading font-bold text-3xl text-revora-slate mt-2 tracking-tight">
                 Submit Your Application to Revora
               </h2>
-              <p className="font-sans text-sm text-[#1E2428]/70 mt-2">
+              <p className="font-sans text-sm text-revora-slate/70 mt-2">
                 Our human resources team reviews every submission within 48 business hours.
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-6">
               <div>
-                <label className="block font-sans text-xs font-semibold text-[#1E2428] uppercase tracking-wider mb-2">
+                <label className="block font-sans text-xs font-semibold text-revora-slate uppercase tracking-wider mb-2">
                   Applying For Role:
                 </label>
                 <select
                   value={selectedJob}
                   onChange={(e) => setSelectedJob(e.target.value)}
-                  className="w-full h-12 px-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-[#1E2428] font-sans text-sm focus:outline-none focus:border-[#0B4A8F]"
+                  className="w-full h-12 px-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-revora-slate font-sans text-[16px] tablet:text-sm focus:outline-none focus:border-revora-cobalt"
                 >
                   {OPEN_POSITIONS.map((job) => (
                     <option key={job.id} value={job.title}>
@@ -292,7 +290,7 @@ export default function CareersPage() {
 
               <div className="grid grid-cols-1 tablet:grid-cols-2 gap-6">
                 <div>
-                  <label className="block font-sans text-xs font-semibold text-[#1E2428] uppercase tracking-wider mb-2">
+                  <label className="block font-sans text-xs font-semibold text-revora-slate uppercase tracking-wider mb-2">
                     Full Name *
                   </label>
                   <input
@@ -301,12 +299,12 @@ export default function CareersPage() {
                     placeholder="e.g. Dr. Rajesh Patel"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full h-12 px-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-[#1E2428] font-sans text-sm focus:outline-none focus:border-[#0B4A8F]"
+                    className="w-full h-12 px-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-revora-slate font-sans text-[16px] tablet:text-sm focus:outline-none focus:border-revora-cobalt"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-sans text-xs font-semibold text-[#1E2428] uppercase tracking-wider mb-2">
+                  <label className="block font-sans text-xs font-semibold text-revora-slate uppercase tracking-wider mb-2">
                     Email Address *
                   </label>
                   <input
@@ -315,14 +313,14 @@ export default function CareersPage() {
                     placeholder="rajesh.patel@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full h-12 px-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-[#1E2428] font-sans text-sm focus:outline-none focus:border-[#0B4A8F]"
+                    className="w-full h-12 px-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-revora-slate font-sans text-[16px] tablet:text-sm focus:outline-none focus:border-revora-cobalt"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 tablet:grid-cols-2 gap-6">
                 <div>
-                  <label className="block font-sans text-xs font-semibold text-[#1E2428] uppercase tracking-wider mb-2">
+                  <label className="block font-sans text-xs font-semibold text-revora-slate uppercase tracking-wider mb-2">
                     Phone / WhatsApp *
                   </label>
                   <input
@@ -331,18 +329,18 @@ export default function CareersPage() {
                     placeholder="+91 98765 43210"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full h-12 px-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-[#1E2428] font-sans text-sm focus:outline-none focus:border-[#0B4A8F]"
+                    className="w-full h-12 px-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-revora-slate font-sans text-[16px] tablet:text-sm focus:outline-none focus:border-revora-cobalt"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-sans text-xs font-semibold text-[#1E2428] uppercase tracking-wider mb-2">
+                  <label className="block font-sans text-xs font-semibold text-revora-slate uppercase tracking-wider mb-2">
                     Total Pharma / Clinical Experience
                   </label>
                   <select
                     value={formData.experience}
                     onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
-                    className="w-full h-12 px-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-[#1E2428] font-sans text-sm focus:outline-none focus:border-[#0B4A8F]"
+                    className="w-full h-12 px-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-revora-slate font-sans text-[16px] tablet:text-sm focus:outline-none focus:border-revora-cobalt"
                   >
                     <option value="1-3 years">1–3 Years</option>
                     <option value="3-5 years">3–5 Years</option>
@@ -353,7 +351,7 @@ export default function CareersPage() {
               </div>
 
               <div>
-                <label className="block font-sans text-xs font-semibold text-[#1E2428] uppercase tracking-wider mb-2">
+                <label className="block font-sans text-xs font-semibold text-revora-slate uppercase tracking-wider mb-2">
                   LinkedIn Profile / Portfolio Link
                 </label>
                 <input
@@ -361,12 +359,12 @@ export default function CareersPage() {
                   placeholder="https://linkedin.com/in/yourprofile"
                   value={formData.linkedin}
                   onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-                  className="w-full h-12 px-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-[#1E2428] font-sans text-sm focus:outline-none focus:border-[#0B4A8F]"
+                  className="w-full h-12 px-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-revora-slate font-sans text-[16px] tablet:text-sm focus:outline-none focus:border-revora-cobalt"
                 />
               </div>
 
               <div>
-                <label className="block font-sans text-xs font-semibold text-[#1E2428] uppercase tracking-wider mb-2">
+                <label className="block font-sans text-xs font-semibold text-revora-slate uppercase tracking-wider mb-2">
                   Professional Summary &amp; Research Highlights
                 </label>
                 <textarea
@@ -374,14 +372,14 @@ export default function CareersPage() {
                   placeholder="Briefly describe your expertise in ophthalmic formulation, regulatory audits, or clinical operations..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full p-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-[#1E2428] font-sans text-sm focus:outline-none focus:border-[#0B4A8F]"
+                  className="w-full p-4 rounded-xl border border-[#D9DFE8] bg-[#F8F9FA] text-revora-slate font-sans text-[16px] tablet:text-sm focus:outline-none focus:border-revora-cobalt"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-4 rounded-xl bg-[#D7262E] hover:bg-[#A01C22] text-white font-semibold text-base transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-50"
+                className="w-full py-4 rounded-xl bg-revora-crimson hover:bg-revora-crimson-dark text-white font-semibold text-base transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-50"
               >
                 {submitting ? (
                   <span>Submitting Application...</span>

@@ -1,11 +1,6 @@
-import { PageContent } from '@/components/page-content';
-import { Footer } from '@/components/layout/footer';
+import { LandingPage } from '@/components/landing/landing-page';
 
+/* Homepage — sections live in src/components/landing. */
 export default function Home() {
-  return (
-    <>
-      <PageContent />
-      <Footer />
-    </>
-  );
+  return <LandingPage />;
 }

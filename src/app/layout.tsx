@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Nunito, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Providers } from "@/components/providers";
 import "./globals.css";
 
-/* Revora Brand Typography
-   - Headlines: Nunito — rounded humanist sans-serif, low stroke contrast,
-                single-story 'g', curved terminals (matches reference exactly)
-   - Body/Labels: Inter (matches design spec)
+/* Revora Brand Typography (Official Design System)
+   - Headlines: Plus Jakarta Sans
+   - Body/Labels: Inter
    - Mono: Geist Mono (code & data) */
 const inter = Inter({
   variable: "--font-inter",
@@ -14,10 +14,12 @@ const inter = Inter({
   display: "swap",
 });
 
-const nunito = Nunito({
-  variable: "--font-nunito",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+/* Plus Jakarta Sans is self-hosted (latin, variable 200–800) so headings
+   never fall back to Arial when Google Fonts can't be reached. */
+const plusJakartaSans = localFont({
+  src: "./fonts/plus-jakarta-sans-latin-variable.woff2",
+  variable: "--font-plus-jakarta-sans",
+  weight: "200 800",
   display: "swap",
 });
 
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
     template: "%s | Revora Healthcare",
   },
   description:
-    "Revora Healthcare Private Limited is a trusted pharmaceutical company in Ahmedabad, Gujarat, committed to delivering innovative healthcare solutions with a focus on quality, research, and integrity. Healthcare – Beyond the Cure.",
+    "Revora Healthcare Private Limited is a trusted pharmaceutical company in Ahmedabad, Gujarat, specializing in ophthalmic pharmaceuticals and expanding into specialty healthcare products and medical devices. Healthcare – Beyond the Cure.",
 };
 
 export default function RootLayout({
@@ -44,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${nunito.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${plusJakartaSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground">

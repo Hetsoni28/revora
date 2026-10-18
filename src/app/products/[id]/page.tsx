@@ -73,14 +73,14 @@ export default function ProductPage({
   params: Promise<{ id: string }>;
 }) {
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8F9FA]">
+    <div className="min-h-screen flex flex-col bg-[#F6F9FC]">
       <Navbar />
-      <main className="flex-1 pt-20 tablet:pt-28 pb-16">
+      <main className="flex-1">
         <Suspense
           fallback={
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 text-center">
-              <div className="inline-block w-8 h-8 border-2 border-[#0B4A8F] border-t-transparent rounded-full animate-spin mb-3" />
-              <p className="text-xs text-[#1E2428]/60 font-sans">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-44 pb-20 text-center">
+              <div className="inline-block w-8 h-8 border-2 border-revora-cobalt border-t-transparent rounded-full animate-spin mb-3" />
+              <p className="text-xs text-revora-slate/60 font-sans">
                 Loading formulation monograph...
               </p>
             </div>

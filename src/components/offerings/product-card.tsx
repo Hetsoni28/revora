@@ -2,113 +2,104 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import { Product } from '@/lib/therapies-data';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
+import { expoOut } from '@/lib/easings';
+import { Product, THERAPY_CATEGORIES } from '@/lib/therapies-data';
+
+const AREA = Object.fromEntries(THERAPY_CATEGORIES.map((c) => [c.slug, c.shortName]));
 
 interface ProductCardProps {
   product: Product;
+  /** Position in its grid — staggers the entrance. */
+  index?: number;
+  /** Show the first indications under the summary. */
+  detailed?: boolean;
   onRequestSample?: (product: Product) => void;
-  onDownloadDossier?: (product: Product) => void;
-  variant?: 'compact' | 'detailed';
 }
 
-export function ProductCard({
-  product,
-  onRequestSample,
-  onDownloadDossier,
-  variant = 'compact',
-}: ProductCardProps) {
+/** Product tile: photo stage, identity, and a clear path to the full monograph. */
+export function ProductCard({ product, index = 0, detailed = false, onRequestSample }: ProductCardProps) {
+  const reduce = useReducedMotion();
+
   return (
-    <div className="bg-white rounded-2xl border border-[#D9DFE8] hover:border-[#0B4A8F]/40 hover:shadow-lg transition-all duration-200 overflow-hidden flex flex-col justify-between group">
-      <div>
-        {/* Photo Pedestal */}
-        <Link
-          href={`/products/${product.id}`}
-          className="relative aspect-square w-full bg-[#FAFBFD] p-4 sm:p-6 flex items-center justify-center border-b border-[#EAEFF5] block overflow-hidden"
-        >
-          <Image
-            src={product.image}
-            alt={`${product.name} packaging`}
-            fill
-            className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          />
-          <span
-            className="absolute top-3 left-3 px-2.5 py-0.5 rounded text-[9.5px] font-semibold uppercase tracking-wider text-white shadow-2xs max-w-[80%] truncate"
-            style={{ backgroundColor: product.color }}
-          >
-            {product.badge}
-          </span>
-          <span className="absolute bottom-3 right-3 font-mono text-[10.5px] text-[#1E2428]/60 bg-white/95 backdrop-blur-xs px-2 py-0.5 rounded border border-[#EAEFF5]">
-            {product.volume}
-          </span>
-        </Link>
+    <motion.article
+      layout={!reduce}
+      initial={reduce ? false : { opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-6% 0px' }}
+      exit={reduce ? undefined : { opacity: 0, scale: 0.96 }}
+      transition={{ duration: 0.6, delay: (index % 6) * 0.05, ease: expoOut }}
+      className="group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-revora-cobalt/10 bg-white transition-shadow duration-500 hover:shadow-[0_28px_60px_-28px_rgba(11,74,143,0.45)]"
+    >
+      <Link
+        href={`/products/${product.id}`}
+        className="relative block aspect-[4/3] overflow-hidden"
+        aria-label={`${product.name} — view product details`}
+      >
+        <Image
+          src={product.image}
+          alt={`${product.name} carton and container`}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
+        />
+        <span
+          aria-hidden
+          className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{ background: `linear-gradient(180deg, transparent 55%, ${product.color}33)` }}
+        />
+        <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-slate backdrop-blur">
+          {AREA[product.categorySlug]}
+        </span>
+        <span className="absolute bottom-4 right-4 grid h-11 w-11 translate-y-2 place-items-center rounded-full bg-white text-revora-cobalt opacity-0 shadow-lg transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+          <ArrowUpRight className="h-5 w-5" />
+        </span>
+      </Link>
 
-        {/* Product Details */}
-        <div className="p-4 sm:p-5">
-          <Link href={`/products/${product.id}`}>
-            <h3 className="font-heading font-bold text-base sm:text-lg text-[#1E2428] group-hover:text-[#0B4A8F] transition-colors leading-snug">
-              {product.name}
-            </h3>
+      <div className="flex flex-1 flex-col p-6">
+        <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ color: product.color }}>
+          {product.badge}
+        </span>
+        <h3 className="mt-2 font-heading text-[1.5rem] font-extrabold leading-tight tracking-[-0.01em] text-revora-slate">
+          <Link href={`/products/${product.id}`} className="transition-colors hover:text-revora-cobalt">
+            {product.name}
           </Link>
+        </h3>
+        <p className="mt-1.5 font-sans text-[14px] font-medium leading-snug text-revora-cobalt">{product.genericName}</p>
+        <p className="mt-3 line-clamp-2 font-sans text-[14px] leading-[1.65] text-revora-slate-light">{product.summary}</p>
 
-          <p className="font-sans text-xs font-semibold text-[#0B4A8F] mt-1 line-clamp-1">
-            {product.genericName}
-          </p>
+        {detailed && (
+          <ul className="mt-4 space-y-1.5 border-t border-revora-cobalt/10 pt-4">
+            {product.indications.slice(0, 2).map((ind) => (
+              <li key={ind} className="flex gap-2 font-sans text-[13px] leading-snug text-revora-slate-light">
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: product.color }} />
+                {ind}
+              </li>
+            ))}
+          </ul>
+        )}
 
-          <p className="font-sans text-xs text-[#1E2428]/70 mt-2 line-clamp-2 leading-relaxed">
-            {product.summary}
-          </p>
-
-          {variant === 'detailed' && product.indications && (
-            <div className="mt-3 pt-3 border-t border-[#F0F4F8]">
-              <span className="text-[10px] uppercase tracking-wider text-[#1E2428]/50 font-semibold block mb-1">
-                Indications:
-              </span>
-              <div className="flex flex-wrap gap-1">
-                {product.indications.slice(0, 2).map((ind, i) => (
-                  <span
-                    key={i}
-                    className="text-[10px] bg-[#F1F5F9] text-[#1E2428]/80 px-2 py-0.5 rounded font-medium truncate max-w-full"
-                  >
-                    {ind}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="p-4 pt-0 flex flex-col gap-2">
-        <Link
-          href={`/products/${product.id}`}
-          className="w-full py-2 px-3 rounded-lg bg-[#0B4A8F] hover:bg-[#08356A] text-white text-xs font-semibold text-center transition-colors flex items-center justify-center gap-1.5 shadow-2xs"
-        >
-          <span>View Monograph</span>
-          <ArrowRight size={13} />
-        </Link>
-
-        <div className="flex items-center gap-2">
-          {onRequestSample && (
+        <div className="mt-auto flex items-center justify-between gap-3 pt-6">
+          <span className="font-sans text-[12.5px] text-revora-slate-muted">{product.volume}</span>
+          {onRequestSample ? (
             <button
+              type="button"
               onClick={() => onRequestSample(product)}
-              className="flex-1 py-1.5 px-2 rounded-lg border border-[#D9DFE8] hover:border-[#D7262E] hover:text-[#D7262E] text-[11px] sm:text-xs font-medium text-[#1E2428]/80 text-center transition-colors truncate"
+              className="shrink-0 rounded-full border border-revora-cobalt/20 px-4 py-2 font-sans text-[12.5px] font-semibold text-revora-cobalt transition-colors hover:border-revora-cobalt hover:bg-revora-cobalt hover:text-white"
             >
-              Request Sample
+              Request sample
             </button>
-          )}
-          {onDownloadDossier && (
-            <button
-              onClick={() => onDownloadDossier(product)}
-              className="flex-1 py-1.5 px-2 rounded-lg border border-[#D9DFE8] hover:border-[#0B4A8F] hover:text-[#0B4A8F] text-[11px] sm:text-xs font-medium text-[#1E2428]/80 text-center transition-colors truncate"
+          ) : (
+            <Link
+              href={`/products/${product.id}`}
+              className="-my-2 inline-flex min-h-10 shrink-0 items-center gap-1 font-sans text-[13px] font-semibold text-revora-cobalt"
             >
-              Dossier (PDF)
-            </button>
+              Details <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />
+            </Link>
           )}
         </div>
       </div>
-    </div>
+    </motion.article>
   );
 }

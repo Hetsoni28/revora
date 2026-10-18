@@ -1,88 +1,59 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, LucideIcon } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
+import { expoOut } from '@/lib/easings';
 import { TherapyCategory } from '@/lib/therapies-data';
 
 interface CategoryCardProps {
   category: TherapyCategory;
-  icon: LucideIcon;
+  index: number;
+  productCount: number;
 }
 
-export function CategoryCard({ category, icon: IconComponent }: CategoryCardProps) {
+/** Therapy-area tile; the colour wash rises on hover. */
+export function CategoryCard({ category, index, productCount }: CategoryCardProps) {
+  const reduce = useReducedMotion();
   return (
-    <div className="bg-white rounded-2xl border border-[#D9DFE8] hover:border-[#0B4A8F]/40 hover:shadow-lg transition-all duration-300 p-5 sm:p-7 md:p-8 flex flex-col justify-between group relative overflow-hidden">
-      {/* Top accent bar */}
-      <div
-        className="absolute top-0 left-0 right-0 h-1 transition-all duration-300 group-hover:h-1.5"
-        style={{ backgroundColor: category.color }}
-      />
-
-      <div>
-        {/* Header: Icon + Badge */}
-        <div className="flex items-center justify-between gap-2 mb-4">
-          <div
-            className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 duration-300 shrink-0"
-            style={{
-              backgroundColor: `${category.color}15`,
-              color: category.color,
-            }}
-          >
-            <IconComponent size={22} className="sm:size-6" />
-          </div>
+    <motion.div
+      initial={reduce ? false : { opacity: 0, y: 36 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-8% 0px' }}
+      transition={{ duration: 0.8, delay: (index % 2) * 0.1, ease: expoOut }}
+    >
+      <Link
+        href={`/our-offerings/${category.slug}`}
+        className="group relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white p-8 tablet:p-10"
+      >
+        <span
+          aria-hidden
+          className="absolute inset-0 translate-y-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0"
+          style={{ background: category.color }}
+        />
+        <div className="relative flex items-start justify-between">
+          <span className="font-heading text-[56px] font-extrabold leading-none tracking-[-0.04em] text-revora-cobalt/10 transition-colors duration-500 group-hover:text-white/20">
+            0{index + 1}
+          </span>
+          <span className="grid h-12 w-12 place-items-center rounded-full bg-revora-sky text-revora-cobalt transition-all duration-500 group-hover:rotate-45 group-hover:bg-white">
+            <ArrowUpRight className="h-5 w-5" />
+          </span>
+        </div>
+        <div className="relative mt-auto pt-10">
           <span
-            className="px-2.5 py-1 rounded-full text-[9.5px] sm:text-[10px] font-semibold uppercase tracking-wider text-white text-right shrink-0"
-            style={{ backgroundColor: category.color }}
+            className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors duration-500 group-hover:text-white/70"
+            style={{ color: category.color }}
           >
-            {category.badge}
+            {category.badge} · {productCount} {productCount === 1 ? 'brand' : 'brands'}
           </span>
+          <h3 className="mt-2 font-heading text-[clamp(1.6rem,2.6vw,2.2rem)] font-extrabold leading-[1.05] tracking-[-0.02em] text-revora-slate transition-colors duration-500 group-hover:text-white">
+            {category.shortName}
+          </h3>
+          <p className="mt-3 max-w-md font-sans text-[14.5px] leading-[1.65] text-revora-slate-light transition-colors duration-500 group-hover:text-white/80">
+            {category.subtitle}
+          </p>
         </div>
-
-        {/* Title & Subtitle */}
-        <h3 className="font-heading font-bold text-lg sm:text-xl md:text-2xl text-[#1E2428] group-hover:text-[#0B4A8F] transition-colors leading-tight">
-          {category.title}
-        </h3>
-        <p className="font-sans text-xs font-semibold text-[#0B4A8F] mt-1.5">
-          {category.subtitle}
-        </p>
-
-        {/* Description */}
-        <p className="font-sans text-xs sm:text-sm text-[#1E2428]/75 mt-3 leading-relaxed">
-          {category.description}
-        </p>
-
-        {/* Key Formulations List */}
-        <div className="mt-5 pt-4 border-t border-[#F0F4F8]">
-          <span className="text-[10.5px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#1E2428]/50 block mb-2">
-            Key Formulations &amp; Molecules:
-          </span>
-          <ul className="space-y-1.5">
-            {category.subTherapies.map((sub, sIdx) => (
-              <li
-                key={sIdx}
-                className="flex items-start gap-2 text-xs text-[#1E2428]/85 font-medium leading-snug"
-              >
-                <CheckCircle2 size={13} className="text-[#0B4A8F] shrink-0 mt-0.5" />
-                <span>{sub}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      {/* Card Action Link */}
-      <div className="mt-6 pt-5 border-t border-[#F0F4F8] flex flex-wrap items-center justify-between gap-2">
-        <span className="text-xs font-mono text-[#1E2428]/60">
-          {category.productIds.length} Prescribing Formulations
-        </span>
-        <Link
-          href={`/our-offerings/${category.slug}`}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0B4A8F] group-hover:text-[#08356A] group-hover:translate-x-1 transition-all"
-        >
-          <span>Explore Category</span>
-          <ArrowRight size={14} />
-        </Link>
-      </div>
-    </div>
+      </Link>
+    </motion.div>
   );
 }

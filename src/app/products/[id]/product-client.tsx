@@ -1,350 +1,483 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
+  AnimatePresence,
+  LayoutGroup,
+  motion,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from 'framer-motion';
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Box,
   ChevronRight,
-  Building2,
-  Download,
-  CheckCircle2,
-  AlertCircle,
+  Clock,
+  FileText,
   FlaskConical,
   HeartPulse,
-  FileCheck,
-  Clock,
-  Box,
+  ListChecks,
+  ShieldAlert,
+  ShieldCheck,
   Thermometer,
 } from 'lucide-react';
-import { toast } from 'sonner';
-import { FormularyModal } from '@/components/offerings/formulary-modal';
+import { expoOut } from '@/lib/easings';
+import { ALL_PRODUCTS, Product, TherapyCategory, getProductsByCategory } from '@/lib/therapies-data';
+import { AnchorLink, Eyebrow, FadeUp, Magnetic } from '@/components/ui/primitives';
 import { ProductCard } from '@/components/offerings/product-card';
 import { FormularyBanner } from '@/components/offerings/formulary-banner';
-import { Product, TherapyCategory, getProductsByCategory } from '@/lib/therapies-data';
+import { FormularyModal } from '@/components/offerings/formulary-modal';
 
 interface ProductClientProps {
   product: Product;
   category: TherapyCategory;
 }
 
+const SECTIONS = [
+  { id: 'composition', label: 'Composition', icon: FlaskConical },
+  { id: 'mechanism', label: 'Mechanism of action', icon: HeartPulse },
+  { id: 'indications', label: 'Indications', icon: ListChecks },
+  { id: 'dosage', label: 'Dosage', icon: Clock },
+  { id: 'storage', label: 'Storage & packaging', icon: Box },
+] as const;
+
+/** "Moxifloxacin Hydrochloride IP eq. to Moxifloxacin 0.5% w/v" → name / equivalence / strength. */
+function parseIngredient(line: string) {
+  const m = line.match(/^(.*?)\s+([\d.]+%\s*w\/v)$/);
+  if (m) {
+    const [name, eq] = m[1].split(/\s+eq\. to\s+/);
+    return { name, note: eq ? `eq. to ${eq}` : undefined, strength: m[2] };
+  }
+  if (/\s*q\.s\.$/.test(line)) return { name: line.replace(/\s*q\.s\.$/, ''), strength: 'q.s.' };
+  return { name: line };
+}
+
 export function ProductClient({ product, category }: ProductClientProps) {
+  const reduce = useReducedMotion();
   const [modalOpen, setModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'composition' | 'moa' | 'indications' | 'dosage' | 'packaging'>(
-    'composition'
-  );
+  const [active, setActive] = useState<string>(SECTIONS[0].id);
 
-  const relatedProducts = getProductsByCategory(category.slug).filter(
-    (p) => p.id !== product.id
-  );
+  const idx = ALL_PRODUCTS.findIndex((p) => p.id === product.id);
+  const prev = ALL_PRODUCTS[(idx - 1 + ALL_PRODUCTS.length) % ALL_PRODUCTS.length];
+  const next = ALL_PRODUCTS[(idx + 1) % ALL_PRODUCTS.length];
+  const sameArea = getProductsByCategory(category.slug).filter((p) => p.id !== product.id);
+  const related = (sameArea.length ? sameArea : ALL_PRODUCTS.filter((p) => p.id !== product.id)).slice(0, 3);
+  const isRx = /schedule/i.test(product.schedule);
+  const [supplyClass] = product.schedule.split(' — ');
 
-  const handleDownloadPI = () => {
-    toast.success('Prescribing Information (PI) Generating', {
-      description: `Official prescribing dossier for ${product.name} (${product.genericName}) is downloading.`,
-    });
-  };
+  // Hero CTAs out of view → show the mobile sticky bar.
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const ctaVisible = useInView(ctaRef, { margin: '0px 0px -10% 0px' });
+  // …and tuck it away again at the end of the page so it never covers the footer.
+  const endRef = useRef<HTMLElement>(null);
+  const atEnd = useInView(endRef, { margin: '100000px 0px 0px 0px' });
+
+  // Scroll-spy for the monograph contents.
+  useEffect(() => {
+    const els = SECTIONS.map((s) => document.getElementById(s.id)).filter(Boolean) as HTMLElement[];
+    const io = new IntersectionObserver(
+      (entries) => {
+        const hit = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (hit) setActive(hit.target.id);
+      },
+      { rootMargin: '-35% 0px -55% 0px' }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  const facts = [
+    { label: 'Pack', value: product.volume },
+    { label: 'Therapy area', value: category.shortName, href: `/our-offerings/${category.slug}` },
+    { label: 'Class', value: product.badge },
+    { label: 'Supply', value: supplyClass },
+  ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 tablet:py-12">
-      {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs font-sans text-[#1E2428]/60">
-        <Link href="/" className="hover:text-[#0B4A8F] transition-colors">Home</Link>
-        <ChevronRight size={12} className="text-[#1E2428]/40" />
-        <Link href="/our-offerings" className="hover:text-[#0B4A8F] transition-colors">Our Offerings</Link>
-        <ChevronRight size={12} className="text-[#1E2428]/40" />
-        <Link href={`/our-offerings/${category.slug}`} className="hover:text-[#0B4A8F] transition-colors">
-          {category.shortName}
-        </Link>
-        <ChevronRight size={12} className="text-[#1E2428]/40" />
-        <span className="font-semibold text-[#0B4A8F]">{product.name}</span>
-      </nav>
+    <>
+      {/* ── hero ── */}
+      <section className="relative isolate overflow-hidden px-5 pb-20 pt-36 tablet:px-8 tablet:pb-28 tablet:pt-44">
+        <div
+          aria-hidden
+          className="absolute -left-40 top-20 -z-10 h-[620px] w-[620px] rounded-full opacity-[0.12] blur-3xl"
+          style={{ background: product.color }}
+        />
+        <div className="mx-auto max-w-330">
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 font-sans text-[13px] text-revora-slate-muted">
+            <Link href="/" className="transition-colors hover:text-revora-cobalt">Home</Link>
+            <ChevronRight className="h-3.5 w-3.5" />
+            <Link href="/our-offerings" className="transition-colors hover:text-revora-cobalt">Our Offerings</Link>
+            <ChevronRight className="h-3.5 w-3.5" />
+            <Link href={`/our-offerings/${category.slug}`} className="transition-colors hover:text-revora-cobalt">{category.shortName}</Link>
+            <ChevronRight className="h-3.5 w-3.5" />
+            <span className="font-semibold text-revora-cobalt">{product.name}</span>
+          </nav>
 
-      {/* Main Single Product Layout */}
-      <div className="space-y-10">
-        {/* Product Showcase Card */}
-        <div className="bg-white rounded-2xl border border-[#D9DFE8] p-6 tablet:p-10 shadow-sm relative overflow-hidden">
-          <div
-            className="absolute top-0 left-0 right-0 h-1.5"
-            style={{ background: `linear-gradient(90deg, ${product.color}, #D7262E)` }}
-          />
+          <div className="mt-10 grid grid-cols-[minmax(0,1fr)] items-start gap-10 tablet:gap-12 tablet-lg:grid-cols-2 desktop:gap-16">
+            <ZoomStage product={product} reduce={!!reduce} />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Image Pedestal */}
-            <div className="lg:col-span-5 flex flex-col items-center">
-              <div className="relative aspect-square w-full max-w-[380px] rounded-2xl overflow-hidden bg-[#FAFBFD] border border-[#EAEFF5] p-6 shadow-sm group">
-                <Image
-                  src={product.image}
-                  alt={`${product.name} packaging carton and bottle`}
-                  fill
-                  className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                  sizes="(max-width: 768px) 100vw, 380px"
-                  priority
-                />
-                <span
-                  className="absolute top-4 left-4 px-3 py-1 rounded text-[10px] font-semibold uppercase tracking-wider text-white shadow-xs"
-                  style={{ backgroundColor: product.color }}
-                >
-                  {product.badge}
-                </span>
-              </div>
-              <span className="text-xs font-mono text-[#1E2428]/50 mt-3 text-center">
-                Commercial Unit: {product.volume} · Sterile BFS Pack
-              </span>
-
-              {/* Action Buttons */}
-              <div className="w-full max-w-[380px] mt-6 space-y-2.5">
-                <button
-                  onClick={() => setModalOpen(true)}
-                  className="w-full py-3 px-4 rounded-xl bg-[#0B4A8F] hover:bg-[#08356A] text-white text-xs font-semibold transition-all shadow-sm flex items-center justify-center gap-2"
-                >
-                  <Building2 size={15} />
-                  <span>Request Doctor / Hospital Samples</span>
-                </button>
-                <button
-                  onClick={handleDownloadPI}
-                  className="w-full py-2.5 px-4 rounded-xl border border-[#D9DFE8] hover:border-[#0B4A8F] hover:bg-[#F8FAFC] text-[#1E2428] text-xs font-medium transition-colors flex items-center justify-center gap-2"
-                >
-                  <Download size={15} />
-                  <span>Download Prescribing Dossier (PDF)</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Specifications & Overview */}
-            <div className="lg:col-span-7 flex flex-col justify-between">
-              <div>
-                <div className="flex flex-wrap items-center gap-2.5 mb-2.5">
-                  <Link
-                    href={`/our-offerings/${category.slug}`}
-                    className="text-xs font-semibold uppercase tracking-wider text-[#0B4A8F] hover:underline"
-                  >
-                    {category.shortName}
-                  </Link>
-                  <span className="text-xs text-[#1E2428]/30">·</span>
-                  <span className="text-xs font-mono text-[#1E2428]/60 bg-[#F1F5F9] px-2.5 py-0.5 rounded-full font-medium">
-                    {product.volume}
-                  </span>
-                  <span className="text-xs text-[#1E2428]/30">·</span>
-                  <span className="text-xs font-semibold text-[#008B74] bg-[#E6F4F1] px-2.5 py-0.5 rounded-full">
-                    Aseptic ISO Class 5
-                  </span>
-                </div>
-
-                <h1 className="font-heading font-bold text-3xl sm:text-5xl text-[#1E2428] tracking-tight">
-                  {product.name}
-                </h1>
-
-                <p className="font-sans text-base font-semibold text-[#0B4A8F] mt-2 leading-snug">
+            <div className="tablet-lg:pt-2 desktop:pt-4">
+              <motion.span
+                initial={reduce ? false : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1, ease: expoOut }}
+                className="font-sans text-[12px] font-semibold uppercase tracking-[0.16em]"
+                style={{ color: product.color }}
+              >
+                {product.badge}
+              </motion.span>
+              <motion.h1
+                initial={reduce ? false : { opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.15, ease: expoOut }}
+                className="mt-3 font-heading text-[clamp(2.8rem,6vw,5.2rem)] font-extrabold leading-[0.98] tracking-[-0.03em] text-revora-slate"
+              >
+                {product.name}
+              </motion.h1>
+              <FadeUp delay={0.3}>
+                <p className="mt-4 font-heading text-[clamp(1.1rem,1.8vw,1.35rem)] font-semibold leading-snug text-revora-cobalt">
                   {product.genericName}
                 </p>
-
-                <p className="font-sans text-xs sm:text-sm text-[#1E2428]/75 mt-3 italic">
-                  &ldquo;{product.tagline}&rdquo;
+                <p className="mt-5 border-l-2 pl-4 font-sans text-[15px] italic leading-[1.65] text-revora-slate-light" style={{ borderColor: product.color }}>
+                  {product.tagline}
                 </p>
+                <p className="mt-5 font-sans text-[16px] leading-[1.75] text-revora-slate-light">{product.summary}</p>
+              </FadeUp>
 
-                <p className="font-sans text-xs sm:text-sm text-[#1E2428]/85 mt-4 leading-relaxed">
-                  {product.summary}
-                </p>
+              <FadeUp delay={0.4}>
+                <dl className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[20px] border border-revora-cobalt/10 bg-revora-cobalt/10">
+                  {facts.map((f) => (
+                    <div key={f.label} className="bg-white px-5 py-4">
+                      <dt className="font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-slate-muted">{f.label}</dt>
+                      <dd className="mt-1 font-sans text-[14.5px] font-semibold leading-snug text-revora-slate">
+                        {f.href ? (
+                          <Link href={f.href} className="text-revora-cobalt hover:underline">
+                            {f.value}
+                          </Link>
+                        ) : (
+                          f.value
+                        )}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </FadeUp>
 
-                {/* Key Spec Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-[#EAEFF5] text-xs">
-                  <div className="p-3 rounded-xl bg-[#F8FAFC] border border-[#EAEFF5]">
-                    <span className="text-[10px] uppercase tracking-wider text-[#1E2428]/50 font-semibold block">Therapy Area</span>
-                    <span className="font-semibold text-[#1E2428] mt-1 block truncate">{category.badge}</span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-[#F8FAFC] border border-[#EAEFF5]">
-                    <span className="text-[10px] uppercase tracking-wider text-[#1E2428]/50 font-semibold block">Pack Form</span>
-                    <span className="font-semibold text-[#1E2428] mt-1 block truncate">{product.volume}</span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-[#F8FAFC] border border-[#EAEFF5]">
-                    <span className="text-[10px] uppercase tracking-wider text-[#1E2428]/50 font-semibold block">Sterility</span>
-                    <span className="font-semibold text-[#008B74] mt-1 block">SAL 10⁻⁶ BFS</span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-[#F8FAFC] border border-[#EAEFF5]">
-                    <span className="text-[10px] uppercase tracking-wider text-[#1E2428]/50 font-semibold block">Standard</span>
-                    <span className="font-semibold text-[#0B4A8F] mt-1 block">WHO-GMP / IP</span>
-                  </div>
-                </div>
-
-                {/* Schedule Warning */}
-                <div className="mt-5 p-3.5 rounded-xl bg-[#FFF8E7] border border-[#FEE685] flex items-start gap-3 text-xs text-[#7A4B00]">
-                  <AlertCircle size={17} className="shrink-0 mt-0.5 text-[#B45309]" />
-                  <div>
-                    <span className="font-semibold block">{product.schedule}</span>
-                    <span className="text-[11px] text-[#7A4B00]/85 mt-0.5 block">
-                      Warning: To be sold by retail on the prescription of a Registered Medical Practitioner (RMP) only.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Clinical Monograph Tabs */}
-        <div className="bg-white rounded-2xl border border-[#D9DFE8] overflow-hidden shadow-xs">
-          <div className="flex border-b border-[#D9DFE8] bg-[#F8FAFC] overflow-x-auto scrollbar-none">
-            {[
-              { id: 'composition', label: 'Formula & Composition', icon: FlaskConical },
-              { id: 'moa', label: 'Pharmacodynamics (MOA)', icon: HeartPulse },
-              { id: 'indications', label: 'Indications & Scope', icon: FileCheck },
-              { id: 'dosage', label: 'Dosage & Administration', icon: Clock },
-              { id: 'packaging', label: 'Packaging & Storage', icon: Box },
-            ].map((tab) => {
-              const Icon = tab.icon;
-              const isSelected = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                  className={`flex items-center gap-2 px-6 py-4 text-xs font-semibold whitespace-nowrap transition-colors border-b-2 ${
-                    isSelected
-                      ? 'border-[#0B4A8F] text-[#0B4A8F] bg-white'
-                      : 'border-transparent text-[#1E2428]/70 hover:text-[#0B4A8F] hover:bg-white/50'
+              <FadeUp delay={0.5}>
+                <div
+                  className={`mt-5 flex items-start gap-3 rounded-[16px] border px-4 py-3.5 font-sans text-[13.5px] leading-[1.55] ${
+                    isRx
+                      ? 'border-revora-crimson/25 bg-revora-crimson-tint text-revora-crimson-dark'
+                      : 'border-revora-cobalt/15 bg-revora-sky text-revora-cobalt-dark'
                   }`}
                 >
-                  <Icon size={15} />
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
+                  {isRx ? <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" /> : <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" />}
+                  <span>{product.schedule}</span>
+                </div>
+              </FadeUp>
 
-          <div className="p-6 tablet:p-10 text-xs tablet:text-sm">
-            {activeTab === 'composition' && (
-              <div className="space-y-6">
-                <div>
-                  <h3 className="font-heading font-bold text-lg text-[#1E2428] mb-1">Qualitative &amp; Quantitative Formulation</h3>
-                  <p className="text-xs text-[#1E2428]/70">Formulated to physiological ocular osmolarity.</p>
+              <FadeUp delay={0.6}>
+                <div ref={ctaRef} className="mt-8 flex flex-wrap items-center gap-3">
+                  <Magnetic>
+                    <button
+                      type="button"
+                      onClick={() => setModalOpen(true)}
+                      className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-revora-cobalt py-3.5 pl-7 pr-3.5 font-sans text-[15px] font-semibold text-white shadow-[0_18px_40px_-14px_rgba(11,74,143,0.7)]"
+                    >
+                      <span className="absolute inset-0 -translate-x-full bg-revora-crimson transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
+                      <span className="relative">Request samples</span>
+                      <span className="relative grid h-8 w-8 place-items-center rounded-full bg-white text-revora-cobalt transition-transform duration-500 group-hover:rotate-45">
+                        <ArrowUpRight className="h-4 w-4" />
+                      </span>
+                    </button>
+                  </Magnetic>
+                  <button
+                    type="button"
+                    onClick={() => setModalOpen(true)}
+                    className="inline-flex items-center gap-2 rounded-full border border-revora-cobalt/25 px-6 py-3.5 font-sans text-[15px] font-semibold text-revora-cobalt transition-colors hover:bg-revora-sky"
+                  >
+                    <FileText className="h-4 w-4" /> Request prescribing info
+                  </button>
                 </div>
-                <div className="bg-[#FAFBFD] rounded-xl border border-[#EAEFF5] divide-y divide-[#EAEFF5]">
-                  {product.composition.map((c, i) => (
-                    <div key={i} className="p-4 flex items-start gap-3">
-                      <CheckCircle2 size={16} className="text-[#0B4A8F] shrink-0 mt-0.5" />
-                      <span className="font-mono text-xs font-semibold text-[#1E2428]">{c}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                  <div className="p-4 rounded-xl bg-[#F8FAFC] border border-[#EAEFF5]">
-                    <span className="text-[10.5px] uppercase font-semibold text-[#1E2428]/50 block">Target pH Range</span>
-                    <span className="font-mono text-sm font-semibold text-[#0B4A8F] mt-1 block">6.8 – 7.4 (Physiological)</span>
-                  </div>
-                  <div className="p-4 rounded-xl bg-[#F8FAFC] border border-[#EAEFF5]">
-                    <span className="text-[10.5px] uppercase font-semibold text-[#1E2428]/50 block">Target Osmolality</span>
-                    <span className="font-mono text-sm font-semibold text-[#0B4A8F] mt-1 block">290 – 310 mOsm/kg</span>
-                  </div>
-                  <div className="p-4 rounded-xl bg-[#F8FAFC] border border-[#EAEFF5]">
-                    <span className="text-[10.5px] uppercase font-semibold text-[#1E2428]/50 block">Sterility Assurance</span>
-                    <span className="font-mono text-sm font-semibold text-[#008B74] mt-1 block">SAL 10⁻⁶ Aseptic</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'moa' && (
-              <div className="space-y-4">
-                <h3 className="font-heading font-bold text-lg text-[#1E2428]">Mechanism of Action &amp; Clinical Pharmacodynamics</h3>
-                <div className="p-5 rounded-xl bg-[#FAFBFD] border border-[#EAEFF5] leading-relaxed text-[#1E2428]/85 text-sm">
-                  {product.mechanismOfAction}
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'indications' && (
-              <div className="space-y-4">
-                <h3 className="font-heading font-bold text-lg text-[#1E2428]">Therapeutic Indications</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {product.indications.map((ind, i) => (
-                    <div key={i} className="p-4 rounded-xl bg-[#FAFBFD] border border-[#EAEFF5] flex items-start gap-3">
-                      <CheckCircle2 size={16} className="text-[#008B74] shrink-0 mt-0.5" />
-                      <span className="font-medium text-[#1E2428]/85">{ind}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'dosage' && (
-              <div className="space-y-4">
-                <h3 className="font-heading font-bold text-lg text-[#1E2428]">Dosage &amp; Administration</h3>
-                <div className="p-5 rounded-xl bg-[#FAFBFD] border border-[#EAEFF5] text-sm text-[#1E2428]/85 font-medium leading-relaxed">
-                  {product.dosage}
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'packaging' && (
-              <div className="space-y-4">
-                <h3 className="font-heading font-bold text-lg text-[#1E2428]">Packaging &amp; Storage</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="p-5 rounded-xl bg-[#FAFBFD] border border-[#EAEFF5] flex items-start gap-3.5">
-                    <Thermometer size={20} className="text-[#D7262E] shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-[#1E2428] text-xs sm:text-sm block">Storage</span>
-                      <p className="text-xs sm:text-sm text-[#1E2428]/75 mt-1">{product.storage}</p>
-                    </div>
-                  </div>
-                  <div className="p-5 rounded-xl bg-[#FAFBFD] border border-[#EAEFF5] flex items-start gap-3.5">
-                    <Box size={20} className="text-[#0B4A8F] shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-[#1E2428] text-xs sm:text-sm block">Container</span>
-                      <p className="text-xs sm:text-sm text-[#1E2428]/75 mt-1">{product.packaging}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+              </FadeUp>
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* Reusable Formulary Banner */}
-        <FormularyBanner
-          title={`Procure ${product.name} for Your Eye Institute or Pharmacy`}
-          description="We supply eye hospitals, surgical day-centers, and pharmacy networks across India with consistent batch delivery, Certificate of Analysis (CoA), and stability dossiers."
-          buttonLabel="Request Rate Card & Samples"
-          onAction={() => setModalOpen(true)}
-        />
+      {/* ── monograph ── */}
+      <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+        <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] gap-10 desktop:grid-cols-[260px_minmax(0,1fr)] desktop:gap-20">
+          {/* contents */}
+          <aside className="desktop:sticky desktop:top-36 desktop:self-start">
+            <Eyebrow>Product monograph</Eyebrow>
+            <LayoutGroup id="toc">
+              <ul className="-mx-5 mt-6 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] desktop:mx-0 desktop:flex-col desktop:gap-1 desktop:px-0">
+                {SECTIONS.map((s) => {
+                  const on = active === s.id;
+                  return (
+                    <li key={s.id} className="shrink-0">
+                      <AnchorLink
+                        href={`#${s.id}`}
+                        aria-current={on ? 'true' : undefined}
+                        className={`relative flex items-center gap-3 rounded-full px-4 py-2.5 font-sans text-[14px] font-semibold transition-colors duration-300 desktop:rounded-xl ${
+                          on ? 'text-revora-cobalt' : 'text-revora-slate-light hover:text-revora-cobalt'
+                        }`}
+                      >
+                        {on && (
+                          <motion.span
+                            layoutId="toc-active"
+                            className="absolute inset-0 rounded-full bg-revora-sky desktop:rounded-xl"
+                            transition={{ type: 'spring', stiffness: 380, damping: 34 }}
+                          />
+                        )}
+                        <s.icon className="relative h-4 w-4" />
+                        <span className="relative whitespace-nowrap">{s.label}</span>
+                      </AnchorLink>
+                    </li>
+                  );
+                })}
+              </ul>
+            </LayoutGroup>
+          </aside>
 
-        {/* Related Formulations Grid */}
-        {relatedProducts.length > 0 && (
-          <div className="pt-8 border-t border-[#D9DFE8]">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <span className="text-xs uppercase tracking-wider text-[#0B4A8F] font-semibold">
-                  {category.shortName} Portfolio
-                </span>
-                <h4 className="font-heading font-bold text-xl sm:text-2xl text-[#1E2428] mt-0.5">
-                  Other Formulations in this Category
-                </h4>
+          <div className="space-y-20 tablet:space-y-24">
+            <MonographSection id="composition" title="Composition" kicker="Each ml / unit contains">
+              <div className="overflow-hidden rounded-[20px] border border-revora-cobalt/10">
+                {product.composition.map((line, i) => {
+                  const ing = parseIngredient(line);
+                  return (
+                    <motion.div
+                      key={line}
+                      initial={reduce ? false : { opacity: 0, x: -16 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: i * 0.07, ease: expoOut }}
+                      className="flex items-center justify-between gap-6 border-b border-revora-cobalt/10 px-5 py-4 last:border-b-0 tablet:px-6"
+                    >
+                      <div>
+                        <p className="font-sans text-[15.5px] font-semibold text-revora-slate">{ing.name}</p>
+                        {ing.note && <p className="mt-0.5 font-sans text-[13px] text-revora-slate-muted">{ing.note}</p>}
+                      </div>
+                      {ing.strength && (
+                        <span
+                          className="shrink-0 rounded-full px-3 py-1 font-mono text-[13px] font-semibold"
+                          style={{ color: product.color, background: `${product.color}12` }}
+                        >
+                          {ing.strength}
+                        </span>
+                      )}
+                    </motion.div>
+                  );
+                })}
               </div>
-              <Link
-                href={`/our-offerings/${category.slug}`}
-                className="text-xs font-semibold text-[#0B4A8F] hover:underline flex items-center gap-1"
-              >
-                <span>View Full Category</span>
-                <ChevronRight size={14} />
-              </Link>
-            </div>
+            </MonographSection>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {relatedProducts.map((rel) => (
-                <ProductCard
-                  key={rel.id}
-                  product={rel}
-                  onRequestSample={() => setModalOpen(true)}
-                />
-              ))}
-            </div>
+            <MonographSection id="mechanism" title="Mechanism of action" kicker="How it works">
+              <p className="font-heading text-[clamp(1.15rem,1.9vw,1.5rem)] font-semibold leading-[1.55] text-revora-slate">
+                {product.mechanismOfAction}
+              </p>
+            </MonographSection>
+
+            <MonographSection id="indications" title="Indications" kicker="Clinical use">
+              <ol className="grid gap-3 tablet:grid-cols-2">
+                {product.indications.map((ind, i) => (
+                  <motion.li
+                    key={ind}
+                    initial={reduce ? false : { opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: i * 0.08, ease: expoOut }}
+                    className="flex gap-4 rounded-[20px] border border-revora-cobalt/10 bg-[#F6F9FC] p-5"
+                  >
+                    <span
+                      className="grid h-8 w-8 shrink-0 place-items-center rounded-full font-sans text-[13px] font-bold text-white"
+                      style={{ background: product.color }}
+                    >
+                      {i + 1}
+                    </span>
+                    <span className="font-sans text-[15px] font-medium leading-[1.55] text-revora-slate">{ind}</span>
+                  </motion.li>
+                ))}
+              </ol>
+            </MonographSection>
+
+            <MonographSection id="dosage" title="Dosage & administration" kicker="As directed by the prescriber">
+              <div className="flex gap-5 rounded-[24px] p-6 tablet:p-8" style={{ background: `${product.color}0D` }}>
+                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white" style={{ color: product.color }}>
+                  <Clock className="h-5 w-5" />
+                </span>
+                <p className="font-sans text-[16.5px] font-medium leading-[1.7] text-revora-slate">{product.dosage}</p>
+              </div>
+            </MonographSection>
+
+            <MonographSection id="storage" title="Storage & packaging" kicker="Handling">
+              <div className="grid gap-4 tablet:grid-cols-2">
+                {[
+                  { icon: Thermometer, label: 'Storage', text: product.storage, tone: 'text-revora-crimson' },
+                  { icon: Box, label: 'Container', text: product.packaging, tone: 'text-revora-cobalt' },
+                ].map((c) => (
+                  <div key={c.label} className="rounded-[20px] border border-revora-cobalt/10 p-6">
+                    <c.icon className={`h-6 w-6 ${c.tone}`} />
+                    <p className="mt-4 font-sans text-[12px] font-semibold uppercase tracking-[0.14em] text-revora-slate-muted">{c.label}</p>
+                    <p className="mt-1.5 font-sans text-[15px] leading-[1.65] text-revora-slate">{c.text}</p>
+                  </div>
+                ))}
+              </div>
+            </MonographSection>
           </div>
-        )}
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <div className="px-5 pt-24 tablet:px-8 tablet:pt-32">
+        <div className="mx-auto max-w-330">
+          <FormularyBanner
+            title={`Stock ${product.name} at your hospital or pharmacy.`}
+            description="Request samples, prescribing literature or an institutional rate card — our team supports doctors, hospitals, pharmacies and distributors across India."
+            buttonLabel="Request rate card & samples"
+            onAction={() => setModalOpen(true)}
+          />
+        </div>
       </div>
 
-      <FormularyModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        product={product}
-        categoryName={category.title}
-      />
-    </div>
+      {/* ── related ── */}
+      <section className="px-5 py-24 tablet:px-8 tablet:py-32">
+        <div className="mx-auto max-w-330">
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <Eyebrow>{sameArea.length ? `More in ${category.shortName}` : 'More from Revora'}</Eyebrow>
+              <h2 className="mt-5 font-heading text-[clamp(1.8rem,3.6vw,2.8rem)] font-extrabold tracking-[-0.02em] text-revora-slate">
+                Related formulations
+              </h2>
+            </div>
+            <Link
+              href={sameArea.length ? `/our-offerings/${category.slug}` : '/our-offerings'}
+              className="group hidden shrink-0 items-center gap-1.5 font-sans text-[14px] font-semibold text-revora-cobalt tablet:inline-flex"
+            >
+              View all <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />
+            </Link>
+          </div>
+          <div className="mt-10 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-3">
+            {related.map((p, i) => (
+              <ProductCard key={p.id} product={p} index={i} />
+            ))}
+          </div>
+
+          {/* prev / next */}
+          <nav ref={endRef} aria-label="Browse products" className="mt-16 grid gap-4 border-t border-revora-cobalt/10 pt-10 tablet:grid-cols-2">
+            {[
+              { p: prev, dir: 'Previous', Icon: ArrowLeft },
+              { p: next, dir: 'Next', Icon: ArrowRight },
+            ].map(({ p, dir, Icon }) => (
+              <Link
+                key={dir}
+                href={`/products/${p.id}`}
+                className={`group flex items-center gap-4 rounded-[20px] border border-revora-cobalt/10 bg-white p-4 transition-shadow duration-500 hover:shadow-[0_20px_40px_-24px_rgba(11,74,143,0.45)] ${
+                  dir === 'Next' ? 'tablet:flex-row-reverse tablet:text-right' : ''
+                }`}
+              >
+                <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl">
+                  <Image src={p.image} alt="" fill sizes="64px" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                </span>
+                <span className="flex-1">
+                  <span className="flex items-center gap-1.5 font-sans text-[12px] font-semibold uppercase tracking-[0.14em] text-revora-slate-muted tablet:inline-flex">
+                    {dir === 'Previous' && <Icon className="h-3.5 w-3.5" />}
+                    {dir} product
+                    {dir === 'Next' && <Icon className="h-3.5 w-3.5" />}
+                  </span>
+                  <span className="mt-1 block font-heading text-[18px] font-extrabold text-revora-slate transition-colors group-hover:text-revora-cobalt">
+                    {p.name}
+                  </span>
+                </span>
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </section>
+
+      {/* ── mobile sticky CTA ── */}
+      <AnimatePresence>
+        {!ctaVisible && !atEnd && !modalOpen && (
+          <motion.div
+            initial={{ y: '120%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '120%' }}
+            transition={{ duration: 0.5, ease: expoOut }}
+            className="fixed inset-x-3 bottom-3 z-80 flex items-center justify-between gap-3 rounded-2xl border border-revora-cobalt/10 bg-white/95 p-3 pl-5 shadow-[0_20px_50px_-20px_rgba(11,74,143,0.45)] backdrop-blur desktop:hidden"
+          >
+            <span className="min-w-0">
+              <span className="block truncate font-heading text-[16px] font-extrabold text-revora-slate">{product.name}</span>
+              <span className="block truncate font-sans text-[12px] text-revora-slate-muted">{product.volume}</span>
+            </span>
+            <button
+              type="button"
+              onClick={() => setModalOpen(true)}
+              className="shrink-0 rounded-full bg-revora-cobalt px-5 py-3 font-sans text-[14px] font-semibold text-white"
+            >
+              Request samples
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <FormularyModal isOpen={modalOpen} onClose={() => setModalOpen(false)} product={product} categoryName={category.title} />
+    </>
+  );
+}
+
+function MonographSection({ id, title, kicker, children }: { id: string; title: string; kicker: string; children: React.ReactNode }) {
+  return (
+    <section id={id} className="scroll-mt-32">
+      <FadeUp>
+        <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.16em] text-revora-slate-muted">{kicker}</p>
+        <h2 className="mt-2 font-heading text-[clamp(1.7rem,3vw,2.4rem)] font-extrabold tracking-[-0.02em] text-revora-slate">{title}</h2>
+      </FadeUp>
+      <div className="mt-7">{children}</div>
+    </section>
+  );
+}
+
+/** Product photo that reveals with a wipe and magnifies under the cursor. */
+function ZoomStage({ product, reduce }: { product: Product; reduce: boolean }) {
+  const ox = useMotionValue(0.5);
+  const oy = useMotionValue(0.5);
+  const scale = useSpring(1, { stiffness: 200, damping: 26 });
+
+  return (
+    <motion.div
+      initial={reduce ? false : { clipPath: 'inset(0 0 100% 0 round 32px)' }}
+      animate={{ clipPath: 'inset(0 0 0% 0 round 32px)' }}
+      transition={{ duration: 1.1, ease: expoOut }}
+      className="relative mx-auto aspect-square w-full max-w-[560px] overflow-hidden rounded-[24px] bg-white shadow-[0_40px_80px_-40px_rgba(11,74,143,0.45)] tablet:rounded-[32px] tablet-lg:sticky tablet-lg:top-32 tablet-lg:max-w-none desktop:top-36"
+      onPointerMove={(e) => {
+        if (reduce || e.pointerType !== 'mouse') return;
+        const r = e.currentTarget.getBoundingClientRect();
+        ox.set((e.clientX - r.left) / r.width);
+        oy.set((e.clientY - r.top) / r.height);
+      }}
+      onPointerEnter={(e) => !reduce && e.pointerType === 'mouse' && scale.set(1.7)}
+      onPointerLeave={() => scale.set(1)}
+    >
+      <motion.div className="absolute inset-0" style={{ scale, originX: ox, originY: oy }}>
+        <Image
+          src={product.image}
+          alt={`${product.name} carton and container`}
+          fill
+          priority
+          sizes="(max-width: 1023px) min(100vw, 560px), 50vw"
+          className="object-cover"
+        />
+      </motion.div>
+      <span className="pointer-events-none absolute bottom-5 left-5 hidden rounded-full bg-white/90 px-3.5 py-1.5 font-sans text-[12px] font-semibold text-revora-slate-light backdrop-blur desktop:inline-block">
+        Hover to zoom
+      </span>
+    </motion.div>
   );
 }

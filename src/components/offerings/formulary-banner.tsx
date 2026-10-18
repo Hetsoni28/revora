@@ -1,6 +1,9 @@
 'use client';
 
-import { Building2 } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight, Factory, MapPin, ShieldCheck } from 'lucide-react';
+import { expoOut } from '@/lib/easings';
+import { Magnetic } from '@/components/ui/primitives';
 
 interface FormularyBannerProps {
   title?: string;
@@ -10,67 +13,65 @@ interface FormularyBannerProps {
   showCredentials?: boolean;
 }
 
+const CREDENTIALS = [
+  { icon: ShieldCheck, label: 'WHO-GMP certified plant' },
+  { icon: Factory, label: 'Own eye-drop manufacturing' },
+  { icon: MapPin, label: 'Supplying across India' },
+];
+
+/** Deep-cobalt call to action for samples and institutional supply. */
 export function FormularyBanner({
   title = 'Supplying Eye Hospitals & Surgical Centers Across India',
-  description = 'Revora Healthcare offers direct institutional rate contracts, consistent batch delivery, and comprehensive analytical documentation for hospital drug formularies.',
+  description = 'Revora Healthcare offers institutional rate contracts and consistent batch delivery for hospital drug formularies.',
   buttonLabel = 'Request Institutional Rate Card',
   onAction,
   showCredentials = false,
 }: FormularyBannerProps) {
+  const reduce = useReducedMotion();
   return (
-    <div className="bg-[#1E2428] rounded-2xl p-6 sm:p-10 text-white relative overflow-hidden shadow-xl">
-      <div className="absolute top-0 right-0 w-80 h-80 bg-[#0B4A8F]/30 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <motion.section
+      initial={reduce ? false : { opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-10% 0px' }}
+      transition={{ duration: 0.9, ease: expoOut }}
+      className="relative isolate overflow-hidden rounded-[32px] bg-revora-cobalt-deep p-8 text-white tablet:p-14"
+    >
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(58,130,200,0.55),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(215,38,46,0.18),transparent_55%)]"
+      />
+      <div className="flex flex-col gap-10 desktop:flex-row desktop:items-end desktop:justify-between">
         <div className="max-w-2xl">
-          <span className="text-xs uppercase tracking-wider text-[#D7262E] font-semibold">
-            Institutional Formulary Supply
-          </span>
-          <h3 className="font-heading font-bold text-xl sm:text-3xl text-white mt-1 tracking-tight">
-            {title}
-          </h3>
-          <p className="font-sans text-xs sm:text-sm text-white/75 mt-2 leading-relaxed">
-            {description}
-          </p>
-
+          <h2 className="font-heading text-[clamp(1.8rem,3.6vw,3rem)] font-extrabold leading-[1.05] tracking-[-0.02em]">{title}</h2>
+          <p className="mt-4 font-sans text-[16px] leading-[1.7] text-white/70">{description}</p>
           {showCredentials && (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6">
-              <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                <span className="font-heading font-bold text-xs text-white block">
-                  WHO-GMP Certified
-                </span>
-                <span className="text-[10.5px] text-white/60 mt-0.5 block">
-                  Schedule M Adherence
-                </span>
-              </div>
-              <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                <span className="font-heading font-bold text-xs text-white block">
-                  BFS Aseptic Fill
-                </span>
-                <span className="text-[10.5px] text-white/60 mt-0.5 block">
-                  Zero Touch Sterility
-                </span>
-              </div>
-              <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                <span className="font-heading font-bold text-xs text-white block">
-                  Batch CoA Released
-                </span>
-                <span className="text-[10.5px] text-white/60 mt-0.5 block">
-                  Complete Dossier
-                </span>
-              </div>
-            </div>
+            <ul className="mt-8 flex flex-wrap gap-2.5">
+              {CREDENTIALS.map((c) => (
+                <li
+                  key={c.label}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 font-sans text-[13px] font-medium"
+                >
+                  <c.icon className="h-4 w-4 text-revora-cobalt-pale" />
+                  {c.label}
+                </li>
+              ))}
+            </ul>
           )}
         </div>
-
-        <button
-          onClick={onAction}
-          className="shrink-0 px-6 py-3.5 rounded-xl bg-[#0B4A8F] hover:bg-[#08356A] text-white text-xs font-semibold whitespace-nowrap transition-colors shadow-md border border-white/20 flex items-center justify-center gap-2"
-        >
-          <Building2 size={15} />
-          <span>{buttonLabel}</span>
-        </button>
+        <Magnetic className="shrink-0">
+          <button
+            type="button"
+            onClick={onAction}
+            className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-white py-3.5 pl-7 pr-3.5 font-sans text-[15px] font-semibold text-revora-cobalt"
+          >
+            <span className="absolute inset-0 -translate-x-full bg-revora-crimson transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
+            <span className="relative transition-colors duration-500 group-hover:text-white">{buttonLabel}</span>
+            <span className="relative grid h-8 w-8 place-items-center rounded-full bg-revora-cobalt text-white transition-transform duration-500 group-hover:rotate-45">
+              <ArrowUpRight className="h-4 w-4" />
+            </span>
+          </button>
+        </Magnetic>
       </div>
-    </div>
+    </motion.section>
   );
 }

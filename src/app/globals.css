@@ -41,7 +41,7 @@
    ============================================================
    Primary (Medical Cobalt Blue):     #0B4A8F  — rgb(11, 74, 143)
    Secondary (Revora Crimson Red):    #D7262E  — rgb(215, 38, 46)
-   Neutral (Charcoal Slate):          #1E2428  — rgb(30, 36, 43)
+   Neutral (Charcoal Slate):          #1E242B  — rgb(30, 36, 43)
    Tertiary (Medical Sky Tint):       #E8F1F9  — rgb(232, 241, 249)
    Warm Beige (Environmental):        #EFECE6  — rgb(239, 236, 230)
    Surface (Clinical Pure White):     #F8F9FA  — rgb(248, 249, 250)
@@ -50,9 +50,11 @@
 @theme inline {
   /* === Revora Brand Colors (Tailwind utilities) === */
   --color-revora-cobalt:       #0B4A8F;
+  --color-revora-cobalt-deep:  #062B55;
   --color-revora-cobalt-dark:  #08356A;
   --color-revora-cobalt-mid:   #1A62A8;
   --color-revora-cobalt-light: #3A82C8;
+  --color-revora-cobalt-pale:  #94B6E5;
   --color-revora-cobalt-tint:  #E8F1F9;
 
   --color-revora-crimson:       #D7262E;
@@ -61,7 +63,7 @@
   --color-revora-crimson-light: #E87880;
   --color-revora-crimson-tint:  #FDECEC;
 
-  --color-revora-slate:         #1E2428;
+  --color-revora-slate:         #1E242B;
   --color-revora-slate-mid:     #2E363B;
   --color-revora-slate-light:   #4A5568;
   --color-revora-slate-muted:   #718096;
@@ -72,7 +74,7 @@
   --color-revora-surface:       #FFFFFF;
 
   /* === Font Families === */
-  --font-heading: var(--font-nunito);
+  --font-heading: var(--font-plus-jakarta-sans);
   --font-sans:    var(--font-inter);
   --font-mono:    var(--font-geist-mono);
 
@@ -127,19 +129,19 @@
   /* CSS Brand Tokens (use with var() directly) */
   --revora-crimson:  #D7262E;
   --revora-cobalt:   #0B4A8F;
-  --revora-slate:    #1E2428;
+  --revora-slate:    #1E242B;
   --revora-sky-tint: #E8F1F9;
   --revora-neutral:  #EFECE6;
 
   /* shadcn/ui semantic tokens → Revora brand */
   --background:           #F8F9FA;   /* Clinical Pure White */
-  --foreground:           #1E2428;   /* Charcoal Slate */
+  --foreground:           #1E242B;   /* Charcoal Slate */
 
   --card:                 #FFFFFF;
-  --card-foreground:      #1E2428;
+  --card-foreground:      #1E242B;
 
   --popover:              #FFFFFF;
-  --popover-foreground:   #1E2428;
+  --popover-foreground:   #1E242B;
 
   --primary:              #0B4A8F;   /* Medical Cobalt Blue */
   --primary-foreground:   #FFFFFF;
@@ -151,7 +153,7 @@
   --muted-foreground:     #4A5568;   /* Slate mid-tone */
 
   --accent:               #EFECE6;   /* Architectural Warm Beige */
-  --accent-foreground:    #1E2428;
+  --accent-foreground:    #1E242B;
 
   --destructive:          #D7262E;
   --border:               #D9DFE8;
@@ -165,15 +167,15 @@
   --chart-2: #D7262E;
   --chart-3: #1A62A8;
   --chart-4: #E8F1F9;
-  --chart-5: #1E2428;
+  --chart-5: #1E242B;
 
   /* Sidebar */
   --sidebar:                    #FFFFFF;
-  --sidebar-foreground:         #1E2428;
+  --sidebar-foreground:         #1E242B;
   --sidebar-primary:            #0B4A8F;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent:             #E8F1F9;
-  --sidebar-accent-foreground:  #1E2428;
+  --sidebar-accent-foreground:  #1E242B;
   --sidebar-border:             #D9DFE8;
   --sidebar-ring:               #0B4A8F;
 }
@@ -185,10 +187,10 @@
   --background:           #12191E;   /* Deep navy-slate */
   --foreground:           #F0F4F8;
 
-  --card:                 #1E2428;   /* Charcoal Slate */
+  --card:                 #1E242B;   /* Charcoal Slate */
   --card-foreground:      #F0F4F8;
 
-  --popover:              #1E2428;
+  --popover:              #1E242B;
   --popover-foreground:   #F0F4F8;
 
   --primary:              #3A82C8;   /* Lightened Cobalt for dark bg */
@@ -214,7 +216,7 @@
   --chart-4: #2E363B;
   --chart-5: #8FA3B4;
 
-  --sidebar:                    #1E2428;
+  --sidebar:                    #1E242B;
   --sidebar-foreground:         #F0F4F8;
   --sidebar-primary:            #3A82C8;
   --sidebar-primary-foreground: #FFFFFF;

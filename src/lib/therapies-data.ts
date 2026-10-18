@@ -60,12 +60,12 @@ export const THERAPY_CATEGORIES: TherapyCategory[] = [
     clinicalRationale:
       'Evaporative and aqueous-deficient dry eye disease disrupts tear film homeostasis, causing chronic hyperosmolarity, inflammation, and corneal epithelial breakdown. Revora tear substitutes provide sustained residence time, reduce friction, and stimulate physiological re-epithelialization.',
     badge: 'Ocular Surface Protection',
-    color: '#008B74',
+    color: '#1A62A8',
     subTherapies: [
       'Sodium Hyaluronate 0.18% (TREHYNATE)',
       'Multi-Polymer PEG & PG + HA (REHYNATE)',
-      'Carboxymethylcellulose 1.0% Gel (RevGel)',
-      'Carboxymethylcellulose 0.5% Drops (RevFresh)',
+      'Carboxymethylcellulose 1.0% Gel (RevoGel)',
+      'Carboxymethylcellulose 0.5% Drops (RevoFresh)',
     ],
     productIds: ['trehynate', 'rehynate', 'revgel', 'revfresh'],
   },
@@ -79,7 +79,7 @@ export const THERAPY_CATEGORIES: TherapyCategory[] = [
     clinicalRationale:
       'Targeted prodrug formulations like nepafenac undergo intraocular bioactivation into amfenac via ocular tissue hydrolases, providing profound prostaglandin inhibition directly at the iris, ciliary body, and retina with minimal corneal surface toxicity.',
     badge: 'Post-Surgical Care',
-    color: '#7E1E6B',
+    color: '#D7262E',
     subTherapies: [
       'Nepafenac Ophthalmic Solution (REVONAC CS)',
     ],
@@ -95,7 +95,7 @@ export const THERAPY_CATEGORIES: TherapyCategory[] = [
     clinicalRationale:
       'High metabolic demand and continuous blue-light photon exposure make the retina uniquely susceptible to cumulative oxidative stress. Revora ocular antioxidants cross the blood-retinal barrier to neutralize free radicals and sustain microvascular health.',
     badge: 'Macular & Retinal Health',
-    color: '#1A3A8F',
+    color: '#1E242B',
     subTherapies: [
       'Retinal Antioxidant & Macular Complex (REVOPT Tablets)',
     ],
@@ -142,7 +142,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'Soft Steroid Complex',
     volume: '5 ml Sterile Suspension',
     image: '/images/products/moxora-lp.jpg',
-    color: '#8C1D6B',
+    color: '#0B4A8F',
     tagline: 'Broad-Spectrum Antimicrobial Coverage with Site-Specific IOP-Spike Safety',
     summary:
       'MOXORA-LP combines moxifloxacin with loteprednol etabonate—a retro-metabolically designed ester corticosteroid. Upon reaching therapeutic targets, loteprednol rapidly deactivates into inactive metabolites, virtually eliminating the risk of clinically significant intraocular pressure (IOP) elevation.',
@@ -172,7 +172,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: '4th-Gen Fluoroquinolone',
     volume: '5 ml Sterile Dropper Vial',
     image: '/images/products/moxora.jpg',
-    color: '#E25C05',
+    color: '#0B4A8F',
     tagline: 'High-Penetration Pure 4th-Generation Fluoroquinolone Monotherapy',
     summary:
       'MOXORA contains pure moxifloxacin 0.5% w/v isotonic solution. Formulated with a physiological pH and preservative-free profile, it provides superior trans-corneal penetration reaching therapeutic concentrations in both the aqueous humor and anterior chamber.',
@@ -201,7 +201,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'Targeted NSAID Prodrug',
     volume: '3 ml Sterile (Blister Packed)',
     image: '/images/products/revonac-cs.jpg',
-    color: '#7E1E6B',
+    color: '#D7262E',
     tagline: 'Advanced Targeted Prodrug for Post-Cataract Pain & Macular Edema Prevention',
     summary:
       'REVONAC CS is an advanced non-steroidal anti-inflammatory prodrug. It rapidly penetrates the cornea in an uncharged lipophilic prodrug state and is bioactivated by ocular tissue hydrolases directly into amfenac—a potent inhibitor of COX-1 and COX-2 enzymes.',
@@ -230,7 +230,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'High-Concentration Viscoelastic',
     volume: '10 ml Sterile (Blister Packed)',
     image: '/images/products/trehynate.jpg',
-    color: '#0A58CA',
+    color: '#1A62A8',
     tagline: 'Calibrated 0.18% High-Molecular-Weight Sodium Hyaluronate Viscoelastic Shield',
     summary:
       'TREHYNATE provides clinically calibrated 0.18% high-molecular-weight sodium hyaluronate. Its non-Newtonian shear-thinning viscoelasticity ensures extended pre-corneal retention without causing blurry vision upon blinking.',
@@ -260,7 +260,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'Triple-Action Multi-Polymer',
     volume: '10 ml Sterile (Blister Packed)',
     image: '/images/products/rehynate.jpg',
-    color: '#C41243',
+    color: '#1A62A8',
     tagline: 'Synergistic Dual-Glycol + Sodium Hyaluronate Biomimetic Tear Film Stabilizer',
     summary:
       'REHYNATE delivers a multi-polymer matrix combining bio-adhesive sodium hyaluronate with polyethylene glycol 400 (PEG 400) and propylene glycol. Designed to bind to hydrophobic surface patches, it creates a long-lasting hydrophilic barrier against evaporative tear loss.',
@@ -285,16 +285,16 @@ export const ALL_PRODUCTS: Product[] = [
   },
   {
     id: 'revgel',
-    name: 'RevGel',
+    name: 'RevoGel',
     genericName: 'Carboxymethylcellulose Sodium Eye Drops IP 1% w/v',
     categorySlug: 'dry-eye-lubricants',
     badge: 'High-Viscosity Intensive Gel',
     volume: '10 ml Sterile Dropper Vial',
     image: '/images/products/revgel.jpg',
-    color: '#008B74',
+    color: '#1A62A8',
     tagline: 'Intensive 1.0% High-Viscosity Gel Shield for Severe Dry Eye & Nocturnal Protection',
     summary:
-      'RevGel features an enriched 1.0% concentration of high-purity carboxymethylcellulose sodium. Its high-viscosity hydrogel formulation provides maximum pre-corneal retention time, protecting against nocturnal lagophthalmos and persistent dry eye exposure.',
+      'RevoGel features an enriched 1.0% concentration of high-purity carboxymethylcellulose sodium. Its high-viscosity hydrogel formulation provides maximum pre-corneal retention time, protecting against nocturnal lagophthalmos and persistent dry eye exposure.',
     composition: [
       'Carboxymethylcellulose Sodium IP 1.0% w/v',
       'Sterile buffered isotonic vehicle with stabilized oxychloro complex q.s.',
@@ -315,16 +315,16 @@ export const ALL_PRODUCTS: Product[] = [
   },
   {
     id: 'revfresh',
-    name: 'RevFresh',
+    name: 'RevoFresh',
     genericName: 'Carboxymethylcellulose Sodium Eye Drops IP 0.5% w/v',
     categorySlug: 'dry-eye-lubricants',
     badge: 'Refreshing Tear Film Protectant',
     volume: '10 ml Sterile Dropper Vial',
     image: '/images/products/revfresh.jpg',
-    color: '#00A86B',
+    color: '#1A62A8',
     tagline: 'Instant Soothing Hydration for Everyday Dry Eye & Digital Fatigue',
     summary:
-      'RevFresh provides isotonic 0.5% carboxymethylcellulose sodium designed for immediate, clear, non-blurring ocular surface refreshment. Perfect for everyday relief from computer vision strain, reading fatigue, and burning sensations.',
+      'RevoFresh provides isotonic 0.5% carboxymethylcellulose sodium designed for immediate, clear, non-blurring ocular surface refreshment. Perfect for everyday relief from computer vision strain, reading fatigue, and burning sensations.',
     composition: [
       'Carboxymethylcellulose Sodium IP 0.5% w/v',
       'Isotonic electrolyte-buffered vehicle q.s.',
@@ -351,7 +351,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'Retinal Neuroprotection',
     volume: '1 x 10 Tablets (Alu-Alu Blister Box)',
     image: '/images/products/revopt-tablets.jpg',
-    color: '#1A3A8F',
+    color: '#1E242B',
     tagline: 'Comprehensive AREDS-2 Aligned Macular Carotenoid & Neurovascular Complex',
     summary:
       'REVOPT Tablets deliver an advanced multi-modal nutraceutical formula combining Lutein, Zeaxanthin, Astaxanthin, Omega-3 DHA, Resveratrol, Curcumin, Bilberry, Pine Bark, and Ginkgo Biloba with essential vitamins and trace minerals for retinal photoreceptor integrity.',
