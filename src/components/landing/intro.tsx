@@ -184,7 +184,7 @@ export function Intro() {
                 className="ri-logo mix-blend-multiply"
                 initial={{ clipPath: 'inset(0 100% 0 0)', y: 10 }}
               >
-                <Image src="/logo.png" alt="Revora" width={1024} height={341} priority className="h-14 w-auto tablet:h-20" />
+                <Image src="/logo.png" alt="Revora" width={1024} height={341} loading="eager" className="h-14 w-auto tablet:h-20" />
               </motion.div>
             </div>
 

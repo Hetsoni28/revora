@@ -1,12 +1,13 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import Link from 'next/link';
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'framer-motion';
-import { ChevronRight, Search, X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { ALL_PRODUCTS, THERAPY_CATEGORIES, Product } from '@/lib/therapies-data';
-import { Eyebrow, FadeUp, SplitWords } from '@/components/ui/primitives';
+import { FadeUp } from '@/components/ui/primitives';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
+import { SectionHeading } from '@/components/ui/section-heading';
 import { ProductCard } from '@/components/offerings/product-card';
 import { CategoryCard } from '@/components/offerings/category-card';
 import { FormularyBanner } from '@/components/offerings/formulary-banner';
@@ -44,23 +45,14 @@ export function OfferingsClient() {
   return (
     <>
       {/* ── hero ── */}
-      <section className="relative isolate overflow-hidden px-5 pb-16 pt-36 tablet:px-8 tablet:pb-24 tablet:pt-44">
+      <section className="relative isolate overflow-hidden px-5 pb-16 pt-36 tablet:px-8 tablet:pb-24 tablet:pt-44 desktop:pt-52">
         <div aria-hidden className="absolute -left-40 top-10 -z-10 h-[480px] w-[480px] rounded-full bg-revora-sky blur-3xl" />
         <div aria-hidden className="absolute -right-24 top-40 -z-10 h-[380px] w-[380px] rounded-full bg-revora-cobalt-light/10 blur-3xl" />
         <div className="mx-auto max-w-330">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 font-sans text-[13px] text-revora-slate-muted">
-            <Link href="/" className="transition-colors hover:text-revora-cobalt">Home</Link>
-            <ChevronRight className="h-3.5 w-3.5" />
-            <span className="font-semibold text-revora-cobalt">Our Offerings</span>
-          </nav>
+          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Our Offerings' }]} />
           <div className="mt-8 grid grid-cols-[minmax(0,1fr)] gap-10 desktop:grid-cols-[1.2fr_0.8fr] desktop:items-end">
             <div>
-              <Eyebrow>Ophthalmic portfolio</Eyebrow>
-              <h1 className="mt-5 font-heading text-[clamp(2.8rem,6.6vw,5.6rem)] font-extrabold leading-[0.98] tracking-[-0.03em] text-revora-slate">
-                <SplitWords text="Nine brands." trigger="mount" delay={0.1} />
-                <br />
-                <SplitWords text="Built for the eye." trigger="mount" delay={0.3} highlight={{ 'eye.': 'text-revora-cobalt' }} />
-              </h1>
+              <SectionHeading level="page" eyebrow="Ophthalmic portfolio" lines={['Nine brands.', 'Built for the eye.']} highlight={{ 'eye.': 'text-revora-cobalt' }} />
               <FadeUp delay={0.5}>
                 <p className="mt-7 max-w-xl font-sans text-[17px] leading-[1.7] text-revora-slate-light">
                   From first prescription to surgical recovery and long-term care — explore every Revora formulation, its composition and its
@@ -83,7 +75,7 @@ export function OfferingsClient() {
       </section>
 
       {/* ── product explorer ── */}
-      <section id="products" className="scroll-mt-28 px-5 pb-24 tablet:px-8 tablet:pb-32">
+      <section id="products" className="scroll-mt-28 desktop:scroll-mt-44 px-5 pb-24 tablet:px-8 tablet:pb-32">
         <div className="mx-auto max-w-330">
           <div className="flex flex-col gap-4 desktop:flex-row desktop:items-center desktop:justify-between">
             <LayoutGroup id="filters">
@@ -144,7 +136,7 @@ export function OfferingsClient() {
           <motion.div layout={!reduce} className="mt-4 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-3">
             <AnimatePresence mode="popLayout">
               {results.map((p, i) => (
-                <ProductCard key={p.id} product={p} index={i} onRequestSample={openSample} />
+                <ProductCard key={p.id} product={p} index={i} eager={i < 3} onRequestSample={openSample} />
               ))}
             </AnimatePresence>
           </motion.div>
@@ -178,17 +170,12 @@ export function OfferingsClient() {
       {/* ── therapy areas ── */}
       <section className="bg-white px-5 py-24 tablet:px-8 tablet:py-32">
         <div className="mx-auto max-w-330">
-          <div className="flex flex-col gap-5 desktop:flex-row desktop:items-end desktop:justify-between">
-            <div>
-              <Eyebrow>Therapy areas</Eyebrow>
-              <h2 className="mt-5 font-heading text-[clamp(2.2rem,4.6vw,3.8rem)] font-extrabold leading-[1.02] tracking-[-0.02em] text-revora-slate">
-                <SplitWords text="Four focused areas of care." highlight={{ focused: 'text-revora-cobalt' }} />
-              </h2>
-            </div>
-            <p className="max-w-sm font-sans text-[15px] leading-[1.7] text-revora-slate-light">
-              Each area brings together the formulations, clinical rationale and prescribing detail an ophthalmologist needs.
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Therapy areas"
+            lines={['Four focused areas of care.']}
+            highlight={{ focused: 'text-revora-cobalt' }}
+            aside="Each area brings together the formulations, clinical rationale and prescribing detail an ophthalmologist needs."
+          />
           <div className="mt-14 grid gap-5 tablet:grid-cols-2">
             {THERAPY_CATEGORIES.map((c, i) => (
               <CategoryCard key={c.slug} category={c} index={i} productCount={c.productIds.length} />

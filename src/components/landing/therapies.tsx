@@ -17,7 +17,7 @@ export function Therapies() {
   return (
     <section id="therapies" className="relative bg-white px-5 py-24 tablet:px-8 tablet:py-36">
       <div className="mx-auto grid max-w-[1320px] gap-12 tablet-lg:grid-cols-[0.8fr_1.2fr] tablet-lg:gap-20">
-        <div className="tablet-lg:sticky tablet-lg:top-32 tablet-lg:self-start">
+        <div className="tablet-lg:sticky tablet-lg:top-32 desktop:top-48 tablet-lg:self-start">
           <Eyebrow>Therapy areas</Eyebrow>
           <h2 className="mt-5 font-heading text-[clamp(2.4rem,5vw,4.2rem)] font-extrabold leading-[1] tracking-[-0.02em] text-revora-slate">
             <SplitWords text="From infection to the retina." highlight={{ 'retina.': 'text-revora-cobalt' }} />

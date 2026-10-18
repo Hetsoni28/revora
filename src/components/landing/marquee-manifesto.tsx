@@ -88,7 +88,8 @@ function Word({
   range: [number, number];
   emphasis: boolean;
 }) {
-  const opacity = useTransform(progress, range, [0.14, 1]);
+  // Function form keeps this on the JS path (see hero.tsx) so it survives client-side navigation.
+  const opacity = useTransform(progress, (v) => 0.14 + 0.86 * Math.min(Math.max((v - range[0]) / (range[1] - range[0]), 0), 1));
   return (
     <span className="relative mr-[0.25em] inline-block">
       <motion.span style={{ opacity }} className={emphasis ? 'text-revora-crimson' : undefined}>

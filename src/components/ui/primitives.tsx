@@ -210,7 +210,9 @@ export function AnchorLink({
             : null;
         if (hash && lenis) {
           e.preventDefault();
-          lenis.scrollTo(hash, { offset: -90, duration: 1.4, force: true });
+          // land just below the fixed navbar, whatever its height on this screen
+          const nav = document.querySelector('header')?.getBoundingClientRect().bottom ?? 90;
+          lenis.scrollTo(hash, { offset: -nav, duration: 1.4, force: true });
         }
       }}
     />

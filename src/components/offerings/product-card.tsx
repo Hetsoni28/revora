@@ -16,10 +16,12 @@ interface ProductCardProps {
   /** Show the first indications under the summary. */
   detailed?: boolean;
   onRequestSample?: (product: Product) => void;
+  /** Load the photo immediately — for cards in the first visible row. */
+  eager?: boolean;
 }
 
 /** Product tile: photo stage, identity, and a clear path to the full monograph. */
-export function ProductCard({ product, index = 0, detailed = false, onRequestSample }: ProductCardProps) {
+export function ProductCard({ product, index = 0, detailed = false, onRequestSample, eager = false }: ProductCardProps) {
   const reduce = useReducedMotion();
 
   return (
@@ -41,6 +43,7 @@ export function ProductCard({ product, index = 0, detailed = false, onRequestSam
           src={product.image}
           alt={`${product.name} carton and container`}
           fill
+          loading={eager ? 'eager' : 'lazy'}
           sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
           className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
         />

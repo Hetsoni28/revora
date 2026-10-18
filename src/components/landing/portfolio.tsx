@@ -17,7 +17,7 @@ function ProductCard({ p, index }: { p: (typeof ALL_PRODUCTS)[number]; index: nu
       className="group relative flex h-full w-[78vw] max-w-[380px] shrink-0 snap-start flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white tablet:w-[360px]"
     >
       {/* visual stage */}
-      <div className="relative h-[280px] overflow-hidden bg-revora-sky tablet:h-[320px] tablet-lg:h-[min(320px,34vh)]">
+      <div className="relative h-[280px] overflow-hidden bg-revora-sky tablet:h-[320px] tablet-lg:h-[min(320px,34vh)] desktop:h-[min(320px,30vh)]">
         <Image
           src={p.image}
           alt={`${p.name} — ${p.genericName}, carton and bottle`}
@@ -114,7 +114,7 @@ export function Portfolio() {
       className="relative bg-[#F6F9FC]"
       style={{ height: pinned ? `calc(100vh + ${distance}px)` : undefined }}
     >
-      <div className={pinned ? 'sticky top-0 flex h-screen flex-col justify-center overflow-hidden pt-20' : 'py-24 tablet:py-32'}>
+      <div className={pinned ? 'sticky top-0 flex h-screen flex-col justify-center overflow-hidden pt-20 desktop:pt-40' : 'py-24 tablet:py-32'}>
         <div className="mx-auto w-full max-w-[1320px] px-5 tablet:px-8">
           <Heading />
         </div>

@@ -19,9 +19,12 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const irisScale = useTransform(scrollYProgress, [0, 1], [1, 1.35]);
   const irisY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
-  const irisOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+  // Function-form transforms keep opacity on the JS path. The array form can be handed to a native
+  // ScrollTimeline, which keeps the scroll position from when the hero mounted after a client-side
+  // navigation, leaving the copy invisible at the top of the page.
+  const irisOpacity = useTransform(scrollYProgress, (v) => 1 - Math.min(v / 0.85, 1));
   const copyY = useTransform(scrollYProgress, [0, 1], ['0%', '-25%']);
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const copyOpacity = useTransform(scrollYProgress, (v) => 1 - Math.min(v / 0.7, 1));
 
   const d = startDelay;
 
@@ -40,7 +43,7 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
   return (
     <section
       ref={ref}
-      className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-[#F6F9FC] pt-28 pb-16 tablet:pt-32"
+      className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-[#F6F9FC] pt-28 pb-16 tablet:pt-32 desktop:pt-40"
     >
       {/* backdrop: soft colour fields */}
       <div aria-hidden className="absolute -left-40 top-1/3 -z-10 h-[520px] w-[520px] rounded-full bg-revora-sky blur-3xl" />

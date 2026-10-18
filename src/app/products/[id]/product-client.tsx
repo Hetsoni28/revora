@@ -17,7 +17,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   Box,
-  ChevronRight,
   Clock,
   FileText,
   FlaskConical,
@@ -29,7 +28,9 @@ import {
 } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { ALL_PRODUCTS, Product, TherapyCategory, getProductsByCategory } from '@/lib/therapies-data';
-import { AnchorLink, Eyebrow, FadeUp, Magnetic } from '@/components/ui/primitives';
+import { AnchorLink, Eyebrow, FadeUp } from '@/components/ui/primitives';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/offerings/product-card';
 import { FormularyBanner } from '@/components/offerings/formulary-banner';
 import { FormularyModal } from '@/components/offerings/formulary-modal';
@@ -102,22 +103,21 @@ export function ProductClient({ product, category }: ProductClientProps) {
   return (
     <>
       {/* ── hero ── */}
-      <section className="relative isolate overflow-hidden px-5 pb-20 pt-36 tablet:px-8 tablet:pb-28 tablet:pt-44">
+      <section className="relative isolate overflow-hidden px-5 pb-20 pt-36 tablet:px-8 tablet:pb-28 tablet:pt-44 desktop:pt-52">
         <div
           aria-hidden
           className="absolute -left-40 top-20 -z-10 h-[620px] w-[620px] rounded-full opacity-[0.12] blur-3xl"
           style={{ background: product.color }}
         />
         <div className="mx-auto max-w-330">
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 font-sans text-[13px] text-revora-slate-muted">
-            <Link href="/" className="transition-colors hover:text-revora-cobalt">Home</Link>
-            <ChevronRight className="h-3.5 w-3.5" />
-            <Link href="/our-offerings" className="transition-colors hover:text-revora-cobalt">Our Offerings</Link>
-            <ChevronRight className="h-3.5 w-3.5" />
-            <Link href={`/our-offerings/${category.slug}`} className="transition-colors hover:text-revora-cobalt">{category.shortName}</Link>
-            <ChevronRight className="h-3.5 w-3.5" />
-            <span className="font-semibold text-revora-cobalt">{product.name}</span>
-          </nav>
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Our Offerings', href: '/our-offerings' },
+              { label: category.shortName, href: `/our-offerings/${category.slug}` },
+              { label: product.name },
+            ]}
+          />
 
           <div className="mt-10 grid grid-cols-[minmax(0,1fr)] items-start gap-10 tablet:gap-12 tablet-lg:grid-cols-2 desktop:gap-16">
             <ZoomStage product={product} reduce={!!reduce} />
@@ -184,26 +184,8 @@ export function ProductClient({ product, category }: ProductClientProps) {
 
               <FadeUp delay={0.6}>
                 <div ref={ctaRef} className="mt-8 flex flex-wrap items-center gap-3">
-                  <Magnetic>
-                    <button
-                      type="button"
-                      onClick={() => setModalOpen(true)}
-                      className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-revora-cobalt py-3.5 pl-7 pr-3.5 font-sans text-[15px] font-semibold text-white shadow-[0_18px_40px_-14px_rgba(11,74,143,0.7)]"
-                    >
-                      <span className="absolute inset-0 -translate-x-full bg-revora-crimson transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
-                      <span className="relative">Request samples</span>
-                      <span className="relative grid h-8 w-8 place-items-center rounded-full bg-white text-revora-cobalt transition-transform duration-500 group-hover:rotate-45">
-                        <ArrowUpRight className="h-4 w-4" />
-                      </span>
-                    </button>
-                  </Magnetic>
-                  <button
-                    type="button"
-                    onClick={() => setModalOpen(true)}
-                    className="inline-flex items-center gap-2 rounded-full border border-revora-cobalt/25 px-6 py-3.5 font-sans text-[15px] font-semibold text-revora-cobalt transition-colors hover:bg-revora-sky"
-                  >
-                    <FileText className="h-4 w-4" /> Request prescribing info
-                  </button>
+                  <Button onClick={() => setModalOpen(true)} arrow="up-right" magnetic>Request samples</Button>
+                  <Button onClick={() => setModalOpen(true)} variant="outline" icon={<FileText />}>Request prescribing info</Button>
                 </div>
               </FadeUp>
             </div>
@@ -215,7 +197,7 @@ export function ProductClient({ product, category }: ProductClientProps) {
       <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
         <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] gap-10 desktop:grid-cols-[260px_minmax(0,1fr)] desktop:gap-20">
           {/* contents */}
-          <aside className="desktop:sticky desktop:top-36 desktop:self-start">
+          <aside className="desktop:sticky desktop:top-48 desktop:self-start">
             <Eyebrow>Product monograph</Eyebrow>
             <LayoutGroup id="toc">
               <ul className="-mx-5 mt-6 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] desktop:mx-0 desktop:flex-col desktop:gap-1 desktop:px-0">
@@ -434,7 +416,7 @@ export function ProductClient({ product, category }: ProductClientProps) {
 
 function MonographSection({ id, title, kicker, children }: { id: string; title: string; kicker: string; children: React.ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-32">
+    <section id={id} className="scroll-mt-32 desktop:scroll-mt-48">
       <FadeUp>
         <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.16em] text-revora-slate-muted">{kicker}</p>
         <h2 className="mt-2 font-heading text-[clamp(1.7rem,3vw,2.4rem)] font-extrabold tracking-[-0.02em] text-revora-slate">{title}</h2>
@@ -455,7 +437,7 @@ function ZoomStage({ product, reduce }: { product: Product; reduce: boolean }) {
       initial={reduce ? false : { clipPath: 'inset(0 0 100% 0 round 32px)' }}
       animate={{ clipPath: 'inset(0 0 0% 0 round 32px)' }}
       transition={{ duration: 1.1, ease: expoOut }}
-      className="relative mx-auto aspect-square w-full max-w-[560px] overflow-hidden rounded-[24px] bg-white shadow-[0_40px_80px_-40px_rgba(11,74,143,0.45)] tablet:rounded-[32px] tablet-lg:sticky tablet-lg:top-32 tablet-lg:max-w-none desktop:top-36"
+      className="relative mx-auto aspect-square w-full max-w-[560px] overflow-hidden rounded-[24px] bg-white shadow-[0_40px_80px_-40px_rgba(11,74,143,0.45)] tablet:rounded-[32px] tablet-lg:sticky tablet-lg:top-32 tablet-lg:max-w-none desktop:top-48"
       onPointerMove={(e) => {
         if (reduce || e.pointerType !== 'mouse') return;
         const r = e.currentTarget.getBoundingClientRect();
@@ -470,7 +452,7 @@ function ZoomStage({ product, reduce }: { product: Product; reduce: boolean }) {
           src={product.image}
           alt={`${product.name} carton and container`}
           fill
-          priority
+          loading="eager"
           sizes="(max-width: 1023px) min(100vw, 560px), 50vw"
           className="object-cover"
         />

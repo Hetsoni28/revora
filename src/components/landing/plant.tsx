@@ -4,7 +4,8 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { Droplets, FlaskConical, MapPin, PackageCheck, ShieldCheck, Shield, Activity } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
-import { Eyebrow, SplitWords } from '@/components/ui/primitives';
+import { SectionHeading } from '@/components/ui/section-heading';
+import { MediaFrame } from '@/components/ui/media-frame';
 
 const STEPS = [
   { icon: FlaskConical, title: 'Formulate', body: 'Each brand is built around a distinct ingredient story, formulated for the ocular surface.' },
@@ -25,17 +26,22 @@ export function Plant() {
       <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(11,74,143,0.9),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(58,130,200,0.18),transparent_55%)]" />
 
       <div className="mx-auto max-w-[1320px]">
-        <div className="grid gap-12 tablet-lg:grid-cols-2 tablet-lg:items-end">
-          <div>
-            <Eyebrow tone="light">Manufacturing</Eyebrow>
-            <h2 className="mt-5 font-heading text-[clamp(2.4rem,5.4vw,4.6rem)] font-extrabold leading-[1] tracking-[-0.02em]">
-              <SplitWords text="Made in our own plant." highlight={{ own: 'text-revora-cobalt-pale' }} />
-            </h2>
-          </div>
-          <p className="max-w-md font-sans text-[16px] leading-[1.75] text-white/70">
-            We don’t outsource the part that matters most. Revora eye drops are manufactured in our own dedicated eye-drop plant — so quality is something we control, not something we hope for.
-          </p>
-        </div>
+        <SectionHeading
+          tone="light"
+          eyebrow="Manufacturing"
+          lines={['Made in our own plant.']}
+          highlight={{ own: 'text-revora-cobalt-pale' }}
+          aside="We don’t outsource the part that matters most. Revora eye drops are manufactured in our own dedicated eye-drop plant — so quality is something we control, not something we hope for."
+        />
+
+        <MediaFrame
+          src="/images/site/eye-drop-filling-line.jpg"
+          alt="Eye-drop bottles moving along a sterile filling line"
+          aspect="aspect-[4/3] tablet:aspect-[21/9]"
+          sizes="(min-width: 1320px) 1320px, 100vw"
+          className="mt-14"
+          caption={<b className="font-semibold">Sterile eye-drop filling</b>}
+        />
 
         {/* location card */}
         <motion.div
@@ -43,7 +49,7 @@ export function Plant() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-10% 0px' }}
           transition={{ duration: 1, ease: expoOut }}
-          className="mt-16 grid overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.04] backdrop-blur-sm tablet:grid-cols-3"
+          className="mt-5 grid overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.04] backdrop-blur-sm tablet:grid-cols-3"
         >
           {[
             { icon: MapPin, k: 'Location', v: 'Paonta Sahib, Himachal Pradesh' },

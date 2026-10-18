@@ -30,6 +30,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // Absolute base for Open Graph / Twitter image URLs; override per environment with NEXT_PUBLIC_SITE_URL.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://revorahealthcare.com'),
   title: {
     default: "Revora Healthcare",
     template: "%s | Revora Healthcare",

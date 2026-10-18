@@ -1,9 +1,9 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, Factory, MapPin, ShieldCheck } from 'lucide-react';
+import { Factory, MapPin, ShieldCheck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
-import { Magnetic } from '@/components/ui/primitives';
+import { Button } from '@/components/ui/button';
 
 interface FormularyBannerProps {
   title?: string;
@@ -58,19 +58,9 @@ export function FormularyBanner({
             </ul>
           )}
         </div>
-        <Magnetic className="shrink-0">
-          <button
-            type="button"
-            onClick={onAction}
-            className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-white py-3.5 pl-7 pr-3.5 font-sans text-[15px] font-semibold text-revora-cobalt"
-          >
-            <span className="absolute inset-0 -translate-x-full bg-revora-crimson transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
-            <span className="relative transition-colors duration-500 group-hover:text-white">{buttonLabel}</span>
-            <span className="relative grid h-8 w-8 place-items-center rounded-full bg-revora-cobalt text-white transition-transform duration-500 group-hover:rotate-45">
-              <ArrowUpRight className="h-4 w-4" />
-            </span>
-          </button>
-        </Magnetic>
+        <Button onClick={onAction} variant="light" arrow="up-right" magnetic className="shrink-0">
+          {buttonLabel}
+        </Button>
       </div>
     </motion.section>
   );

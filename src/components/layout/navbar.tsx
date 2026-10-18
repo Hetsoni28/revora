@@ -57,19 +57,13 @@ export function Navbar() {
   const { scrollY, scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.3 });
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState<string | null>(null);
   const [mobileGroup, setMobileGroup] = useState<string | null>('Our Offerings');
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useMotionValueEvent(scrollY, 'change', (v) => {
-    const prev = scrollY.getPrevious() ?? 0;
-    setScrolled(v > 24);
-    const goingDown = v > 600 && v > prev && !open;
-    setHidden(goingDown);
-    if (goingDown) setDropdown(null);
-  });
+  // The full bar (utility strip included) stays put; scrolling only deepens its shadow.
+  useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 24));
 
   const lenis = useLenis();
   useEffect(() => {
@@ -98,11 +92,7 @@ export function Navbar() {
 
   return (
     <>
-      <motion.header
-        className="fixed inset-x-0 top-0 z-100 px-3 pt-3 tablet:px-6 tablet:pt-4"
-        animate={{ y: hidden ? '-120%' : '0%' }}
-        transition={{ duration: 0.5, ease: expoOut }}
-      >
+      <header className="fixed inset-x-0 top-0 z-100 px-3 pt-3 tablet:px-6 tablet:pt-4">
         <div
           className={`relative mx-auto max-w-330 rounded-2xl border bg-white transition-[box-shadow,border-color] duration-500 ${
             scrolled || pathname !== '/'
@@ -110,13 +100,8 @@ export function Navbar() {
               : 'border-transparent shadow-none'
           }`}
         >
-          {/* ── utility strip (desktop) — collapses once the page scrolls ── */}
-          <motion.div
-            className="hidden overflow-hidden desktop:block"
-            initial={false}
-            animate={{ height: scrolled ? 0 : 'auto', opacity: scrolled ? 0 : 1 }}
-            transition={{ duration: 0.4, ease: expoOut }}
-          >
+          {/* ── utility strip (desktop) ── */}
+          <div className="hidden desktop:block">
             <div className="flex items-center justify-between border-b border-revora-cobalt/10 px-6 py-2 font-sans text-[11.5px] text-revora-slate-light">
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1.5 font-medium text-revora-slate">
@@ -141,12 +126,12 @@ export function Navbar() {
                 </a>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* ── main row ── */}
           <nav className="relative flex items-center justify-between px-4 py-2.5 tablet:px-6 tablet:py-3">
             <Link href="/" aria-label="Revora Healthcare — home" className="flex shrink-0 items-center gap-3">
-              <Image src="/logo.png" alt="Revora" width={1024} height={341} priority className="h-7 w-auto tablet:h-8" />
+              <Image src="/logo.png" alt="Revora" width={1024} height={341} loading="eager" className="h-7 w-auto tablet:h-8" />
               <span className="hidden items-center gap-3 sm:flex">
                 <span className="h-4 w-px bg-revora-cobalt/25" aria-hidden />
                 <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-revora-cobalt">Healthcare</span>
@@ -252,7 +237,7 @@ export function Navbar() {
             />
           </nav>
         </div>
-      </motion.header>
+      </header>
 
       {/* ── mobile / tablet menu ── */}
       <AnimatePresence>
