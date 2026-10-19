@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'framer-motion';
 import { Search, X } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
-import { ALL_PRODUCTS, THERAPY_CATEGORIES, Product } from '@/lib/therapies-data';
+import { Product, TherapyCategory } from '@/lib/therapies-data';
 import { FadeUp } from '@/components/ui/primitives';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { SectionHeading } from '@/components/ui/section-heading';
@@ -13,29 +13,37 @@ import { CategoryCard } from '@/components/offerings/category-card';
 import { FormularyBanner } from '@/components/offerings/formulary-banner';
 import { FormularyModal } from '@/components/offerings/formulary-modal';
 
-const FILTERS = [{ slug: 'all', label: 'All products' }, ...THERAPY_CATEGORIES.map((c) => ({ slug: c.slug, label: c.shortName }))];
+interface OfferingsClientProps {
+  initialProducts: Product[];
+  initialCategories: TherapyCategory[];
+}
 
-const STATS = [
-  { value: ALL_PRODUCTS.length, label: 'Ophthalmic brands' },
-  { value: THERAPY_CATEGORIES.length, label: 'Therapy areas' },
-  { value: 1, label: 'Dedicated eye-drop plant' },
-];
-
-export function OfferingsClient() {
+export function OfferingsClient({ initialProducts, initialCategories }: OfferingsClientProps) {
   const reduce = useReducedMotion();
   const [filter, setFilter] = useState('all');
   const [query, setQuery] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [selected, setSelected] = useState<Product | null>(null);
 
+  const FILTERS = [
+    { slug: 'all', label: 'All products' },
+    ...initialCategories.map((c) => ({ slug: c.slug, label: c.shortName })),
+  ];
+
+  const STATS = [
+    { value: initialProducts.length, label: 'Ophthalmic brands' },
+    { value: initialCategories.length, label: 'Therapy areas' },
+    { value: 1, label: 'Dedicated eye-drop plant' },
+  ];
+
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return ALL_PRODUCTS.filter(
+    return initialProducts.filter(
       (p) =>
         (filter === 'all' || p.categorySlug === filter) &&
         (!q || [p.name, p.genericName, p.badge, ...p.indications].some((s) => s.toLowerCase().includes(q)))
     );
-  }, [filter, query]);
+  }, [filter, query, initialProducts]);
 
   const openSample = (p?: Product) => {
     setSelected(p ?? null);
@@ -130,7 +138,7 @@ export function OfferingsClient() {
           </div>
 
           <p aria-live="polite" className="mt-6 font-sans text-[13px] text-revora-slate-muted">
-            Showing {results.length} of {ALL_PRODUCTS.length} products
+            Showing {results.length} of {initialProducts.length} products
           </p>
 
           <motion.div layout={!reduce} className="mt-4 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-3">
@@ -150,13 +158,10 @@ export function OfferingsClient() {
                 transition={{ duration: 0.4, ease: expoOut }}
                 className="rounded-[24px] border border-dashed border-revora-cobalt/20 bg-white px-6 py-16 text-center"
               >
-                <p className="font-heading text-xl font-bold text-revora-slate">No products match “{query}”.</p>
+                <p className="font-heading text-xl font-bold text-revora-slate">No products match "{query}".</p>
                 <button
                   type="button"
-                  onClick={() => {
-                    setQuery('');
-                    setFilter('all');
-                  }}
+                  onClick={() => { setQuery(''); setFilter('all'); }}
                   className="mt-4 font-sans text-[14px] font-semibold text-revora-cobalt hover:underline"
                 >
                   Clear filters
@@ -177,8 +182,8 @@ export function OfferingsClient() {
             aside="Each area brings together the formulations, clinical rationale and prescribing detail an ophthalmologist needs."
           />
           <div className="mt-14 grid gap-5 tablet:grid-cols-2">
-            {THERAPY_CATEGORIES.map((c, i) => (
-              <CategoryCard key={c.slug} category={c} index={i} productCount={c.productIds.length} />
+            {initialCategories.map((c, i) => (
+              <CategoryCard key={c.slug} category={c} index={i} productCount={c.productIds?.length ?? 0} />
             ))}
           </div>
         </div>
