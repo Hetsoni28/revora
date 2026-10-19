@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "sonner";
 import { ReactLenis } from "lenis/react";
 
@@ -15,12 +14,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
       disableTransitionOnChange
     >
       <ReactLenis root options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}>
-        <TooltipProvider>
-          {children}
-          <Toaster richColors position="bottom-right" closeButton />
-        </TooltipProvider>
+        {children}
+        <Toaster richColors position="bottom-right" closeButton />
       </ReactLenis>
     </NextThemesProvider>
   );
 }
-
