@@ -15,7 +15,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       disableTransitionOnChange
     >
       <ReactLenis root options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}>
-        <TooltipProvider delay={150}>
+        <TooltipProvider>
           {children}
           <Toaster richColors position="bottom-right" closeButton />
         </TooltipProvider>

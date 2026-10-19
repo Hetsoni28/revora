@@ -5,6 +5,8 @@ import { ALL_PRODUCTS, THERAPY_CATEGORIES } from '@/lib/therapies-data';
 import { getAllProducts, getAllCategories, adaptProduct, adaptCategory } from '@/lib/sanity';
 import { OfferingsClient } from './offerings-client';
 
+export const instant = false;
+
 export const metadata: Metadata = {
   title: 'Our Offerings — Ophthalmic Portfolio | Revora Healthcare',
   description:
