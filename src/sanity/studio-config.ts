@@ -8,6 +8,7 @@ const config = defineConfig({
   title: 'Revora Healthcare CMS',
   projectId: 'hi6d4ijd',
   dataset: 'production',
+  basePath: '/studio',
   plugins: [structureTool(), visionTool()],
   schema: { types: schemaTypes },
 });
