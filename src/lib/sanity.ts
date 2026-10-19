@@ -9,7 +9,9 @@ const config = {
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? '2024-10-01',
-  useCdn: false, // false so we always get fresh data
+  useCdn: false,
+  // Token enables authenticated reads (needed for Editor-level token)
+  token: process.env.SANITY_API_TOKEN,
 };
 
 export const sanityClient = createClient(config);
