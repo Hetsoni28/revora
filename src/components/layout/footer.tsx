@@ -193,7 +193,20 @@ export function Footer() {
 
         {/* ── bottom bar ── */}
         <div className="mt-8 flex flex-wrap items-center justify-between gap-x-10 gap-y-4 border-t border-white/10 py-6 font-sans text-[12px] text-white/45">
-          <p>© 2026 Revora Healthcare Private Limited. All rights reserved. S.G. Business Hub, Ognaj, Ahmedabad, Gujarat, India.</p>
+          <div className="space-y-1.5">
+            <p>© 2026 Revora Healthcare Private Limited. All rights reserved. S.G. Business Hub, Ognaj, Ahmedabad, Gujarat, India.</p>
+            <p>
+              Designed &amp; built by{' '}
+              <a
+                href="https://www.hntech.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline"
+              >
+                HN Tech
+              </a>
+            </p>
+          </div>
           <div className="-my-2 flex flex-wrap items-center gap-x-5 [&_a]:inline-flex [&_a]:min-h-10 [&_a]:items-center">
             <Link href="/our-offerings" className="transition-colors hover:text-white">Products</Link>
             <Link href="/our-presence" className="transition-colors hover:text-white">Presence</Link>
@@ -212,7 +225,7 @@ export function Footer() {
       <div aria-hidden className="pointer-events-none select-none overflow-hidden">
         <motion.p
           style={reduce ? undefined : { y: wordY }}
-          className="-mt-[0.1em] pb-[0.08em] text-center font-heading text-[clamp(5.5rem,21vw,20rem)] font-extrabold leading-[0.9] tracking-[-0.04em] text-white/5"
+          className="mt-[-0.1em] pb-[0.08em] text-center font-heading text-[clamp(5.5rem,21vw,20rem)] font-extrabold leading-[0.9] tracking-[-0.04em] text-white/5"
         >
           revora
         </motion.p>
