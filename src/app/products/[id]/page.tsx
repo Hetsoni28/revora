@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
-import { ALL_PRODUCTS, THERAPY_CATEGORIES } from '@/lib/therapies-data';
+import { ALL_PRODUCTS, type Product, type TherapyCategory } from '@/lib/therapies-data';
 import {
   getProductBySlug,
   getAllProductSlugs,
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
   try {
     const slugs = await getAllProductSlugs();
     if (slugs.length > 0) return slugs.map((id) => ({ id }));
-  } catch (_) {}
+  } catch {}
   return ALL_PRODUCTS.map((prod) => ({ id: prod.id }));
 }
 
@@ -41,11 +41,11 @@ export async function generateMetadata({
         openGraph: {
           title: `${product.name} — Ophthalmic Formulation | Revora Healthcare`,
           description: product.summary,
-          images: [{ url: product.image, width: 800, height: 800, alt: product.name }],
+          images: [{ url: product.logo.replace('.webp', '.png'), alt: `${product.name} logo` }],
         },
       };
     }
-  } catch (_) {}
+  } catch {}
 
   // Fall back to static data
   const product = getProductById(id);
@@ -56,7 +56,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${product.name} — Ophthalmic Formulation | Revora Healthcare`,
       description: product.summary,
-      images: [{ url: product.image, width: 800, height: 800, alt: product.name }],
+      images: [{ url: product.logo.replace('.webp', '.png'), alt: `${product.name} logo` }],
     },
   };
 }
@@ -64,20 +64,21 @@ export async function generateMetadata({
 async function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
-  // ── 1. Try Sanity ──────────────────────────────────────────────────────────
+  // ── 1. Try Sanity (data only — rendering stays outside the try) ───────────
+  let fromSanity: { product: Product; category: TherapyCategory | undefined } | null = null;
   try {
     const sanityProduct = await getProductBySlug(id);
     if (sanityProduct) {
       const product = adaptProduct(sanityProduct);
       const sanityCategory = await getSanityCategoryBySlug(product.categorySlug);
-      const category = sanityCategory
-        ? adaptCategory(sanityCategory)
-        : getCategoryBySlug(product.categorySlug);
-      if (!category) notFound();
-      return <ProductClient product={product} category={category!} />;
+      fromSanity = { product, category: sanityCategory ? adaptCategory(sanityCategory) : getCategoryBySlug(product.categorySlug) };
     }
-  } catch (_) {
+  } catch {
     // Sanity unavailable — fall through to static data
+  }
+  if (fromSanity) {
+    if (!fromSanity.category) notFound();
+    return <ProductClient product={fromSanity.product} category={fromSanity.category} />;
   }
 
   // ── 2. Fall back to static data ────────────────────────────────────────────

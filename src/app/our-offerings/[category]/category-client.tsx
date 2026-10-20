@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
+import { ProductLogo } from '@/components/offerings/product-logo';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
@@ -77,7 +77,7 @@ export function CategoryClient({ category, products }: CategoryClientProps) {
             </div>
 
             {/* fanned product stack */}
-            <div className="relative mx-auto h-[340px] w-full max-w-[520px] tablet:h-[420px]">
+            <div className="relative mx-auto h-[300px] w-full max-w-[540px] tablet:h-[380px]">
               {stack.map((p, i) => {
                 const offsets = stack.length === 1 ? [0] : stack.length === 2 ? [-1, 1] : [-1, 0, 1];
                 const o = offsets[i];
@@ -88,17 +88,17 @@ export function CategoryClient({ category, products }: CategoryClientProps) {
                     animate={{ opacity: 1, y: Math.abs(o) * 18, rotate: o * 7, x: `${o * 26}%` }}
                     transition={{ duration: 1.1, delay: 0.25 + i * 0.12, ease: expoOut }}
                     whileHover={reduce ? undefined : { y: Math.abs(o) * 18 - 14, rotate: o * 4 }}
-                    className="absolute left-1/2 top-0 w-[58%] -translate-x-1/2"
+                    className="absolute left-1/2 top-12 w-[62%] -translate-x-1/2 tablet:top-16"
                     style={{ zIndex: o === 0 ? 3 : 2 - i }}
                   >
                     <Link
                       href={`/products/${p.id}`}
                       className="block overflow-hidden rounded-[24px] border-4 border-white bg-white shadow-[0_30px_60px_-24px_rgba(11,74,143,0.5)]"
                     >
-                      <div className="relative aspect-[4/5]">
-                        <Image src={p.image} alt={`${p.name} carton`} fill sizes="300px" className="object-cover" loading="eager" />
-                      </div>
-                      <span className="block px-4 py-3 font-heading text-[15px] font-extrabold text-revora-slate">{p.name}</span>
+                      <ProductLogo product={p} link={false} className="aspect-[4/3]" sizes="300px" eager />
+                      <span className="flex items-center justify-between border-t border-revora-cobalt/10 px-4 py-3 font-sans text-[13px] font-semibold text-revora-cobalt">
+                        View product <ArrowUpRight className="h-4 w-4" />
+                      </span>
                     </Link>
                   </motion.div>
                 );

@@ -24,7 +24,7 @@ export default async function OurOfferingsPage() {
     ]);
     if (sanityProducts.length > 0) products = sanityProducts.map(adaptProduct);
     if (sanityCategories.length > 0) categories = sanityCategories.map(adaptCategory);
-  } catch (_) {
+  } catch {
     // Sanity unavailable — keep static fallback
   }
 

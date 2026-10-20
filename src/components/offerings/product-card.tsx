@@ -1,10 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
+import { ProductLogo } from './product-logo';
 import { Product, THERAPY_CATEGORIES } from '@/lib/therapies-data';
 
 const AREA = Object.fromEntries(THERAPY_CATEGORIES.map((c) => [c.slug, c.shortName]));
@@ -16,11 +16,11 @@ interface ProductCardProps {
   /** Show the first indications under the summary. */
   detailed?: boolean;
   onRequestSample?: (product: Product) => void;
-  /** Load the photo immediately — for cards in the first visible row. */
+  /** Load the logo immediately — for cards in the first visible row. */
   eager?: boolean;
 }
 
-/** Product tile: photo stage, identity, and a clear path to the full monograph. */
+/** Product tile: logo stage, identity, and a clear path to the full monograph. */
 export function ProductCard({ product, index = 0, detailed = false, onRequestSample, eager = false }: ProductCardProps) {
   const reduce = useReducedMotion();
 
@@ -36,22 +36,10 @@ export function ProductCard({ product, index = 0, detailed = false, onRequestSam
     >
       <Link
         href={`/products/${product.id}`}
-        className="relative block aspect-[4/3] overflow-hidden"
+        className="relative block aspect-[4/3] overflow-hidden border-b border-revora-cobalt/10"
         aria-label={`${product.name} — view product details`}
       >
-        <Image
-          src={product.image}
-          alt={`${product.name} carton and container`}
-          fill
-          loading={eager ? 'eager' : 'lazy'}
-          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-          className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
-        />
-        <span
-          aria-hidden
-          className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{ background: `linear-gradient(180deg, transparent 55%, ${product.color}33)` }}
-        />
+        <ProductLogo product={product} link={false} className="h-full" eager={eager} />
         <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-slate backdrop-blur">
           {AREA[product.categorySlug]}
         </span>

@@ -31,7 +31,7 @@ import { ALL_PRODUCTS, Product, TherapyCategory, getProductsByCategory } from '@
 import { AnchorLink, Eyebrow, FadeUp } from '@/components/ui/primitives';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
-import { ProductCard } from '@/components/offerings/product-card';
+import { ProductLogo, ProductLogoLink } from '@/components/offerings/product-logo';
 import { FormularyBanner } from '@/components/offerings/formulary-banner';
 import { FormularyModal } from '@/components/offerings/formulary-modal';
 
@@ -346,9 +346,11 @@ export function ProductClient({ product, category }: ProductClientProps) {
               View all <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />
             </Link>
           </div>
-          <div className="mt-10 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-3">
+          <div className="mt-10 grid grid-cols-1 items-center gap-10 tablet:grid-cols-2 desktop:grid-cols-3">
             {related.map((p, i) => (
-              <ProductCard key={p.id} product={p} index={i} />
+              <FadeUp key={p.id} delay={i * 0.08}>
+                <ProductLogoLink product={p} />
+              </FadeUp>
             ))}
           </div>
 
@@ -365,9 +367,7 @@ export function ProductClient({ product, category }: ProductClientProps) {
                   dir === 'Next' ? 'tablet:flex-row-reverse tablet:text-right' : ''
                 }`}
               >
-                <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl">
-                  <Image src={p.image} alt="" fill sizes="64px" className="object-cover transition-transform duration-700 group-hover:scale-110" />
-                </span>
+                <ProductLogo product={p} link={false} sizes="120px" className="h-16 w-28 shrink-0 rounded-2xl border border-revora-cobalt/10" />
                 <span className="flex-1">
                   <span className="flex items-center gap-1.5 font-sans text-[12px] font-semibold uppercase tracking-[0.14em] text-revora-slate-muted tablet:inline-flex">
                     {dir === 'Previous' && <Icon className="h-3.5 w-3.5" />}

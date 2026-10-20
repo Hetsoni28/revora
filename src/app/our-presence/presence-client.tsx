@@ -33,7 +33,8 @@ const FACILITIES = [
     roles: ['Sales & marketing', 'Distribution & supply planning', 'Partnerships & institutional supply', 'Pharmacovigilance'],
     facts: [['Incorporated', '10 March 2026'], ['CIN', 'U21000GJ2026PTC174674']],
     mapQuery: 'S.G. Business Hub, Gota, Ahmedabad, Gujarat 380060',
-    images: ['/images/products/moxora.jpg', '/images/products/rehynate.jpg', '/images/products/revopt-tablets.jpg'],
+    images: ['/images/logos/moxora.webp', '/images/logos/rehynate.webp', '/images/logos/revopt-tablets.webp'],
+    logos: true,
     second: { label: 'Email the office', href: `mailto:${EMAIL}`, icon: <Mail /> },
   },
   {
@@ -48,6 +49,7 @@ const FACILITIES = [
     facts: [['Standard', 'WHO-GMP'], ['Compliance', 'EU-compliant']],
     mapQuery: 'Paonta Sahib, Himachal Pradesh',
     images: ['/images/site/eye-drop-filling-line.jpg'],
+    logos: false,
     second: { label: 'How we manufacture', href: '/#plant', icon: undefined },
   },
 ];
@@ -213,15 +215,22 @@ function FacilityCard({ f }: { f: (typeof FACILITIES)[number] }) {
     <article className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_rgba(11,74,143,0.45)]">
       {/* photo header with the title over it */}
       <div className="relative aspect-[16/10] overflow-hidden bg-revora-cobalt">
-        <div className={`absolute inset-0 grid ${f.images.length > 1 ? 'grid-cols-3 gap-1' : ''}`}>
-          {f.images.map((src) => (
-            <div key={src} className="relative overflow-hidden">
-              <Image src={src} alt="" fill loading="eager" sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]" />
-            </div>
-          ))}
-        </div>
-        <div aria-hidden className="absolute inset-0 bg-linear-to-t from-revora-cobalt-deep via-revora-cobalt-deep/40 to-transparent" />
-        <span aria-hidden className="absolute right-5 top-3 font-heading text-[88px] font-extrabold leading-none tracking-[-0.05em] text-white/25">{f.index}</span>
+        {f.logos ? (
+          /* brand logos on a light wall, as our portfolio — not carton photos */
+          <div className="logo-wall absolute inset-x-0 top-0 grid h-[62%] grid-cols-3 gap-2 bg-white p-3">
+            {f.images.map((src) => (
+              <div key={src} className="relative mt-10 rounded-xl bg-[#F6F9FC]">
+                <Image src={src} alt="" fill loading="eager" sizes="200px" className="object-contain p-3 transition-transform duration-700 group-hover:scale-[1.06]" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="absolute inset-0">
+            <Image src={f.images[0]} alt="" fill loading="eager" sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]" />
+          </div>
+        )}
+        <div aria-hidden className={`absolute inset-x-0 bottom-0 bg-linear-to-t from-revora-cobalt-deep to-transparent ${f.logos ? 'top-[62%] via-revora-cobalt-deep' : 'top-0 via-revora-cobalt-deep/40'}`} />
+        <span aria-hidden className="absolute right-5 top-3 hidden font-heading text-[88px] [.group:not(:has(.logo-wall))_&]:block font-extrabold leading-none tracking-[-0.05em] text-white/25">{f.index}</span>
         <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-cobalt backdrop-blur tablet:left-7 tablet:top-7">
           <f.icon className="h-3.5 w-3.5" /> {f.badge}
         </span>

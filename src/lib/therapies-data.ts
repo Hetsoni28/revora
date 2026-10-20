@@ -6,6 +6,8 @@ export interface Product {
   badge: string;
   volume: string;
   image: string;
+  /** Brand logo (transparent WebP), shown in place of the carton photo. */
+  logo: string;
   color: string;
   tagline: string;
   summary: string;
@@ -112,6 +114,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'Antibacterial + Steroid',
     volume: '5 ml Sterile Dropper Vial',
     image: '/images/products/moxora-d.jpg',
+    logo: '/images/logos/moxora-d.webp',
     color: '#0B4A8F',
     tagline: 'Synergistic 4th-Gen Bactericidal & Potent Anti-Inflammatory Therapy',
     summary:
@@ -142,6 +145,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'Soft Steroid Complex',
     volume: '5 ml Sterile Suspension',
     image: '/images/products/moxora-lp.jpg',
+    logo: '/images/logos/moxora-lp.webp',
     color: '#0B4A8F',
     tagline: 'Broad-Spectrum Antimicrobial Coverage with Site-Specific IOP-Spike Safety',
     summary:
@@ -172,6 +176,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: '4th-Gen Fluoroquinolone',
     volume: '5 ml Sterile Dropper Vial',
     image: '/images/products/moxora.jpg',
+    logo: '/images/logos/moxora.webp',
     color: '#0B4A8F',
     tagline: 'High-Penetration Pure 4th-Generation Fluoroquinolone Monotherapy',
     summary:
@@ -201,6 +206,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'Targeted NSAID Prodrug',
     volume: '3 ml Sterile (Blister Packed)',
     image: '/images/products/revonac-cs.jpg',
+    logo: '/images/logos/revonac-cs.webp',
     color: '#D7262E',
     tagline: 'Advanced Targeted Prodrug for Post-Cataract Pain & Macular Edema Prevention',
     summary:
@@ -230,6 +236,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'High-Concentration Viscoelastic',
     volume: '10 ml Sterile (Blister Packed)',
     image: '/images/products/trehynate.jpg',
+    logo: '/images/logos/trehynate.webp',
     color: '#1A62A8',
     tagline: 'Calibrated 0.18% High-Molecular-Weight Sodium Hyaluronate Viscoelastic Shield',
     summary:
@@ -260,6 +267,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'Triple-Action Multi-Polymer',
     volume: '10 ml Sterile (Blister Packed)',
     image: '/images/products/rehynate.jpg',
+    logo: '/images/logos/rehynate.webp',
     color: '#1A62A8',
     tagline: 'Synergistic Dual-Glycol + Sodium Hyaluronate Biomimetic Tear Film Stabilizer',
     summary:
@@ -291,6 +299,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'High-Viscosity Intensive Gel',
     volume: '10 ml Sterile Dropper Vial',
     image: '/images/products/revgel.jpg',
+    logo: '/images/logos/revgel.webp',
     color: '#1A62A8',
     tagline: 'Intensive 1.0% High-Viscosity Gel Shield for Severe Dry Eye & Nocturnal Protection',
     summary:
@@ -321,6 +330,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'Refreshing Tear Film Protectant',
     volume: '10 ml Sterile Dropper Vial',
     image: '/images/products/revfresh.jpg',
+    logo: '/images/logos/revfresh.webp',
     color: '#1A62A8',
     tagline: 'Instant Soothing Hydration for Everyday Dry Eye & Digital Fatigue',
     summary:
@@ -351,6 +361,7 @@ export const ALL_PRODUCTS: Product[] = [
     badge: 'Retinal Neuroprotection',
     volume: '1 x 10 Tablets (Alu-Alu Blister Box)',
     image: '/images/products/revopt-tablets.jpg',
+    logo: '/images/logos/revopt-tablets.webp',
     color: '#1E242B',
     tagline: 'Comprehensive AREDS-2 Aligned Macular Carotenoid & Neurovascular Complex',
     summary:

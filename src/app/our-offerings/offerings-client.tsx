@@ -158,7 +158,7 @@ export function OfferingsClient({ initialProducts, initialCategories }: Offering
                 transition={{ duration: 0.4, ease: expoOut }}
                 className="rounded-[24px] border border-dashed border-revora-cobalt/20 bg-white px-6 py-16 text-center"
               >
-                <p className="font-heading text-xl font-bold text-revora-slate">No products match "{query}".</p>
+                <p className="font-heading text-xl font-bold text-revora-slate">No products match “{query}”.</p>
                 <button
                   type="button"
                   onClick={() => { setQuery(''); setFilter('all'); }}

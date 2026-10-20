@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
-import { THERAPY_CATEGORIES, getCategoryBySlug, getProductsByCategory } from '@/lib/therapies-data';
+import { THERAPY_CATEGORIES, getCategoryBySlug, getProductsByCategory, type Product, type TherapyCategory } from '@/lib/therapies-data';
 import {
   getAllCategorySlugs,
   getCategoryBySlug as getSanityCategoryBySlug,
@@ -17,7 +17,7 @@ export async function generateStaticParams() {
   try {
     const slugs = await getAllCategorySlugs();
     if (slugs.length > 0) return slugs.map((category) => ({ category }));
-  } catch (_) {}
+  } catch {}
   return THERAPY_CATEGORIES.map((cat) => ({ category: cat.slug }));
 }
 
@@ -38,7 +38,7 @@ export async function generateMetadata({
         openGraph: { title: `${adapted.title} | Revora Healthcare`, description: adapted.description },
       };
     }
-  } catch (_) {}
+  } catch {}
 
   const cat = getCategoryBySlug(category);
   if (!cat) return { title: 'Therapeutic Portfolio Not Found | Revora Healthcare' };
@@ -52,22 +52,24 @@ export async function generateMetadata({
 async function CategoryDetails({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params;
 
-  // ── 1. Try Sanity ──────────────────────────────────────────────────────────
+  // ── 1. Try Sanity (data only — rendering stays outside the try) ───────────
+  let fromSanity: { cat: TherapyCategory; products: Product[] } | null = null;
   try {
     const sanityCategory = await getSanityCategoryBySlug(category);
     if (sanityCategory) {
-      const cat = adaptCategory(sanityCategory);
       const sanityProducts = await getSanityProductsByCategory(category);
-      const products = sanityProducts.map(adaptProduct);
-      return <CategoryClient category={cat} products={products} />;
+      fromSanity = { cat: adaptCategory(sanityCategory), products: sanityProducts.map(adaptProduct) };
     }
-  } catch (_) {}
+  } catch {
+    // Sanity unavailable — fall through to static data
+  }
+  if (fromSanity) return <CategoryClient category={fromSanity.cat} products={fromSanity.products} />;
 
   // ── 2. Fall back to static data ────────────────────────────────────────────
   const cat = getCategoryBySlug(category);
   if (!cat) notFound();
   const products = getProductsByCategory(category);
-  return <CategoryClient category={cat!} products={products} />;
+  return <CategoryClient category={cat} products={products} />;
 }
 
 export default function CategoryPage({ params }: { params: Promise<{ category: string }> }) {

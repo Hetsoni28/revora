@@ -2,59 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import { ProductLogoLink } from '@/components/offerings/product-logo';
 import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import { ALL_PRODUCTS, THERAPY_CATEGORIES } from '@/lib/therapies-data';
+import { ALL_PRODUCTS } from '@/lib/therapies-data';
 import { Eyebrow, SplitWords } from '@/components/ui/primitives';
-
-const CAT_NAME = Object.fromEntries(THERAPY_CATEGORIES.map((c) => [c.slug, c.shortName]));
-
-function ProductCard({ p, index }: { p: (typeof ALL_PRODUCTS)[number]; index: number }) {
-  return (
-    <Link
-      href={`/products/${p.id}`}
-      className="group relative flex h-full w-[78vw] max-w-[380px] shrink-0 snap-start flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white tablet:w-[360px]"
-    >
-      {/* visual stage */}
-      <div className="relative h-[280px] overflow-hidden bg-revora-sky tablet:h-[320px] tablet-lg:h-[min(320px,34vh)] desktop:h-[min(320px,30vh)]">
-        <Image
-          src={p.image}
-          alt={`${p.name} — ${p.genericName}, carton and bottle`}
-          fill
-          sizes="(min-width: 768px) 360px, 78vw"
-          className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07]"
-        />
-        {/* brand-colour wash rises on hover */}
-        <span
-          aria-hidden
-          className="absolute inset-x-0 bottom-0 h-2/3 translate-y-1/3 opacity-0 transition-all duration-700 group-hover:translate-y-0 group-hover:opacity-100"
-          style={{ background: `linear-gradient(to top, ${p.color}40, transparent)` }}
-        />
-        <span className="absolute left-4 top-4 grid h-8 min-w-8 place-items-center rounded-full bg-white/85 px-2 font-heading text-[12px] font-extrabold text-revora-slate backdrop-blur">
-          {String(index + 1).padStart(2, '0')}
-        </span>
-        <span className="absolute right-4 top-4 rounded-full bg-white/85 px-3 py-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-slate backdrop-blur">
-          {CAT_NAME[p.categorySlug]}
-        </span>
-      </div>
-
-      <div className="flex flex-1 flex-col p-6">
-        <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ color: p.color }}>
-          {p.badge}
-        </span>
-        <h3 className="mt-2 font-heading text-[1.7rem] font-extrabold leading-none tracking-[-0.01em] text-revora-slate">{p.name}</h3>
-        <p className="mt-2 font-sans text-[13.5px] leading-[1.55] text-revora-slate-light">{p.genericName}</p>
-        <div className="mt-auto flex items-center justify-between pt-6">
-          <span className="font-sans text-[12px] text-revora-slate-muted">{p.volume}</span>
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-revora-sky text-revora-cobalt transition-all duration-500 group-hover:rotate-45 group-hover:bg-revora-cobalt group-hover:text-white">
-            <ArrowUpRight className="h-4 w-4" />
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
 
 function Heading() {
   return (
@@ -122,12 +74,12 @@ export function Portfolio() {
         <motion.div
           ref={railRef}
           style={pinned ? { x } : undefined}
-          className={`mt-12 flex gap-5 px-5 tablet:px-8 [@media(max-height:820px)]:mt-8 ${
-            pinned ? 'w-max' : 'snap-x snap-mandatory overflow-x-auto pb-4 [scrollbar-width:none]'
+          className={`mt-12 flex items-center gap-12 px-5 tablet:gap-16 tablet:px-8 [@media(max-height:820px)]:mt-8 ${
+            pinned ? 'w-max' : 'snap-x snap-mandatory scroll-px-5 overflow-x-auto pb-4 [scrollbar-width:none] tablet:scroll-px-8'
           } desktop:pl-[max(2rem,calc((100vw-1320px)/2+2rem))]`}
         >
-          {ALL_PRODUCTS.map((p, i) => (
-            <ProductCard key={p.id} p={p} index={i} />
+          {ALL_PRODUCTS.map((p) => (
+            <ProductLogoLink key={p.id} product={p} className="h-[150px] w-[64vw] max-w-[340px] shrink-0 snap-start tablet:h-[180px] tablet:w-[340px]" />
           ))}
         </motion.div>
 

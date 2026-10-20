@@ -1,4 +1,5 @@
 import { createClient } from 'next-sanity';
+import { cacheLife } from 'next/cache';
 import { createImageUrlBuilder } from '@sanity/image-url';
 
 // Use a broad type since @sanity/image-url sub-path types vary by version
@@ -15,6 +16,20 @@ const config = {
 };
 
 export const sanityClient = createClient(config);
+
+/**
+ * Run a Sanity query; on failure (bad token, offline, project missing) return `fallback`.
+ * Errors thrown inside a 'use cache' scope would otherwise fail the prerender, so callers
+ * get an empty result and fall back to the static catalogue in lib/therapies-data.
+ */
+async function safeFetch<T>(query: string, params: Record<string, unknown>, fallback: T): Promise<T> {
+  try {
+    return await sanityClient.fetch<T>(query, params);
+  } catch (err) {
+    console.warn('[sanity] query failed, using static data:', (err as Error).message);
+    return fallback;
+  }
+}
 
 const builder = createImageUrlBuilder(sanityClient);
 export function urlFor(source: SanityImageSource) {
@@ -107,65 +122,79 @@ const CATEGORY_FIELDS = `
 
 /** Fetch all therapy categories, ordered */
 export async function getAllCategories(): Promise<SanityTherapyCategory[]> {
-  return sanityClient.fetch(
+  'use cache';
+  cacheLife('minutes');
+  return safeFetch(
     `*[_type == "therapyCategory"] | order(order asc) { ${CATEGORY_FIELDS} }`,
     {},
-    { next: { revalidate: 60 } }
+    []
   );
 }
 
 /** Fetch single category by slug */
 export async function getCategoryBySlug(slug: string): Promise<SanityTherapyCategory | null> {
-  return sanityClient.fetch(
+  'use cache';
+  cacheLife('minutes');
+  return safeFetch(
     `*[_type == "therapyCategory" && slug.current == $slug][0] { ${CATEGORY_FIELDS} }`,
     { slug },
-    { next: { revalidate: 60 } }
+    null
   );
 }
 
 /** Fetch all products, ordered */
 export async function getAllProducts(): Promise<SanityProduct[]> {
-  return sanityClient.fetch(
+  'use cache';
+  cacheLife('minutes');
+  return safeFetch(
     `*[_type == "product"] | order(category->order asc, order asc) { ${PRODUCT_FIELDS} }`,
     {},
-    { next: { revalidate: 60 } }
+    []
   );
 }
 
 /** Fetch all products in a given category slug */
 export async function getProductsByCategory(categorySlug: string): Promise<SanityProduct[]> {
-  return sanityClient.fetch(
+  'use cache';
+  cacheLife('minutes');
+  return safeFetch(
     `*[_type == "product" && category->slug.current == $categorySlug] | order(order asc) { ${PRODUCT_FIELDS} }`,
     { categorySlug },
-    { next: { revalidate: 60 } }
+    []
   );
 }
 
 /** Fetch single product by slug */
 export async function getProductBySlug(slug: string): Promise<SanityProduct | null> {
-  return sanityClient.fetch(
+  'use cache';
+  cacheLife('minutes');
+  return safeFetch(
     `*[_type == "product" && id.current == $slug][0] { ${PRODUCT_FIELDS} }`,
     { slug },
-    { next: { revalidate: 60 } }
+    null
   );
 }
 
 /** Fetch all product slugs (for generateStaticParams) */
 export async function getAllProductSlugs(): Promise<string[]> {
-  const results: { id: { current: string } }[] = await sanityClient.fetch(
+  'use cache';
+  cacheLife('minutes');
+  const results: { id: { current: string } }[] = await safeFetch(
     `*[_type == "product"]{ "id": id }`,
     {},
-    { next: { revalidate: 60 } }
+    [] as { id: { current: string } }[]
   );
   return results.map((r) => r.id.current);
 }
 
 /** Fetch all category slugs (for generateStaticParams) */
 export async function getAllCategorySlugs(): Promise<string[]> {
-  const results: { slug: { current: string } }[] = await sanityClient.fetch(
+  'use cache';
+  cacheLife('minutes');
+  const results: { slug: { current: string } }[] = await safeFetch(
     `*[_type == "therapyCategory"]{ slug }`,
     {},
-    { next: { revalidate: 60 } }
+    [] as { slug: { current: string } }[]
   );
   return results.map((r) => r.slug.current);
 }
@@ -186,6 +215,7 @@ export function adaptProduct(p: SanityProduct): Product {
     image: p.image
       ? urlFor(p.image).width(800).height(800).url()
       : `/images/products/${p.id.current}.jpg`,
+    logo: `/images/logos/${p.id.current}.webp`,
     color: p.color ?? '#0B4A8F',
     tagline: p.tagline ?? '',
     summary: p.summary ?? '',
