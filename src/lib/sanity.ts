@@ -11,8 +11,8 @@ const config = {
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? '2024-10-01',
   useCdn: false,
-  // Token enables authenticated reads (needed for Editor-level token)
-  token: process.env.SANITY_API_TOKEN,
+  // Read-only (Viewer) token. Local .env.local uses SANITY_API_TOKEN; the Sanity–Vercel integration sets SANITY_API_READ_TOKEN.
+  token: process.env.SANITY_API_TOKEN ?? process.env.SANITY_API_READ_TOKEN,
 };
 
 export const sanityClient = createClient(config);
