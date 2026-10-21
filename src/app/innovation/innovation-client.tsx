@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { INNOVATION_PRODUCTS } from '@/lib/innovation-products';
+import { onTabListKeyDown } from '@/lib/a11y';
 import { FadeUp } from '@/components/ui/primitives';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
@@ -71,7 +72,11 @@ export function InnovationClient() {
         <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] gap-10 tablet-lg:grid-cols-[0.8fr_1.2fr] tablet-lg:gap-16">
           <SectionHeading eyebrow="FAQs" lines={['Good to know.']} highlight={{ 'know.': 'text-revora-cobalt' }} />
           <FadeUp delay={0.1}>
-            <div role="tablist" aria-label="Choose a product" className="-mx-5 mb-5 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] tablet:mx-0 tablet:flex-wrap tablet:px-0">
+            <div
+              role="tablist"
+              aria-label="Choose a product"
+              onKeyDown={(e) => onTabListKeyDown(e, INNOVATION_PRODUCTS.map((p) => p.id), faqFor, setFaqFor)}
+              className="-mx-5 mb-5 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] tablet:mx-0 tablet:flex-wrap tablet:px-0">
               {INNOVATION_PRODUCTS.map((p) => {
                 const on = p.id === faqFor;
                 return (
@@ -79,7 +84,11 @@ export function InnovationClient() {
                     key={p.id}
                     type="button"
                     role="tab"
+                    id={`faq-tab-${p.id}`}
+                    data-tab={p.id}
                     aria-selected={on}
+                    aria-controls="faq-panel"
+                    tabIndex={on ? 0 : -1}
                     onClick={() => setFaqFor(p.id)}
                     className={`relative shrink-0 rounded-full px-4 py-2 font-sans text-[13.5px] font-semibold transition-colors ${on ? 'text-white' : 'text-revora-slate hover:text-revora-cobalt'}`}
                   >
@@ -89,7 +98,9 @@ export function InnovationClient() {
                 );
               })}
             </div>
-            <FaqList key={faqProduct.id} items={faqProduct.faqs} />
+            <div id="faq-panel" role="tabpanel" aria-labelledby={`faq-tab-${faqProduct.id}`}>
+              <FaqList key={faqProduct.id} items={faqProduct.faqs} />
+            </div>
           </FadeUp>
         </div>
       </section>

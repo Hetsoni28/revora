@@ -68,7 +68,7 @@ export function ChannelPartnerClient() {
           <div className="mt-12 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-4">
             {BENEFITS.map((b, i) => (
               <FadeUp key={b.title} delay={i * 0.08}>
-                <div className="group relative isolate flex h-full min-h-[220px] flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white p-7">
+                <div className="group relative isolate flex h-full min-h-55 flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white p-7">
                   <span aria-hidden className="absolute inset-0 -z-10 translate-y-full bg-revora-cobalt transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
                   <span className="grid h-12 w-12 place-items-center rounded-2xl bg-revora-sky text-revora-cobalt transition-all duration-500 group-hover:rotate-[-8deg] group-hover:bg-white">
                     <b.icon className="h-5 w-5" />
@@ -89,13 +89,13 @@ export function ChannelPartnerClient() {
           <div className="mt-12 grid gap-5 tablet-lg:grid-cols-2">
             {RANGES.map((r, i) => (
               <FadeUp key={r.title} delay={i * 0.1}>
-                <a href={r.href} className="group relative isolate flex h-full min-h-[260px] flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] p-8 tablet:p-10">
+                <a href={r.href} className="group relative isolate flex h-full min-h-65 flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] p-8 tablet:p-10">
                   <span aria-hidden className="absolute inset-0 -z-10 translate-y-full bg-revora-cobalt transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
                   <div className="flex items-start justify-between">
                     <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white text-revora-cobalt shadow-sm transition-all duration-500 group-hover:rotate-[-8deg] group-hover:bg-white/15 group-hover:text-white">
                       <r.icon className="h-5 w-5" />
                     </span>
-                    <span className="font-heading text-[56px] font-extrabold leading-none tracking-[-0.04em] text-revora-cobalt/15 transition-colors duration-500 group-hover:text-white/25">{r.count}</span>
+                    <span aria-hidden className="font-heading text-[56px] font-extrabold leading-none tracking-[-0.04em] text-revora-cobalt/15 transition-colors duration-500 group-hover:text-white/25">{r.count}</span>
                   </div>
                   <h3 className="mt-auto pt-10 font-heading text-[1.6rem] font-extrabold leading-tight text-revora-slate transition-colors duration-500 group-hover:text-white">{r.title}</h3>
                   <p className="mt-2 font-sans text-[15px] leading-[1.6] text-revora-slate-light transition-colors duration-500 group-hover:text-white/80">{r.text}</p>
@@ -120,13 +120,13 @@ export function ChannelPartnerClient() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-10% 0px' }}
                 transition={{ duration: 0.7, delay: i * 0.12, ease: expoOut }}
-                className="rounded-[24px] border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm"
+                className="rounded-[24px] border border-white/10 bg-white/4 p-6 backdrop-blur-sm"
               >
                 <div className="flex items-center justify-between">
                   <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/10 text-revora-cobalt-pale">
                     <s.icon className="h-5 w-5" />
                   </span>
-                  <span className="font-heading text-3xl font-extrabold text-white/15">0{i + 1}</span>
+                  <span aria-hidden className="font-heading text-3xl font-extrabold text-white/15">0{i + 1}</span>
                 </div>
                 <h3 className="mt-8 font-heading text-2xl font-extrabold">{s.title}</h3>
                 <p className="mt-1 font-sans text-[14.5px] text-white/65">{s.text}</p>
@@ -165,7 +165,7 @@ function ApplyForm() {
           <SectionHeading eyebrow="Apply" lines={['Let’s grow', 'together.']} highlight={{ 'together.': 'text-revora-cobalt' }} />
           <FadeUp delay={0.15}>
             <p className="mt-6 max-w-sm font-sans text-[16px] leading-[1.7] text-revora-slate-light">Tell us about your business. Our team will get back to you.</p>
-            <a href={`mailto:${PARTNER_EMAIL}`} className="mt-6 inline-flex items-center gap-2 font-sans text-[15px] font-semibold text-revora-cobalt hover:underline">
+            <a href={`mailto:${PARTNER_EMAIL}`} className="mt-6 inline-flex min-h-6 items-center gap-2 font-sans text-[15px] font-semibold text-revora-cobalt hover:underline">
               <Send className="h-4 w-4" /> {PARTNER_EMAIL}
             </a>
           </FadeUp>
@@ -251,7 +251,7 @@ function PartnerCard() {
       initial={reduce ? false : { opacity: 0, y: 40, rotate: 2 }}
       animate={{ opacity: 1, y: 0, rotate: 0 }}
       transition={{ duration: 1.1, delay: 0.2, ease: expoOut }}
-      className="relative isolate mx-auto w-full max-w-[520px] overflow-hidden rounded-[28px] bg-revora-cobalt-deep p-8 text-white shadow-[0_40px_80px_-40px_rgba(11,74,143,0.6)] tablet:rounded-[32px] tablet:p-10"
+      className="relative isolate mx-auto w-full max-w-130 overflow-hidden rounded-[28px] bg-revora-cobalt-deep p-8 text-white shadow-[0_40px_80px_-40px_rgba(11,74,143,0.6)] tablet:rounded-[32px] tablet:p-10"
     >
       <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(58,130,200,0.55),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(215,38,46,0.22),transparent_55%)]" />
       <div className="flex items-center justify-between gap-4">

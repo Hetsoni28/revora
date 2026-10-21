@@ -86,7 +86,7 @@ function PillarCard({ p, i }: { p: (typeof PILLARS)[number]; i: number }) {
       )}
 
       <div className="flex items-center justify-between">
-        <span className={`font-sans text-[11px] font-semibold uppercase tracking-[0.18em] ${p.tone === 'light' ? 'text-revora-slate-muted' : 'text-white/60'}`}>
+        <span className={`font-sans text-[11px] font-semibold uppercase tracking-[0.18em] ${p.tone === 'light' ? 'text-revora-slate-muted' : 'text-white/75'}`}>
           {p.kicker}
         </span>
         <span
@@ -107,7 +107,7 @@ function PillarCard({ p, i }: { p: (typeof PILLARS)[number]; i: number }) {
         </p>
         <Link
           href={p.href}
-          className={`mt-7 inline-flex items-center gap-2 font-sans text-[14.5px] font-semibold after:absolute after:inset-0 after:content-[''] ${p.tone === 'light' ? 'text-revora-cobalt' : 'text-white'}`}
+          className={`mt-7 inline-flex min-h-6 items-center gap-2 font-sans text-[14.5px] font-semibold after:absolute after:inset-0 after:content-[''] ${p.tone === 'light' ? 'text-revora-cobalt' : 'text-white'}`}
         >
           {p.cta}
           <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />

@@ -50,15 +50,11 @@ export interface SanityProduct {
   badge?: string;
   volume?: string;
   image?: SanityImageSource;
-  color?: string;
-  tagline?: string;
   summary?: string;
   composition?: string[];
-  mechanismOfAction?: string;
   indications?: string[];
   dosage?: string;
   storage?: string;
-  packaging?: string;
   schedule?: string;
   order?: number;
 }
@@ -96,15 +92,11 @@ const PRODUCT_FIELDS = `
   badge,
   volume,
   image,
-  color,
-  tagline,
   summary,
   composition,
-  mechanismOfAction,
   indications,
   dosage,
   storage,
-  packaging,
   schedule,
   order
 `;
@@ -205,7 +197,7 @@ export async function getAllCategorySlugs(): Promise<string[]> {
 // ─── Helpers to adapt Sanity types → legacy Product/TherapyCategory types ──────
 // (lets existing client components work unchanged)
 
-import type { Product, TherapyCategory } from '@/lib/therapies-data';
+import { getProductById, type Product, type TherapyCategory } from '@/lib/therapies-data';
 
 export function adaptProduct(p: SanityProduct): Product {
   return {
@@ -218,16 +210,14 @@ export function adaptProduct(p: SanityProduct): Product {
     image: p.image
       ? urlFor(p.image).width(800).height(800).url()
       : `/images/products/${p.id.current}.jpg`,
-    logo: `/images/logos/${p.id.current}.webp`,
-    color: p.color ?? '#0B4A8F',
-    tagline: p.tagline ?? '',
+    logo: `/images/brand-logos/${p.id.current}.webp`,
+    // brand colour isn't edited in Studio — it follows the site's own data, then the category
+    color: getProductById(p.id.current)?.color ?? p.category?.color ?? '#0B4A8F',
     summary: p.summary ?? '',
     composition: p.composition ?? [],
-    mechanismOfAction: p.mechanismOfAction ?? '',
     indications: p.indications ?? [],
     dosage: p.dosage ?? '',
     storage: p.storage ?? '',
-    packaging: p.packaging ?? '',
     schedule: p.schedule ?? '',
   };
 }

@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 import { X, Building2, Send, ShieldCheck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { Product } from '@/lib/therapies-data';
+import { useFocusTrap } from '@/lib/a11y';
 
 const REQUEST_EMAIL = 'depot@revorahealthcare.com';
 
@@ -36,18 +37,18 @@ export function FormularyModal({
     message: '',
   });
 
-  // Lock the page behind the dialog and close on Escape.
+  // Lock the page behind the dialog; keep keyboard focus inside it and close on Escape.
   const lenis = useLenis();
   useEffect(() => {
     if (!isOpen) return;
     lenis?.stop();
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
-    window.addEventListener('keydown', onKey);
     return () => {
       lenis?.start();
-      window.removeEventListener('keydown', onKey);
     };
-  }, [isOpen, lenis, onClose]);
+  }, [isOpen, lenis]);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(dialogRef, isOpen, onClose);
+  const uid = useId();
 
   // No backend yet: hand the request to the visitor's email app, pre-filled.
   const handleSubmit = (e: React.FormEvent) => {
@@ -88,8 +89,10 @@ export function FormularyModal({
     >
       <motion.div
         className="flex max-h-[calc(100dvh-1.5rem)] w-full max-w-xl flex-col overflow-hidden rounded-[24px] border border-revora-cobalt/10 bg-white shadow-2xl tablet:max-h-[calc(100dvh-4rem)] tablet:rounded-[28px]"
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
+        aria-labelledby={`${uid}-title`}
         initial={{ opacity: 0, y: 40, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 24, scale: 0.98 }}
@@ -110,7 +113,7 @@ export function FormularyModal({
             <span>Institutional &amp; Clinician Request</span>
           </div>
 
-          <h3 className="font-heading font-bold text-xl tablet:text-2xl text-white">
+          <h3 id={`${uid}-title`} className="font-heading font-bold text-xl tablet:text-2xl text-white">
             {product
               ? `Request Samples: ${product.name}`
               : `Formulary Request: ${categoryName || 'Ophthalmic Solutions'}`}
@@ -140,27 +143,29 @@ export function FormularyModal({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-semibold text-revora-slate mb-1">
+              <label htmlFor={`${uid}-f1`} className="block text-xs font-semibold text-revora-slate mb-1">
                 Full Name / Doctor Name *
               </label>
               <input
+                id={`${uid}-f1`}
                 type="text"
                 required
                 placeholder="Dr. Rajesh Patel"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none"
+                className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-revora-slate mb-1">
+              <label htmlFor={`${uid}-f2`} className="block text-xs font-semibold text-revora-slate mb-1">
                 Designation / Role *
               </label>
               <select
+                id={`${uid}-f2`}
                 value={formData.designation}
                 onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
-                className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none bg-white"
+                className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)] bg-white"
               >
                 <option value="Ophthalmologist / Surgeon">Ophthalmologist / Surgeon</option>
                 <option value="Hospital Procurement Manager">Hospital Procurement Manager</option>
@@ -173,72 +178,77 @@ export function FormularyModal({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-semibold text-revora-slate mb-1">
+              <label htmlFor={`${uid}-f3`} className="block text-xs font-semibold text-revora-slate mb-1">
                 Hospital / Clinic / Pharmacy *
               </label>
               <input
+                id={`${uid}-f3`}
                 type="text"
                 required
                 placeholder="Aavkar Eye Institute"
                 value={formData.institution}
                 onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-                className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none"
+                className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-revora-slate mb-1">
+              <label htmlFor={`${uid}-f4`} className="block text-xs font-semibold text-revora-slate mb-1">
                 City / Location *
               </label>
               <input
+                id={`${uid}-f4`}
                 type="text"
                 required
                 placeholder="Ahmedabad, Gujarat"
                 value={formData.city}
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none"
+                className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-semibold text-revora-slate mb-1">
+              <label htmlFor={`${uid}-f5`} className="block text-xs font-semibold text-revora-slate mb-1">
                 Official Email Address *
               </label>
               <input
+                id={`${uid}-f5`}
                 type="email"
                 required
                 placeholder="dr.patel@eyehospital.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none"
+                className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-revora-slate mb-1">
+              <label htmlFor={`${uid}-f6`} className="block text-xs font-semibold text-revora-slate mb-1">
                 Mobile / WhatsApp Number *
               </label>
               <input
+                id={`${uid}-f6`}
                 type="tel"
                 required
                 placeholder="+91 98765 43210"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none"
+                className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-revora-slate mb-1">
+            <label htmlFor={`${uid}-f7`} className="block text-xs font-semibold text-revora-slate mb-1">
               Sample Type &amp; Requirements
             </label>
             <select
+                id={`${uid}-f7`}
               value={formData.quantityNeeded}
               onChange={(e) => setFormData({ ...formData, quantityNeeded: e.target.value })}
-              className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none bg-white"
+              className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)] bg-white"
             >
               <option value="Sample Pack (5 units)">Doctor Evaluation Sample Pack (5 units)</option>
               <option value="Hospital Formulary Review (10 units)">Hospital Formulary Review Pack (10 units)</option>
@@ -248,15 +258,16 @@ export function FormularyModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-revora-slate mb-1">
+            <label htmlFor={`${uid}-f8`} className="block text-xs font-semibold text-revora-slate mb-1">
               Clinical Notes / Special Requests
             </label>
             <textarea
+                id={`${uid}-f8`}
               rows={2}
               placeholder="e.g. Please include Certificate of Analysis (CoA) and product stability data."
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none"
+              className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
             />
           </div>
 

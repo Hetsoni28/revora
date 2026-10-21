@@ -56,7 +56,7 @@ export function ProductShowcase({ product: p, flip = false }: { product: Innovat
       {/* details */}
       <div>
         <FadeUp>
-          <span className="inline-flex items-center gap-2 rounded-full bg-revora-crimson-tint px-3 py-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-revora-crimson">
+          <span className="inline-flex items-center gap-2 rounded-full bg-revora-crimson-tint px-3 py-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-revora-crimson-dark">
             New · {p.pack}
           </span>
           {p.badge && (

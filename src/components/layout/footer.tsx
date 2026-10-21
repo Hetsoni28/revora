@@ -86,7 +86,7 @@ export function Footer() {
             <p className="max-w-3xl font-sans text-[14px] leading-[1.7] text-white/70">
               <span className="font-semibold text-white">Pharmacovigilance &amp; Patient Safety. </span>
               To report an adverse drug reaction (ADR) or product quality issue, please contact our Drug Safety Team at{' '}
-              <a href="mailto:safety@revorahealthcare.com" className="font-medium text-revora-cobalt-light hover:underline">
+              <a href="mailto:safety@revorahealthcare.com" className="font-medium text-revora-cobalt-pale hover:underline">
                 safety@revorahealthcare.com
               </a>{' '}
               or call our 24/7 dedicated safety desk.
@@ -122,13 +122,13 @@ export function Footer() {
               </li>
               <li className="flex gap-3">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
-                <a href="tel:+919876543210" className="hover:text-white">
+                <a href="tel:+919876543210" className="inline-flex min-h-6 items-center hover:text-white">
                   Boardline: +91 (079) 4890-REVORA
                 </a>
               </li>
               <li className="flex gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
-                <a href="mailto:info@revorahealthcare.com" className="hover:text-white">
+                <a href="mailto:info@revorahealthcare.com" className="inline-flex min-h-6 items-center hover:text-white">
                   info@revorahealthcare.com
                 </a>
               </li>
@@ -164,12 +164,12 @@ export function Footer() {
               {col.href ? (
                 <Link
                   href={col.href}
-                  className="-my-3 flex h-10 w-fit items-center gap-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45 transition-colors hover:text-white"
+                  className="-my-3 flex h-10 w-fit items-center gap-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/70 transition-colors hover:text-white"
                 >
                   {col.title} <ArrowUpRight className="h-3 w-3" />
                 </Link>
               ) : (
-                <p className="flex h-4 items-center font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45">{col.title}</p>
+                <p className="flex h-4 items-center font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/70">{col.title}</p>
               )}
               <ul className="mt-5 space-y-3 font-sans text-[14.5px]">
                 {col.links.map(([label, href]) => (
@@ -183,7 +183,7 @@ export function Footer() {
         </div>
 
         {/* ── statutory notice ── */}
-        <p className="mt-16 border-t border-white/10 pt-8 font-sans text-[12px] leading-[1.75] text-white/45">
+        <p className="mt-16 border-t border-white/10 pt-8 font-sans text-[12px] leading-[1.75] text-white/70">
           <span className="font-semibold text-white/60">Statutory Notice: </span>
           The information contained on this website is intended solely for healthcare professionals, registered medical practitioners, and
           authorized distribution partners. It is provided for informational and educational purposes only and should not be construed as medical
@@ -192,7 +192,7 @@ export function Footer() {
         </p>
 
         {/* ── bottom bar ── */}
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-x-10 gap-y-4 border-t border-white/10 py-6 font-sans text-[12px] text-white/45">
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-x-10 gap-y-4 border-t border-white/10 py-6 font-sans text-[12px] text-white/70">
           <div className="space-y-1.5">
             <p>© 2026 Revora Healthcare Private Limited. All rights reserved. S.G. Business Hub, Ognaj, Ahmedabad, Gujarat, India.</p>
             <p>

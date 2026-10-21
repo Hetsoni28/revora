@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useId } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
@@ -97,7 +97,7 @@ export function PromoBanner({ product: p }: { product: InnovationProduct }) {
             >
               <Image src={p.image} alt={p.imageAlt} fill loading="eager" sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
             </motion.div>
-            <span className="absolute -bottom-4 -left-2 rotate-[-4deg] rounded-2xl bg-[#FF7A2F] px-4 py-2.5 font-heading text-[14px] font-extrabold text-white shadow-lg tablet:-left-6">
+            <span className="absolute -bottom-4 -left-2 rotate-[-4deg] rounded-2xl bg-[#C2410C] px-4 py-2.5 font-heading text-[14px] font-extrabold text-white shadow-lg tablet:-left-6">
               {p.highlight}
             </span>
           </motion.div>
@@ -172,7 +172,7 @@ export function InnovationProductCard({ product: p, index = 0 }: { product: Inno
           ))}
         </div>
         <div className="mt-auto flex items-center justify-between gap-3 pt-6">
-          <Link href={`#${p.id}`} className="inline-flex items-center gap-1.5 font-sans text-[14px] font-semibold text-revora-cobalt">
+          <Link href={`#${p.id}`} className="inline-flex min-h-6 items-center gap-1.5 font-sans text-[14px] font-semibold text-revora-cobalt">
             View details <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />
           </Link>
           <a
@@ -190,6 +190,7 @@ export function InnovationProductCard({ product: p, index = 0 }: { product: Inno
 /* ── FAQ accordion ────────────────────────────────────────── */
 export function FaqList({ items }: { items: { q: string; a: string }[] }) {
   const [open, setOpen] = useState<number | null>(0);
+  const uid = useId();
   return (
     <ul className="divide-y divide-revora-cobalt/10 rounded-[24px] border border-revora-cobalt/10 bg-white">
       {items.map((f, i) => {
@@ -198,18 +199,23 @@ export function FaqList({ items }: { items: { q: string; a: string }[] }) {
           <li key={f.q}>
             <button
               type="button"
+              id={`${uid}-q${i}`}
               onClick={() => setOpen(on ? null : i)}
               aria-expanded={on}
+              aria-controls={`${uid}-a${i}`}
               className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left tablet:px-8"
             >
               <span className="font-heading text-[1.05rem] font-bold text-revora-slate tablet:text-[1.15rem]">{f.q}</span>
-              <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full transition-all duration-500 ${on ? 'rotate-45 bg-revora-cobalt text-white' : 'bg-revora-sky text-revora-cobalt'}`}>
+              <span aria-hidden className={`grid h-9 w-9 shrink-0 place-items-center rounded-full transition-all duration-500 ${on ? 'rotate-45 bg-revora-cobalt text-white' : 'bg-revora-sky text-revora-cobalt'}`}>
                 <Plus className="h-4 w-4" />
               </span>
             </button>
             <AnimatePresence initial={false}>
               {on && (
                 <motion.div
+                  id={`${uid}-a${i}`}
+                  role="region"
+                  aria-labelledby={`${uid}-q${i}`}
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}

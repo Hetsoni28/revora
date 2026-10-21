@@ -97,7 +97,7 @@ export default function ProductPage({
   return (
     <div className="min-h-screen flex flex-col bg-[#F6F9FC]">
       <Navbar />
-      <main className="flex-1">
+      <main id="main" tabIndex={-1} className="flex-1">
         <Suspense
           fallback={
             <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-44 pb-20 text-center">

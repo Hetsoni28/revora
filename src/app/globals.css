@@ -66,7 +66,7 @@
   --color-revora-slate:         #1E242B;
   --color-revora-slate-mid:     #2E363B;
   --color-revora-slate-light:   #4A5568;
-  --color-revora-slate-muted:   #718096;
+  --color-revora-slate-muted:   #5F6B7D;
 
   --color-revora-sky:           #E8F1F9;
   --color-revora-beige:         #EFECE6;
@@ -267,4 +267,14 @@ html.lenis body {
 
 .lenis.lenis-smooth iframe {
   pointer-events: none;
+}
+/* Keyboard focus: a clear ring on every interactive element (mouse clicks don't show it). */
+@layer base {
+  :focus-visible {
+    outline: 3px solid var(--color-revora-cobalt-light);
+    outline-offset: 3px;
+  }
+  #main:focus {
+    outline: none;
+  }
 }

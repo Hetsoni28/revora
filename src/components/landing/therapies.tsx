@@ -56,7 +56,7 @@ export function Therapies() {
                   type="button"
                   onClick={() => setActive((prev) => (prev === i ? null : i))}
                   aria-expanded={open}
-                  aria-label={open ? `Close ${c.shortName}` : `Open ${c.shortName}`}
+                  aria-controls={`therapy-${c.slug}`}
                   className="group flex w-full cursor-pointer items-center gap-5 py-7 text-left tablet:py-9"
                 >
                   <span className="font-sans text-[12px] font-semibold text-revora-slate-muted">0{i + 1}</span>
@@ -81,6 +81,7 @@ export function Therapies() {
                 <AnimatePresence initial={false}>
                   {open && (
                     <motion.div
+                      id={`therapy-${c.slug}`}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}

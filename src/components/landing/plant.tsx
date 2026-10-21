@@ -59,7 +59,7 @@ export function Plant() {
             <div key={item.k} className={`flex items-start gap-4 p-7 tablet:p-9 ${i > 0 ? 'border-t border-white/10 tablet:border-l tablet:border-t-0' : ''}`}>
               <item.icon className="mt-1 h-5 w-5 shrink-0 text-revora-cobalt-pale" />
               <div>
-                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">{item.k}</p>
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/70">{item.k}</p>
                 <p className="mt-1.5 font-heading text-xl font-bold tracking-tight tablet:text-2xl">{item.v}</p>
               </div>
             </div>
@@ -93,7 +93,7 @@ export function Plant() {
                 <span className="absolute left-0 top-0 grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-revora-cobalt-deep text-revora-cobalt-pale">
                   <s.icon className="h-5 w-5" />
                 </span>
-                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45">Step 0{i + 1}</p>
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/70">Step 0{i + 1}</p>
                 <h3 className="mt-2 font-heading text-2xl font-extrabold tracking-tight">{s.title}</h3>
                 <p className="mt-2 max-w-xs font-sans text-[14.5px] leading-[1.7] text-white/65">{s.body}</p>
               </motion.li>

@@ -67,7 +67,7 @@ export function PresenceClient() {
     <>
       {/* ── hero ── */}
       <section className="relative isolate overflow-hidden px-5 pb-16 pt-36 tablet:px-8 tablet:pb-24 tablet:pt-44 desktop:pt-52">
-        <div aria-hidden className="absolute -left-40 top-10 -z-10 h-[480px] w-[480px] rounded-full bg-revora-sky blur-3xl" />
+        <div aria-hidden className="absolute -left-40 top-10 -z-10 h-120 w-120 rounded-full bg-revora-sky blur-3xl" />
         <div className="mx-auto max-w-330">
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Our Presence' }]} />
           <div className="mt-8 grid grid-cols-[minmax(0,1fr)] items-center gap-12 tablet-lg:grid-cols-[1.15fr_0.85fr] desktop:gap-16">
@@ -124,7 +124,7 @@ function FacilityCard({ f }: { f: (typeof FACILITIES)[number] }) {
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_rgba(11,74,143,0.45)]">
       {/* photo header with the title over it */}
-      <div className="relative aspect-[16/10] overflow-hidden bg-revora-cobalt">
+      <div className="relative aspect-16/10 overflow-hidden bg-revora-cobalt">
         {f.logos ? (
           /* brand logos on a light wall, as our portfolio — not carton photos */
           <div className="logo-wall absolute inset-x-0 top-0 grid h-[62%] grid-cols-3 gap-2 bg-white p-3">
@@ -136,11 +136,11 @@ function FacilityCard({ f }: { f: (typeof FACILITIES)[number] }) {
           </div>
         ) : (
           <div className="absolute inset-0">
-            <Image src={f.images[0]} alt="" fill loading="eager" sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]" />
+            <Image src={f.images[0]} alt="" fill loading="eager" sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover transition-transform duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]" />
           </div>
         )}
         <div aria-hidden className={`absolute inset-x-0 bottom-0 bg-linear-to-t from-revora-cobalt-deep to-transparent ${f.logos ? 'top-[62%] via-revora-cobalt-deep' : 'top-0 via-revora-cobalt-deep/40'}`} />
-        <span aria-hidden className="absolute right-5 top-3 hidden font-heading text-[88px] [.group:not(:has(.logo-wall))_&]:block font-extrabold leading-none tracking-[-0.05em] text-white/25">{f.index}</span>
+        <span aria-hidden className="absolute right-5 top-3 hidden font-heading text-[88px] [.group:not(:has(.logo-wall))_&]:block font-extrabold leading-none tracking-tighter text-white/25">{f.index}</span>
         <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-cobalt backdrop-blur tablet:left-7 tablet:top-7">
           <f.icon className="h-3.5 w-3.5" /> {f.badge}
         </span>
@@ -168,7 +168,7 @@ function FacilityCard({ f }: { f: (typeof FACILITIES)[number] }) {
           {f.facts.map(([k, v]) => (
             <div key={k} className="bg-white px-4 py-3">
               <dt className="font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-slate-muted">{k}</dt>
-              <dd className="mt-0.5 break-words font-sans text-[13.5px] font-semibold text-revora-slate">{v}</dd>
+              <dd className="mt-0.5 wrap-break-word font-sans text-[13.5px] font-semibold text-revora-slate">{v}</dd>
             </div>
           ))}
         </dl>
@@ -195,7 +195,7 @@ function RouteCard() {
       initial={reduce ? false : { opacity: 0, y: 40, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 1.1, delay: 0.25, ease: expoOut }}
-      className="relative mx-auto aspect-[13/11] w-full max-w-[600px] overflow-hidden rounded-[28px] bg-revora-cobalt-deep shadow-[0_40px_80px_-40px_rgba(11,74,143,0.6)] tablet:rounded-[32px]"
+      className="relative mx-auto aspect-13/11 w-full max-w-150 overflow-hidden rounded-[28px] bg-revora-cobalt-deep shadow-[0_40px_80px_-40px_rgba(11,74,143,0.6)] tablet:rounded-[32px]"
     >
       <div aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(58,130,200,0.55),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(215,38,46,0.2),transparent_55%)]" />
       <svg viewBox="0 0 520 440" className="absolute inset-0 h-full w-full" aria-hidden>

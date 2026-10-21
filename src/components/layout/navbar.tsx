@@ -11,6 +11,7 @@ import { expoOut } from '@/lib/easings';
 import { THERAPY_CATEGORIES, ALL_PRODUCTS } from '@/lib/therapies-data';
 import { PARTNER_CATEGORIES, partnerHref } from '@/lib/partner-categories';
 import { AnchorLink, Magnetic, Tick } from '@/components/ui/primitives';
+import { useFocusTrap } from '@/lib/a11y';
 
 type NavItem = {
   label: string;
@@ -83,10 +84,22 @@ export function Navbar() {
   }, [open, lenis]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setDropdown(null);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      // close the open dropdown and put focus back on its trigger, not on <body>
+      // (focus first: focusing the trigger re-opens its menu, so close it afterwards)
+      const item = (document.activeElement as HTMLElement | null)?.closest('[data-menu]');
+      item?.querySelector<HTMLElement>(':scope > a, :scope > button')?.focus();
+      setDropdown(null);
+    };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
+
+  // Mobile menu: keep Tab inside the menu (and its close button), Escape closes it.
+  const menuRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  useFocusTrap(menuRef, open, () => setOpen(false), toggleRef);
 
   const openMenu = (label: string) => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -157,6 +170,7 @@ export function Navbar() {
                   <li
                     key={item.label}
                     className={item.mega ? '' : 'relative'}
+                    data-menu
                     onMouseEnter={() => hasMenu && openMenu(item.label)}
                     onMouseLeave={() => hasMenu && closeMenu()}
                     onFocus={() => hasMenu && openMenu(item.label)}
@@ -232,9 +246,11 @@ export function Navbar() {
                 </AnchorLink>
               </Magnetic>
               <button
+                ref={toggleRef}
                 onClick={() => setOpen((o) => !o)}
                 aria-label={open ? 'Close menu' : 'Open menu'}
                 aria-expanded={open}
+                aria-controls="mobile-menu"
                 className="grid h-10 w-10 place-items-center rounded-full bg-revora-sky text-revora-cobalt desktop:hidden"
               >
                 {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -254,6 +270,11 @@ export function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
+            ref={menuRef}
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
             data-lenis-prevent
             className="fixed inset-0 z-90 overflow-y-auto overscroll-contain bg-white px-6 pb-10 pt-28 desktop:hidden"
             initial={{ clipPath: 'inset(0 0 100% 0)' }}
@@ -289,6 +310,7 @@ export function Navbar() {
                           onClick={() => setMobileGroup(expanded ? null : item.label)}
                           aria-label={`${expanded ? 'Collapse' : 'Expand'} ${item.label}`}
                           aria-expanded={expanded}
+                          aria-controls={`m-group-${i}`}
                           className="grid h-10 w-10 place-items-center rounded-full bg-revora-sky text-revora-cobalt"
                         >
                           <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} />
@@ -301,6 +323,7 @@ export function Navbar() {
                     <AnimatePresence initial={false}>
                       {hasMenu && expanded && (
                         <motion.div
+                          id={`m-group-${i}`}
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}

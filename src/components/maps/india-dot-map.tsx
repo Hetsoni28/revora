@@ -50,7 +50,7 @@ export function IndiaDotMap({ className }: { className?: string }) {
       </svg>
 
       {/* layer 2: route, pins and pulses on their own compositor layer, so they never repaint the dots */}
-      <svg viewBox={`0 0 ${W} ${H}`} className="pointer-events-none absolute inset-0 h-full w-full [transform:translateZ(0)]" aria-hidden>
+      <svg viewBox={`0 0 ${W} ${H}`} className="pointer-events-none absolute inset-0 h-full w-full transform-[translateZ(0)]" aria-hidden>
         <defs>
           <linearGradient id="ind-route" x1="0" y1="1" x2="1" y2="0">
             <stop offset="0%" stopColor="#0B4A8F" />

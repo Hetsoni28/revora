@@ -73,7 +73,7 @@ export function ProfileClient() {
             initial={reduce ? false : { opacity: 0, y: 40, rotate: -2 }}
             animate={{ opacity: 1, y: 0, rotate: 0 }}
             transition={{ duration: 1.1, delay: 0.2, ease: expoOut }}
-            className="relative isolate mx-auto w-full max-w-[520px] overflow-hidden rounded-[28px] bg-revora-cobalt-deep p-8 text-white shadow-[0_40px_80px_-40px_rgba(11,74,143,0.6)] tablet:rounded-[32px] tablet:p-10"
+            className="relative isolate mx-auto w-full max-w-130 overflow-hidden rounded-[28px] bg-revora-cobalt-deep p-8 text-white shadow-[0_40px_80px_-40px_rgba(11,74,143,0.6)] tablet:rounded-[32px] tablet:p-10"
           >
             <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(58,130,200,0.55),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(215,38,46,0.22),transparent_55%)]" />
             <div className="flex items-center justify-between gap-4">
@@ -109,7 +109,7 @@ export function ProfileClient() {
                   </span>
                   <div className="min-w-0">
                     <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-revora-slate-muted">{d.k}</p>
-                    <p className={`mt-1 break-words font-heading text-[16px] font-bold leading-snug text-revora-slate ${d.mono ? 'font-mono text-[15px]' : ''}`}>{d.v}</p>
+                    <p className={`mt-1 wrap-break-word font-heading text-[16px] font-bold leading-snug text-revora-slate ${d.mono ? 'font-mono text-[15px]' : ''}`}>{d.v}</p>
                   </div>
                 </div>
               </FadeUp>
@@ -125,13 +125,13 @@ export function ProfileClient() {
           <div className="mt-12 grid gap-5 tablet:grid-cols-3">
             {BUSINESS.map((b, i) => (
               <FadeUp key={b.title} delay={i * 0.1}>
-                <div className="group relative isolate flex h-full min-h-[220px] flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white p-7">
+                <div className="group relative isolate flex h-full min-h-55 flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white p-7">
                   <span aria-hidden className="absolute inset-0 -z-10 translate-y-full bg-revora-cobalt transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
                   <div className="flex items-start justify-between">
                     <span className="grid h-12 w-12 place-items-center rounded-2xl bg-revora-sky text-revora-cobalt transition-all duration-500 group-hover:rotate-[-8deg] group-hover:bg-white">
                       <b.icon className="h-5 w-5" />
                     </span>
-                    <span className="rounded-full bg-revora-crimson-tint px-3 py-1 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-crimson transition-colors duration-500 group-hover:bg-white/15 group-hover:text-white">{b.tag}</span>
+                    <span className="rounded-full bg-revora-crimson-tint px-3 py-1 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-crimson-dark transition-colors duration-500 group-hover:bg-white/15 group-hover:text-white">{b.tag}</span>
                   </div>
                   <h3 className="mt-auto pt-10 font-heading text-[1.35rem] font-extrabold leading-tight text-revora-slate transition-colors duration-500 group-hover:text-white">{b.title}</h3>
                   <p className="mt-2 font-sans text-[14.5px] leading-[1.6] text-revora-slate-light transition-colors duration-500 group-hover:text-white/80">{b.text}</p>

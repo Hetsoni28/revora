@@ -26,7 +26,7 @@ export function LandingPage() {
     <>
       <Intro />
       <Navbar />
-      <main className="flex flex-col overflow-x-clip">
+      <main id="main" tabIndex={-1} className="flex flex-col overflow-x-clip">
         <LandingHero startDelay={heroDelay} />
         <BrandMarquee />
         <Manifesto />

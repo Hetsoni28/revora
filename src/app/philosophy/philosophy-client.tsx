@@ -71,7 +71,7 @@ export function PhilosophyClient() {
                     <span className={`grid h-12 w-12 place-items-center rounded-2xl transition-all duration-500 group-hover:rotate-[-8deg] ${i === 0 ? 'bg-white/15' : 'bg-white text-revora-cobalt shadow-sm group-hover:bg-white/15 group-hover:text-white'}`}>
                       <v.icon className="h-5 w-5" />
                     </span>
-                    <span className={`font-heading text-[40px] font-extrabold leading-none tracking-[-0.04em] ${i === 0 ? 'text-white/20' : 'text-revora-cobalt/10 transition-colors duration-500 group-hover:text-white/20'}`}>
+                    <span aria-hidden className={`font-heading text-[40px] font-extrabold leading-none tracking-[-0.04em] ${i === 0 ? 'text-white/20' : 'text-revora-cobalt/10 transition-colors duration-500 group-hover:text-white/20'}`}>
                       0{i + 1}
                     </span>
                   </div>
@@ -120,6 +120,7 @@ function PromiseStatement() {
       <div className="mx-auto max-w-[1100px]">
         <Eyebrow>Our promise</Eyebrow>
         <p ref={ref} className="mt-8 font-heading text-[clamp(1.9rem,4.4vw,3.6rem)] font-bold leading-[1.15] tracking-[-0.02em] text-revora-slate">
+          <span className="sr-only">{PROMISE}</span>
           {words.map((w, i) => (
             <Word key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} reduce={!!reduce} emphasis={EMPHASIS.has(w)}>
               {w}
@@ -142,6 +143,7 @@ function Word({ children, progress, range, reduce, emphasis }: {
   const opacity = useTransform(progress, (v) => 0.15 + 0.85 * Math.min(Math.max((v - range[0]) / (range[1] - range[0]), 0), 1));
   return (
     <motion.span
+      aria-hidden
       style={reduce ? undefined : { opacity }}
       transition={{ ease: expoOut }}
       className={`mr-[0.25em] inline-block ${emphasis ? 'text-revora-crimson' : ''}`}

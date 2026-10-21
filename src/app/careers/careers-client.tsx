@@ -189,10 +189,12 @@ function Teams({ onPick }: { onPick: (team: string) => void }) {
         {/* hiring steps */}
         <ol className="mt-16 grid gap-3 rounded-[28px] border border-revora-cobalt/10 bg-white p-6 tablet:grid-cols-4 tablet:p-8">
           {STEPS.map((s, i) => (
-            <Rise key={s} i={i} className="flex items-center gap-3">
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-revora-cobalt font-sans text-[13px] font-bold text-white">{i + 1}</span>
-              <span className="font-sans text-[15px] font-semibold text-revora-slate">{s}</span>
-            </Rise>
+            <li key={s}>
+              <Rise i={i} className="flex items-center gap-3">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-revora-cobalt font-sans text-[13px] font-bold text-white">{i + 1}</span>
+                <span className="font-sans text-[15px] font-semibold text-revora-slate">{s}</span>
+              </Rise>
+            </li>
           ))}
         </ol>
       </div>
@@ -238,7 +240,7 @@ function Apply({ team, setTeam }: { team: string; setTeam: (team: string) => voi
             <p className="mt-6 max-w-sm font-sans text-[16px] leading-[1.7] text-revora-slate-light">
               Fill in your details, attach your CV, send.
             </p>
-            <a href={`mailto:${CAREERS_EMAIL}`} className="mt-6 inline-flex items-center gap-2 font-sans text-[15px] font-semibold text-revora-cobalt hover:underline">
+            <a href={`mailto:${CAREERS_EMAIL}`} className="mt-6 inline-flex min-h-6 items-center gap-2 font-sans text-[15px] font-semibold text-revora-cobalt hover:underline">
               <Send className="h-4 w-4" /> {CAREERS_EMAIL}
             </a>
           </FadeUp>

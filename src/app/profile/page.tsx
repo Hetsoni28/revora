@@ -13,7 +13,7 @@ export default function ProfilePage() {
   return (
     <div className="flex min-h-screen flex-col bg-[#F6F9FC]">
       <Navbar />
-      <main className="flex-1">
+      <main id="main" tabIndex={-1} className="flex-1">
         <ProfileClient />
       </main>
       <Footer />

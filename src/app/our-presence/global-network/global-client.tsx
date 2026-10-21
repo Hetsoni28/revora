@@ -1,10 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useId, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { toast } from 'sonner';
-import { Globe, ShieldCheck, Award, Ship, Plane, FileCheck, ArrowUpRight } from 'lucide-react';
+import { Globe, ShieldCheck, Award, Ship, Plane, FileCheck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { Counter, FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
@@ -47,12 +46,12 @@ const CAPABILITIES = [
 
 export function GlobalClient() {
   const reduce = useReducedMotion();
-  const [partnerType, setPartnerType] = useState('importer');
+  const uid = useId();
+  const partnerType = 'importer';
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [country, setCountry] = useState('');
   const [message, setMessage] = useState('');
-  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,7 +61,6 @@ export function GlobalClient() {
     }
     const body = `Name: ${name}\nCountry: ${country}\nType: ${partnerType}\n\nMessage:\n${message}`;
     window.location.href = `mailto:${PARTNER_EMAIL}?subject=International Partnership Inquiry - ${encodeURIComponent(name)}&body=${encodeURIComponent(body)}`;
-    setSubmitted(true);
     toast.success('Opening email client for global inquiry...');
   };
 
@@ -190,48 +188,52 @@ export function GlobalClient() {
 
             <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
               <div>
-                <label className="block font-sans text-xs font-semibold text-revora-slate">Your Name</label>
+                <label htmlFor={`${uid}-f1`} className="block font-sans text-xs font-semibold text-revora-slate">Your Name</label>
                 <input
+                  id={`${uid}-f1`}
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Dr. Alex Morgan"
-                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-sm focus:border-revora-cobalt focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-sm focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
                 />
               </div>
 
               <div>
-                <label className="block font-sans text-xs font-semibold text-revora-slate">Business Email</label>
+                <label htmlFor={`${uid}-f2`} className="block font-sans text-xs font-semibold text-revora-slate">Business Email</label>
                 <input
+                  id={`${uid}-f2`}
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="alex@company.com"
-                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-sm focus:border-revora-cobalt focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-sm focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
                 />
               </div>
 
               <div>
-                <label className="block font-sans text-xs font-semibold text-revora-slate">Target Country / Region</label>
+                <label htmlFor={`${uid}-f3`} className="block font-sans text-xs font-semibold text-revora-slate">Target Country / Region</label>
                 <input
+                  id={`${uid}-f3`}
                   type="text"
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
                   placeholder="e.g. UAE, Vietnam, Kenya"
-                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-sm focus:border-revora-cobalt focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-sm focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
                 />
               </div>
 
               <div>
-                <label className="block font-sans text-xs font-semibold text-revora-slate">Message / Products of Interest</label>
+                <label htmlFor={`${uid}-f4`} className="block font-sans text-xs font-semibold text-revora-slate">Message / Products of Interest</label>
                 <textarea
+                  id={`${uid}-f4`}
                   rows={3}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Tell us about your distribution reach or formulation needs..."
-                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-sm focus:border-revora-cobalt focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-sm focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
                 />
               </div>
 

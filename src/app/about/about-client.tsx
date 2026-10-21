@@ -58,7 +58,7 @@ export function AboutClient() {
             {PURPOSE.map((p, i) => (
               <FadeUp key={p.tag} delay={i * 0.1}>
                 <div
-                  className={`group relative isolate flex h-full min-h-[280px] flex-col overflow-hidden rounded-[28px] p-8 tablet:p-10 ${
+                  className={`group relative isolate flex h-full min-h-70 flex-col overflow-hidden rounded-[28px] p-8 tablet:p-10 ${
                     p.filled ? 'bg-revora-cobalt text-white' : 'border border-revora-cobalt/10 bg-white'
                   }`}
                 >
@@ -66,7 +66,7 @@ export function AboutClient() {
                   <span className={`grid h-12 w-12 place-items-center rounded-2xl transition-transform duration-500 group-hover:rotate-[-8deg] ${p.filled ? 'bg-white/15' : 'bg-revora-sky text-revora-cobalt'}`}>
                     <p.icon className="h-5 w-5" />
                   </span>
-                  <p className={`mt-auto pt-12 font-sans text-[11px] font-semibold uppercase tracking-[0.16em] ${p.filled ? 'text-revora-cobalt-pale' : 'text-revora-crimson'}`}>{p.tag}</p>
+                  <p className={`mt-auto pt-12 font-sans text-[11px] font-semibold uppercase tracking-[0.16em] ${p.filled ? 'text-white/80' : 'text-revora-crimson'}`}>{p.tag}</p>
                   <p className={`mt-2 font-heading text-[clamp(1.4rem,2.4vw,1.9rem)] font-extrabold leading-snug tracking-[-0.01em] ${p.filled ? '' : 'text-revora-slate'}`}>{p.text}</p>
                 </div>
               </FadeUp>
@@ -90,7 +90,7 @@ export function AboutClient() {
                 <div>
                   <span
                     aria-hidden
-                    className={`absolute -left-[41px] top-1 h-4 w-4 rounded-full ring-4 ring-white desktop:-top-[49px] desktop:left-0 ${j.next ? 'border-2 border-dashed border-revora-crimson bg-white' : 'bg-revora-cobalt'}`}
+                    className={`absolute -left-10.25 top-1 h-4 w-4 rounded-full ring-4 ring-white desktop:-top-12.25 desktop:left-0 ${j.next ? 'border-2 border-dashed border-revora-crimson bg-white' : 'bg-revora-cobalt'}`}
                   />
                   <span className={`grid h-11 w-11 place-items-center rounded-xl ${j.next ? 'bg-revora-crimson-tint text-revora-crimson' : 'bg-revora-sky text-revora-cobalt'}`}>
                     <j.icon className="h-5 w-5" />
@@ -117,7 +117,7 @@ export function AboutClient() {
 
           <div className="mt-14 grid grid-cols-[minmax(0,1fr)] items-center gap-10 tablet-lg:grid-cols-[0.85fr_1.15fr] tablet-lg:gap-16">
             <FadeUp>
-              <div className="relative mx-auto max-w-[420px] tablet-lg:mx-0 tablet-lg:max-w-none">
+              <div className="relative mx-auto max-w-105 tablet-lg:mx-0 tablet-lg:max-w-none">
                 <div className="relative aspect-square w-full overflow-hidden rounded-[28px] border border-revora-cobalt/15 bg-revora-cobalt-deep shadow-[0_24px_60px_-20px_rgba(11,74,143,0.25)]">
                   <Image
                     src="/images/leadership/founder.webp"
@@ -127,7 +127,7 @@ export function AboutClient() {
                     sizes="(min-width: 1024px) 40vw, 85vw"
                     className="object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
                   />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-revora-slate/90 via-revora-slate/40 to-transparent p-6 text-white">
+                  <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-revora-slate/90 via-revora-slate/40 to-transparent p-6 text-white">
                     <p className="font-heading text-xl font-bold">Founder & Managing Director</p>
                     <p className="mt-0.5 font-sans text-[13px] text-white/80">Revora Healthcare Private Limited</p>
                   </div>

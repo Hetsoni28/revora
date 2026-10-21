@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { BadgeCheck, Hospital, Pill, Stethoscope, Truck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
+import { onTabListKeyDown } from '@/lib/a11y';
 import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
@@ -126,7 +127,11 @@ function WhoWeServe() {
       <div className="mx-auto max-w-330">
         <SectionHeading eyebrow="Who we serve" lines={['Four partners.', 'One promise.']} highlight={{ 'promise.': 'text-revora-crimson' }} />
 
-        <div role="tablist" aria-label="Who we serve" className="-mx-5 mt-10 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] tablet:mx-0 tablet:px-0">
+        <div
+          role="tablist"
+          aria-label="Who we serve"
+          onKeyDown={(e) => onTabListKeyDown(e, AUDIENCES.map((x) => x.id), active, setActive)}
+          className="-mx-5 mt-10 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] tablet:mx-0 tablet:px-0">
           {AUDIENCES.map((x) => {
             const on = x.id === active;
             return (
@@ -134,7 +139,11 @@ function WhoWeServe() {
                 key={x.id}
                 type="button"
                 role="tab"
+                id={`who-tab-${x.id}`}
+                data-tab={x.id}
                 aria-selected={on}
+                aria-controls="who-panel"
+                tabIndex={on ? 0 : -1}
                 onClick={() => setActive(x.id)}
                 className={`relative inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-3 font-sans text-[14.5px] font-semibold transition-colors duration-300 ${on ? 'text-white' : 'text-revora-slate hover:text-revora-cobalt'}`}
               >
@@ -146,7 +155,12 @@ function WhoWeServe() {
           })}
         </div>
 
-        <div className="mt-8 grid grid-cols-[minmax(0,1fr)] overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] tablet-lg:grid-cols-2">
+        <div
+          id="who-panel"
+          role="tabpanel"
+          aria-labelledby={`who-tab-${a.id}`}
+          className="mt-8 grid grid-cols-[minmax(0,1fr)] overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] tablet-lg:grid-cols-2"
+        >
           <div className="relative aspect-[4/3] tablet-lg:aspect-auto tablet-lg:min-h-[420px]">
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.div
