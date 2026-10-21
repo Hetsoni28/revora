@@ -33,8 +33,8 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Our Presence',
     href: '/our-presence',
     sublinks: [
-      { label: 'Ahmedabad Headquarters', href: '/our-presence#ahmedabad' },
-      { label: 'Domestic Network', href: '/our-presence#domestic' },
+      { label: 'Ahmedabad Headquarters', href: '/our-presence/ahmedabad' },
+      { label: 'Domestic Network', href: '/our-presence/domestic-network' },
     ],
   },
   { label: 'Careers', href: '/careers' },
@@ -324,15 +324,16 @@ export function Navbar() {
                                     <span className="h-2 w-2 rounded-full" style={{ background: cat.color }} />
                                     {cat.shortName}
                                   </Link>
-                                  <div className="mt-2 flex flex-wrap gap-2 pl-4">
+                                  <div className="mt-2 grid grid-cols-2 gap-2 pl-4">
                                     {productsOf(cat.slug).map((p) => (
                                       <Link
                                         key={p.id}
                                         href={`/products/${p.id}`}
                                         onClick={() => setOpen(false)}
-                                        className="rounded-full border border-revora-cobalt/15 px-3.5 py-2 font-sans text-[13px] font-semibold text-revora-cobalt"
+                                        aria-label={p.name}
+                                        className="relative block h-14 rounded-xl border border-revora-cobalt/10 bg-white"
                                       >
-                                        {p.name}
+                                        <Image src={p.logo} alt={`${p.name} logo`} fill sizes="160px" className="object-contain p-2.5" />
                                       </Link>
                                     ))}
                                   </div>
@@ -435,17 +436,17 @@ function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
                   {cat.shortName}
                   <ArrowUpRight className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover/c:opacity-100" />
                 </Link>
-                <div className="mt-2.5 flex flex-wrap gap-1.5 pl-4">
+                <div className="mt-2.5 grid grid-cols-2 gap-2 pl-4">
                   {productsOf(cat.slug).map((p) => (
                     <Link
                       key={p.id}
                       href={`/products/${p.id}`}
                       onClick={onNavigate}
-                      className="rounded-full border border-revora-cobalt/15 px-3 py-1 font-sans text-[12px] font-semibold text-revora-slate transition-colors hover:border-transparent hover:text-white"
-                      onMouseEnter={(e) => (e.currentTarget.style.background = cat.color)}
-                      onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                      aria-label={p.name}
+                      title={p.name}
+                      className="group/p relative block h-12 rounded-xl border border-revora-cobalt/10 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-revora-cobalt/30 hover:shadow-[0_10px_24px_-14px_rgba(11,74,143,0.5)]"
                     >
-                      {p.name}
+                      <Image src={p.logo} alt={`${p.name} logo`} fill sizes="140px" className="object-contain p-2" />
                     </Link>
                   ))}
                 </div>
@@ -460,7 +461,7 @@ function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
             <div className="mt-4 flex flex-col gap-1">
               {[
                 ['All Formulations Directory', '/our-offerings'],
-                ['Hospital & Distribution Network', '/our-presence#domestic'],
+                ['Hospital & Distribution Network', '/our-presence/domestic-network'],
               ].map(([label, href]) => (
                 <Link
                   key={label}

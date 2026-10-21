@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { AnchorLink, Counter, Eyebrow, Magnetic, SplitWords } from '@/components/ui/primitives';
 import { IrisBurst } from './iris-burst';
@@ -153,17 +153,6 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
         </motion.div>
       </div>
 
-      <motion.div
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-revora-slate-muted tablet:flex"
-        initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: d + 1.6 }}
-      >
-        <motion.span animate={reduce ? undefined : { y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.8 }}>
-          <ArrowDown className="h-3.5 w-3.5" />
-        </motion.span>
-        Scroll
-      </motion.div>
     </section>
   );
 }

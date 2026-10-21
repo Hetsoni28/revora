@@ -271,7 +271,7 @@ function Apply({ team, setTeam }: { team: string; setTeam: (team: string) => voi
                 <span className={label}>City</span>
                 <input value={form.city} onChange={set('city')} placeholder="Ahmedabad" className={field} />
               </label>
-              <label className="tablet:col-span-2">
+              <div className="tablet:col-span-2">
                 <span className={label}>Experience</span>
                 <div className="flex flex-wrap gap-2">
                   {EXPERIENCE.map((x) => (
@@ -288,7 +288,7 @@ function Apply({ team, setTeam }: { team: string; setTeam: (team: string) => voi
                     </button>
                   ))}
                 </div>
-              </label>
+              </div>
               <label className="tablet:col-span-2">
                 <span className={label}>A few words about you</span>
                 <textarea rows={4} value={form.message} onChange={set('message')} placeholder="Your current role and what you’d like to do at Revora" className={field} />

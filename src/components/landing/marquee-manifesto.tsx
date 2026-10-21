@@ -12,6 +12,8 @@ import {
   useReducedMotion,
   type MotionValue,
 } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
 import { ALL_PRODUCTS } from '@/lib/therapies-data';
 import { Eyebrow, Tick } from '@/components/ui/primitives';
 
@@ -43,23 +45,23 @@ export function BrandMarquee() {
     base.set(base.get() + move);
   });
 
-  const names = ALL_PRODUCTS.map((p) => p.name.replace(' Tablets', ''));
-  const row = [...names, ...names];
+  const row = [...ALL_PRODUCTS, ...ALL_PRODUCTS];
 
   return (
     <section aria-label="Revora brands" className="relative overflow-hidden border-y border-revora-cobalt/10 bg-white py-7 tablet:py-9">
       <motion.div className="flex w-max whitespace-nowrap" style={{ x }}>
         {[0, 1].map((k) => (
           <div key={k} className="flex shrink-0 items-center" aria-hidden={k === 1}>
-            {row.map((n, i) => (
+            {row.map((p, i) => (
               <span key={`${k}-${i}`} className="flex items-center">
-                <span
-                  className={`px-6 font-heading text-[clamp(2rem,5vw,4rem)] font-extrabold tracking-[-0.02em] tablet:px-10 ${
-                    i % 2 === 0 ? 'text-revora-cobalt' : 'text-transparent [-webkit-text-stroke:1.5px_#0B4A8F]'
-                  }`}
+                <Link
+                  href={`/products/${p.id}`}
+                  tabIndex={k === 1 ? -1 : undefined}
+                  aria-label={p.name}
+                  className="relative mx-6 block h-14 w-44 transition-transform duration-500 hover:scale-110 tablet:mx-10 tablet:h-20 tablet:w-60"
                 >
-                  {n}
-                </span>
+                  <Image src={p.logo} alt={`${p.name} logo`} fill sizes="240px" className="object-contain" />
+                </Link>
                 <Tick className="h-5 w-6 text-revora-crimson tablet:h-6 tablet:w-8" />
               </span>
             ))}

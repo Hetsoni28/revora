@@ -1,15 +1,15 @@
 'use client';
 
-import { useRef } from 'react';
 import Image from 'next/image';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { Building2, Factory, Hospital, Mail, MapPin, Navigation, Pill, ShieldCheck, Stethoscope, Truck, UserRound } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Building2, Factory, Hospital, Mail, MapPin, Navigation, Pill, ShieldCheck, Stethoscope, Truck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { Counter, FadeUp } from '@/components/ui/primitives';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
-import { MediaFrame } from '@/components/ui/media-frame';
+import { SupplyFlow } from '@/components/presence/supply-flow';
+import { PresenceLinks } from '@/components/presence/presence-links';
 
 const EMAIL = 'info@revorahealthcare.com';
 const mapsUrl = (q: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
@@ -35,7 +35,7 @@ const FACILITIES = [
     mapQuery: 'S.G. Business Hub, Gota, Ahmedabad, Gujarat 380060',
     images: ['/images/logos/moxora.webp', '/images/logos/rehynate.webp', '/images/logos/revopt-tablets.webp'],
     logos: true,
-    second: { label: 'Email the office', href: `mailto:${EMAIL}`, icon: <Mail /> },
+    second: { label: 'Visit HQ page', href: '/our-presence/ahmedabad', icon: undefined },
   },
   {
     index: '02',
@@ -50,16 +50,8 @@ const FACILITIES = [
     mapQuery: 'Paonta Sahib, Himachal Pradesh',
     images: ['/images/site/eye-drop-filling-line.jpg'],
     logos: false,
-    second: { label: 'How we manufacture', href: '/#plant', icon: undefined },
+    second: { label: 'Certifications', href: '/certifications', icon: undefined },
   },
-];
-
-const FLOW = [
-  { icon: Factory, title: 'Made', where: 'Paonta Sahib plant', body: 'Formulated and filled in our dedicated, WHO-GMP certified eye-drop plant.' },
-  { icon: Building2, title: 'Coordinated', where: 'Ahmedabad HQ', body: 'Sales, supply planning and partnerships are run from our Ahmedabad office.' },
-  { icon: Truck, title: 'Distributed', where: 'Distributors & stockists', body: 'Partners carry the portfolio into their territories across India.' },
-  { icon: Hospital, title: 'Dispensed', where: 'Hospitals & pharmacies', body: 'Consistent supply for eye hospitals, clinics and the pharmacies around them.' },
-  { icon: UserRound, title: 'Prescribed', where: 'Doctors & patients', body: 'Ophthalmologists prescribe with confidence; patients get reliable eye care.' },
 ];
 
 const AUDIENCES = [
@@ -108,8 +100,8 @@ export function PresenceClient() {
                 </p>
               </FadeUp>
               <FadeUp delay={0.6} className="mt-9 flex flex-wrap gap-3">
-                <Button href="#ahmedabad" arrow="up-right" magnetic>See our locations</Button>
-                <Button href="#partner" variant="outline">Become a partner</Button>
+                <Button href="/our-presence/ahmedabad" arrow="up-right" magnetic>Ahmedabad HQ</Button>
+                <Button href="/our-presence/domestic-network" variant="outline">Domestic network</Button>
               </FadeUp>
             </div>
             <RouteCard />
@@ -148,7 +140,7 @@ export function PresenceClient() {
         </div>
       </section>
 
-      <Flow />
+      <SupplyFlow />
 
       {/* ── who we serve ── */}
       <section id="domestic" className="px-5 py-24 tablet:px-8 tablet:py-32">
@@ -176,6 +168,9 @@ export function PresenceClient() {
               </Rise>
             ))}
           </div>
+          <FadeUp className="mt-10 flex justify-center">
+            <Button href="/our-presence/domestic-network" arrow="up-right">Explore our domestic network</Button>
+          </FadeUp>
         </div>
       </section>
 
@@ -197,7 +192,7 @@ export function PresenceClient() {
               </p>
             </div>
             <div className="flex flex-wrap gap-3 desktop:shrink-0 desktop:flex-col">
-              <Button href="/#contact" variant="light" arrow="up-right" magnetic>Partner with us</Button>
+              <Button href="/our-presence/domestic-network#partner" variant="light" arrow="up-right" magnetic>Partner with us</Button>
               <Button href={`mailto:${EMAIL}?subject=${encodeURIComponent('Distribution partnership enquiry')}`} variant="outline-light" icon={<Mail />}>
                 {EMAIL}
               </Button>
@@ -205,6 +200,8 @@ export function PresenceClient() {
           </div>
         </Rise>
       </div>
+
+      <PresenceLinks current="/our-presence" title="Explore more" />
     </>
   );
 }
@@ -268,59 +265,6 @@ function FacilityCard({ f }: { f: (typeof FACILITIES)[number] }) {
         </div>
       </div>
     </article>
-  );
-}
-
-/* ── plant to patient ─────────────────────────────────────── */
-function Flow() {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.8', 'end 0.55'] });
-  const line = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
-  return (
-    <section className="relative isolate overflow-hidden bg-revora-cobalt-deep px-5 py-24 text-white tablet:px-8 tablet:py-32">
-      <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(11,74,143,0.9),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(58,130,200,0.18),transparent_55%)]" />
-      <div className="mx-auto max-w-330">
-        <div className="grid grid-cols-[minmax(0,1fr)] items-center gap-12 tablet-lg:grid-cols-2">
-          <div>
-            <SectionHeading tone="light" eyebrow="How we reach India" lines={['From our plant', 'to the patient.']} highlight={{ 'patient.': 'text-revora-cobalt-pale' }} />
-            <FadeUp delay={0.2}>
-              <p className="mt-6 max-w-md font-sans text-[16px] leading-[1.75] text-white/70">
-                Every Revora product follows the same path — made under WHO-GMP in our own plant, coordinated from Ahmedabad, and carried by our
-                partners to the people who need it.
-              </p>
-            </FadeUp>
-          </div>
-          <MediaFrame
-            src="/images/site/sterile-formulation-lab.jpg"
-            alt="Technicians in a sterile formulation laboratory"
-            aspect="aspect-[16/10]"
-            caption={<><ShieldCheck className="mr-1.5 inline h-4 w-4 text-revora-cobalt" />Quality under WHO-GMP</>}
-          />
-        </div>
-
-        <div ref={ref} className="relative mt-20">
-          <div aria-hidden className="absolute left-[22px] top-0 h-full w-[2px] bg-white/10 desktop:left-0 desktop:top-[22px] desktop:h-[2px] desktop:w-full" />
-          <motion.div aria-hidden className="absolute left-0 top-[22px] hidden h-[2px] w-full origin-left bg-linear-to-r from-revora-cobalt-pale via-white to-revora-crimson desktop:block" style={{ scaleX: reduce ? 1 : line }} />
-          <motion.div aria-hidden className="absolute left-[22px] top-0 h-full w-[2px] origin-top bg-linear-to-b from-revora-cobalt-pale via-white to-revora-crimson desktop:hidden" style={{ scaleY: reduce ? 1 : line }} />
-          <ol className="relative grid gap-10 desktop:grid-cols-5 desktop:gap-8">
-            {FLOW.map((s, i) => (
-              <li key={s.title} className="relative pl-16 desktop:pl-0 desktop:pt-16">
-                <Rise i={i}>
-                  <span className="absolute left-0 top-0 grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-revora-cobalt-deep text-revora-cobalt-pale">
-                    <s.icon className="h-5 w-5" />
-                  </span>
-                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45">0{i + 1} · {s.where}</p>
-                  <h3 className="mt-2 font-heading text-2xl font-extrabold tracking-tight">{s.title}</h3>
-                  <p className="mt-2 max-w-sm font-sans text-[14.5px] leading-[1.7] text-white/65">{s.body}</p>
-                </Rise>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
-    </section>
   );
 }
 
