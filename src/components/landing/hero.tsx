@@ -134,22 +134,6 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
           style={parallax ? { scale: irisScale, y: irisY, opacity: irisOpacity } : undefined}
         >
           <IrisBurst className="h-auto w-full" />
-          <motion.div
-            className="absolute bottom-[8%] left-[4%] rounded-2xl border border-white/60 bg-white/80 px-4 py-3 shadow-[0_20px_50px_-20px_rgba(11,74,143,0.35)] backdrop-blur-md"
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: d + 1.3, ease: expoOut }}
-          >
-            <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-revora-slate-muted">Made at</p>
-            <p className="font-heading text-[15px] font-bold text-revora-slate">Paonta Sahib, H.P.</p>
-            <p className="mt-0.5 flex items-center gap-1.5 font-sans text-[12px] text-revora-cobalt">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-revora-cobalt-light opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-revora-cobalt-light" />
-              </span>
-              WHO-GMP · EU-compliant
-            </p>
-          </motion.div>
         </motion.div>
       </div>
 
