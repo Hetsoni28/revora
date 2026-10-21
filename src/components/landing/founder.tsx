@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, Award, Quote, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, Quote, ShieldCheck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { Eyebrow, FadeUp } from '@/components/ui/primitives';
 
@@ -77,20 +77,6 @@ export function FounderSection() {
                   <p className="font-heading text-lg font-extrabold text-revora-crimson">Ahmedabad</p>
                   <p className="font-sans text-[11px] font-medium text-revora-slate-light">Headquarters</p>
                 </div>
-              </div>
-            </div>
-
-            {/* decorative floating badge */}
-            <div
-              aria-hidden
-              className="absolute -bottom-5 -right-5 hidden rounded-2xl border border-revora-cobalt/10 bg-white p-3.5 shadow-xl tablet:flex tablet:items-center tablet:gap-3"
-            >
-              <div className="grid h-10 w-10 place-items-center rounded-xl bg-revora-sky text-revora-cobalt">
-                <Award className="h-5 w-5" />
-              </div>
-              <div className="pr-2">
-                <p className="font-sans text-[10px] font-bold uppercase tracking-wider text-revora-crimson">Commitment</p>
-                <p className="font-heading text-[13px] font-bold text-revora-slate">Quality Without Compromise</p>
               </div>
             </div>
           </motion.div>

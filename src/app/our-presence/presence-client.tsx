@@ -33,8 +33,8 @@ const FACILITIES = [
     roles: ['Sales & marketing', 'Distribution & supply planning', 'Partnerships & institutional supply', 'Pharmacovigilance'],
     facts: [['Incorporated', '10 March 2026'], ['CIN', 'U21000GJ2026PTC174674']],
     mapQuery: 'S.G. Business Hub, Gota, Ahmedabad, Gujarat 380060',
-    images: ['/images/logos/moxora.webp', '/images/logos/rehynate.webp', '/images/logos/revopt-tablets.webp'],
-    logos: true,
+    images: ['/images/photos/ahmedabad-skyline.webp'],
+    logos: false,
     second: { label: 'Visit HQ page', href: '/our-presence/ahmedabad', icon: undefined },
   },
   {
