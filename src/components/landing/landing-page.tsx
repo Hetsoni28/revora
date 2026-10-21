@@ -8,7 +8,6 @@ import { LandingHero } from './hero';
 import { BrandMarquee, Manifesto } from './marquee-manifesto';
 import { Pillars } from './pillars';
 import { Portfolio } from './portfolio';
-import { Therapies } from './therapies';
 import { Plant } from './plant';
 import { FounderSection } from './founder';
 import { ContactBand } from './contact-band';
@@ -16,7 +15,7 @@ import { ContactBand } from './contact-band';
 /**
  * Revora Healthcare — landing page.
  * Section order: Intro → Hero → Brand marquee → Philosophy → Why Revora →
- * Portfolio (pinned horizontal rail) → Therapy areas → Plant → Leadership (Founder) → Contact → Footer.
+ * Portfolio (pinned horizontal rail) → Plant → Leadership (Founder) → Contact → Footer.
  */
 export function LandingPage() {
   // Hero entrance waits for the intro curtain on the first visit of a session.
@@ -33,7 +32,6 @@ export function LandingPage() {
         <Manifesto />
         <Pillars />
         <Portfolio />
-        <Therapies />
         <Plant />
         <FounderSection />
         <ContactBand />
