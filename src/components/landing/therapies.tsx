@@ -11,7 +11,7 @@ import { Eyebrow, SplitWords } from '@/components/ui/primitives';
 const NAME = Object.fromEntries(ALL_PRODUCTS.map((p) => [p.id, p.name]));
 
 export function Therapies() {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState<number | null>(0);
   const reduce = useReducedMotion();
 
   return (
@@ -29,17 +29,19 @@ export function Therapies() {
           {/* big animated index */}
           <div className="relative mt-12 hidden h-[140px] overflow-hidden tablet-lg:block">
             <AnimatePresence mode="popLayout" initial={false}>
-              <motion.span
-                key={active}
-                initial={reduce ? false : { y: '100%' }}
-                animate={{ y: '0%' }}
-                exit={{ y: '-100%' }}
-                transition={{ duration: 0.7, ease: expoOut }}
-                className="absolute font-heading text-[140px] font-extrabold leading-none tracking-[-0.04em]"
-                style={{ color: THERAPY_CATEGORIES[active].color }}
-              >
-                0{active + 1}
-              </motion.span>
+              {active !== null && THERAPY_CATEGORIES[active] && (
+                <motion.span
+                  key={active}
+                  initial={reduce ? false : { y: '100%' }}
+                  animate={{ y: '0%' }}
+                  exit={{ y: '-100%' }}
+                  transition={{ duration: 0.7, ease: expoOut }}
+                  className="absolute font-heading text-[140px] font-extrabold leading-none tracking-[-0.04em]"
+                  style={{ color: THERAPY_CATEGORIES[active].color }}
+                >
+                  0{active + 1}
+                </motion.span>
+              )}
             </AnimatePresence>
           </div>
         </div>
@@ -50,9 +52,11 @@ export function Therapies() {
             return (
               <li key={c.slug} className="border-b border-revora-cobalt/10">
                 <button
-                  onClick={() => setActive(i)}
+                  type="button"
+                  onClick={() => setActive((prev) => (prev === i ? null : i))}
                   aria-expanded={open}
-                  className="group flex w-full items-center gap-5 py-7 text-left tablet:py-9"
+                  aria-label={open ? `Close ${c.shortName}` : `Open ${c.shortName}`}
+                  className="group flex w-full cursor-pointer items-center gap-5 py-7 text-left tablet:py-9"
                 >
                   <span className="font-sans text-[12px] font-semibold text-revora-slate-muted">0{i + 1}</span>
                   <span
@@ -67,6 +71,7 @@ export function Therapies() {
                       open ? 'rotate-45 text-white' : 'bg-revora-sky text-revora-cobalt'
                     }`}
                     style={open ? { background: c.color } : undefined}
+                    aria-hidden="true"
                   >
                     <Plus className="h-5 w-5" />
                   </span>
