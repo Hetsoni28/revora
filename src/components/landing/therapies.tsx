@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight, Plus } from 'lucide-react';
@@ -8,7 +9,7 @@ import { THERAPY_CATEGORIES, ALL_PRODUCTS } from '@/lib/therapies-data';
 import { expoOut } from '@/lib/easings';
 import { Eyebrow, SplitWords } from '@/components/ui/primitives';
 
-const NAME = Object.fromEntries(ALL_PRODUCTS.map((p) => [p.id, p.name]));
+const PRODUCT = Object.fromEntries(ALL_PRODUCTS.map((p) => [p.id, p]));
 
 export function Therapies() {
   const [active, setActive] = useState<number | null>(0);
@@ -88,19 +89,23 @@ export function Therapies() {
                     >
                       <div className="pb-9 pl-0 tablet:pl-10">
                         <p className="max-w-xl font-sans text-[15px] leading-[1.75] text-revora-slate-light">{c.subtitle}.</p>
-                        <div className="mt-6 flex flex-wrap gap-2">
-                          {c.productIds.map((id) => (
-                            <Link
-                              key={id}
-                              href={`/products/${id}`}
-                              className="rounded-full border px-4 py-2 font-heading text-[14px] font-bold transition-colors duration-300 hover:text-white"
-                              style={{ borderColor: `${c.color}40`, color: c.color }}
-                              onMouseEnter={(e) => (e.currentTarget.style.background = c.color)}
-                              onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-                            >
-                              {NAME[id]}
-                            </Link>
-                          ))}
+                        <div className="mt-6 grid max-w-2xl grid-cols-2 gap-3 tablet:grid-cols-3">
+                          {c.productIds.map((id) => {
+                            const p = PRODUCT[id];
+                            if (!p) return null;
+                            return (
+                              <Link
+                                key={id}
+                                href={`/products/${id}`}
+                                aria-label={p.name}
+                                title={p.name}
+                                className="relative block h-16 rounded-2xl border bg-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_rgba(11,74,143,0.55)] tablet:h-20"
+                                style={{ borderColor: `${c.color}33` }}
+                              >
+                                <Image src={p.logo} alt={`${p.name} logo`} fill sizes="200px" className="object-contain p-3" />
+                              </Link>
+                            );
+                          })}
                         </div>
                         <Link
                           href={`/our-offerings/${c.slug}`}
