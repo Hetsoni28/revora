@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Building2, CalendarDays, Factory, Hospital, Layers, MapPin, Pill, Stethoscope, Truck } from 'lucide-react';
 import { ALL_PRODUCTS, THERAPY_CATEGORIES } from '@/lib/therapies-data';
 import { Counter, FadeUp } from '@/components/ui/primitives';
@@ -129,8 +130,70 @@ export function AboutClient() {
         </div>
       </section>
 
+      {/* ── leadership & vision (founder) ── */}
+      <section className="border-y border-revora-cobalt/10 bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+        <div className="mx-auto max-w-330">
+          <SectionHeading
+            eyebrow="Leadership & Direction"
+            lines={['Vision from the founder.']}
+            highlight={{ 'founder.': 'text-revora-cobalt' }}
+            aside="Steering Revora's journey with a singular commitment to ophthalmic excellence."
+          />
+
+          <div className="mt-14 grid grid-cols-[minmax(0,1fr)] items-center gap-10 tablet-lg:grid-cols-[0.85fr_1.15fr] tablet-lg:gap-16">
+            <FadeUp>
+              <div className="relative mx-auto max-w-[420px] tablet-lg:mx-0 tablet-lg:max-w-none">
+                <div className="relative aspect-square w-full overflow-hidden rounded-[28px] border border-revora-cobalt/15 bg-revora-cobalt-deep shadow-[0_24px_60px_-20px_rgba(11,74,143,0.25)]">
+                  <Image
+                    src="/images/leadership/founder.webp"
+                    alt="Founder & Managing Director — Revora Healthcare"
+                    fill
+                    sizes="(min-width: 1024px) 40vw, 85vw"
+                    className="object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-revora-slate/90 via-revora-slate/40 to-transparent p-6 text-white">
+                    <p className="font-heading text-xl font-bold">Founder & Managing Director</p>
+                    <p className="mt-0.5 font-sans text-[13px] text-white/80">Revora Healthcare Private Limited</p>
+                  </div>
+                </div>
+              </div>
+            </FadeUp>
+
+            <FadeUp delay={0.15}>
+              <div className="space-y-6">
+                <div className="rounded-[24px] border border-revora-cobalt/15 bg-revora-sky/40 p-6 tablet:p-8">
+                  <p className="font-heading text-lg font-bold italic leading-relaxed text-revora-slate tablet:text-xl">
+                    “Healthcare is not just about bringing molecules to market—it is about earning the trust of the surgeon in the operating room and the patient at home every single day.”
+                  </p>
+                </div>
+
+                <div className="space-y-4 font-sans text-[15.5px] leading-[1.8] text-revora-slate-light">
+                  <p>
+                    Revora was founded in Ahmedabad with a focused ambition: to create an ophthalmic enterprise that combines dedicated WHO-GMP manufacturing with advanced ocular formulations.
+                  </p>
+                  <p>
+                    Under his direction, the company established its own dedicated eye-drop plant at Paonta Sahib, Himachal Pradesh, ensuring complete oversight over sterility, purity, and formulation stability. Today, Revora continues to expand into post-operative surgical solutions, dry eye therapeutics, and specialized healthcare products across India.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-4 border-t border-revora-cobalt/10 pt-6">
+                  <div>
+                    <p className="font-heading text-[17px] font-extrabold text-revora-slate">Founder & Managing Director</p>
+                    <p className="font-sans text-[13px] text-revora-slate-muted">Ahmedabad, Gujarat</p>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-revora-sky px-4 py-2 font-sans text-[12px] font-semibold text-revora-cobalt">
+                    <span className="h-2 w-2 rounded-full bg-revora-cobalt" />
+                    WHO-GMP & ISO 9001:2015 Direction
+                  </span>
+                </div>
+              </div>
+            </FadeUp>
+          </div>
+        </div>
+      </section>
+
       {/* ── the people we serve ── */}
-      <section className="px-5 pb-20 tablet:px-8 tablet:pb-28">
+      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
         <div className="mx-auto grid max-w-330 gap-5 tablet:grid-cols-2">
           {[
             { src: '/images/photos/eye-exam-doctor.webp', alt: 'Patient during an eye examination', label: 'For doctors', text: 'Formulations ophthalmologists can prescribe with confidence.' },

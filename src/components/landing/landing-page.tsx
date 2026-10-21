@@ -10,12 +10,13 @@ import { Pillars } from './pillars';
 import { Portfolio } from './portfolio';
 import { Therapies } from './therapies';
 import { Plant } from './plant';
+import { FounderSection } from './founder';
 import { ContactBand } from './contact-band';
 
 /**
  * Revora Healthcare — landing page.
  * Section order: Intro → Hero → Brand marquee → Philosophy → Why Revora →
- * Portfolio (pinned horizontal rail) → Therapy areas → Plant → Contact → Footer.
+ * Portfolio (pinned horizontal rail) → Therapy areas → Plant → Leadership (Founder) → Contact → Footer.
  */
 export function LandingPage() {
   // Hero entrance waits for the intro curtain on the first visit of a session.
@@ -34,6 +35,7 @@ export function LandingPage() {
         <Portfolio />
         <Therapies />
         <Plant />
+        <FounderSection />
         <ContactBand />
       </main>
       <Footer />
