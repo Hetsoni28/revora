@@ -50,7 +50,7 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
       <div aria-hidden className="absolute -right-20 -top-20 -z-10 h-[420px] w-[420px] rounded-full bg-revora-cobalt-light/10 blur-3xl" />
 
       <div className="mx-auto grid w-full max-w-[1320px] items-center gap-10 px-5 tablet:px-8 tablet-lg:grid-cols-[1.1fr_0.9fr] desktop:gap-4">
-        <motion.div style={parallax ? { y: copyY, opacity: copyOpacity } : undefined} className="relative z-10">
+        <motion.div style={parallax ? { y: copyY } : undefined} className="relative z-10">
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
