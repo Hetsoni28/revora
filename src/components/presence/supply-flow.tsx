@@ -17,7 +17,7 @@ const FLOW = [
 ];
 
 /** "From our plant to the patient" — five steps joined by a line that draws as you scroll. */
-export function SupplyFlow({ image = '/images/site/sterile-formulation-lab.jpg', imageAlt = 'Technicians in a sterile formulation laboratory' }: { image?: string; imageAlt?: string }) {
+export function SupplyFlow({ image = '/images/site/sterile-formulation-lab.webp', imageAlt = 'Technicians in a sterile formulation laboratory' }: { image?: string; imageAlt?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.8', 'end 0.55'] });

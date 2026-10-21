@@ -35,7 +35,7 @@ export function Plant() {
         />
 
         <MediaFrame
-          src="/images/site/eye-drop-filling-line.jpg"
+          src="/images/site/eye-drop-filling-line.webp"
           alt="Eye-drop bottles moving along a sterile filling line"
           aspect="aspect-[4/3] tablet:aspect-[21/9]"
           sizes="(min-width: 1320px) 1320px, 100vw"

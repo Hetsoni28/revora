@@ -23,6 +23,7 @@ export function ProductLogo({ product, className = 'aspect-[4/3]', link = true, 
       style={{ background: `radial-gradient(ellipse at 50% 40%, #ffffff 30%, ${product.color}14 100%)` }}
     >
       <Image
+        unoptimized
         src={product.logo}
         alt={`${product.name} logo`}
         fill
@@ -41,14 +42,16 @@ export function ProductLogo({ product, className = 'aspect-[4/3]', link = true, 
 }
 
 /** Logo only, no tile or card — the whole logo links to the product. */
-export function ProductLogoLink({ product, className = 'h-[150px] w-full tablet:h-[180px]', sizes = '(min-width: 768px) 340px, 70vw' }: { product: Product; className?: string; sizes?: string }) {
+export function ProductLogoLink({ product, className = 'h-[150px] w-full tablet:h-[180px]', sizes = '(min-width: 768px) 340px, 70vw', eager = false }: { product: Product; className?: string; sizes?: string; eager?: boolean }) {
   return (
     <Link href={`/products/${product.id}`} aria-label={`${product.name} — view product details`} className={`group relative block ${className}`}>
       <Image
+        unoptimized
         src={product.logo}
         alt={`${product.name} logo`}
         fill
         sizes={sizes}
+        loading={eager ? 'eager' : 'lazy'}
         className="object-contain transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1.5 group-hover:scale-[1.06]"
       />
     </Link>

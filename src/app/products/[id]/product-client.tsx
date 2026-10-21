@@ -33,7 +33,7 @@ import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { ProductLogo, ProductLogoLink } from '@/components/offerings/product-logo';
 import { FormularyBanner } from '@/components/offerings/formulary-banner';
-import { FormularyModal } from '@/components/offerings/formulary-modal';
+import { LazyFormularyModal as FormularyModal } from '@/components/offerings/lazy-formulary-modal';
 
 interface ProductClientProps {
   product: Product;

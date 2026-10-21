@@ -10,6 +10,7 @@ import {
   useAnimationFrame,
   useMotionValue,
   useReducedMotion,
+  useInView,
   type MotionValue,
 } from 'framer-motion';
 import Image from 'next/image';
@@ -28,6 +29,9 @@ function wrap(min: number, max: number, v: number) {
 
 export function BrandMarquee() {
   const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  // Skip per-frame work while the strip is off screen.
+  const visible = useInView(sectionRef, { margin: '200px 0px' });
   const base = useMotionValue(0);
   const { scrollY } = useScroll();
   const vel = useSpring(useVelocity(scrollY), { damping: 50, stiffness: 400 });
@@ -36,7 +40,7 @@ export function BrandMarquee() {
   const dir = useRef(1);
 
   useAnimationFrame((_, delta) => {
-    if (reduce) return;
+    if (reduce || !visible) return;
     const f = factor.get();
     if (f < 0) dir.current = -1;
     else if (f > 0) dir.current = 1;
@@ -48,7 +52,7 @@ export function BrandMarquee() {
   const row = [...ALL_PRODUCTS, ...ALL_PRODUCTS];
 
   return (
-    <section aria-label="Revora brands" className="relative overflow-hidden border-y border-revora-cobalt/10 bg-white py-7 tablet:py-9">
+    <section ref={sectionRef} aria-label="Revora brands" className="relative overflow-hidden border-y border-revora-cobalt/10 bg-white py-7 tablet:py-9">
       <motion.div className="flex w-max whitespace-nowrap" style={{ x }}>
         {[0, 1].map((k) => (
           <div key={k} className="flex shrink-0 items-center" aria-hidden={k === 1}>
@@ -60,7 +64,7 @@ export function BrandMarquee() {
                   aria-label={p.name}
                   className="relative mx-6 block h-14 w-44 transition-transform duration-500 hover:scale-110 tablet:mx-10 tablet:h-20 tablet:w-60"
                 >
-                  <Image src={p.logo} alt={`${p.name} logo`} fill sizes="240px" className="object-contain" />
+                  <Image unoptimized loading="eager" src={p.logo} alt={`${p.name} logo`} fill sizes="240px" className="object-contain" />
                 </Link>
                 <Tick className="h-5 w-6 text-revora-crimson tablet:h-6 tablet:w-8" />
               </span>

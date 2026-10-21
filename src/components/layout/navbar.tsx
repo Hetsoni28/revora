@@ -333,7 +333,7 @@ export function Navbar() {
                                         aria-label={p.name}
                                         className="relative block h-14 rounded-xl border border-revora-cobalt/10 bg-white"
                                       >
-                                        <Image src={p.logo} alt={`${p.name} logo`} fill sizes="160px" className="object-contain p-2.5" />
+                                        <Image unoptimized src={p.logo} alt={`${p.name} logo`} fill sizes="160px" className="object-contain p-2.5" />
                                       </Link>
                                     ))}
                                   </div>
@@ -446,7 +446,7 @@ function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
                       title={p.name}
                       className="group/p relative block h-12 rounded-xl border border-revora-cobalt/10 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-revora-cobalt/30 hover:shadow-[0_10px_24px_-14px_rgba(11,74,143,0.5)]"
                     >
-                      <Image src={p.logo} alt={`${p.name} logo`} fill sizes="140px" className="object-contain p-2" />
+                      <Image unoptimized src={p.logo} alt={`${p.name} logo`} fill sizes="140px" className="object-contain p-2" />
                     </Link>
                   ))}
                 </div>

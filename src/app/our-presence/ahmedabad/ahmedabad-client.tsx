@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { toast } from 'sonner';
 import { Check, Copy, HeartPulse, Mail, MapPin, Megaphone, Navigation, PackageCheck, Truck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
@@ -178,9 +178,12 @@ function AddressCard() {
   );
 }
 
-/** Live Google map of the office (no API key needed). */
+/** Live Google map of the office (no API key needed). Google's ~400 KB of map code is only
+ *  fetched once the card is actually on screen, not with the page. */
 function MapCard() {
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const near = useInView(ref, { once: true, margin: '0px 0px -10% 0px' });
   return (
     <motion.div
       // fade + rise (a fully clipped element never registers as in view)
@@ -188,8 +191,13 @@ function MapCard() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-8% 0px' }}
       transition={{ duration: 1.1, delay: 0.1, ease: expoOut }}
+      ref={ref}
       className="relative min-h-[360px] overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-revora-sky tablet:min-h-[440px]"
     >
+      <div aria-hidden className="absolute inset-0 grid place-items-center">
+        <MapPin className="h-10 w-10 animate-pulse text-revora-cobalt/40" />
+      </div>
+      {near && (
       <iframe
         title="Map of Revora Healthcare, S.G. Business Hub, Ahmedabad"
         src={`https://maps.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&z=15&output=embed`}
@@ -197,6 +205,7 @@ function MapCard() {
         referrerPolicy="no-referrer-when-downgrade"
         className="absolute inset-0 h-full w-full border-0"
       />
+      )}
     </motion.div>
   );
 }

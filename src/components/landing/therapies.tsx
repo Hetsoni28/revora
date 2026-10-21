@@ -102,7 +102,7 @@ export function Therapies() {
                                 className="relative block h-16 rounded-2xl border bg-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_rgba(11,74,143,0.55)] tablet:h-20"
                                 style={{ borderColor: `${c.color}33` }}
                               >
-                                <Image src={p.logo} alt={`${p.name} logo`} fill sizes="200px" className="object-contain p-3" />
+                                <Image unoptimized src={p.logo} alt={`${p.name} logo`} fill sizes="200px" className="object-contain p-3" />
                               </Link>
                             );
                           })}

@@ -48,7 +48,7 @@ const FACILITIES = [
     roles: ['Sterile eye-drop filling', 'Dedicated ophthalmic lines', 'Quality control & release', 'Packing in premium cartons'],
     facts: [['Standard', 'WHO-GMP'], ['Compliance', 'EU-compliant']],
     mapQuery: 'Paonta Sahib, Himachal Pradesh',
-    images: ['/images/site/eye-drop-filling-line.jpg'],
+    images: ['/images/site/eye-drop-filling-line.webp'],
     logos: false,
     second: { label: 'Certifications', href: '/certifications', icon: undefined },
   },

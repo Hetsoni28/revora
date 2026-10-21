@@ -23,10 +23,12 @@ const plusJakartaSans = localFont({
   display: "swap",
 });
 
+// Only used for a few small CIN/strength labels, so don't preload it on every page.
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {

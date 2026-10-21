@@ -6,13 +6,16 @@ import { createImageUrlBuilder } from '@sanity/image-url';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SanityImageSource = any;
 
+const token = process.env.SANITY_API_TOKEN ?? process.env.SANITY_API_READ_TOKEN;
+
 const config = {
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? '2024-10-01',
-  useCdn: false,
+  // Public dataset: read through Sanity's edge CDN (faster, cached). With a token, read the live API.
+  useCdn: !token,
   // Read-only (Viewer) token. Local .env.local uses SANITY_API_TOKEN; the Sanity–Vercel integration sets SANITY_API_READ_TOKEN.
-  token: process.env.SANITY_API_TOKEN ?? process.env.SANITY_API_READ_TOKEN,
+  token,
 };
 
 export const sanityClient = createClient(config);

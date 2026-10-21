@@ -11,7 +11,7 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import { ProductCard } from '@/components/offerings/product-card';
 import { CategoryCard } from '@/components/offerings/category-card';
 import { FormularyBanner } from '@/components/offerings/formulary-banner';
-import { FormularyModal } from '@/components/offerings/formulary-modal';
+import { LazyFormularyModal as FormularyModal } from '@/components/offerings/lazy-formulary-modal';
 
 interface OfferingsClientProps {
   initialProducts: Product[];

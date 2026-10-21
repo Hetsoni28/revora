@@ -79,7 +79,7 @@ export function Portfolio() {
           } desktop:pl-[max(2rem,calc((100vw-1320px)/2+2rem))]`}
         >
           {ALL_PRODUCTS.map((p) => (
-            <ProductLogoLink key={p.id} product={p} className="h-[150px] w-[64vw] max-w-[340px] shrink-0 snap-start tablet:h-[180px] tablet:w-[340px]" />
+            <ProductLogoLink key={p.id} product={p} eager className="h-[150px] w-[64vw] max-w-[340px] shrink-0 snap-start tablet:h-[180px] tablet:w-[340px]" />
           ))}
         </motion.div>
 
