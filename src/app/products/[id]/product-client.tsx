@@ -322,7 +322,7 @@ export function ProductClient({ product, category }: ProductClientProps) {
         <div className="mx-auto max-w-330">
           <FormularyBanner
             title={`Stock ${product.name} at your hospital or pharmacy.`}
-            description="Request samples, prescribing literature or an institutional rate card — our team supports doctors, hospitals, pharmacies and distributors across India."
+            description="Samples, literature or a rate card — our team replies across India."
             buttonLabel="Request rate card & samples"
             onAction={() => setModalOpen(true)}
           />

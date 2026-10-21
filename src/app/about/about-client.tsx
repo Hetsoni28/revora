@@ -47,7 +47,7 @@ export function AboutClient() {
         eyebrow="About Revora"
         lines={['Healthcare,', 'beyond the cure.']}
         highlight={{ 'beyond': 'text-revora-cobalt', 'cure.': 'text-revora-crimson' }}
-        text="A pharmaceutical company in Ahmedabad, focused on reliable eye care for doctors, hospitals, pharmacies and distributors across India."
+        text="Reliable eye care from Ahmedabad — for doctors, hospitals, pharmacies and distributors across India."
         actions={
           <>
             <Button href="/our-offerings" arrow="up-right" magnetic>Our products</Button>
@@ -79,8 +79,8 @@ export function AboutClient() {
             <SectionHeading eyebrow="Who we are" lines={['Eye care first.', 'More to come.']} highlight={{ 'first.': 'text-revora-cobalt' }} />
             <FadeUp delay={0.15}>
               <p className="mt-6 max-w-md font-sans text-[16.5px] leading-[1.75] text-revora-slate-light">
-                Revora Healthcare Private Limited is a trusted pharmaceutical company in Ahmedabad, Gujarat, specialising in ophthalmic
-                pharmaceuticals and expanding into specialty healthcare products and medical devices.
+                An Ahmedabad pharmaceutical company focused on ophthalmics — and growing into specialty healthcare products and medical
+                devices.
               </p>
             </FadeUp>
             <FadeUp delay={0.25}>
@@ -163,16 +163,16 @@ export function AboutClient() {
               <div className="space-y-6">
                 <div className="rounded-[24px] border border-revora-cobalt/15 bg-revora-sky/40 p-6 tablet:p-8">
                   <p className="font-heading text-lg font-bold italic leading-relaxed text-revora-slate tablet:text-xl">
-                    “Healthcare is not just about bringing molecules to market—it is about earning the trust of the surgeon in the operating room and the patient at home every single day.”
+                    “Healthcare is about earning trust — of the surgeon in theatre and the patient at home, every day.”
                   </p>
                 </div>
 
                 <div className="space-y-4 font-sans text-[15.5px] leading-[1.8] text-revora-slate-light">
                   <p>
-                    Revora was founded in Ahmedabad with a focused ambition: to create an ophthalmic enterprise that combines dedicated WHO-GMP manufacturing with advanced ocular formulations.
+                    Revora was founded in Ahmedabad to pair dedicated WHO-GMP manufacturing with focused eye-care formulations.
                   </p>
                   <p>
-                    Under his direction, the company established its own dedicated eye-drop plant at Paonta Sahib, Himachal Pradesh, ensuring complete oversight over sterility, purity, and formulation stability. Today, Revora continues to expand into post-operative surgical solutions, dry eye therapeutics, and specialized healthcare products across India.
+                    Our own eye-drop plant at Paonta Sahib keeps quality in our hands — and the portfolio keeps growing across India.
                   </p>
                 </div>
 

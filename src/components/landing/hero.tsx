@@ -76,8 +76,8 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: d + 0.7, ease: expoOut }}
           >
-            Revora Healthcare builds precision eye-care brands — anti-infectives, tear substitutes,
-            NSAIDs and retinal nutrition — made in our own WHO-GMP, EU-compliant eye-drop plant.
+            Trusted eye-care medicines for doctors and patients across India — made in our own
+            WHO-GMP certified plant.
           </motion.p>
 
           <motion.div

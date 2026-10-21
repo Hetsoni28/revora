@@ -26,7 +26,7 @@ const AUDIENCES = [
     name: 'Doctors',
     image: '/images/photos/doctor-portrait.webp',
     alt: 'Doctor in a white coat with a stethoscope',
-    text: 'Ophthalmic formulations you can prescribe with confidence, with product literature and samples on request.',
+    text: 'Formulations to prescribe with confidence.',
     points: ['Product literature', 'Samples on request', 'Medical representative support'],
   },
   {
@@ -35,7 +35,7 @@ const AUDIENCES = [
     name: 'Hospitals & eye clinics',
     image: '/images/photos/hospital-doctors.webp',
     alt: 'Two doctors reviewing a scan together',
-    text: 'A focused portfolio for the eye clinic — from anti-infectives to post-surgical care and retinal nutrition.',
+    text: 'A focused portfolio for the eye clinic.',
     points: ['Four therapy areas', 'Institutional supply', 'Rate cards on request'],
   },
   {
@@ -44,7 +44,7 @@ const AUDIENCES = [
     name: 'Pharmacies',
     image: '/images/photos/pharmacist.webp',
     alt: 'Pharmacist in a white coat at a pharmacy',
-    text: 'Recognisable, premium cartons and steady supply for the pharmacies patients visit every day.',
+    text: 'Premium packs and steady supply.',
     points: ['Premium outer cartons', 'Consistent supply', 'Easy re-ordering'],
   },
   {
@@ -53,7 +53,7 @@ const AUDIENCES = [
     name: 'Distributors & stockists',
     image: '/images/photos/warehouse-inventory.webp',
     alt: 'Worker checking medicine stock in a warehouse',
-    text: 'Partnerships that bring a dedicated ophthalmic portfolio to new territories across India.',
+    text: 'Our range, in new territories.',
     points: ['Dedicated eye-care range', 'Made in our own plant', 'Support from Ahmedabad HQ'],
   },
 ];
@@ -72,7 +72,7 @@ export function DomesticClient() {
         eyebrow="Domestic Network"
         lines={['Every link in', 'the eye-care chain.']}
         highlight={{ 'eye-care': 'text-revora-cobalt' }}
-        text="From our plant to doctors, hospitals, pharmacies and distributors — building lasting relationships across India."
+        text="From our plant to every doctor, hospital and pharmacy across India."
         actions={
           <>
             <Button href="#partner" arrow="up-right" magnetic>Become a partner</Button>
@@ -89,8 +89,7 @@ export function DomesticClient() {
             <SectionHeading eyebrow="Across India" lines={['One office. One plant.', 'All of India.']} highlight={{ 'India.': 'text-revora-cobalt' }} />
             <FadeUp delay={0.15}>
               <p className="mt-6 max-w-md font-sans text-[16.5px] leading-[1.75] text-revora-slate-light">
-                Made at our WHO-GMP plant in Paonta Sahib, coordinated from our Ahmedabad headquarters, and delivered to doctors, hospitals and
-                pharmacies across the country through our distribution partners.
+                Made in Paonta Sahib, run from Ahmedabad, delivered across India by our partners.
               </p>
               <ul className="mt-8 space-y-4">
                 {[
@@ -218,7 +217,7 @@ function Partner() {
           <SectionHeading eyebrow="Become a partner" lines={['Bring Revora to', 'your territory.']} highlight={{ 'territory.': 'text-revora-cobalt' }} />
           <FadeUp delay={0.15}>
             <p className="mt-6 max-w-md font-sans text-[16.5px] leading-[1.75] text-revora-slate-light">
-              We’re looking for distributors and stockists who share our focus on reliable eye care.
+              Distributors and stockists — let’s grow together.
             </p>
             <dl className="mt-10 grid grid-cols-3 gap-4 border-t border-revora-cobalt/10 pt-8">
               {WHY.map((w) => (

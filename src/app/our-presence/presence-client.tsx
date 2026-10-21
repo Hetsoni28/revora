@@ -29,7 +29,7 @@ const FACILITIES = [
     name: 'Corporate headquarters',
     city: 'Ahmedabad, Gujarat',
     address: '3rd Floor, S.G. Business Hub, A/303, Sarkhej–Gandhinagar Highway, near Gota Overbridge, Ognaj, Ahmedabad, Gujarat 380060',
-    detail: 'Our Ahmedabad office leads sales, distribution and partnerships with doctors, hospitals, pharmacies and distributors across India.',
+    detail: 'Sales, distribution and partnerships for all of India.',
     roles: ['Sales & marketing', 'Distribution & supply planning', 'Partnerships & institutional supply', 'Pharmacovigilance'],
     facts: [['Incorporated', '10 March 2026'], ['CIN', 'U21000GJ2026PTC174674']],
     mapQuery: 'S.G. Business Hub, Gota, Ahmedabad, Gujarat 380060',
@@ -44,7 +44,7 @@ const FACILITIES = [
     name: 'Ophthalmic manufacturing plant',
     city: 'Paonta Sahib, Himachal Pradesh',
     address: 'Paonta Sahib, Himachal Pradesh',
-    detail: 'Revora eye drops are made in our own dedicated eye-drop plant — WHO-GMP certified and EU-compliant — so quality stays in our hands.',
+    detail: 'Our own eye-drop plant — WHO-GMP certified and EU-compliant.',
     roles: ['Sterile eye-drop filling', 'Dedicated ophthalmic lines', 'Quality control & release', 'Packing in premium cartons'],
     facts: [['Standard', 'WHO-GMP'], ['Compliance', 'EU-compliant']],
     mapQuery: 'Paonta Sahib, Himachal Pradesh',
@@ -55,10 +55,10 @@ const FACILITIES = [
 ];
 
 const AUDIENCES = [
-  { icon: Stethoscope, name: 'Doctors & ophthalmologists', detail: 'Reliable ophthalmic formulations, product literature and medical representative support for prescribers.' },
-  { icon: Hospital, name: 'Hospitals & eye clinics', detail: 'A focused portfolio spanning anti-infectives, tear substitutes, post-surgical NSAIDs and retinal nutrition.' },
-  { icon: Pill, name: 'Pharmacies', detail: 'Premium, recognisable cartons and consistent supply for the pharmacies that serve patients every day.' },
-  { icon: Truck, name: 'Distributors & stockists', detail: 'Partnerships that bring a dedicated ophthalmic portfolio to new territories across India.' },
+  { icon: Stethoscope, name: 'Doctors & ophthalmologists', detail: 'Formulations, literature and rep support.' },
+  { icon: Hospital, name: 'Hospitals & eye clinics', detail: 'A focused portfolio across four therapy areas.' },
+  { icon: Pill, name: 'Pharmacies', detail: 'Recognisable packs and steady supply.' },
+  { icon: Truck, name: 'Distributors & stockists', detail: 'Our range, in new territories.' },
 ];
 
 /** Reveal-on-scroll wrapper shared by the cards on this page. */
@@ -95,8 +95,7 @@ export function PresenceClient() {
               />
               <FadeUp delay={0.5}>
                 <p className="mt-7 max-w-xl font-sans text-[17px] leading-[1.7] text-revora-slate-light">
-                  From our office at S.G. Business Hub in Ahmedabad and our own eye-drop plant in Himachal Pradesh, Revora Healthcare serves
-                  doctors, hospitals, pharmacies and distributors across India.
+                  An Ahmedabad office and our own eye-drop plant — serving doctors, hospitals, pharmacies and distributors across India.
                 </p>
               </FadeUp>
               <FadeUp delay={0.6} className="mt-9 flex flex-wrap gap-3">
@@ -128,7 +127,7 @@ export function PresenceClient() {
             eyebrow="Where we operate"
             lines={['One office. One plant.', 'One focus.']}
             highlight={{ 'focus.': 'text-revora-crimson' }}
-            aside="A corporate office in Ahmedabad, Gujarat and a dedicated ophthalmic manufacturing plant in Himachal Pradesh."
+            aside="Ahmedabad office. Himachal Pradesh plant."
           />
           <div className="mt-14 grid grid-cols-[minmax(0,1fr)] gap-5 tablet-lg:grid-cols-2">
             {FACILITIES.map((f, i) => (
@@ -149,7 +148,7 @@ export function PresenceClient() {
             eyebrow="Domestic network"
             lines={['Who we serve across India.']}
             highlight={{ 'India.': 'text-revora-cobalt' }}
-            aside="Specialising in ophthalmic pharmaceuticals and expanding into specialty healthcare products and medical devices, we build lasting relationships with every link in the eye-care chain."
+            aside="Lasting relationships with every link in the eye-care chain."
           />
           <div className="mt-14 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-4">
             {AUDIENCES.map((a, i) => (
@@ -187,8 +186,7 @@ export function PresenceClient() {
                 Bring Revora to the doctors and pharmacies in your territory.
               </h2>
               <p className="mt-4 font-sans text-[16px] leading-[1.7] text-white/70">
-                We’re looking for distributors and stockists who share our focus on reliable eye care. Tell us about your region and our business
-                team will get in touch.
+                Tell us about your region — our business team will get in touch.
               </p>
             </div>
             <div className="flex flex-wrap gap-3 desktop:shrink-0 desktop:flex-col">

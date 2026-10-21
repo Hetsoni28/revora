@@ -39,7 +39,7 @@ export function AhmedabadClient() {
         eyebrow="Ahmedabad Headquarters"
         lines={['Our home on', 'S.G. Highway.']}
         highlight={{ 'S.G.': 'text-revora-cobalt', 'Highway.': 'text-revora-cobalt' }}
-        text="Our registered and corporate office, where sales, supply and partnerships for all of India are run."
+        text="Our registered and corporate office — running sales, supply and partnerships."
         actions={
           <>
             <Button href={DIRECTIONS} arrow="up-right" magnetic>Get directions</Button>
@@ -60,7 +60,7 @@ export function AhmedabadClient() {
       {/* ── what happens here ── */}
       <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
         <div className="mx-auto max-w-330">
-          <SectionHeading eyebrow="What happens here" lines={['Run from Ahmedabad.']} highlight={{ 'Ahmedabad.': 'text-revora-cobalt' }} aside="Our eye drops are made at our Paonta Sahib plant. Everything that brings them to you is run from here." />
+          <SectionHeading eyebrow="What happens here" lines={['Run from Ahmedabad.']} highlight={{ 'Ahmedabad.': 'text-revora-cobalt' }} aside="Made in Paonta Sahib. Run from here." />
           <div className="mt-12 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-4">
             {TEAMS.map((t, i) => (
               <FadeUp key={t.name} delay={i * 0.08}>
@@ -89,8 +89,7 @@ export function AhmedabadClient() {
             <SectionHeading eyebrow="Why Ahmedabad" lines={['Gujarat’s pharma', 'heartland.']} highlight={{ 'heartland.': 'text-revora-crimson' }} />
             <FadeUp delay={0.15}>
               <p className="mt-6 max-w-md font-sans text-[16.5px] leading-[1.75] text-revora-slate-light">
-                Ahmedabad sits at the centre of Gujarat’s pharmaceutical industry. Our office on the Sarkhej–Gandhinagar Highway keeps us close to the
-                partners and people we work with.
+                At the heart of Gujarat’s pharma industry — close to the partners we work with.
               </p>
               <ul className="mt-7 space-y-3">
                 {['Registered office of Revora Healthcare Private Limited', 'Incorporated 10 March 2026', 'CIN U21000GJ2026PTC174674'].map((x) => (

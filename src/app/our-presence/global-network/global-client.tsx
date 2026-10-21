@@ -133,7 +133,7 @@ export function GlobalClient() {
             eyebrow="Export Readiness"
             lines={['Built for stringent', 'global standards.']}
             highlight={{ 'global': 'text-revora-cobalt' }}
-            aside="From sterile ophthalmic BFS production to complete dossier preparation, our operations are tuned for international markets."
+            aside="Quality and documentation built for international markets."
           />
 
           <div className="mt-14 grid gap-6 sm:grid-cols-2 desktop:grid-cols-4">
@@ -168,7 +168,7 @@ export function GlobalClient() {
               Partner with Revora in your country.
             </h2>
             <p className="mt-4 font-sans text-base text-revora-slate-light leading-relaxed">
-              We welcome partnerships with pharmaceutical importers, regional distributors, hospital supply groups, and out-licensing collaborators across overseas markets.
+              Importers, distributors and licensing partners — let’s talk.
             </p>
             <div className="mt-8 flex flex-col gap-3 font-sans text-sm text-revora-slate">
               <div className="flex items-center gap-2">

@@ -52,7 +52,7 @@ export function CertificationsClient() {
         eyebrow="Certifications"
         lines={['Quality,', 'certified.']}
         highlight={{ 'certified.': 'text-revora-cobalt' }}
-        text="Revora eye drops are made in our own WHO-GMP certified, EU-compliant plant — so quality stays in our hands."
+        text="Made in our own WHO-GMP certified, EU-compliant plant."
         actions={
           <>
             <Button href="#certificates" arrow="down" magnetic>See certifications</Button>
@@ -69,7 +69,7 @@ export function CertificationsClient() {
             eyebrow="Our certifications"
             lines={['Standards we meet.']}
             highlight={{ 'meet.': 'text-revora-cobalt' }}
-            aside="Copies of each certificate are available to doctors, hospitals and partners on request."
+            aside="Certificate copies available on request."
           />
           <div className="mt-12 grid gap-5 tablet:grid-cols-2">
             {CERTS.map((c, i) => (
@@ -136,7 +136,7 @@ export function CertificationsClient() {
             <SectionHeading eyebrow="Where it’s made" lines={['Our own', 'eye-drop plant.']} highlight={{ own: 'text-revora-cobalt' }} />
             <FadeUp delay={0.15}>
               <p className="mt-6 max-w-md font-sans text-[16.5px] leading-[1.75] text-revora-slate-light">
-                We don’t outsource the part that matters most. A dedicated ophthalmic plant means quality is something we control.
+                A dedicated ophthalmic plant — so quality stays in our control.
               </p>
               <ul className="mt-8 space-y-3">
                 {[

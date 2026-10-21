@@ -42,7 +42,7 @@ export function FounderSection() {
                   fill
                   sizes="(min-width: 1024px) 45vw, 90vw"
                   className="object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
-                  priority={false}
+                  loading="eager"
                 />
                 
                 {/* gradient vignette at bottom */}
@@ -110,7 +110,7 @@ export function FounderSection() {
               <div className="relative mt-8 rounded-[24px] border border-revora-cobalt/15 bg-revora-sky/30 p-6 tablet:p-8">
                 <Quote className="h-9 w-9 text-revora-cobalt/30" />
                 <blockquote className="mt-2 font-heading text-[clamp(1.15rem,2vw,1.45rem)] font-bold italic leading-relaxed text-revora-slate">
-                  “When we founded Revora Healthcare, our mandate was uncompromising: every formulation must deliver genuine clinical confidence to the ophthalmologist and gentle, lasting comfort to the patient.”
+                  “Every formulation must give the doctor confidence and the patient lasting comfort.”
                 </blockquote>
               </div>
             </FadeUp>
@@ -118,13 +118,8 @@ export function FounderSection() {
             <FadeUp delay={0.25}>
               <div className="mt-7 space-y-4 font-sans text-[15.5px] leading-[1.8] text-revora-slate-light">
                 <p>
-                  From our corporate headquarters in Ahmedabad to our dedicated WHO-GMP eye-drop plant at Paonta Sahib,
-                  every decision we make is rooted in deep respect for the ocular surface. We do not view eye care as a secondary
-                  offering—it is our primary focus and passion.
-                </p>
-                <p>
-                  Today, as our brands reach clinics, surgical theaters, and hospital pharmacies nationwide, we remain dedicated to
-                  upholding rigorous standards in sterile filling, formulation purity, and doctor partnership.
+                  From our Ahmedabad headquarters to our WHO-GMP eye-drop plant at Paonta Sahib, eye care isn’t a side line — it’s
+                  all we do.
                 </p>
               </div>
             </FadeUp>

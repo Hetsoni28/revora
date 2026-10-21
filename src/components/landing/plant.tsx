@@ -8,10 +8,10 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import { MediaFrame } from '@/components/ui/media-frame';
 
 const STEPS = [
-  { icon: FlaskConical, title: 'Formulate', body: 'Each brand is built around a distinct ingredient story, formulated for the ocular surface.' },
-  { icon: Droplets, title: 'Fill', body: 'Sterile eye-drop filling in a facility dedicated to ophthalmic products.' },
-  { icon: ShieldCheck, title: 'Verify', body: 'Quality systems run to WHO-GMP standards, in an EU-compliant plant.' },
-  { icon: PackageCheck, title: 'Present', body: 'Packed in premium outer cartons — ready for the doctor’s desk and the pharmacy shelf.' },
+  { icon: FlaskConical, title: 'Formulate', body: 'Each brand built around a distinct ingredient.' },
+  { icon: Droplets, title: 'Fill', body: 'Sterile filling in a dedicated eye-drop facility.' },
+  { icon: ShieldCheck, title: 'Verify', body: 'WHO-GMP quality, in an EU-compliant plant.' },
+  { icon: PackageCheck, title: 'Present', body: 'Premium cartons, ready for the pharmacy shelf.' },
 ];
 
 export function Plant() {
@@ -31,7 +31,7 @@ export function Plant() {
           eyebrow="Manufacturing"
           lines={['Made in our own plant.']}
           highlight={{ own: 'text-revora-cobalt-pale' }}
-          aside="We don’t outsource the part that matters most. Revora eye drops are manufactured in our own dedicated eye-drop plant — so quality is something we control, not something we hope for."
+          aside="We make our eye drops ourselves — so quality stays in our hands."
         />
 
         <MediaFrame
@@ -112,7 +112,7 @@ export function Plant() {
           <div>
             <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-crimson">Beyond ophthalmology</p>
             <p className="mt-2 max-w-xl font-heading text-[clamp(1.4rem,2.6vw,2rem)] font-extrabold leading-[1.15] tracking-[-0.01em]">
-              Beyond eye care, Revora is also present in oncology — with a strong record of supplying medicines to the defence sector.
+              Also present in oncology, with a strong record of supplying the defence sector.
             </p>
           </div>
           <div className="flex gap-3">

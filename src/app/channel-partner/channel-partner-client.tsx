@@ -50,7 +50,7 @@ export function ChannelPartnerClient() {
         eyebrow="Channel Partner"
         lines={['Grow with', 'Revora.']}
         highlight={{ 'Revora.': 'text-revora-cobalt' }}
-        text="Bring a dedicated ophthalmic range to the doctors and pharmacies in your territory."
+        text="Bring our eye-care range to your territory."
         actions={
           <>
             <Button href="#apply" arrow="down" magnetic>Become a partner</Button>

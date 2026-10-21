@@ -158,7 +158,7 @@ export function CategoryClient({ category, products }: CategoryClientProps) {
         <div className="mx-auto max-w-330">
           <FormularyBanner
             title={`Bring ${category.shortName} to your hospital or pharmacy.`}
-            description="Request samples, prescribing literature or an institutional rate card. Our team supports eye hospitals, surgical centres and pharmacies across India."
+            description="Samples, literature or a rate card for hospitals and pharmacies."
             buttonLabel="Request rate card"
             onAction={() => openSample()}
           />

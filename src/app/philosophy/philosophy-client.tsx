@@ -17,11 +17,11 @@ const PROMISE =
 const EMPHASIS = new Set(['promise', 'trust', 'completely.']);
 
 const VALUES = [
-  { icon: ShieldCheck, title: 'Trust', text: 'Doctors and patients should be able to rely on every product, every time.' },
+  { icon: ShieldCheck, title: 'Trust', text: 'Every product, every time.' },
   { icon: Eye, title: 'Focus', text: 'Ophthalmology is all we do — and it shows in every brand.' },
   { icon: Factory, title: 'Quality', text: 'Our eye drops are made in our own WHO-GMP certified plant.' },
   { icon: HeartHandshake, title: 'Relationships', text: 'We don’t just sell products — we build brands and relationships.' },
-  { icon: Users, title: 'Care', text: 'Improving patient care and building healthier communities across India.' },
+  { icon: Users, title: 'Care', text: 'Better patient care, healthier communities.' },
 ];
 
 export function PhilosophyClient() {
@@ -32,7 +32,7 @@ export function PhilosophyClient() {
         eyebrow="Philosophy & Values"
         lines={['Beyond', 'the cure.']}
         highlight={{ 'cure.': 'text-revora-crimson' }}
-        text="A medicine’s job doesn’t end at the prescription. For us, it ends when the patient can trust it completely."
+        text="Our job ends only when the patient can trust the medicine completely."
         actions={<Button href="#values" arrow="down" magnetic>Our values</Button>}
         visual={<IrisPromise />}
       />

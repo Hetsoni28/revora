@@ -9,11 +9,11 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import { MediaFrame } from '@/components/ui/media-frame';
 
 const FLOW = [
-  { icon: Factory, title: 'Made', where: 'Paonta Sahib plant', body: 'Formulated and filled in our dedicated, WHO-GMP certified eye-drop plant.' },
-  { icon: Building2, title: 'Coordinated', where: 'Ahmedabad HQ', body: 'Sales, supply planning and partnerships are run from our Ahmedabad office.' },
+  { icon: Factory, title: 'Made', where: 'Paonta Sahib plant', body: 'In our WHO-GMP eye-drop plant.' },
+  { icon: Building2, title: 'Coordinated', where: 'Ahmedabad HQ', body: 'Sales and supply, from Ahmedabad.' },
   { icon: Truck, title: 'Distributed', where: 'Distributors & stockists', body: 'Partners carry the portfolio into their territories across India.' },
-  { icon: Hospital, title: 'Dispensed', where: 'Hospitals & pharmacies', body: 'Consistent supply for eye hospitals, clinics and the pharmacies around them.' },
-  { icon: UserRound, title: 'Prescribed', where: 'Doctors & patients', body: 'Ophthalmologists prescribe with confidence; patients get reliable eye care.' },
+  { icon: Hospital, title: 'Dispensed', where: 'Hospitals & pharmacies', body: 'Steady supply to hospitals and pharmacies.' },
+  { icon: UserRound, title: 'Prescribed', where: 'Doctors & patients', body: 'Doctors prescribe; patients trust.' },
 ];
 
 /** "From our plant to the patient" — five steps joined by a line that draws as you scroll. */
@@ -33,8 +33,7 @@ export function SupplyFlow({ image = '/images/site/sterile-formulation-lab.webp'
             <SectionHeading tone="light" eyebrow="How we reach India" lines={['From our plant', 'to the patient.']} highlight={{ 'patient.': 'text-revora-cobalt-pale' }} />
             <FadeUp delay={0.2}>
               <p className="mt-6 max-w-md font-sans text-[16px] leading-[1.75] text-white/70">
-                Every Revora product follows the same path — made under WHO-GMP in our own plant, coordinated from Ahmedabad, and carried by our
-                partners to the people who need it.
+                Made in our plant, run from Ahmedabad, carried by our partners.
               </p>
             </FadeUp>
           </div>

@@ -63,8 +63,7 @@ export function OfferingsClient({ initialProducts, initialCategories }: Offering
               <SectionHeading level="page" eyebrow="Ophthalmic portfolio" lines={['Nine brands.', 'Built for the eye.']} highlight={{ 'eye.': 'text-revora-cobalt' }} />
               <FadeUp delay={0.5}>
                 <p className="mt-7 max-w-xl font-sans text-[17px] leading-[1.7] text-revora-slate-light">
-                  From first prescription to surgical recovery and long-term care — explore every Revora formulation, its composition and its
-                  clinical use.
+                  Every Revora formulation — its composition and clinical use.
                 </p>
               </FadeUp>
             </div>
@@ -179,7 +178,7 @@ export function OfferingsClient({ initialProducts, initialCategories }: Offering
             eyebrow="Therapy areas"
             lines={['Four focused areas of care.']}
             highlight={{ focused: 'text-revora-cobalt' }}
-            aside="Each area brings together the formulations, clinical rationale and prescribing detail an ophthalmologist needs."
+            aside="Formulations, rationale and prescribing detail in one place."
           />
           <div className="mt-14 grid gap-5 tablet:grid-cols-2">
             {initialCategories.map((c, i) => (
@@ -193,7 +192,7 @@ export function OfferingsClient({ initialProducts, initialCategories }: Offering
         <div className="mx-auto max-w-330">
           <FormularyBanner
             title="Samples, literature and institutional supply."
-            description="Request product samples, prescribing literature or an institutional rate card — our team responds to doctors, hospitals, pharmacies and distributors across India."
+            description="Samples, literature or a rate card — our team replies across India."
             buttonLabel="Request samples"
             onAction={() => openSample()}
             showCredentials

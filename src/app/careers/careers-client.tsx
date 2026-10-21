@@ -154,7 +154,7 @@ function Teams({ onPick }: { onPick: (team: string) => void }) {
           eyebrow="Teams we hire for"
           lines={['Find where you fit.']}
           highlight={{ fit: 'text-revora-cobalt', 'fit.': 'text-revora-cobalt' }}
-          aside="We don’t list fixed openings — send your CV for the team that suits you and we’ll be in touch when a role opens."
+          aside="No fixed openings — send your CV and we’ll be in touch."
         />
         <div className="mt-12 grid gap-5 tablet:grid-cols-2">
           {TEAMS.map((t, i) => (
@@ -236,7 +236,7 @@ function Apply({ team, setTeam }: { team: string; setTeam: (team: string) => voi
           <SectionHeading eyebrow="Apply" lines={['Send us your CV.']} highlight={{ 'CV.': 'text-revora-cobalt' }} />
           <FadeUp delay={0.15}>
             <p className="mt-6 max-w-sm font-sans text-[16px] leading-[1.7] text-revora-slate-light">
-              Fill in a few details — your email app opens with everything ready. Just attach your CV and send.
+              Fill in your details, attach your CV, send.
             </p>
             <a href={`mailto:${CAREERS_EMAIL}`} className="mt-6 inline-flex items-center gap-2 font-sans text-[15px] font-semibold text-revora-cobalt hover:underline">
               <Send className="h-4 w-4" /> {CAREERS_EMAIL}
