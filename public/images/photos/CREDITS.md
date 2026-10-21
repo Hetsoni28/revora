@@ -16,3 +16,8 @@ Photos from [Pexels](https://www.pexels.com) under the [Pexels License](https://
 | warehouse-dispatch.webp | https://www.pexels.com/photo/4487383/ |
 | doctor-portrait.webp | https://www.pexels.com/photo/19438563/ |
 | hospital-doctors.webp | https://www.pexels.com/photo/8770713/ |
+| innovation/himalaya-trek.webp | https://www.pexels.com/photo/37898606/ |
+| innovation/outdoor-trek.webp | https://www.pexels.com/photo/32109154/ |
+| innovation/defence-snow.webp | https://www.pexels.com/photo/6786309/ |
+| innovation/industrial-snow.webp | https://www.pexels.com/photo/11677751/ |
+| innovation/warm-hands.webp | https://www.pexels.com/photo/30185635/ |

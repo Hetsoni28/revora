@@ -12,6 +12,7 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
 import { MediaFrame } from '@/components/ui/media-frame';
 import { PresenceLinks } from '@/components/presence/presence-links';
+import { WorldDotMap, WORLD_REGIONS } from '@/components/maps/world-dot-map';
 
 const PARTNER_EMAIL = 'exports@revorahealthcare.com';
 
@@ -81,7 +82,7 @@ export function GlobalClient() {
           <MediaFrame
             src="/images/photos/warehouse-dispatch.webp"
             alt="International dispatch of ophthalmic formulations"
-            aspect="video"
+            aspect="aspect-[4/3]"
           />
         }
       />
@@ -100,6 +101,28 @@ export function GlobalClient() {
               </span>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ── Global reach map ── */}
+      <section className="relative isolate overflow-hidden bg-revora-cobalt-deep px-5 py-20 text-white tablet:px-8 tablet:py-28">
+        <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(58,130,200,0.45),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(215,38,46,0.18),transparent_55%)]" />
+        <div className="mx-auto max-w-330">
+          <SectionHeading
+            tone="light"
+            eyebrow="Global reach"
+            lines={['From Ahmedabad', 'to the world.']}
+            highlight={{ 'world.': 'text-revora-cobalt-pale' }}
+            aside="Regions where we welcome import, distribution and licensing partners."
+          />
+          <FadeUp delay={0.1}>
+            <WorldDotMap className="mt-12" />
+          </FadeUp>
+          <div className="mt-8 flex flex-wrap gap-2 tablet:hidden">
+            {WORLD_REGIONS.map((r) => (
+              <span key={r.key} className="rounded-full bg-white/10 px-3 py-1.5 font-sans text-[12.5px] font-semibold">{r.label}</span>
+            ))}
+          </div>
         </div>
       </section>
 

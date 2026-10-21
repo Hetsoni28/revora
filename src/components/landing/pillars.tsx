@@ -2,41 +2,40 @@
 
 import { useRef } from 'react';
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from 'framer-motion';
-import { Eye, Factory, FlaskConical, Package } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowUpRight, Eye, Handshake, Lightbulb } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
-import { Eyebrow, SplitWords } from '@/components/ui/primitives';
+import { SplitWords } from '@/components/ui/primitives';
 
 const PILLARS = [
   {
     icon: Eye,
-    kicker: '01 · Focus',
+    kicker: '01 · Healthcare',
     title: 'Only ophthalmology.',
-    body: 'A dedicated ophthalmic company with a 15+ year legacy in eye care. Every product, every conversation, is built around the eye.',
+    body: 'Eye-care medicines for every stage of care — made in our own WHO-GMP certified plant.',
+    href: '/our-offerings',
+    cta: 'Our products',
     span: 'tablet-lg:col-span-7',
     tone: 'cobalt' as const,
   },
   {
-    icon: Factory,
-    kicker: '02 · Manufacturing',
-    title: 'Our own eye-drop plant.',
-    body: 'A dedicated facility at Paonta Sahib, Himachal Pradesh — WHO-GMP certified and EU-compliant.',
-    span: 'tablet-lg:col-span-5',
-    tone: 'light' as const,
-  },
-  {
-    icon: FlaskConical,
-    kicker: '03 · Science',
+    icon: Lightbulb,
+    kicker: '02 · Innovation',
     title: 'Distinct by design.',
-    body: 'Patented products in the market, and a distinct ingredient in every formulation we make.',
+    body: 'A distinct ingredient story in every formulation, in premium packs doctors and patients remember.',
+    href: '/innovation',
+    cta: 'Explore innovation',
     span: 'tablet-lg:col-span-5',
     tone: 'light' as const,
   },
   {
-    icon: Package,
-    kicker: '04 · Presence',
-    title: 'Premium, inside and out.',
-    body: 'Premium outer cartons that look as considered as the formulation inside — a brand doctors and patients remember.',
-    span: 'tablet-lg:col-span-7',
+    icon: Handshake,
+    kicker: '03 · Channel Partner',
+    title: 'Grow with Revora.',
+    body: 'Distributors and stockists bring our dedicated ophthalmic range to their territory — backed by our Ahmedabad team.',
+    href: '/channel-partner',
+    cta: 'Become a partner',
+    span: 'tablet-lg:col-span-12',
     tone: 'crimson' as const,
   },
 ];
@@ -76,7 +75,7 @@ function PillarCard({ p, i }: { p: (typeof PILLARS)[number]; i: number }) {
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '-10% 0px' }}
       transition={{ duration: 0.9, delay: (i % 2) * 0.12, ease: expoOut }}
-      className={`group relative isolate flex min-h-[300px] flex-col overflow-hidden rounded-[28px] p-7 tablet:min-h-[340px] tablet:p-10 ${toneCls} ${p.span}`}
+      className={`group relative isolate flex min-h-[300px] flex-col overflow-hidden rounded-[28px] p-7 tablet:min-h-[320px] tablet:p-10 ${toneCls} ${p.span}`}
     >
       <motion.div aria-hidden className="pointer-events-none absolute inset-0 -z-10" style={{ background: spot }} />
       {p.tone === 'crimson' && (
@@ -106,6 +105,13 @@ function PillarCard({ p, i }: { p: (typeof PILLARS)[number]; i: number }) {
         <p className={`mt-4 max-w-md font-sans text-[15px] leading-[1.7] ${p.tone === 'light' ? 'text-revora-slate-light' : 'text-white/75'}`}>
           {p.body}
         </p>
+        <Link
+          href={p.href}
+          className={`mt-7 inline-flex items-center gap-2 font-sans text-[14.5px] font-semibold after:absolute after:inset-0 after:content-[''] ${p.tone === 'light' ? 'text-revora-cobalt' : 'text-white'}`}
+        >
+          {p.cta}
+          <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />
+        </Link>
       </div>
 
       <span
@@ -118,19 +124,11 @@ function PillarCard({ p, i }: { p: (typeof PILLARS)[number]; i: number }) {
 
 export function Pillars() {
   return (
-    <section id="why" className="relative bg-[#F6F9FC] px-5 py-24 tablet:px-8 tablet:py-36">
+    <section id="why" className="relative bg-[#F6F9FC] px-5 pb-12 pt-24 tablet:px-8 tablet:pb-16 tablet:pt-36">
       <div className="mx-auto max-w-[1320px]">
-        <div className="flex flex-col justify-between gap-6 tablet-lg:flex-row tablet-lg:items-end">
-          <div>
-            <Eyebrow>Why Revora</Eyebrow>
-            <h2 className="mt-5 max-w-3xl font-heading text-[clamp(2.4rem,5.4vw,4.6rem)] font-extrabold leading-[1] tracking-[-0.02em] text-revora-slate">
-              <SplitWords text="Four reasons doctors remember us." highlight={{ remember: 'text-revora-cobalt' }} />
-            </h2>
-          </div>
-          <p className="max-w-sm font-sans text-[15px] leading-[1.7] text-revora-slate-light">
-            We are not a generalist with an eye-care line. Ophthalmology is all we do — and it shows in how we make, pack and present every brand.
-          </p>
-        </div>
+        <h2 className="font-heading text-[clamp(2.6rem,6.4vw,5.6rem)] font-extrabold leading-[1] tracking-[-0.03em] text-revora-slate">
+          <SplitWords text="Why Revora?" highlight={{ 'Revora?': 'text-revora-cobalt' }} />
+        </h2>
 
         <div className="mt-14 grid grid-cols-1 gap-4 tablet:mt-20 tablet-lg:grid-cols-12 tablet-lg:gap-5">
           {PILLARS.map((p, i) => (

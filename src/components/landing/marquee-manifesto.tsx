@@ -16,7 +16,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { ALL_PRODUCTS } from '@/lib/therapies-data';
-import { Eyebrow, Tick } from '@/components/ui/primitives';
+import { SplitWords, Tick } from '@/components/ui/primitives';
 
 /* ─────────────────────────────────────────────────────────────
    Velocity marquee — brand names drift, and speed up / reverse
@@ -113,11 +113,13 @@ export function Manifesto() {
 
   return (
     <section id="philosophy" className="relative bg-white px-5 py-28 tablet:px-8 tablet:py-40">
-      <div className="mx-auto max-w-[1100px]">
-        <Eyebrow>Our philosophy</Eyebrow>
+      <div className="mx-auto max-w-[1320px]">
+        <h2 className="font-heading text-[clamp(2.6rem,6.4vw,5.6rem)] font-extrabold leading-[1] tracking-[-0.03em] text-revora-slate">
+          <SplitWords text="Our philosophy." highlight={{ 'philosophy.': 'text-revora-cobalt' }} />
+        </h2>
         <div
           ref={ref}
-          className="mt-8 font-heading text-[clamp(1.9rem,4.6vw,4rem)] font-bold leading-[1.12] tracking-[-0.02em] text-revora-slate"
+          className="mt-8 max-w-4xl font-heading text-[clamp(1.25rem,2.2vw,1.9rem)] font-semibold leading-[1.4] tracking-[-0.01em] text-revora-slate"
         >
           {reduce ? (
             <p>{MANIFESTO}</p>

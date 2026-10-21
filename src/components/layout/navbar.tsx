@@ -37,6 +37,8 @@ const NAV_ITEMS: NavItem[] = [
       { label: 'Global Network', href: '/our-presence/global-network' },
     ],
   },
+  { label: 'Innovation', href: '/innovation' },
+  { label: 'Channel Partner', href: '/channel-partner' },
   { label: 'Careers', href: '/careers' },
 ];
 
@@ -134,8 +136,11 @@ export function Navbar() {
             <Link href="/" aria-label="Revora Healthcare — home" className="flex shrink-0 items-center gap-3">
               <Image src="/logo.png" alt="Revora" width={1024} height={341} loading="eager" className="h-7 w-auto tablet:h-8" />
               <span className="hidden items-center gap-3 sm:flex">
-                <span className="h-4 w-px bg-revora-cobalt/25" aria-hidden />
-                <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-revora-cobalt">Healthcare</span>
+                <span className="h-7 w-px bg-revora-cobalt/25" aria-hidden />
+                <span className="flex flex-col font-sans text-[10.5px] font-semibold uppercase leading-[1.35] tracking-[0.22em] text-revora-cobalt">
+                  <span>Healthcare</span>
+                  <span className="text-revora-crimson">Innovation</span>
+                </span>
               </span>
             </Link>
 
@@ -161,7 +166,7 @@ export function Navbar() {
                       aria-haspopup={hasMenu || undefined}
                       aria-expanded={hasMenu ? isOpen : undefined}
                       onClick={() => setDropdown(null)}
-                      className={`group relative flex items-center gap-1.5 overflow-hidden rounded-full px-4 py-2 font-sans text-[14px] font-medium transition-colors hover:text-revora-cobalt ${
+                      className={`group relative flex items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-full px-3 py-2 font-sans desktop-lg:px-4 text-[14px] font-medium transition-colors hover:text-revora-cobalt ${
                         active || isOpen ? 'text-revora-cobalt' : 'text-revora-slate'
                       }`}
                     >
@@ -206,7 +211,7 @@ export function Navbar() {
             <div className="flex items-center gap-2">
               <AnchorLink
                 href="/#contact"
-                className="hidden rounded-full border border-revora-cobalt/25 px-4 py-2.5 font-sans text-[14px] font-semibold text-revora-cobalt transition-colors hover:bg-revora-sky desktop:inline-flex"
+                className="hidden rounded-full border border-revora-cobalt/25 px-4 py-2.5 font-sans text-[14px] font-semibold text-revora-cobalt transition-colors hover:bg-revora-sky desktop-lg:inline-flex"
               >
                 Partner With Us
               </AnchorLink>

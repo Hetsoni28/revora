@@ -35,8 +35,9 @@ const COLUMNS: { title: string; href?: string; links: [string, string][] }[] = [
       ['Domestic Network', '/our-presence/domestic-network'],
       ['Global Network', '/our-presence/global-network'],
       ['Ahmedabad Headquarters', '/our-presence/ahmedabad'],
+      ['Innovation', '/innovation'],
+      ['Channel Partner', '/channel-partner'],
       ['Careers at Revora', '/careers'],
-      ['Distribution Partnerships', '/#contact'],
       ['Institutional Inquiries', '/#contact'],
     ],
   },
@@ -211,6 +212,8 @@ export function Footer() {
           <div className="-my-2 flex flex-wrap items-center gap-x-5 [&_a]:inline-flex [&_a]:min-h-10 [&_a]:items-center">
             <Link href="/our-offerings" className="transition-colors hover:text-white">Products</Link>
             <Link href="/our-presence" className="transition-colors hover:text-white">Presence</Link>
+            <Link href="/innovation" className="transition-colors hover:text-white">Innovation</Link>
+            <Link href="/channel-partner" className="transition-colors hover:text-white">Channel Partner</Link>
             <Link href="/careers" className="transition-colors hover:text-white">Careers</Link>
             <span className="text-white/20">|</span>
             {LEGAL.map((l) => (

@@ -66,7 +66,7 @@ export function Portfolio() {
       className="relative bg-[#F6F9FC]"
       style={{ height: pinned ? `calc(100vh + ${distance}px)` : undefined }}
     >
-      <div className={pinned ? 'sticky top-0 flex h-screen flex-col justify-center overflow-hidden pt-20 desktop:pt-40' : 'py-24 tablet:py-32'}>
+      <div className={pinned ? 'sticky top-0 flex h-screen flex-col justify-start overflow-hidden pt-28 desktop:pt-40' : 'py-24 tablet:py-32'}>
         <div className="mx-auto w-full max-w-[1320px] px-5 tablet:px-8">
           <Heading />
         </div>
@@ -74,12 +74,12 @@ export function Portfolio() {
         <motion.div
           ref={railRef}
           style={pinned ? { x } : undefined}
-          className={`mt-12 flex items-center gap-12 px-5 tablet:gap-16 tablet:px-8 [@media(max-height:820px)]:mt-8 ${
+          className={`mt-12 flex items-center gap-12 px-5 tablet:gap-16 tablet-lg:mt-16 tablet-lg:gap-24 tablet:px-8 [@media(max-height:820px)]:mt-8 ${
             pinned ? 'w-max' : 'snap-x snap-mandatory scroll-px-5 overflow-x-auto pb-4 [scrollbar-width:none] tablet:scroll-px-8'
           } desktop:pl-[max(2rem,calc((100vw-1320px)/2+2rem))]`}
         >
           {ALL_PRODUCTS.map((p) => (
-            <ProductLogoLink key={p.id} product={p} eager className="h-[150px] w-[64vw] max-w-[340px] shrink-0 snap-start tablet:h-[180px] tablet:w-[340px]" />
+            <ProductLogoLink key={p.id} product={p} eager className="h-[150px] w-[64vw] max-w-[340px] shrink-0 snap-start tablet:h-[180px] tablet:w-[340px] tablet-lg:h-[min(240px,26vh)] tablet-lg:w-[460px] tablet-lg:max-w-none" />
           ))}
         </motion.div>
 

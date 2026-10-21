@@ -16,7 +16,7 @@ interface ProductLogoProps {
  * The product's brand logo on a softly tinted tile — used in place of carton photos.
  * The logo lifts slightly on hover of the nearest `group`.
  */
-export function ProductLogo({ product, className = 'aspect-[4/3]', link = true, sizes = '(max-width: 768px) 80vw, 360px', eager }: ProductLogoProps) {
+export function ProductLogo({ product, className = 'aspect-[4/3]', link = true, sizes = '(max-width: 768px) 80vw, 360px', eager = true }: ProductLogoProps) {
   const tile = (
     <span
       className={`relative block overflow-hidden ${className}`}
@@ -42,7 +42,7 @@ export function ProductLogo({ product, className = 'aspect-[4/3]', link = true, 
 }
 
 /** Logo only, no tile or card — the whole logo links to the product. */
-export function ProductLogoLink({ product, className = 'h-[150px] w-full tablet:h-[180px]', sizes = '(min-width: 768px) 340px, 70vw', eager = false }: { product: Product; className?: string; sizes?: string; eager?: boolean }) {
+export function ProductLogoLink({ product, className = 'h-[150px] w-full tablet:h-[180px]', sizes = '(min-width: 768px) 340px, 70vw', eager = true }: { product: Product; className?: string; sizes?: string; eager?: boolean }) {
   return (
     <Link href={`/products/${product.id}`} aria-label={`${product.name} — view product details`} className={`group relative block ${className}`}>
       <Image

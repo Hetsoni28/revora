@@ -31,7 +31,7 @@ export function PresenceLinks({ current, title = 'Explore our presence' }: { cur
             >
               <Link href={p.href} className="group block">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[24px] bg-revora-sky">
-                  <Image src={p.image} alt={p.alt} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]" />
+                  <Image src={p.image} alt={p.alt} fill loading="eager" sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]" />
                   <div aria-hidden className="absolute inset-0 bg-linear-to-t from-revora-cobalt-deep/85 via-revora-cobalt-deep/10 to-transparent" />
                   <span className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white text-revora-cobalt transition-transform duration-500 group-hover:rotate-45">
                     <ArrowUpRight className="h-5 w-5" />

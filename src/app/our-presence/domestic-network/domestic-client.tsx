@@ -15,6 +15,7 @@ import { MediaFrame } from '@/components/ui/media-frame';
 import { NetworkHub } from '@/components/illustrations/presence-illustrations';
 import { SupplyFlow } from '@/components/presence/supply-flow';
 import { PresenceLinks } from '@/components/presence/presence-links';
+import { IndiaDotMap } from '@/components/maps/india-dot-map';
 
 const PARTNER_EMAIL = 'depot@revorahealthcare.com';
 
@@ -80,6 +81,36 @@ export function DomesticClient() {
         }
         visual={<NetworkHub />}
       />
+
+      {/* ── across India map ── */}
+      <section className="px-5 pb-20 tablet:px-8 tablet:pb-28">
+        <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] items-center gap-12 overflow-hidden rounded-[32px] border border-revora-cobalt/10 bg-white p-6 tablet:p-12 tablet-lg:grid-cols-[0.9fr_1.1fr] tablet-lg:gap-16">
+          <div>
+            <SectionHeading eyebrow="Across India" lines={['One office. One plant.', 'All of India.']} highlight={{ 'India.': 'text-revora-cobalt' }} />
+            <FadeUp delay={0.15}>
+              <p className="mt-6 max-w-md font-sans text-[16.5px] leading-[1.75] text-revora-slate-light">
+                Made at our WHO-GMP plant in Paonta Sahib, coordinated from our Ahmedabad headquarters, and delivered to doctors, hospitals and
+                pharmacies across the country through our distribution partners.
+              </p>
+              <ul className="mt-8 space-y-4">
+                {[
+                  { c: 'bg-revora-cobalt', t: 'Ahmedabad, Gujarat', s: 'Headquarters & registered office' },
+                  { c: 'bg-revora-crimson', t: 'Paonta Sahib, Himachal Pradesh', s: 'Eye-drop manufacturing plant' },
+                ].map((x) => (
+                  <li key={x.t} className="flex items-start gap-3">
+                    <span className={`mt-1.5 h-3 w-3 shrink-0 rounded-full ring-4 ring-revora-sky ${x.c}`} />
+                    <span>
+                      <span className="block font-heading text-[17px] font-extrabold text-revora-slate">{x.t}</span>
+                      <span className="block font-sans text-[14px] text-revora-slate-light">{x.s}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </FadeUp>
+          </div>
+          <IndiaDotMap className="mx-auto w-full max-w-[460px]" />
+        </div>
+      </section>
 
       <WhoWeServe />
       <SupplyFlow image="/images/photos/warehouse-dispatch.webp" imageAlt="Workers moving stock through a warehouse" />
