@@ -5,10 +5,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, ChevronDown, Globe, Mail, Menu, Phone, ShieldCheck, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronDown, ChevronRight, Globe, Mail, Menu, Phone, ShieldCheck, X } from 'lucide-react';
 import { useLenis } from 'lenis/react';
 import { expoOut } from '@/lib/easings';
 import { THERAPY_CATEGORIES, ALL_PRODUCTS } from '@/lib/therapies-data';
+import { PARTNER_CATEGORIES, partnerHref } from '@/lib/partner-categories';
 import { AnchorLink, Magnetic, Tick } from '@/components/ui/primitives';
 
 type NavItem = {
@@ -16,19 +17,22 @@ type NavItem = {
   href: string;
   sublinks?: { label: string; href: string }[];
   mega?: boolean;
+  /** Two-pane category menu (categories → sub-categories). */
+  categories?: boolean;
 };
 
 const NAV_ITEMS: NavItem[] = [
   {
-    label: 'Company',
+    label: 'About Us',
     href: '/about',
     sublinks: [
-      { label: 'About Revora', href: '/about' },
+      { label: 'About Us', href: '/about' },
+      { label: 'Profile', href: '/profile' },
       { label: 'Philosophy & Values', href: '/philosophy' },
       { label: 'Certifications', href: '/certifications' },
     ],
   },
-  { label: 'Healthcare', href: '/our-offerings', mega: true },
+  { label: 'Healthcare', href: '', mega: true },
   {
     label: 'Our Presence',
     href: '/our-presence',
@@ -38,7 +42,7 @@ const NAV_ITEMS: NavItem[] = [
     ],
   },
   { label: 'Innovation', href: '/innovation' },
-  { label: 'Channel Partner', href: '/channel-partner' },
+  { label: 'Channel Partner', href: '/channel-partner', categories: true },
   { label: 'Careers', href: '/careers' },
 ];
 
@@ -50,7 +54,7 @@ const productsOf = (slug: string) => ALL_PRODUCTS.filter((p) => p.categorySlug =
 /** Route items light up on their own page and its sub-pages. */
 function isActive(item: NavItem, pathname: string) {
   if (item.href.startsWith('/#')) return false;
-  if (item.mega) return pathname.startsWith('/our-offerings') || pathname.startsWith('/products');
+  if (item.mega) return pathname.startsWith('/products');
   if (item.sublinks?.some((s) => !s.href.includes('#') && pathname.startsWith(s.href))) return true;
   return pathname.startsWith(item.href);
 }
@@ -115,7 +119,7 @@ export function Navbar() {
                 <span className="font-mono text-[11px]">CIN: U21000GJ2026PTC174674 · Ahmedabad, Gujarat</span>
               </div>
               <div className="flex items-center gap-4">
-                <Link href="/our-offerings" className="font-medium transition-colors hover:text-revora-cobalt">
+                <Link href="/profile#portfolio" className="font-medium transition-colors hover:text-revora-cobalt">
                   Physician Formulary
                 </Link>
                 <span className="h-3 w-px bg-revora-cobalt/15" />
@@ -147,7 +151,7 @@ export function Navbar() {
             <ul className="hidden items-center gap-1 desktop:flex">
               {NAV_ITEMS.map((item) => {
                 const active = isActive(item, pathname);
-                const hasMenu = !!item.sublinks || !!item.mega;
+                const hasMenu = !!item.sublinks || !!item.mega || !!item.categories;
                 const isOpen = dropdown === item.label;
                 return (
                   <li
@@ -160,12 +164,12 @@ export function Navbar() {
                       if (!e.currentTarget.contains(e.relatedTarget as Node)) closeMenu();
                     }}
                   >
-                    <AnchorLink
+                    <TopLink
                       href={item.href}
                       aria-current={active ? 'page' : undefined}
                       aria-haspopup={hasMenu || undefined}
                       aria-expanded={hasMenu ? isOpen : undefined}
-                      onClick={() => setDropdown(null)}
+                      onClick={() => setDropdown(item.mega && !isOpen ? item.label : null)}
                       className={`group relative flex items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-full px-3 py-2 font-sans desktop-lg:px-4 text-[14px] font-medium transition-colors hover:text-revora-cobalt ${
                         active || isOpen ? 'text-revora-cobalt' : 'text-revora-slate'
                       }`}
@@ -181,7 +185,7 @@ export function Navbar() {
                           active || isOpen ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
                         }`}
                       />
-                    </AnchorLink>
+                    </TopLink>
 
                     <AnimatePresence>
                       {isOpen && item.sublinks && (
@@ -202,6 +206,7 @@ export function Navbar() {
                         </DropdownPanel>
                       )}
                       {isOpen && item.mega && <OfferingsMegaMenu onNavigate={() => setDropdown(null)} />}
+                      {isOpen && item.categories && <CategoryMenu onNavigate={() => setDropdown(null)} />}
                     </AnimatePresence>
                   </li>
                 );
@@ -258,7 +263,7 @@ export function Navbar() {
           >
             <ul className="flex flex-col">
               {NAV_ITEMS.map((item, i) => {
-                const hasMenu = !!item.sublinks || !!item.mega;
+                const hasMenu = !!item.sublinks || !!item.mega || !!item.categories;
                 const expanded = mobileGroup === item.label;
                 return (
                   <motion.li
@@ -269,16 +274,16 @@ export function Navbar() {
                     transition={{ delay: 0.15 + i * 0.06, duration: 0.6, ease: expoOut }}
                   >
                     <div className="flex items-center justify-between">
-                      <AnchorLink
+                      <TopLink
                         href={item.href}
-                        onClick={() => setOpen(false)}
+                        onClick={() => (item.mega ? setMobileGroup(expanded ? null : item.label) : setOpen(false))}
                         aria-current={isActive(item, pathname) ? 'page' : undefined}
                         className={`flex-1 py-4 font-heading text-3xl font-extrabold tracking-tight ${
                           isActive(item, pathname) ? 'text-revora-cobalt' : 'text-revora-slate'
                         }`}
                       >
                         {item.label}
-                      </AnchorLink>
+                      </TopLink>
                       {hasMenu ? (
                         <button
                           onClick={() => setMobileGroup(expanded ? null : item.label)}
@@ -317,18 +322,36 @@ export function Navbar() {
                               ))}
                             </div>
                           )}
+                          {item.categories && (
+                            <div className="grid gap-5 pb-6 sm:grid-cols-2">
+                              {PARTNER_CATEGORIES.map((c) => (
+                                <div key={c.name}>
+                                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-slate-muted">{c.name}</p>
+                                  <div className="mt-2 flex flex-col gap-1">
+                                    {c.items.map((it) => (
+                                      <AnchorLink
+                                        key={it}
+                                        href={partnerHref(it)}
+                                        onClick={() => setOpen(false)}
+                                        className="flex items-center gap-2 py-1.5 font-sans text-[15px] font-medium text-revora-slate-light"
+                                      >
+                                        <Tick className="h-2.5 w-3 text-revora-crimson" />
+                                        {it}
+                                      </AnchorLink>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
                           {item.mega && (
                             <div className="grid gap-5 pb-6 sm:grid-cols-2">
                               {THERAPY_CATEGORIES.map((cat) => (
                                 <div key={cat.slug}>
-                                  <Link
-                                    href={`/our-offerings/${cat.slug}`}
-                                    onClick={() => setOpen(false)}
-                                    className="flex items-center gap-2 font-heading text-[16px] font-bold text-revora-slate"
-                                  >
+                                  <p className="flex items-center gap-2 font-heading text-[16px] font-bold text-revora-slate">
                                     <span className="h-2 w-2 rounded-full" style={{ background: cat.color }} />
                                     {cat.shortName}
-                                  </Link>
+                                  </p>
                                   <div className="mt-2 grid grid-cols-2 gap-2 pl-4">
                                     {productsOf(cat.slug).map((p) => (
                                       <Link
@@ -345,11 +368,11 @@ export function Navbar() {
                                 </div>
                               ))}
                               <Link
-                                href="/our-offerings"
+                                href="/profile#portfolio"
                                 onClick={() => setOpen(false)}
                                 className="inline-flex items-center gap-1.5 font-sans text-[14px] font-semibold text-revora-cobalt sm:col-span-2"
                               >
-                                All Formulations Directory <ArrowRight className="h-4 w-4" />
+                                Full portfolio <ArrowRight className="h-4 w-4" />
                               </Link>
                             </div>
                           )}
@@ -396,6 +419,65 @@ export function Navbar() {
   );
 }
 
+type TopLinkProps = {
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+  'aria-current'?: 'page';
+  'aria-haspopup'?: boolean;
+  'aria-expanded'?: boolean;
+};
+
+/** A nav item's own link — or, for a menu with no page behind it, a button that opens the menu. */
+function TopLink({ href, className, ...rest }: TopLinkProps) {
+  if (href) return <AnchorLink href={href} className={className} {...rest} />;
+  return <button type="button" className={`${className ?? ''} cursor-pointer text-left`} {...rest} />;
+}
+
+/** "Channel Partner" — pick a category on the left, then what you'd like to carry on the right. */
+function CategoryMenu({ onNavigate }: { onNavigate: () => void }) {
+  const [active, setActive] = useState(0);
+  const cat = PARTNER_CATEGORIES[active];
+  const row = 'flex items-center justify-between gap-4 rounded-2xl px-4 py-3.5 font-sans text-[15px] font-medium transition-colors';
+  return (
+    <DropdownPanel className="left-1/2 w-[600px] -translate-x-1/2">
+      <div className="grid grid-cols-2">
+        <div className="p-4">
+          <p className="px-4 pt-2 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-slate-muted">Categories</p>
+          <div className="mt-3 flex flex-col gap-1">
+            {PARTNER_CATEGORIES.map((c, i) => (
+              <button
+                key={c.name}
+                type="button"
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+                onClick={() => setActive(i)}
+                aria-pressed={i === active}
+                className={`${row} text-left ${i === active ? 'bg-revora-sky text-revora-cobalt' : 'text-revora-slate hover:bg-revora-sky/60'}`}
+              >
+                {c.name}
+                <ChevronRight className="h-4 w-4 shrink-0" />
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="border-l border-revora-cobalt/10 p-4">
+          <p className="px-4 pt-2 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-slate-muted">{cat.name}</p>
+          <div className="mt-3 flex flex-col gap-1">
+            {cat.items.map((it) => (
+              <AnchorLink key={it} href={partnerHref(it)} onClick={onNavigate} className={`${row} text-revora-slate hover:bg-revora-sky hover:text-revora-cobalt`}>
+                {it}
+                <ChevronRight className="h-4 w-4 shrink-0" />
+              </AnchorLink>
+            ))}
+          </div>
+        </div>
+      </div>
+    </DropdownPanel>
+  );
+}
+
 function DropdownPanel({ className, children }: { className?: string; children: React.ReactNode }) {
   return (
     <motion.div
@@ -413,7 +495,7 @@ function DropdownPanel({ className, children }: { className?: string; children: 
   );
 }
 
-/** "Healthcare" (Our Offerings) — every therapy area with its brands, plus portfolio shortcuts. */
+/** "Healthcare" — every therapy area with its brands, plus portfolio shortcuts. */
 function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
   return (
     <DropdownPanel className="left-1/2 w-[min(880px,calc(100vw-48px))] -translate-x-1/2">
@@ -422,25 +504,20 @@ function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
           <div className="flex items-center justify-between">
             <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-slate-muted">Our Therapies</span>
             <Link
-              href="/our-offerings"
+              href="/profile#portfolio"
               onClick={onNavigate}
               className="inline-flex items-center gap-1 font-sans text-[12.5px] font-semibold text-revora-cobalt hover:underline"
             >
-              Overview <ArrowRight className="h-3.5 w-3.5" />
+              Full portfolio <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
           <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-6">
             {THERAPY_CATEGORIES.map((cat) => (
               <div key={cat.slug}>
-                <Link
-                  href={`/our-offerings/${cat.slug}`}
-                  onClick={onNavigate}
-                  className="group/c flex items-center gap-2 font-heading text-[16px] font-bold text-revora-slate transition-colors hover:text-revora-cobalt"
-                >
+                <p className="flex items-center gap-2 font-heading text-[16px] font-bold text-revora-slate">
                   <span className="h-2 w-2 rounded-full" style={{ background: cat.color }} />
                   {cat.shortName}
-                  <ArrowUpRight className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover/c:opacity-100" />
-                </Link>
+                </p>
                 <div className="mt-2.5 grid grid-cols-2 gap-2 pl-4">
                   {productsOf(cat.slug).map((p) => (
                     <Link
@@ -465,7 +542,7 @@ function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
             <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-slate-muted">Revora Portfolio</span>
             <div className="mt-4 flex flex-col gap-1">
               {[
-                ['All Formulations Directory', '/our-offerings'],
+                ['Company profile & portfolio', '/profile#portfolio'],
                 ['Hospital & Distribution Network', '/our-presence/domestic-network'],
               ].map(([label, href]) => (
                 <Link
@@ -481,11 +558,11 @@ function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
             </div>
           </div>
           <Link
-            href="/our-offerings"
+            href="/innovation"
             onClick={onNavigate}
             className="group inline-flex items-center justify-between gap-2 rounded-full bg-revora-cobalt py-2.5 pl-5 pr-2.5 font-sans text-[13px] font-semibold text-white transition-colors hover:bg-revora-cobalt-dark"
           >
-            View Complete Prescribing Portfolio
+            Explore our innovation range
             <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/15 transition-transform duration-500 group-hover:rotate-45">
               <ArrowUpRight className="h-4 w-4" />
             </span>

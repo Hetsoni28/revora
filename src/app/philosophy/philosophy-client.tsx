@@ -9,7 +9,6 @@ import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
 import { IrisPromise } from '@/components/illustrations/illustrations';
-import { NextPages } from '@/components/company/next-pages';
 import { MediaFrame } from '@/components/ui/media-frame';
 
 const PROMISE =
@@ -20,7 +19,7 @@ const VALUES = [
   { icon: ShieldCheck, title: 'Trust', text: 'Every product, every time.' },
   { icon: Eye, title: 'Focus', text: 'Ophthalmology is all we do — and it shows in every brand.' },
   { icon: Factory, title: 'Quality', text: 'Our eye drops are made in our own WHO-GMP certified plant.' },
-  { icon: HeartHandshake, title: 'Relationships', text: 'We don’t just sell products — we build brands and relationships.' },
+  { icon: HeartHandshake, title: 'Relationships', text: 'Partners for the long term — doctors, pharmacies and distributors.' },
   { icon: Users, title: 'Care', text: 'Better patient care, healthier communities.' },
 ];
 
@@ -95,10 +94,10 @@ export function PhilosophyClient() {
           <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(11,74,143,0.85),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(215,38,46,0.25),transparent_55%)]" />
           <Tick className="mx-auto h-10 w-12 text-revora-crimson" />
           <p className="mx-auto mt-6 max-w-3xl font-heading text-[clamp(2rem,4.6vw,3.6rem)] font-extrabold leading-[1.05] tracking-[-0.02em]">
-            Proud to be a <span className="text-revora-cobalt-pale">Revorian.</span>
+            Live these values <span className="text-revora-cobalt-pale">with us.</span>
           </p>
           <p className="mx-auto mt-5 max-w-xl font-sans text-[16.5px] leading-[1.7] text-white/70">
-            We don’t just sell products — we build brands and relationships.
+            Join a team that puts the patient first.
           </p>
           <div className="mt-9 flex justify-center">
             <Button href="/careers" variant="light" arrow="up-right" magnetic>Join the team</Button>
@@ -106,7 +105,6 @@ export function PhilosophyClient() {
         </FadeUp>
       </section>
 
-      <NextPages current="/philosophy" />
     </>
   );
 }

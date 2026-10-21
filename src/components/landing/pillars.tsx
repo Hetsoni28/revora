@@ -13,7 +13,7 @@ const PILLARS = [
     kicker: '01 · Healthcare',
     title: 'Only ophthalmology.',
     body: 'Nine eye-care brands across four therapy areas.',
-    href: '/our-offerings',
+    href: '/profile#portfolio',
     cta: 'Our products',
     span: 'tablet-lg:col-span-7',
     tone: 'cobalt' as const,

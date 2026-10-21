@@ -18,10 +18,10 @@ function Heading() {
         </h2>
       </div>
       <Link
-        href="/our-offerings"
+        href="/profile#portfolio"
         className="group -my-2 inline-flex min-h-10 items-center gap-2 self-start font-sans text-[15px] font-semibold text-revora-cobalt tablet-lg:self-auto"
       >
-        View all therapy areas
+        View full portfolio
         <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />
       </Link>
     </div>

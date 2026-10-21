@@ -95,7 +95,7 @@ export function ProductClient({ product, category }: ProductClientProps) {
 
   const facts = [
     { label: 'Pack', value: product.volume },
-    { label: 'Therapy area', value: category.shortName, href: `/our-offerings/${category.slug}` },
+    { label: 'Therapy area', value: category.shortName },
     { label: 'Class', value: product.badge },
     { label: 'Supply', value: supplyClass },
   ];
@@ -113,8 +113,8 @@ export function ProductClient({ product, category }: ProductClientProps) {
           <Breadcrumb
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Our Offerings', href: '/our-offerings' },
-              { label: category.shortName, href: `/our-offerings/${category.slug}` },
+              { label: 'Portfolio', href: '/profile#portfolio' },
+              { label: category.shortName },
               { label: product.name },
             ]}
           />
@@ -155,15 +155,7 @@ export function ProductClient({ product, category }: ProductClientProps) {
                   {facts.map((f) => (
                     <div key={f.label} className="bg-white px-5 py-4">
                       <dt className="font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-slate-muted">{f.label}</dt>
-                      <dd className="mt-1 font-sans text-[14.5px] font-semibold leading-snug text-revora-slate">
-                        {f.href ? (
-                          <Link href={f.href} className="text-revora-cobalt hover:underline">
-                            {f.value}
-                          </Link>
-                        ) : (
-                          f.value
-                        )}
-                      </dd>
+                      <dd className="mt-1 font-sans text-[14.5px] font-semibold leading-snug text-revora-slate">{f.value}</dd>
                     </div>
                   ))}
                 </dl>
@@ -340,7 +332,7 @@ export function ProductClient({ product, category }: ProductClientProps) {
               </h2>
             </div>
             <Link
-              href={sameArea.length ? `/our-offerings/${category.slug}` : '/our-offerings'}
+              href="/profile#portfolio"
               className="group hidden shrink-0 items-center gap-1.5 font-sans text-[14px] font-semibold text-revora-cobalt tablet:inline-flex"
             >
               View all <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />

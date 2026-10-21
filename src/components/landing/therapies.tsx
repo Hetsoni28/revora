@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { THERAPY_CATEGORIES, ALL_PRODUCTS } from '@/lib/therapies-data';
 import { expoOut } from '@/lib/easings';
 import { Eyebrow, SplitWords } from '@/components/ui/primitives';
@@ -107,13 +107,6 @@ export function Therapies() {
                             );
                           })}
                         </div>
-                        <Link
-                          href={`/our-offerings/${c.slug}`}
-                          className="group mt-7 inline-flex items-center gap-2 font-sans text-[14px] font-semibold text-revora-cobalt"
-                        >
-                          Explore {c.shortName}
-                          <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />
-                        </Link>
                       </div>
                     </motion.div>
                   )}

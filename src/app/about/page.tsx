@@ -4,7 +4,7 @@ import { Footer } from '@/components/layout/footer';
 import { AboutClient } from './about-client';
 
 export const metadata: Metadata = {
-  title: 'About Revora — Ophthalmic Pharmaceuticals, Ahmedabad',
+  title: 'About Us — Ophthalmic Pharmaceuticals, Ahmedabad',
   description:
     'Revora Healthcare Private Limited is a pharmaceutical company in Ahmedabad, Gujarat, specialising in ophthalmic pharmaceuticals and expanding into specialty healthcare products and medical devices.',
 };

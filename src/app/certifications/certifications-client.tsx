@@ -6,7 +6,6 @@ import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
 import { PlantLine, QualitySeal } from '@/components/illustrations/illustrations';
-import { NextPages } from '@/components/company/next-pages';
 import { MediaFrame } from '@/components/ui/media-frame';
 
 const EMAIL = 'info@revorahealthcare.com';
@@ -174,7 +173,6 @@ export function CertificationsClient() {
         </FadeUp>
       </section>
 
-      <NextPages current="/certifications" />
     </>
   );
 }

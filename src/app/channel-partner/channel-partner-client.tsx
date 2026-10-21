@@ -1,31 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { motion, useReducedMotion } from 'framer-motion';
 import { toast } from 'sonner';
-import { Building2, Factory, Handshake, Layers, MessageSquare, Package, Rocket, Send, Store, Truck } from 'lucide-react';
+import { Building2, Eye, Factory, Handshake, Layers, MapPin, MessageSquare, Package, Rocket, Send, Sparkles, Store, Truck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { ALL_PRODUCTS, THERAPY_CATEGORIES } from '@/lib/therapies-data';
-import { Counter, FadeUp } from '@/components/ui/primitives';
+import { INNOVATION_PRODUCTS } from '@/lib/innovation-products';
+import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
-import { IndiaDotMap } from '@/components/maps/india-dot-map';
-import { ProductLogoLink } from '@/components/offerings/product-logo';
 
 const PARTNER_EMAIL = 'depot@revorahealthcare.com';
-
-const STATS = [
-  { value: ALL_PRODUCTS.length, label: 'Eye-care brands' },
-  { value: THERAPY_CATEGORIES.length, label: 'Therapy areas' },
-  { value: 1, label: 'Own WHO-GMP plant' },
-];
 
 const BENEFITS = [
   { icon: Layers, title: 'A focused range', text: 'Nine ophthalmic brands across four therapy areas.' },
   { icon: Factory, title: 'Made in our plant', text: 'WHO-GMP certified, EU-compliant manufacturing.' },
   { icon: Package, title: 'Premium packs', text: 'Cartons doctors and patients recognise.' },
   { icon: Building2, title: 'Backed by HQ', text: 'Sales and supply support from Ahmedabad.' },
+];
+
+const RANGES = [
+  { icon: Eye, count: ALL_PRODUCTS.length, title: 'Ophthalmic range', text: `Prescription eye drops and eye nutrition across ${THERAPY_CATEGORIES.length} therapy areas.`, href: '/profile#portfolio', cta: 'See the brands' },
+  { icon: Sparkles, count: INNOVATION_PRODUCTS.length, title: 'Innovation range', text: 'Warmers, cooling and field-care products for tough conditions.', href: '/innovation', cta: 'See the products' },
 ];
 
 const STEPS = [
@@ -54,27 +53,13 @@ export function ChannelPartnerClient() {
         actions={
           <>
             <Button href="#apply" arrow="down" magnetic>Become a partner</Button>
-            <Button href="/our-offerings" variant="outline">See the range</Button>
+            <Button href="/profile#portfolio" variant="outline">See the range</Button>
           </>
         }
         visual={
-          <FadeUp className="mx-auto w-full max-w-[560px] rounded-[28px] border border-revora-cobalt/10 bg-white p-6 shadow-[0_40px_80px_-40px_rgba(11,74,143,0.45)] tablet:rounded-[32px] tablet:p-10">
-            <IndiaDotMap className="mx-auto w-full max-w-[420px]" />
-          </FadeUp>
+          <PartnerCard />
         }
       />
-
-      {/* ── stats ── */}
-      <div className="px-5 tablet:px-8">
-        <FadeUp className="mx-auto grid max-w-330 grid-cols-3 divide-x divide-revora-cobalt/10 rounded-[28px] border border-revora-cobalt/10 bg-white">
-          {STATS.map((s) => (
-            <div key={s.label} className="p-6 text-center tablet:p-8">
-              <p className="font-heading text-4xl font-extrabold tracking-tight text-revora-cobalt tablet:text-5xl"><Counter to={s.value} /></p>
-              <p className="mt-1 font-sans text-[12.5px] font-medium text-revora-slate-light tablet:text-[13.5px]">{s.label}</p>
-            </div>
-          ))}
-        </FadeUp>
-      </div>
 
       {/* ── why partner ── */}
       <section className="px-5 py-20 tablet:px-8 tablet:py-28">
@@ -97,14 +82,25 @@ export function ChannelPartnerClient() {
         </div>
       </section>
 
-      {/* ── the range ── */}
+      {/* ── the ranges ── */}
       <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
         <div className="mx-auto max-w-330">
-          <SectionHeading eyebrow="The range you’ll carry" lines={['Nine brands.', 'One focus.']} highlight={{ 'focus.': 'text-revora-crimson' }} />
-          <div className="mt-12 grid grid-cols-3 items-center gap-x-6 gap-y-8 tablet:gap-x-10">
-            {ALL_PRODUCTS.map((p, i) => (
-              <FadeUp key={p.id} delay={(i % 3) * 0.06}>
-                <ProductLogoLink product={p} className="h-[60px] w-full tablet:h-[100px]" sizes="(min-width: 768px) 30vw, 30vw" />
+          <SectionHeading eyebrow="What you’ll carry" lines={['Two ranges.', 'One partner.']} highlight={{ 'One': 'text-revora-crimson' }} />
+          <div className="mt-12 grid gap-5 tablet-lg:grid-cols-2">
+            {RANGES.map((r, i) => (
+              <FadeUp key={r.title} delay={i * 0.1}>
+                <a href={r.href} className="group relative isolate flex h-full min-h-[260px] flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] p-8 tablet:p-10">
+                  <span aria-hidden className="absolute inset-0 -z-10 translate-y-full bg-revora-cobalt transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
+                  <div className="flex items-start justify-between">
+                    <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white text-revora-cobalt shadow-sm transition-all duration-500 group-hover:rotate-[-8deg] group-hover:bg-white/15 group-hover:text-white">
+                      <r.icon className="h-5 w-5" />
+                    </span>
+                    <span className="font-heading text-[56px] font-extrabold leading-none tracking-[-0.04em] text-revora-cobalt/15 transition-colors duration-500 group-hover:text-white/25">{r.count}</span>
+                  </div>
+                  <h3 className="mt-auto pt-10 font-heading text-[1.6rem] font-extrabold leading-tight text-revora-slate transition-colors duration-500 group-hover:text-white">{r.title}</h3>
+                  <p className="mt-2 font-sans text-[15px] leading-[1.6] text-revora-slate-light transition-colors duration-500 group-hover:text-white/80">{r.text}</p>
+                  <span className="mt-6 font-sans text-[14px] font-semibold text-revora-cobalt transition-colors duration-500 group-hover:text-white">{r.cta} →</span>
+                </a>
               </FadeUp>
             ))}
           </div>
@@ -176,6 +172,9 @@ function ApplyForm() {
         </div>
 
         <FadeUp delay={0.1}>
+          <Suspense fallback={null}>
+            <InterestPrefill onInterest={(it) => setForm((f) => ({ ...f, message: `Interested in: ${it}` }))} />
+          </Suspense>
           <form onSubmit={submit} className="rounded-[28px] border border-revora-cobalt/10 bg-white p-6 tablet:p-9">
             <div className="grid gap-5 tablet:grid-cols-2">
               <div className="tablet:col-span-2">
@@ -230,5 +229,53 @@ function ApplyForm() {
         </FadeUp>
       </div>
     </section>
+  );
+}
+
+/** Fills the message from the menu's ?interest= link (kept in Suspense so the page stays static). */
+function InterestPrefill({ onInterest }: { onInterest: (interest: string) => void }) {
+  const interest = useSearchParams().get('interest');
+  useEffect(() => {
+    if (interest) onInterest(interest);
+    // only when the chosen range changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [interest]);
+  return null;
+}
+
+/* ── hero: partner card ───────────────────────────────────── */
+function PartnerCard() {
+  const reduce = useReducedMotion();
+  return (
+    <motion.div
+      initial={reduce ? false : { opacity: 0, y: 40, rotate: 2 }}
+      animate={{ opacity: 1, y: 0, rotate: 0 }}
+      transition={{ duration: 1.1, delay: 0.2, ease: expoOut }}
+      className="relative isolate mx-auto w-full max-w-[520px] overflow-hidden rounded-[28px] bg-revora-cobalt-deep p-8 text-white shadow-[0_40px_80px_-40px_rgba(11,74,143,0.6)] tablet:rounded-[32px] tablet:p-10"
+    >
+      <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(58,130,200,0.55),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(215,38,46,0.22),transparent_55%)]" />
+      <div className="flex items-center justify-between gap-4">
+        <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-cobalt-pale">Partner programme</span>
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 font-sans text-[11px] font-semibold">
+          <MapPin className="h-3.5 w-3.5 text-revora-crimson" /> Your territory
+        </span>
+      </div>
+      <p className="mt-10 font-heading text-[clamp(1.5rem,2.6vw,2rem)] font-extrabold leading-tight">Open to</p>
+      <ul className="mt-5 space-y-3">
+        {TYPES.map((t, i) => (
+          <motion.li
+            key={t.label}
+            initial={reduce ? false : { opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.6 + i * 0.12, ease: expoOut }}
+            className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3"
+          >
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white/10"><t.icon className="h-4 w-4" /></span>
+            <span className="font-heading text-[17px] font-bold">{t.label}</span>
+          </motion.li>
+        ))}
+      </ul>
+      <p className="mt-8 border-t border-white/10 pt-5 font-sans text-[13px] text-white/60">Supported from Ahmedabad · Supplied from our own plant</p>
+    </motion.div>
   );
 }

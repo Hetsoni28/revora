@@ -22,7 +22,7 @@ const TEAMS = [
 
 const VALUES = [
   { icon: Eye, title: 'Only eye care', text: 'Go deep in one specialty, not wide across many.' },
-  { icon: Sprout, title: 'Build brands', text: 'We don’t just sell products — we build brands and relationships.' },
+  { icon: Sprout, title: 'Build brands', text: 'Help shape our eye-care brands from the very start.' },
   { icon: Rocket, title: 'Grow early', text: 'A young company: your work shapes how we grow.' },
 ];
 

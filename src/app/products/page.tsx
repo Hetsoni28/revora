@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
 export default function ProductsIndexPage() {
-  redirect('/our-offerings');
+  redirect('/profile#portfolio');
 }

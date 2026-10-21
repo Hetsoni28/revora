@@ -2,24 +2,16 @@
 
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Building2, Factory, Hospital, Mail, MapPin, Navigation, Pill, ShieldCheck, Stethoscope, Truck } from 'lucide-react';
+import { Building2, Factory, MapPin, Navigation, ShieldCheck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
-import { Counter, FadeUp } from '@/components/ui/primitives';
+import { FadeUp } from '@/components/ui/primitives';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
 import { SupplyFlow } from '@/components/presence/supply-flow';
 import { PresenceLinks } from '@/components/presence/presence-links';
 
-const EMAIL = 'info@revorahealthcare.com';
 const mapsUrl = (q: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
-
-const STATS = [
-  { value: 9, label: 'Ophthalmic brands' },
-  { value: 4, label: 'Therapy areas' },
-  { value: 2, label: 'Locations — office & plant' },
-  { value: 1, label: 'Dedicated eye-drop plant' },
-];
 
 const FACILITIES = [
   {
@@ -31,7 +23,7 @@ const FACILITIES = [
     address: '3rd Floor, S.G. Business Hub, A/303, Sarkhej–Gandhinagar Highway, near Gota Overbridge, Ognaj, Ahmedabad, Gujarat 380060',
     detail: 'Sales, distribution and partnerships for all of India.',
     roles: ['Sales & marketing', 'Distribution & supply planning', 'Partnerships & institutional supply', 'Pharmacovigilance'],
-    facts: [['Incorporated', '10 March 2026'], ['CIN', 'U21000GJ2026PTC174674']],
+    facts: [['Role', 'Head office'], ['Reach', 'All of India']],
     mapQuery: 'S.G. Business Hub, Gota, Ahmedabad, Gujarat 380060',
     images: ['/images/photos/ahmedabad-skyline.webp'],
     logos: false,
@@ -52,13 +44,6 @@ const FACILITIES = [
     logos: false,
     second: { label: 'Certifications', href: '/certifications', icon: undefined },
   },
-];
-
-const AUDIENCES = [
-  { icon: Stethoscope, name: 'Doctors & ophthalmologists', detail: 'Formulations, literature and rep support.' },
-  { icon: Hospital, name: 'Hospitals & eye clinics', detail: 'A focused portfolio across four therapy areas.' },
-  { icon: Pill, name: 'Pharmacies', detail: 'Recognisable packs and steady supply.' },
-  { icon: Truck, name: 'Distributors & stockists', detail: 'Our range, in new territories.' },
 ];
 
 /** Reveal-on-scroll wrapper shared by the cards on this page. */
@@ -105,18 +90,6 @@ export function PresenceClient() {
             </div>
             <RouteCard />
           </div>
-          <FadeUp delay={0.2}>
-            <dl className="mt-16 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-revora-cobalt/10 pt-8 tablet:grid-cols-4">
-              {STATS.map((s) => (
-                <div key={s.label}>
-                  <dd className="font-heading text-4xl font-extrabold tracking-tight text-revora-cobalt tablet:text-5xl">
-                    <Counter to={s.value} />
-                  </dd>
-                  <dt className="mt-1 font-sans text-[13px] font-medium leading-snug text-revora-slate-light">{s.label}</dt>
-                </div>
-              ))}
-            </dl>
-          </FadeUp>
         </div>
       </section>
 
@@ -140,64 +113,6 @@ export function PresenceClient() {
       </section>
 
       <SupplyFlow />
-
-      {/* ── who we serve ── */}
-      <section id="domestic" className="px-5 py-24 tablet:px-8 tablet:py-32">
-        <div className="mx-auto max-w-330">
-          <SectionHeading
-            eyebrow="Domestic network"
-            lines={['Who we serve across India.']}
-            highlight={{ 'India.': 'text-revora-cobalt' }}
-            aside="Lasting relationships with every link in the eye-care chain."
-          />
-          <div className="mt-14 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-4">
-            {AUDIENCES.map((a, i) => (
-              <Rise key={a.name} i={i} className="group relative isolate flex min-h-[260px] flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white p-7">
-                <span aria-hidden className="absolute inset-0 -z-10 translate-y-full bg-revora-cobalt transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
-                <div className="flex items-start justify-between">
-                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-revora-sky text-revora-cobalt transition-all duration-500 group-hover:rotate-[-8deg] group-hover:bg-white">
-                    <a.icon className="h-5 w-5" />
-                  </span>
-                  <span className="font-heading text-[40px] font-extrabold leading-none tracking-[-0.04em] text-revora-cobalt/10 transition-colors duration-500 group-hover:text-white/20">
-                    0{i + 1}
-                  </span>
-                </div>
-                <h3 className="mt-auto pt-10 font-heading text-[22px] font-extrabold leading-tight text-revora-slate transition-colors duration-500 group-hover:text-white">{a.name}</h3>
-                <p className="mt-2.5 font-sans text-[14.5px] leading-[1.65] text-revora-slate-light transition-colors duration-500 group-hover:text-white/80">{a.detail}</p>
-              </Rise>
-            ))}
-          </div>
-          <FadeUp className="mt-10 flex justify-center">
-            <Button href="/our-presence/domestic-network" arrow="up-right">Explore our domestic network</Button>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* ── partnership ── */}
-      <div id="partner" className="px-5 pb-24 tablet:px-8 tablet:pb-32">
-        <Rise className="relative isolate mx-auto max-w-330 overflow-hidden rounded-[32px] bg-revora-slate p-8 text-white tablet:p-14">
-          <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(11,74,143,0.85),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(215,38,46,0.22),transparent_55%)]" />
-          <div className="flex flex-col gap-10 desktop:flex-row desktop:items-end desktop:justify-between">
-            <div className="max-w-2xl">
-              <p className="inline-flex items-center gap-2 font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-revora-cobalt-pale">
-                <Truck className="h-4 w-4" /> Distribution partnerships
-              </p>
-              <h2 className="mt-4 font-heading text-[clamp(1.9rem,3.8vw,3.2rem)] font-extrabold leading-[1.05] tracking-[-0.02em]">
-                Bring Revora to the doctors and pharmacies in your territory.
-              </h2>
-              <p className="mt-4 font-sans text-[16px] leading-[1.7] text-white/70">
-                Tell us about your region — our business team will get in touch.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3 desktop:shrink-0 desktop:flex-col">
-              <Button href="/our-presence/domestic-network#partner" variant="light" arrow="up-right" magnetic>Partner with us</Button>
-              <Button href={`mailto:${EMAIL}?subject=${encodeURIComponent('Distribution partnership enquiry')}`} variant="outline-light" icon={<Mail />}>
-                {EMAIL}
-              </Button>
-            </div>
-          </div>
-        </Rise>
-      </div>
 
       <PresenceLinks current="/our-presence" title="Explore more" />
     </>

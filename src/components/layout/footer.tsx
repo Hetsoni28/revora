@@ -7,16 +7,14 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion
 import { AlertCircle, ArrowUpRight, Award, Building2, Globe, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
 import { AnchorLink, Magnetic, Tick } from '@/components/ui/primitives';
 
-const COLUMNS: { title: string; href?: string; links: [string, string][] }[] = [
+const COLUMNS: { title: string; href?: string; links: [string, string | null][] }[] = [
   {
-    title: 'Therapeutic Areas',
-    href: '/our-offerings',
+    title: 'Healthcare',
     links: [
-      ['Anti-Infective & Anti-Inflammatory', '/our-offerings/anti-infectives'],
-      ['Dry Eye & Tear Substitutes', '/our-offerings/dry-eye-lubricants'],
-      ['Ophthalmic NSAIDs & Cataract', '/our-offerings/nsaids-surgical'],
-      ['Retinal Vitality & Nutrition', '/our-offerings/retinal-nutrition'],
-      ['View All Products & Formularies', '/our-offerings'],
+      ['Anti-Infectives', null],
+      ['Dry Eye & Lubricants', null],
+      ['Ophthalmic NSAIDs', null],
+      ['Retinal Nutrition', null],
     ],
   },
   {
@@ -176,7 +174,7 @@ export function Footer() {
               <ul className="mt-5 space-y-3 font-sans text-[14.5px]">
                 {col.links.map(([label, href]) => (
                   <li key={label}>
-                    <FooterLink label={label} href={href} />
+                    {href ? <FooterLink label={label} href={href} /> : <span className="text-white/70">{label}</span>}
                   </li>
                 ))}
               </ul>
@@ -210,7 +208,7 @@ export function Footer() {
             </p>
           </div>
           <div className="-my-2 flex flex-wrap items-center gap-x-5 [&_a]:inline-flex [&_a]:min-h-10 [&_a]:items-center">
-            <Link href="/our-offerings" className="transition-colors hover:text-white">Products</Link>
+            <Link href="/profile#portfolio" className="transition-colors hover:text-white">Portfolio</Link>
             <Link href="/our-presence" className="transition-colors hover:text-white">Presence</Link>
             <Link href="/innovation" className="transition-colors hover:text-white">Innovation</Link>
             <Link href="/channel-partner" className="transition-colors hover:text-white">Channel Partner</Link>

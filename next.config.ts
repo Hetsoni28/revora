@@ -24,6 +24,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    // The Healthcare (Our Offerings) pages were removed; old links land on the portfolio table.
+    return [
+      { source: "/our-offerings", destination: "/profile#portfolio", permanent: true },
+      { source: "/our-offerings/:path*", destination: "/profile#portfolio", permanent: true },
+    ];
+  },
   async headers() {
     // Files in /public aren't content-hashed, so cache for a week and revalidate in the background
     // instead of marking them immutable — a replaced photo still shows up within days.

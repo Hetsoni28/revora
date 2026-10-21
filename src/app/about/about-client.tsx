@@ -1,137 +1,112 @@
 'use client';
 
 import Image from 'next/image';
-import { Building2, CalendarDays, Factory, Hospital, Layers, MapPin, Pill, Stethoscope, Truck } from 'lucide-react';
+import { Building2, Compass, Factory, Layers, Rocket, Sparkles, Target } from 'lucide-react';
 import { ALL_PRODUCTS, THERAPY_CATEGORIES } from '@/lib/therapies-data';
-import { Counter, FadeUp } from '@/components/ui/primitives';
+import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
-import { ProductLogoLink } from '@/components/offerings/product-logo';
 import { EyeDropScene } from '@/components/illustrations/illustrations';
-import { NextPages } from '@/components/company/next-pages';
-import { MediaFrame } from '@/components/ui/media-frame';
 
-const FACTS = [
-  { icon: CalendarDays, k: 'Incorporated', v: '10 March 2026' },
-  { icon: Building2, k: 'Headquarters', v: 'Ahmedabad, Gujarat' },
-  { icon: Factory, k: 'Manufacturing', v: 'Paonta Sahib, H.P.' },
-  { icon: MapPin, k: 'Serving', v: 'Across India' },
+const PURPOSE = [
+  {
+    icon: Target,
+    tag: 'Our mission',
+    text: 'Make dependable eye-care medicines easy to find for every doctor, hospital and pharmacy in India.',
+    filled: true,
+  },
+  {
+    icon: Compass,
+    tag: 'Our vision',
+    text: 'Grow from eye care into specialty healthcare and medical devices — with the same care for quality.',
+    filled: false,
+  },
 ];
 
-const FOCUS = [
-  { tag: 'Today', title: 'Ophthalmic pharmaceuticals', text: 'Eye drops and eye-care nutrition across four therapy areas.', now: true },
-  { tag: 'Expanding', title: 'Specialty healthcare products', text: 'Building beyond ophthalmology into specialty care.', now: false },
-  { tag: 'Expanding', title: 'Medical devices', text: 'Adding medical devices to our portfolio.', now: false },
-];
-
-const SERVE = [
-  { icon: Stethoscope, name: 'Doctors' },
-  { icon: Hospital, name: 'Hospitals' },
-  { icon: Pill, name: 'Pharmacies' },
-  { icon: Truck, name: 'Distributors' },
-];
-
-const DETAILS = [
-  ['Company', 'Revora Healthcare Private Limited'],
-  ['CIN', 'U21000GJ2026PTC174674'],
-  ['Incorporated', '10 March 2026'],
-  ['Registered office', '3rd Floor, S.G. Business Hub, A/303, Sarkhej–Gandhinagar Highway, near Gota Overbridge, Ognaj, Ahmedabad, Gujarat 380060'],
+const JOURNEY = [
+  { icon: Building2, when: 'March 2026', title: 'Founded in Ahmedabad', text: 'Revora Healthcare Private Limited is incorporated on 10 March 2026.' },
+  { icon: Factory, when: 'Manufacturing', title: 'Our own plant', text: 'Eye drops made at our WHO-GMP plant in Paonta Sahib, Himachal Pradesh.' },
+  { icon: Layers, when: 'Portfolio', title: `${ALL_PRODUCTS.length} eye-care brands`, text: `Covering ${THERAPY_CATEGORIES.length} therapy areas, from dry eye to infection.` },
+  { icon: Sparkles, when: 'Innovation', title: 'A new range', text: 'Warmers, cooling and field-care products for everyday comfort.' },
+  { icon: Rocket, when: 'Next', title: 'Beyond the eye', text: 'Specialty healthcare products and medical devices.', next: true },
 ];
 
 export function AboutClient() {
   return (
     <>
       <PageHero
-        crumbs={[{ label: 'Home', href: '/' }, { label: 'About Revora' }]}
-        eyebrow="About Revora"
-        lines={['Healthcare,', 'beyond the cure.']}
-        highlight={{ 'beyond': 'text-revora-cobalt', 'cure.': 'text-revora-crimson' }}
-        text="Reliable eye care from Ahmedabad — for doctors, hospitals, pharmacies and distributors across India."
+        crumbs={[{ label: 'Home', href: '/' }, { label: 'About Us' }]}
+        eyebrow="About Us"
+        lines={['Our story', 'so far.']}
+        highlight={{ 'story': 'text-revora-cobalt', 'far.': 'text-revora-crimson' }}
+        text="A young Ahmedabad company with one clear purpose — eye care that India can rely on."
         actions={
           <>
-            <Button href="/our-offerings" arrow="up-right" magnetic>Our products</Button>
+            <Button href="/profile" arrow="up-right" magnetic>Company profile</Button>
             <Button href="/philosophy" variant="outline">Our philosophy</Button>
           </>
         }
         visual={<EyeDropScene />}
       />
 
-      {/* ── key facts ── */}
-      <div className="px-5 tablet:px-8">
-        <FadeUp className="mx-auto grid max-w-330 grid-cols-2 overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white desktop:grid-cols-4">
-          {FACTS.map((f, i) => (
-            <div key={f.k} className={`flex items-start gap-3.5 p-6 tablet:p-8 ${i % 2 ? 'border-l border-revora-cobalt/10' : ''} ${i > 1 ? 'border-t border-revora-cobalt/10 desktop:border-t-0' : ''} ${i === 2 ? 'desktop:border-l' : ''}`}>
-              <f.icon className="mt-0.5 h-5 w-5 shrink-0 text-revora-cobalt" />
-              <div>
-                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-revora-slate-muted">{f.k}</p>
-                <p className="mt-1 font-heading text-[17px] font-extrabold leading-snug text-revora-slate tablet:text-xl">{f.v}</p>
-              </div>
-            </div>
-          ))}
-        </FadeUp>
-      </div>
-
-      {/* ── who we are ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
-        <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] gap-12 tablet-lg:grid-cols-[0.9fr_1.1fr] tablet-lg:gap-20">
-          <div>
-            <SectionHeading eyebrow="Who we are" lines={['Eye care first.', 'More to come.']} highlight={{ 'first.': 'text-revora-cobalt' }} />
-            <FadeUp delay={0.15}>
-              <p className="mt-6 max-w-md font-sans text-[16.5px] leading-[1.75] text-revora-slate-light">
-                An Ahmedabad pharmaceutical company focused on ophthalmics — and growing into specialty healthcare products and medical
-                devices.
-              </p>
-            </FadeUp>
-            <FadeUp delay={0.25}>
-              <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-revora-cobalt/10 pt-8">
-                <div>
-                  <dd className="font-heading text-5xl font-extrabold tracking-tight text-revora-cobalt"><Counter to={ALL_PRODUCTS.length} /></dd>
-                  <dt className="mt-1 font-sans text-[13px] font-medium text-revora-slate-light">Eye-care brands</dt>
-                </div>
-                <div>
-                  <dd className="font-heading text-5xl font-extrabold tracking-tight text-revora-cobalt"><Counter to={THERAPY_CATEGORIES.length} /></dd>
-                  <dt className="mt-1 font-sans text-[13px] font-medium text-revora-slate-light">Therapy areas</dt>
-                </div>
-              </dl>
-            </FadeUp>
-          </div>
-
-          <div className="space-y-4">
-            {FOCUS.map((f, i) => (
-              <FadeUp key={f.title} delay={i * 0.1}>
+      {/* ── mission & vision ── */}
+      <section className="px-5 pb-20 tablet:px-8 tablet:pb-28">
+        <div className="mx-auto max-w-330">
+          <SectionHeading eyebrow="Why we exist" lines={['Mission & vision.']} highlight={{ 'vision.': 'text-revora-cobalt' }} />
+          <div className="mt-12 grid gap-5 tablet-lg:grid-cols-2">
+            {PURPOSE.map((p, i) => (
+              <FadeUp key={p.tag} delay={i * 0.1}>
                 <div
-                  className={`group flex items-start gap-5 rounded-[24px] border p-6 transition-shadow duration-500 hover:shadow-[0_24px_50px_-28px_rgba(11,74,143,0.45)] tablet:p-7 ${
-                    f.now ? 'border-transparent bg-revora-cobalt text-white' : 'border-revora-cobalt/10 bg-white'
+                  className={`group relative isolate flex h-full min-h-[280px] flex-col overflow-hidden rounded-[28px] p-8 tablet:p-10 ${
+                    p.filled ? 'bg-revora-cobalt text-white' : 'border border-revora-cobalt/10 bg-white'
                   }`}
                 >
-                  <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl transition-transform duration-500 group-hover:rotate-[-8deg] ${f.now ? 'bg-white/15' : 'bg-revora-sky text-revora-cobalt'}`}>
-                    <Layers className="h-5 w-5" />
+                  {p.filled && <div aria-hidden className="absolute -bottom-24 -right-16 -z-10 h-72 w-72 rounded-full bg-revora-cobalt-light/40 blur-3xl" />}
+                  <span className={`grid h-12 w-12 place-items-center rounded-2xl transition-transform duration-500 group-hover:rotate-[-8deg] ${p.filled ? 'bg-white/15' : 'bg-revora-sky text-revora-cobalt'}`}>
+                    <p.icon className="h-5 w-5" />
                   </span>
-                  <div>
-                    <span className={`font-sans text-[11px] font-semibold uppercase tracking-[0.16em] ${f.now ? 'text-revora-cobalt-pale' : 'text-revora-crimson'}`}>{f.tag}</span>
-                    <h3 className={`mt-1 font-heading text-[1.35rem] font-extrabold leading-tight ${f.now ? '' : 'text-revora-slate'}`}>{f.title}</h3>
-                    <p className={`mt-1.5 font-sans text-[14.5px] leading-[1.6] ${f.now ? 'text-white/75' : 'text-revora-slate-light'}`}>{f.text}</p>
-                  </div>
+                  <p className={`mt-auto pt-12 font-sans text-[11px] font-semibold uppercase tracking-[0.16em] ${p.filled ? 'text-revora-cobalt-pale' : 'text-revora-crimson'}`}>{p.tag}</p>
+                  <p className={`mt-2 font-heading text-[clamp(1.4rem,2.4vw,1.9rem)] font-extrabold leading-snug tracking-[-0.01em] ${p.filled ? '' : 'text-revora-slate'}`}>{p.text}</p>
                 </div>
               </FadeUp>
             ))}
-            <FadeUp delay={0.3}>
-              <div className="flex flex-wrap items-center gap-2 pt-4">
-                <span className="mr-1 font-sans text-[13px] font-semibold text-revora-slate-muted">We serve</span>
-                {SERVE.map((s) => (
-                  <span key={s.name} className="inline-flex items-center gap-2 rounded-full border border-revora-cobalt/15 bg-white px-4 py-2 font-sans text-[14px] font-semibold text-revora-slate">
-                    <s.icon className="h-4 w-4 text-revora-cobalt" /> {s.name}
+          </div>
+        </div>
+      </section>
+
+      {/* ── our journey ── */}
+      <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+        <div className="mx-auto max-w-330">
+          <SectionHeading
+            eyebrow="Our journey"
+            lines={['Step by step.']}
+            highlight={{ 'step.': 'text-revora-crimson' }}
+            aside="Where we started, where we are, and where we’re heading."
+          />
+          <div className="relative mt-14 grid gap-8 border-l border-revora-cobalt/15 pl-8 desktop:grid-cols-5 desktop:gap-5 desktop:border-l-0 desktop:border-t desktop:pl-0 desktop:pt-10">
+            {JOURNEY.map((j, i) => (
+              <FadeUp key={j.title} delay={i * 0.08} className="relative">
+                <div>
+                  <span
+                    aria-hidden
+                    className={`absolute -left-[41px] top-1 h-4 w-4 rounded-full ring-4 ring-white desktop:-top-[49px] desktop:left-0 ${j.next ? 'border-2 border-dashed border-revora-crimson bg-white' : 'bg-revora-cobalt'}`}
+                  />
+                  <span className={`grid h-11 w-11 place-items-center rounded-xl ${j.next ? 'bg-revora-crimson-tint text-revora-crimson' : 'bg-revora-sky text-revora-cobalt'}`}>
+                    <j.icon className="h-5 w-5" />
                   </span>
-                ))}
-              </div>
-            </FadeUp>
+                  <p className={`mt-5 font-sans text-[11px] font-semibold uppercase tracking-[0.16em] ${j.next ? 'text-revora-crimson' : 'text-revora-slate-muted'}`}>{j.when}</p>
+                  <h3 className="mt-1 font-heading text-[1.25rem] font-extrabold leading-tight text-revora-slate">{j.title}</h3>
+                  <p className="mt-2 font-sans text-[14.5px] leading-[1.6] text-revora-slate-light">{j.text}</p>
+                </div>
+              </FadeUp>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ── leadership & vision (founder) ── */}
-      <section className="border-y border-revora-cobalt/10 bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="border-b border-revora-cobalt/10 px-5 py-20 tablet:px-8 tablet:py-28">
         <div className="mx-auto max-w-330">
           <SectionHeading
             eyebrow="Leadership & Direction"
@@ -148,6 +123,7 @@ export function AboutClient() {
                     src="/images/leadership/founder.webp"
                     alt="Founder & Managing Director — Revora Healthcare"
                     fill
+                    loading="eager"
                     sizes="(min-width: 1024px) 40vw, 85vw"
                     className="object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
                   />
@@ -169,10 +145,10 @@ export function AboutClient() {
 
                 <div className="space-y-4 font-sans text-[15.5px] leading-[1.8] text-revora-slate-light">
                   <p>
-                    Revora was founded in Ahmedabad to pair dedicated WHO-GMP manufacturing with focused eye-care formulations.
+                    Revora started with a simple idea — eye-care medicines that doctors can rely on and patients can trust.
                   </p>
                   <p>
-                    Our own eye-drop plant at Paonta Sahib keeps quality in our hands — and the portfolio keeps growing across India.
+                    Every decision since, from where we manufacture to which brands we build, comes back to that idea.
                   </p>
                 </div>
 
@@ -191,60 +167,6 @@ export function AboutClient() {
           </div>
         </div>
       </section>
-
-      {/* ── the people we serve ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
-        <div className="mx-auto grid max-w-330 gap-5 tablet:grid-cols-2">
-          {[
-            { src: '/images/photos/eye-exam-doctor.webp', alt: 'Patient during an eye examination', label: 'For doctors', text: 'Formulations ophthalmologists can prescribe with confidence.' },
-            { src: '/images/photos/pharmacist.webp', alt: 'Pharmacist in a white coat at a pharmacy', label: 'For pharmacies', text: 'Recognisable brands and steady supply for every counter.' },
-          ].map((p, i) => (
-            <FadeUp key={p.label} delay={i * 0.1}>
-              <MediaFrame src={p.src} alt={p.alt} aspect="aspect-[4/5] tablet:aspect-[4/3] desktop:aspect-[5/4]" sizes="(min-width: 768px) 50vw, 100vw" />
-              <p className="mt-5 font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-revora-crimson">{p.label}</p>
-              <p className="mt-1.5 max-w-md font-heading text-[1.3rem] font-bold leading-snug text-revora-slate">{p.text}</p>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
-
-      {/* ── brands ── */}
-      <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
-        <div className="mx-auto max-w-330">
-          <SectionHeading
-            eyebrow="Our brands"
-            lines={['Nine brands. One focus.']}
-            highlight={{ 'focus.': 'text-revora-crimson' }}
-            aside="Tap a brand to see the product."
-          />
-          <div className="mt-12 grid grid-cols-2 items-center gap-x-8 gap-y-10 tablet:grid-cols-3">
-            {ALL_PRODUCTS.map((p, i) => (
-              <FadeUp key={p.id} delay={(i % 3) * 0.08}>
-                <ProductLogoLink product={p} className="h-[90px] w-full tablet:h-[120px]" sizes="(min-width: 768px) 30vw, 45vw" />
-              </FadeUp>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── company details ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
-        <div className="mx-auto max-w-330">
-          <SectionHeading eyebrow="Company details" lines={['On the record.']} highlight={{ 'record.': 'text-revora-cobalt' }} />
-          <FadeUp delay={0.1}>
-            <dl className="mt-10 overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white">
-              {DETAILS.map(([k, v]) => (
-                <div key={k} className="grid gap-1 border-b border-revora-cobalt/10 px-6 py-5 last:border-b-0 tablet:grid-cols-[220px_1fr] tablet:gap-6 tablet:px-8">
-                  <dt className="font-sans text-[12px] font-semibold uppercase tracking-[0.14em] text-revora-slate-muted">{k}</dt>
-                  <dd className={`font-sans text-[15.5px] font-medium leading-[1.6] text-revora-slate ${k === 'CIN' ? 'font-mono text-[14.5px]' : ''}`}>{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </FadeUp>
-        </div>
-      </section>
-
-      <NextPages current="/about" />
     </>
   );
 }
