@@ -4,6 +4,7 @@ import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Toaster, toast } from "sonner";
 import { ReactLenis } from "lenis/react";
+import { CookieConsent } from "@/components/consent/cookie-consent";
 
 /** Tells the visitor when the connection drops and comes back, so failed actions aren't a mystery. */
 function NetworkStatus() {
@@ -33,6 +34,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         {/* on phones, sit above the product page's sticky "Request samples" bar */}
         <Toaster richColors position="bottom-right" closeButton mobileOffset={{ bottom: 96 }} />
         <NetworkStatus />
+        <CookieConsent />
       </ReactLenis>
     </NextThemesProvider>
   );

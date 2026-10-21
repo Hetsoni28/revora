@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { AlertCircle, ArrowUpRight, Award, Building2, Globe, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
 import { AnchorLink, Magnetic, Tick } from '@/components/ui/primitives';
+import { CookieSettingsLink } from '@/components/consent/cookie-settings-link';
 
 const COLUMNS: { title: string; href?: string; links: [string, string | null][] }[] = [
   {
@@ -219,6 +220,8 @@ export function Footer() {
                 {l}
               </a>
             ))}
+            <Link href="/cookie-policy" className="transition-colors hover:text-white">Cookie Policy</Link>
+            <CookieSettingsLink className="inline-flex min-h-10 items-center transition-colors hover:text-white" />
           </div>
         </div>
       </div>

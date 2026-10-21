@@ -28,5 +28,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/our-presence/global-network', 0.5),
     page('/philosophy', 0.5, 'yearly'),
     page('/careers', 0.5),
+    page('/cookie-policy', 0.2, 'yearly'),
   ];
 }
