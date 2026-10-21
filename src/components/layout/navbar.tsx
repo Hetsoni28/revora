@@ -28,7 +28,7 @@ const NAV_ITEMS: NavItem[] = [
       { label: 'Certifications', href: '/certifications' },
     ],
   },
-  { label: 'Our Offerings', href: '/our-offerings', mega: true },
+  { label: 'Healthcare', href: '/our-offerings', mega: true },
   {
     label: 'Our Presence',
     href: '/our-presence',
@@ -62,7 +62,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState<string | null>(null);
-  const [mobileGroup, setMobileGroup] = useState<string | null>('Our Offerings');
+  const [mobileGroup, setMobileGroup] = useState<string | null>('Healthcare');
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // The full bar (utility strip included) stays put; scrolling only deepens its shadow.
@@ -413,7 +413,7 @@ function DropdownPanel({ className, children }: { className?: string; children: 
   );
 }
 
-/** "Our Offerings" — every therapy area with its brands, plus portfolio shortcuts. */
+/** "Healthcare" (Our Offerings) — every therapy area with its brands, plus portfolio shortcuts. */
 function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
   return (
     <DropdownPanel className="left-1/2 w-[min(880px,calc(100vw-48px))] -translate-x-1/2">
