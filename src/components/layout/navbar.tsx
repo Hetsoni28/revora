@@ -33,8 +33,8 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Our Presence',
     href: '/our-presence',
     sublinks: [
-      { label: 'Ahmedabad Headquarters', href: '/our-presence/ahmedabad' },
       { label: 'Domestic Network', href: '/our-presence/domestic-network' },
+      { label: 'Global Network', href: '/our-presence/global-network' },
     ],
   },
   { label: 'Careers', href: '/careers' },

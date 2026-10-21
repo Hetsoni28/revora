@@ -32,8 +32,9 @@ const COLUMNS: { title: string; href?: string; links: [string, string][] }[] = [
   {
     title: 'Corporate & Trade',
     links: [
+      ['Domestic Network', '/our-presence/domestic-network'],
+      ['Global Network', '/our-presence/global-network'],
       ['Ahmedabad Headquarters', '/our-presence/ahmedabad'],
-      ['Our Presence Across India', '/our-presence/domestic-network'],
       ['Careers at Revora', '/careers'],
       ['Distribution Partnerships', '/#contact'],
       ['Institutional Inquiries', '/#contact'],
