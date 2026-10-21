@@ -121,17 +121,17 @@ export function Navbar() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-100 px-3 pt-3 tablet:px-6 tablet:pt-4">
+      <header className="fixed inset-x-0 top-0 z-100">
         <div
-          className={`relative mx-auto max-w-330 rounded-2xl border bg-white transition-[box-shadow,border-color] duration-500 ${
+          className={`relative border-b bg-white transition-[box-shadow,border-color] duration-500 ${
             scrolled || pathname !== '/'
-              ? 'border-revora-cobalt/10 shadow-[0_12px_40px_-12px_rgba(11,74,143,0.25)]'
+              ? 'border-revora-cobalt/10 shadow-[0_12px_40px_-18px_rgba(11,74,143,0.3)]'
               : 'border-transparent shadow-none'
           }`}
         >
           {/* ── utility strip (desktop) ── */}
-          <div className="hidden desktop:block">
-            <div className="flex items-center justify-between border-b border-revora-cobalt/10 px-6 py-2 font-sans text-[11.5px] text-revora-slate-light">
+          <div className="hidden border-b border-revora-cobalt/10 bg-[#F6F9FC] desktop:block">
+            <div className="mx-auto flex max-w-330 items-center justify-between px-8 py-2 font-sans text-[11.5px] text-revora-slate-light">
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1.5 font-medium text-revora-slate">
                   <ShieldCheck className="h-3.5 w-3.5 text-revora-cobalt" />
@@ -158,7 +158,7 @@ export function Navbar() {
           </div>
 
           {/* ── main row ── */}
-          <nav className="relative flex items-center justify-between px-4 py-2.5 tablet:px-6 tablet:py-3">
+          <nav className="relative mx-auto flex max-w-330 items-center justify-between px-5 py-2.5 tablet:px-8 tablet:py-3">
             <Link href="/" aria-label="Revora Healthcare — home" className="flex shrink-0 items-center gap-3">
               <Image src="/logo.png" alt="Revora" width={1024} height={341} loading="eager" className="h-7 w-auto tablet:h-8" />
               <span className="hidden items-center gap-3 sm:flex">
@@ -266,12 +266,13 @@ export function Navbar() {
               </button>
             </div>
 
-            {/* scroll progress */}
-            <motion.span
-              className="absolute inset-x-6 bottom-0 h-0.5 origin-left rounded-full bg-linear-to-r from-revora-cobalt to-revora-crimson"
-              style={{ scaleX: progress }}
-            />
           </nav>
+
+          {/* scroll progress */}
+          <motion.span
+            className="absolute inset-x-0 -bottom-px h-0.5 origin-left bg-linear-to-r from-revora-cobalt to-revora-crimson"
+            style={{ scaleX: progress }}
+          />
         </div>
       </header>
 
