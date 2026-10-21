@@ -156,6 +156,7 @@ export function ProfileClient() {
                   <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-revora-slate-muted">{row.innovation ? 'Innovation' : 'Ophthalmic'}</p>
                   <p className="mt-0.5 font-heading text-[17px] font-extrabold text-revora-slate">{row.area}</p>
                 </div>
+                {!row.items.length && <p className="font-sans text-[14px] text-revora-slate-muted">Coming soon</p>}
                 <ul className="flex flex-wrap gap-2">
                   {row.items.map((it) => (
                     <li key={it.label}>

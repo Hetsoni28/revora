@@ -115,17 +115,6 @@ const CATEGORY_FIELDS = `
   order
 `;
 
-/** Fetch all therapy categories, ordered */
-export async function getAllCategories(): Promise<SanityTherapyCategory[]> {
-  'use cache';
-  cacheLife('minutes');
-  return safeFetch(
-    `*[_type == "therapyCategory"] | order(order asc) { ${CATEGORY_FIELDS} }`,
-    {},
-    []
-  );
-}
-
 /** Fetch single category by slug */
 export async function getCategoryBySlug(slug: string): Promise<SanityTherapyCategory | null> {
   'use cache';
@@ -134,28 +123,6 @@ export async function getCategoryBySlug(slug: string): Promise<SanityTherapyCate
     `*[_type == "therapyCategory" && slug.current == $slug][0] { ${CATEGORY_FIELDS} }`,
     { slug },
     null
-  );
-}
-
-/** Fetch all products, ordered */
-export async function getAllProducts(): Promise<SanityProduct[]> {
-  'use cache';
-  cacheLife('minutes');
-  return safeFetch(
-    `*[_type == "product"] | order(category->order asc, order asc) { ${PRODUCT_FIELDS} }`,
-    {},
-    []
-  );
-}
-
-/** Fetch all products in a given category slug */
-export async function getProductsByCategory(categorySlug: string): Promise<SanityProduct[]> {
-  'use cache';
-  cacheLife('minutes');
-  return safeFetch(
-    `*[_type == "product" && category->slug.current == $categorySlug] | order(order asc) { ${PRODUCT_FIELDS} }`,
-    { categorySlug },
-    []
   );
 }
 
@@ -180,18 +147,6 @@ export async function getAllProductSlugs(): Promise<string[]> {
     [] as { id: { current: string } }[]
   );
   return results.map((r) => r.id.current);
-}
-
-/** Fetch all category slugs (for generateStaticParams) */
-export async function getAllCategorySlugs(): Promise<string[]> {
-  'use cache';
-  cacheLife('minutes');
-  const results: { slug: { current: string } }[] = await safeFetch(
-    `*[_type == "therapyCategory"]{ slug }`,
-    {},
-    [] as { slug: { current: string } }[]
-  );
-  return results.map((r) => r.slug.current);
 }
 
 // ─── Helpers to adapt Sanity types → legacy Product/TherapyCategory types ──────

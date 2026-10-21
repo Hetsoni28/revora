@@ -1,7 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Providers } from "@/components/providers";
+import { JsonLd } from "@/components/seo/json-ld";
+import { KEYWORDS, SITE, SITE_URL, organizationLd, websiteLd } from "@/lib/seo";
 import "./globals.css";
 
 /* Revora Brand Typography (Official Design System)
@@ -32,14 +34,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  // Absolute base for Open Graph / Twitter image URLs; override per environment with NEXT_PUBLIC_SITE_URL.
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://revorahealthcare.com'),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Revora Healthcare",
-    template: "%s | Revora Healthcare",
+    default: 'Revora Healthcare | Ophthalmic Eye Drops Company, Ahmedabad',
+    template: '%s | Revora Healthcare',
   },
   description:
-    "Revora Healthcare Private Limited is a trusted pharmaceutical company in Ahmedabad, Gujarat, specializing in ophthalmic pharmaceuticals and expanding into specialty healthcare products and medical devices. Healthcare – Beyond the Cure.",
+    'Revora Healthcare is an Ahmedabad pharmaceutical company making ophthalmic eye drops for infection, inflammation and dry eye in its own WHO-GMP plant.',
+  applicationName: SITE.name,
+  keywords: KEYWORDS,
+  authors: [{ name: SITE.legalName, url: SITE_URL }],
+  creator: SITE.legalName,
+  publisher: SITE.legalName,
+  category: 'health',
+  formatDetection: { telephone: false, address: false, email: false },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+  },
+  openGraph: { type: 'website', locale: 'en_IN', siteName: SITE.name },
+  twitter: { card: 'summary_large_image' },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -52,6 +67,10 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: '#0B4A8F',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -59,7 +78,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="en-IN"
       className={`${inter.variable} ${plusJakartaSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
@@ -70,6 +89,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <JsonLd data={[organizationLd, websiteLd]} />
         <Providers>{children}</Providers>
       </body>
     </html>

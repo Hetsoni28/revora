@@ -29,6 +29,8 @@ const nextConfig: NextConfig = {
     return [
       { source: "/our-offerings", destination: "/profile#portfolio", permanent: true },
       { source: "/our-offerings/:path*", destination: "/profile#portfolio", permanent: true },
+      // The separate Ahmedabad page was folded into Our Presence.
+      { source: "/our-presence/ahmedabad", destination: "/our-presence#ahmedabad", permanent: true },
     ];
   },
   async headers() {

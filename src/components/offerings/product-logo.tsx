@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Product } from '@/lib/therapies-data';
+import { productKind } from '@/lib/seo';
 
 interface ProductLogoProps {
   product: Product;
@@ -25,7 +26,7 @@ export function ProductLogo({ product, className = 'aspect-[4/3]', link = true, 
       <Image
         unoptimized
         src={product.logo}
-        alt={`${product.name} logo`}
+        alt={`${product.name} ${productKind(product)} logo`}
         fill
         sizes={sizes}
         loading={eager ? 'eager' : 'lazy'}
@@ -48,7 +49,7 @@ export function ProductLogoLink({ product, className = 'h-[150px] w-full tablet:
       <Image
         unoptimized
         src={product.logo}
-        alt={`${product.name} logo`}
+        alt={`${product.name} ${productKind(product)} logo`}
         fill
         sizes={sizes}
         loading={eager ? 'eager' : 'lazy'}

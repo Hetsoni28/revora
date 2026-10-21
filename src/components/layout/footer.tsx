@@ -32,7 +32,7 @@ const COLUMNS: { title: string; href?: string; links: [string, string | null][] 
     links: [
       ['Domestic Network', '/our-presence/domestic-network'],
       ['Global Network', '/our-presence/global-network'],
-      ['Ahmedabad Headquarters', '/our-presence/ahmedabad'],
+      ['Ahmedabad Headquarters', '/our-presence#ahmedabad'],
       ['Innovation', '/innovation'],
       ['Channel Partner', '/channel-partner'],
       ['Careers at Revora', '/careers'],

@@ -4,10 +4,11 @@ import { useState, useId } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, Clock, Plus, Thermometer } from 'lucide-react';
+import { ArrowUpRight, Clock, MessageCircleQuestion, Plus, Thermometer } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import type { InnovationProduct } from '@/lib/innovation-products';
 import { Button } from '@/components/ui/button';
+import { EmptyState } from '@/components/ui/states';
 
 /* ── Promo banner (hero) ──────────────────────────────────── */
 export function PromoBanner({ product: p }: { product: InnovationProduct }) {
@@ -191,6 +192,16 @@ export function InnovationProductCard({ product: p, index = 0 }: { product: Inno
 export function FaqList({ items }: { items: { q: string; a: string }[] }) {
   const [open, setOpen] = useState<number | null>(0);
   const uid = useId();
+  if (!items.length) {
+    return (
+      <EmptyState
+        icon={MessageCircleQuestion}
+        title="No questions yet"
+        text="Ask us anything about this product."
+        action={<Button href="mailto:info@revorahealthcare.com" variant="outline">Email us</Button>}
+      />
+    );
+  }
   return (
     <ul className="divide-y divide-revora-cobalt/10 rounded-[24px] border border-revora-cobalt/10 bg-white">
       {items.map((f, i) => {

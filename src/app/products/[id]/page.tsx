@@ -13,6 +13,9 @@ import {
 } from '@/lib/sanity';
 import { getCategoryBySlug, getProductById } from '@/lib/therapies-data';
 import { ProductClient } from './product-client';
+import { JsonLd } from '@/components/seo/json-ld';
+import { PageLoader } from '@/components/ui/states';
+import { breadcrumbLd, productLd, productMetadata } from '@/lib/seo';
 
 // Generate static params — try Sanity first, fall back to static data
 export async function generateStaticParams() {
@@ -35,30 +38,33 @@ export async function generateMetadata({
     const sanityProduct = await getProductBySlug(id);
     if (sanityProduct) {
       const product = adaptProduct(sanityProduct);
-      return {
-        title: `${product.name} (${product.genericName}) — Prescribing Information | Revora Healthcare`,
-        description: `${product.name} (${product.volume}): ${product.summary}`,
-        openGraph: {
-          title: `${product.name} — Ophthalmic Formulation | Revora Healthcare`,
-          description: product.summary,
-          images: [{ url: product.logo.replace('.webp', '.png'), alt: `${product.name} logo` }],
-        },
-      };
+      return productMetadata(product, getCategoryBySlug(product.categorySlug));
     }
   } catch {}
 
   // Fall back to static data
   const product = getProductById(id);
-  if (!product) return { title: 'Product Not Found | Revora Healthcare' };
-  return {
-    title: `${product.name} (${product.genericName}) — Prescribing Information | Revora Healthcare`,
-    description: `${product.name} (${product.volume}): ${product.summary}`,
-    openGraph: {
-      title: `${product.name} — Ophthalmic Formulation | Revora Healthcare`,
-      description: product.summary,
-      images: [{ url: product.logo.replace('.webp', '.png'), alt: `${product.name} logo` }],
-    },
-  };
+  if (!product) return { title: 'Product not found', robots: { index: false } };
+  return productMetadata(product, getCategoryBySlug(product.categorySlug));
+}
+
+/** Product page body plus its structured data (medicine + breadcrumb trail). */
+function ProductWithSchema({ product, category }: { product: Product; category: TherapyCategory }) {
+  return (
+    <>
+      <JsonLd
+        data={[
+          productLd(product, category),
+          breadcrumbLd([
+            ['Home', '/'],
+            ['Portfolio', '/profile'],
+            [product.name, `/products/${product.id}`],
+          ]),
+        ]}
+      />
+      <ProductClient product={product} category={category} />
+    </>
+  );
 }
 
 async function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
@@ -78,7 +84,7 @@ async function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
   }
   if (fromSanity) {
     if (!fromSanity.category) notFound();
-    return <ProductClient product={fromSanity.product} category={fromSanity.category} />;
+    return <ProductWithSchema product={fromSanity.product} category={fromSanity.category} />;
   }
 
   // ── 2. Fall back to static data ────────────────────────────────────────────
@@ -86,7 +92,7 @@ async function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
   if (!product) notFound();
   const category = getCategoryBySlug(product.categorySlug);
   if (!category) notFound();
-  return <ProductClient product={product} category={category} />;
+  return <ProductWithSchema product={product} category={category} />;
 }
 
 export default function ProductPage({
@@ -98,16 +104,7 @@ export default function ProductPage({
     <div className="min-h-screen flex flex-col bg-[#F6F9FC]">
       <Navbar />
       <main id="main" tabIndex={-1} className="flex-1">
-        <Suspense
-          fallback={
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-44 pb-20 text-center">
-              <div className="inline-block w-8 h-8 border-2 border-revora-cobalt border-t-transparent rounded-full animate-spin mb-3" />
-              <p className="text-xs text-revora-slate/60 font-sans">
-                Loading formulation monograph…
-              </p>
-            </div>
-          }
-        >
+        <Suspense fallback={<PageLoader label="Loading product…" />}>
           <ProductDetails params={params} />
         </Suspense>
       </main>

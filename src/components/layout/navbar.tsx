@@ -9,6 +9,7 @@ import { ArrowRight, ArrowUpRight, ChevronDown, ChevronRight, Globe, Mail, Menu,
 import { useLenis } from 'lenis/react';
 import { expoOut } from '@/lib/easings';
 import { THERAPY_CATEGORIES, ALL_PRODUCTS } from '@/lib/therapies-data';
+import { productKind } from '@/lib/seo';
 import { PARTNER_CATEGORIES, partnerHref } from '@/lib/partner-categories';
 import { AnchorLink, Magnetic, Tick } from '@/components/ui/primitives';
 import { useFocusTrap } from '@/lib/a11y';
@@ -69,6 +70,14 @@ export function Navbar() {
   const [dropdown, setDropdown] = useState<string | null>(null);
   const [mobileGroup, setMobileGroup] = useState<string | null>('Healthcare');
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Close menus whenever the page changes — including the browser's Back button.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setOpen(false);
+    setDropdown(null);
+  }
 
   // The full bar (utility strip included) stays put; scrolling only deepens its shadow.
   useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 24));
@@ -384,7 +393,7 @@ export function Navbar() {
                                         aria-label={p.name}
                                         className="relative block h-14 rounded-xl border border-revora-cobalt/10 bg-white"
                                       >
-                                        <Image unoptimized src={p.logo} alt={`${p.name} logo`} fill sizes="160px" className="object-contain p-2.5" />
+                                        <Image unoptimized src={p.logo} alt={`${p.name} ${productKind(p)} logo`} fill sizes="160px" className="object-contain p-2.5" />
                                       </Link>
                                     ))}
                                   </div>
@@ -551,7 +560,7 @@ function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
                       title={p.name}
                       className="group/p relative block h-12 rounded-xl border border-revora-cobalt/10 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-revora-cobalt/30 hover:shadow-[0_10px_24px_-14px_rgba(11,74,143,0.5)]"
                     >
-                      <Image unoptimized src={p.logo} alt={`${p.name} logo`} fill sizes="140px" className="object-contain p-2" />
+                      <Image unoptimized src={p.logo} alt={`${p.name} ${productKind(p)} logo`} fill sizes="140px" className="object-contain p-2" />
                     </Link>
                   ))}
                 </div>

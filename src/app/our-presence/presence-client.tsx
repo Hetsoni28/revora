@@ -27,7 +27,7 @@ const FACILITIES = [
     mapQuery: 'S.G. Business Hub, Gota, Ahmedabad, Gujarat 380060',
     images: ['/images/photos/ahmedabad-skyline.webp'],
     logos: false,
-    second: { label: 'Visit HQ page', href: '/our-presence/ahmedabad', icon: undefined },
+    second: { label: 'Contact us', href: '/#contact', icon: undefined },
   },
   {
     index: '02',
@@ -84,7 +84,7 @@ export function PresenceClient() {
                 </p>
               </FadeUp>
               <FadeUp delay={0.6} className="mt-9 flex flex-wrap gap-3">
-                <Button href="/our-presence/ahmedabad" arrow="up-right" magnetic>Ahmedabad HQ</Button>
+                <Button href="#ahmedabad" arrow="down" magnetic>Ahmedabad HQ</Button>
                 <Button href="/our-presence/domestic-network" variant="outline">Domestic network</Button>
               </FadeUp>
             </div>

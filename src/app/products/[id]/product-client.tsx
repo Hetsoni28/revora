@@ -4,12 +4,13 @@ import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion, useInView, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Clock, FileText, FlaskConical, ListChecks, ShieldAlert, ShieldCheck, Thermometer } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Clock, FileText, FlaskConical, ListChecks, PackageSearch, ShieldAlert, ShieldCheck, Thermometer } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { ALL_PRODUCTS, Product, TherapyCategory, getProductsByCategory } from '@/lib/therapies-data';
 import { Eyebrow, FadeUp } from '@/components/ui/primitives';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
+import { EmptyState } from '@/components/ui/states';
 import { ProductLogo, ProductLogoLink } from '@/components/offerings/product-logo';
 import { LazyFormularyModal as FormularyModal } from '@/components/offerings/lazy-formulary-modal';
 
@@ -191,13 +192,19 @@ export function ProductClient({ product, category }: ProductClientProps) {
       <section className="px-5 py-20 tablet:px-8 tablet:py-24">
         <div className="mx-auto max-w-330">
           <Eyebrow>{sameArea.length ? `More in ${category.shortName}` : 'More from Revora'}</Eyebrow>
-          <div className="mt-8 grid grid-cols-1 items-center gap-8 tablet:grid-cols-3">
-            {related.map((p, i) => (
-              <FadeUp key={p.id} delay={i * 0.08}>
-                <ProductLogoLink product={p} eager={false} className="h-30 w-full tablet:h-35" />
-              </FadeUp>
-            ))}
-          </div>
+          {related.length ? (
+            <div className="mt-8 grid grid-cols-1 items-center gap-8 tablet:grid-cols-3">
+              {related.map((p, i) => (
+                <FadeUp key={p.id} delay={i * 0.08}>
+                  <ProductLogoLink product={p} eager={false} className="h-30 w-full tablet:h-35" />
+                </FadeUp>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-8">
+              <EmptyState icon={PackageSearch} title="More products coming soon" text="Our portfolio is growing — see everything we make today." action={<Button href="/profile#portfolio" variant="outline">Full portfolio</Button>} />
+            </div>
+          )}
 
           {/* prev / next */}
           <nav ref={endRef} aria-label="Browse products" className="mt-14 grid gap-4 border-t border-revora-cobalt/10 pt-10 tablet:grid-cols-2">
@@ -300,7 +307,7 @@ function ZoomStage({ product, reduce }: { product: Product; reduce: boolean }) {
       <motion.div className="absolute inset-0" style={{ scale, originX: ox, originY: oy }}>
         <Image
           src={product.image}
-          alt={`${product.name} carton and container`}
+          alt={`${product.name} (${product.genericName}) — ${product.volume} pack`}
           fill
           loading="eager"
           sizes="(max-width: 1023px) min(100vw, 560px), 50vw"

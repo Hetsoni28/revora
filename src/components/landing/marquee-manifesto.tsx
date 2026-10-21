@@ -16,6 +16,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { ALL_PRODUCTS } from '@/lib/therapies-data';
+import { productKind } from '@/lib/seo';
 import { SplitWords, Tick } from '@/components/ui/primitives';
 
 /* ─────────────────────────────────────────────────────────────
@@ -64,7 +65,7 @@ export function BrandMarquee() {
                   aria-label={p.name}
                   className="relative mx-6 block h-14 w-44 transition-transform duration-500 hover:scale-110 tablet:mx-10 tablet:h-20 tablet:w-60"
                 >
-                  <Image unoptimized loading="eager" src={p.logo} alt={`${p.name} logo`} fill sizes="240px" className="object-contain" />
+                  <Image unoptimized loading="eager" src={p.logo} alt={`${p.name} ${productKind(p)} logo`} fill sizes="240px" className="object-contain" />
                 </Link>
                 <Tick className="h-5 w-6 text-revora-crimson tablet:h-6 tablet:w-8" />
               </span>
