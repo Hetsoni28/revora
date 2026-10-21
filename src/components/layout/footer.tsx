@@ -22,7 +22,7 @@ const COLUMNS: { title: string; href?: string; links: [string, string][] }[] = [
   {
     title: 'Quality & Compliance',
     links: [
-      ['WHO-GMP Certified Facility', '/#plant'],
+      ['WHO-GMP Certified Facility', '/certifications'],
       ['Sterile Formulation Suites', '/#plant'],
       ['Analytical Testing & Stability', '/#plant'],
       ['ICH Q1 Compliance', '/#plant'],

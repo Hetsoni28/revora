@@ -21,11 +21,11 @@ type NavItem = {
 const NAV_ITEMS: NavItem[] = [
   {
     label: 'Company',
-    href: '/#why',
+    href: '/about',
     sublinks: [
-      { label: 'About Revora', href: '/#why' },
-      { label: 'Philosophy & Values', href: '/#philosophy' },
-      { label: 'Certifications', href: '/#plant' },
+      { label: 'About Revora', href: '/about' },
+      { label: 'Philosophy & Values', href: '/philosophy' },
+      { label: 'Certifications', href: '/certifications' },
     ],
   },
   { label: 'Our Offerings', href: '/our-offerings', mega: true },
@@ -49,6 +49,7 @@ const productsOf = (slug: string) => ALL_PRODUCTS.filter((p) => p.categorySlug =
 function isActive(item: NavItem, pathname: string) {
   if (item.href.startsWith('/#')) return false;
   if (item.mega) return pathname.startsWith('/our-offerings') || pathname.startsWith('/products');
+  if (item.sublinks?.some((s) => !s.href.includes('#') && pathname.startsWith(s.href))) return true;
   return pathname.startsWith(item.href);
 }
 
