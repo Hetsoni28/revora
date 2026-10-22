@@ -35,9 +35,10 @@ export function Plant() {
         />
 
         <MediaFrame
-          src="/images/site/eye-drop-filling-line.webp"
-          alt="Eye-drop bottles moving along a sterile filling line"
-          aspect="aspect-[4/3] tablet:aspect-[21/9]"
+          src="/videos/eye-drop-filling-poster.webp"
+          video={{ webm: '/videos/eye-drop-filling.webm', mp4: '/videos/eye-drop-filling.mp4' }}
+          alt="Eye-drop bottles being filled and capped on a sterile filling line"
+          aspect="aspect-[4/3] tablet:aspect-video"
           sizes="(min-width: 1320px) 1320px, 100vw"
           className="mt-14"
           caption={<b className="font-semibold">Sterile eye-drop filling</b>}

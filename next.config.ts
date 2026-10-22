@@ -39,6 +39,7 @@ const nextConfig: NextConfig = {
     const week = "public, max-age=604800, stale-while-revalidate=2592000";
     return [
       { source: "/images/:path*", headers: [{ key: "Cache-Control", value: week }] },
+      { source: "/videos/:path*", headers: [{ key: "Cache-Control", value: week }] },
       { source: "/logo.png", headers: [{ key: "Cache-Control", value: week }] },
     ];
   },
