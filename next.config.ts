@@ -37,7 +37,16 @@ const nextConfig: NextConfig = {
     // Files in /public aren't content-hashed, so cache for a week and revalidate in the background
     // instead of marking them immutable — a replaced photo still shows up within days.
     const week = "public, max-age=604800, stale-while-revalidate=2592000";
+    // Browser protections on every page: no MIME sniffing, no framing by other sites, no full URLs
+    // leaked to other sites, and no camera/microphone/location access. (Vercel adds HSTS itself.)
+    const security = [
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      { key: "X-Frame-Options", value: "SAMEORIGIN" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), browsing-topics=()" },
+    ];
     return [
+      { source: "/:path*", headers: security },
       { source: "/images/:path*", headers: [{ key: "Cache-Control", value: week }] },
       { source: "/videos/:path*", headers: [{ key: "Cache-Control", value: week }] },
       { source: "/logo.png", headers: [{ key: "Cache-Control", value: week }] },
