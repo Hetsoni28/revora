@@ -9,7 +9,6 @@ import { Counter, FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
-import { MediaFrame } from '@/components/ui/media-frame';
 import { PresenceLinks } from '@/components/presence/presence-links';
 import { WorldDotMap } from '@/components/maps/world-dot-map';
 import { GLOBAL_NETWORK } from '@/lib/network';
@@ -77,15 +76,9 @@ export function GlobalClient() {
         ]}
         eyebrow="Global Network"
         lines={['Expanding vision,', 'worldwide.']}
-        highlight={{ 'worldwide.': 'text-revora-cobalt' }}
+        highlight={{ 'worldwide.': 'text-revora-cobalt-pale' }}
         text="Taking Revora's precision ophthalmic eye-care formulations to international markets through dedicated distribution and institutional partnerships."
-        visual={
-          <MediaFrame
-            src="/images/photos/warehouse-dispatch.webp"
-            alt="International dispatch of ophthalmic formulations"
-            aspect="aspect-[4/3]"
-          />
-        }
+        background={{ src: '/images/photos/warehouse-dispatch.webp', alt: 'International dispatch of ophthalmic formulations' }}
       />
 
       {/* ── Key Global Metrics ── */}
