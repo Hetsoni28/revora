@@ -13,12 +13,17 @@ const HOLD_MS = 3200;
 /** Hero entrance delay on a first visit (s): starts as the curtain lifts. */
 export const HERO_DELAY_AFTER_INTRO = HOLD_MS / 1000 + 0.25;
 
-/** Has the intro already played in this browser session? */
+/** The intro plays once per visitor, then not again for this long. */
+export const INTRO_REPLAY_MS = 30 * 24 * 60 * 60 * 1000;
+
+/** Has this visitor seen the intro recently (or asked for less motion)? */
 export function introSeen(): boolean {
   if (typeof window === 'undefined') return false;
   try {
+    const at = Number(window.localStorage.getItem(INTRO_KEY));
     return (
       window.sessionStorage.getItem(INTRO_KEY) === '1' ||
+      (at > 0 && Date.now() - at < INTRO_REPLAY_MS) ||
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     );
   } catch {
@@ -62,6 +67,7 @@ export function Intro() {
   const finish = useCallback(() => {
     try {
       window.sessionStorage.setItem(INTRO_KEY, '1');
+      window.localStorage.setItem(INTRO_KEY, String(Date.now()));
     } catch {
       /* storage unavailable — intro simply plays again next time */
     }
@@ -108,7 +114,7 @@ export function Intro() {
         <motion.div
           key="intro-underlay"
           aria-hidden
-          className="fixed inset-0 z-199 bg-revora-cobalt"
+          className="intro-curtain fixed inset-0 z-199 bg-revora-cobalt"
           initial={{ clipPath: 'inset(0 0 0% 0)' }}
           exit={{ clipPath: 'inset(0 0 100% 0)' }}
           transition={{ duration: 0.9, delay: 0.12, ease: expoOut }}
@@ -120,7 +126,7 @@ export function Intro() {
           ref={scope}
           role="status"
           aria-label="Welcome to Revora Healthcare"
-          className="fixed inset-0 z-200 grid place-items-center overflow-hidden bg-white"
+          className="intro-curtain fixed inset-0 z-200 grid place-items-center overflow-hidden bg-white"
           initial={{ clipPath: 'inset(0 0 0% 0)' }}
           exit={{ clipPath: 'inset(0 0 100% 0)' }}
           transition={{ duration: 0.85, ease: expoOut }}

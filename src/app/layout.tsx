@@ -82,6 +82,14 @@ export default function RootLayout({
       className={`${inter.variable} ${plusJakartaSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Runs before the first paint: returning visitors never see the intro curtain flash while scripts load. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var k='revora-intro-seen',t=+localStorage.getItem(k);if(sessionStorage.getItem(k)==='1'||(t&&Date.now()-t<2592e6)||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.setAttribute('data-intro-seen','')}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
         <a
           href="#main"

@@ -59,7 +59,7 @@ export function EmptyState({ icon: Icon, title, text, action }: { icon: LucideIc
 /** Loading indicator — announced to screen readers, pulses gently instead of spinning when motion is reduced. */
 export function PageLoader({ label = 'Loading…' }: { label?: string }) {
   return (
-    <div role="status" aria-live="polite" className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-5 pt-32">
+    <div role="status" aria-live="polite" className="loader-delayed flex min-h-[60vh] flex-col items-center justify-center gap-4 px-5 pt-32">
       <span className="relative grid h-14 w-14 place-items-center">
         <span className="absolute inset-0 rounded-full border-2 border-revora-cobalt/15" />
         <span className="absolute inset-0 animate-spin rounded-full border-2 border-transparent border-t-revora-cobalt motion-reduce:animate-pulse motion-reduce:border-t-revora-cobalt/40" />

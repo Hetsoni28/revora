@@ -278,3 +278,21 @@ html.lenis body {
     outline: none;
   }
 }
+
+/* The intro already played for this visitor (set by an inline script in layout.tsx). */
+html[data-intro-seen] .intro-curtain {
+  display: none !important;
+}
+
+/* Loading UI only appears if a page is actually slow — quick page changes never flash it. */
+.loader-delayed {
+  animation: loader-in 0.25s ease-out 0.5s both;
+}
+@keyframes loader-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
