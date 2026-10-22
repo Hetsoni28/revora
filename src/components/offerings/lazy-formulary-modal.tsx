@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import type { Product } from '@/lib/therapies-data';
+import type { Product } from '@/lib/catalogue';
 
 // The request form's code (and its animation) is only fetched the first time it opens.
 const FormularyModal = dynamic(() => import('./formulary-modal').then((m) => m.FormularyModal), { ssr: false });

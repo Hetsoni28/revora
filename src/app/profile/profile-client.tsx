@@ -4,8 +4,9 @@ import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Building2, CalendarDays, Factory, FileText, Globe2, Layers, Mail, MapPin, ShieldCheck, Sparkles } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
-import { ALL_PRODUCTS, THERAPY_CATEGORIES } from '@/lib/therapies-data';
-import { INNOVATION_PRODUCTS } from '@/lib/innovation-products';
+import { INNOVATION_CATEGORIES } from '@/lib/innovation-products';
+import type { Catalogue } from '@/lib/catalogue';
+import { useCatalogue } from '@/components/catalogue/catalogue-context';
 import { Counter, FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
@@ -14,10 +15,10 @@ import { Button } from '@/components/ui/button';
 const EMAIL = 'info@revorahealthcare.com';
 const REQUEST = `mailto:${EMAIL}?subject=${encodeURIComponent('Request for company profile')}`;
 
-const AT_A_GLANCE = [
-  { value: ALL_PRODUCTS.length, label: 'Eye-care brands' },
-  { value: THERAPY_CATEGORIES.length, label: 'Therapy areas' },
-  { value: INNOVATION_PRODUCTS.length, label: 'Innovation products' },
+const atAGlance = ({ products, categories, innovation }: Catalogue) => [
+  { value: products.length, label: 'Eye-care brands' },
+  { value: categories.length, label: 'Therapy areas' },
+  { value: innovation.length, label: 'Innovation products' },
   { value: 2, label: 'Locations' },
 ];
 
@@ -32,27 +33,31 @@ const DETAILS = [
   { icon: Mail, k: 'Email', v: EMAIL, wide: true },
 ];
 
-const BUSINESS = [
-  { icon: Layers, title: 'Ophthalmic pharmaceuticals', text: 'Nine brands across four therapy areas.', tag: 'Core' },
+const businessFor = (brands: number, areas: number) => [
+  { icon: Layers, title: 'Ophthalmic pharmaceuticals', text: `${brands} brands across ${areas} therapy areas.`, tag: 'Core' },
   { icon: Sparkles, title: 'Innovation products', text: 'Warmers, cooling and field-care products.', tag: 'Growing' },
   { icon: ShieldCheck, title: 'Specialty healthcare & devices', text: 'Expanding into new categories.', tag: 'Expanding' },
 ];
 
-const PORTFOLIO = [
-  ...THERAPY_CATEGORIES.map((c) => ({
+const portfolioRows = ({ products, categories, innovation }: Catalogue) => [
+  ...categories.map((c) => ({
     area: c.shortName,
     innovation: false,
-    items: ALL_PRODUCTS.filter((p) => p.categorySlug === c.slug).map((p) => ({ label: p.name, href: `/products/${p.id}` })),
+    items: products.filter((p) => p.categorySlug === c.slug).map((p) => ({ label: p.name, href: `/products/${p.id}` })),
   })),
-  ...(['Warmers', 'Cooling', 'Field kits', 'Field food'] as const).map((cat) => ({
+  ...INNOVATION_CATEGORIES.map((cat) => ({
     area: cat,
     innovation: true,
-    items: INNOVATION_PRODUCTS.filter((p) => p.category === cat).map((p) => ({ label: [p.name, p.accent].filter(Boolean).join(' '), href: `/innovation#${p.id}` })),
+    items: innovation.filter((p) => p.category === cat).map((p) => ({ label: [p.name, p.accent].filter(Boolean).join(' '), href: `/innovation#${p.id}` })),
   })),
 ];
 
 export function ProfileClient() {
   const reduce = useReducedMotion();
+  const catalogue = useCatalogue();
+  const AT_A_GLANCE = atAGlance(catalogue);
+  const BUSINESS = businessFor(catalogue.products.length, catalogue.categories.length);
+  const PORTFOLIO = portfolioRows(catalogue);
   return (
     <>
       <PageHero

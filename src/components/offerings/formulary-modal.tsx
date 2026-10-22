@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 import { X, Building2, Send, ShieldCheck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
-import { Product } from '@/lib/therapies-data';
+import type { Product } from '@/lib/catalogue';
 import { useFocusTrap } from '@/lib/a11y';
 
 const REQUEST_EMAIL = 'depot@revorahealthcare.com';

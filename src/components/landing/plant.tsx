@@ -25,7 +25,7 @@ export function Plant() {
       {/* backdrop */}
       <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(11,74,143,0.9),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(58,130,200,0.18),transparent_55%)]" />
 
-      <div className="mx-auto max-w-[1320px]">
+      <div className="mx-auto max-w-330">
         <SectionHeading
           tone="light"
           eyebrow="Manufacturing"
@@ -38,7 +38,7 @@ export function Plant() {
           src="/videos/eye-drop-filling-poster.webp"
           video={{ webm: '/videos/eye-drop-filling.webm', mp4: '/videos/eye-drop-filling.mp4' }}
           alt="Eye-drop bottles being filled and capped on a sterile filling line"
-          aspect="aspect-[4/3] tablet:aspect-video"
+          aspect="aspect-4/3 tablet:aspect-video"
           sizes="(min-width: 1320px) 1320px, 100vw"
           className="mt-14"
           caption={<b className="font-semibold">Sterile eye-drop filling</b>}
@@ -50,7 +50,7 @@ export function Plant() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-10% 0px' }}
           transition={{ duration: 1, ease: expoOut }}
-          className="mt-5 grid overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.04] backdrop-blur-sm tablet:grid-cols-3"
+          className="mt-5 grid overflow-hidden rounded-[28px] border border-white/10 bg-white/4 backdrop-blur-sm tablet:grid-cols-3"
         >
           {[
             { icon: MapPin, k: 'Location', v: 'Paonta Sahib, Himachal Pradesh' },
@@ -69,15 +69,15 @@ export function Plant() {
 
         {/* process with scroll-drawn line */}
         <div ref={ref} className="relative mt-20 tablet:mt-28">
-          <div aria-hidden className="absolute left-[22px] top-0 h-full w-[2px] bg-white/10 tablet-lg:left-0 tablet-lg:top-[22px] tablet-lg:h-[2px] tablet-lg:w-full" />
+          <div aria-hidden className="absolute left-5.5 top-0 h-full w-0.5 bg-white/10 tablet-lg:left-0 tablet-lg:top-5.5 tablet-lg:h-0.5 tablet-lg:w-full" />
           <motion.div
             aria-hidden
-            className="absolute left-[22px] top-0 hidden h-[2px] w-full origin-left bg-gradient-to-r from-revora-cobalt-pale via-white to-revora-crimson tablet-lg:left-0 tablet-lg:top-[22px] tablet-lg:block"
+            className="absolute left-5.5 top-0 hidden h-0.5 w-full origin-left bg-linear-to-r from-revora-cobalt-pale via-white to-revora-crimson tablet-lg:left-0 tablet-lg:top-5.5 tablet-lg:block"
             style={{ scaleX: reduce ? 1 : line }}
           />
           <motion.div
             aria-hidden
-            className="absolute left-[22px] top-0 h-full w-[2px] origin-top bg-gradient-to-b from-revora-cobalt-pale via-white to-revora-crimson tablet-lg:hidden"
+            className="absolute left-5.5 top-0 h-full w-0.5 origin-top bg-linear-to-b from-revora-cobalt-pale via-white to-revora-crimson tablet-lg:hidden"
             style={{ scaleY: reduce ? 1 : line }}
           />
 

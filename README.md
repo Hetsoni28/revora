@@ -33,3 +33,14 @@ Copy `.env.example` to `.env.local` and fill in:
 - Page titles, descriptions, canonical, Open Graph and Twitter tags: `src/lib/seo.ts` (`pageMetadata`, `productMetadata`)
 - Structured data (company, website, medicines, breadcrumbs): `src/lib/seo.ts` + `src/components/seo/json-ld.tsx`
 - `src/app/sitemap.ts`, `src/app/robots.ts`, `src/app/manifest.ts`, `src/app/opengraph-image.tsx`
+
+## Sanity content
+
+All products live in Sanity — edit them at `/studio` (sign in with your Sanity account):
+
+- **Therapy Category** — the eye-care therapy areas (menu order, colour)
+- **Product** — eye-care brands: photo, brand logo, composition, uses, dosage
+- **Innovation product** — warmers, cooling and field-care products
+
+Published changes appear on the site within a few minutes. Drafts are never shown.
+A product needs a photo (and an innovation product a range) before it appears.

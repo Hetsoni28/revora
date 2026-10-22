@@ -119,7 +119,7 @@ export function GlobalClient() {
           <FadeUp delay={0.1}>
             <WorldDotMap className="mt-12" />
           </FadeUp>
-          {/* key to the pins — on phones the map has no labels */}
+          {/* key to the pins */}
           <p className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-sans text-[12.5px] font-semibold text-white/80">
             <span className="inline-flex items-center gap-2"><span aria-hidden className="h-3 w-3 rounded-full border-2 border-white bg-revora-cobalt" /> India · HQ Ahmedabad</span>
             <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2.5 w-2.5 rounded-full bg-revora-crimson ring-2 ring-white/70" /> Countries we serve</span>

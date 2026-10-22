@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Providers } from "@/components/providers";
+import { WithCatalogue } from "@/components/catalogue/catalogue-data";
 import { JsonLd } from "@/components/seo/json-ld";
 import { KEYWORDS, SITE, SITE_URL, organizationLd, websiteLd } from "@/lib/seo";
 import "./globals.css";
@@ -98,7 +99,9 @@ export default function RootLayout({
           Skip to content
         </a>
         <JsonLd data={[organizationLd, websiteLd]} />
-        <Providers>{children}</Providers>
+        <Providers>
+          <WithCatalogue>{children}</WithCatalogue>
+        </Providers>
       </body>
     </html>
   );

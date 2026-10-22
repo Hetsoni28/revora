@@ -8,9 +8,9 @@ import { InnovationClient } from './innovation-client';
 export const metadata: Metadata = pageMetadata({
   title: 'Hand Warmers, Cooling Vests & Field Kits',
   description:
-    'Revora innovation products: self-heating hand and sleeping-bag warmers, instant cooling vests, cool packs, hypothermia kits and the InstaHot cooking bowl.',
+    'Revora innovation products: self-heating hand, foot and sleeping-bag warmers, instant cooling vests, cool packs, hypothermia kits and the InstaHot cooking bowl.',
   path: '/innovation',
-  keywords: ['self-heating hand warmer India', 'instant cooling vest', 'hypothermia prevention kit', 'InstaHot cooking bowl'],
+  keywords: ['self-heating hand warmer India', 'foot warmer for army', 'instant cooling vest', 'hypothermia prevention kit', 'InstaHot cooking bowl'],
 });
 
 const breadcrumbs = breadcrumbLd([['Home', '/'], ['Innovation', '/innovation']]);

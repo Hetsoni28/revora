@@ -15,7 +15,7 @@ import {
 } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ALL_PRODUCTS } from '@/lib/therapies-data';
+import { useCatalogue } from '@/components/catalogue/catalogue-context';
 import { productKind } from '@/lib/seo';
 import { SplitWords, Tick } from '@/components/ui/primitives';
 
@@ -29,6 +29,7 @@ function wrap(min: number, max: number, v: number) {
 }
 
 export function BrandMarquee() {
+  const { products } = useCatalogue();
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   // Skip per-frame work while the strip is off screen.
@@ -50,7 +51,7 @@ export function BrandMarquee() {
     base.set(base.get() + move);
   });
 
-  const row = [...ALL_PRODUCTS, ...ALL_PRODUCTS];
+  const row = [...products, ...products];
 
   return (
     <section ref={sectionRef} aria-label="Revora brands" className="relative overflow-hidden border-y border-revora-cobalt/10 bg-white py-7 tablet:py-9">

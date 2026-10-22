@@ -6,8 +6,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { toast } from 'sonner';
 import { Building2, Eye, Factory, Handshake, Layers, MapPin, MessageSquare, Package, Rocket, Send, Sparkles, Store, Truck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
-import { ALL_PRODUCTS, THERAPY_CATEGORIES } from '@/lib/therapies-data';
-import { INNOVATION_PRODUCTS } from '@/lib/innovation-products';
+import { useCatalogue } from '@/components/catalogue/catalogue-context';
 import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
@@ -15,16 +14,16 @@ import { Button } from '@/components/ui/button';
 
 const PARTNER_EMAIL = 'depot@revorahealthcare.com';
 
-const BENEFITS = [
-  { icon: Layers, title: 'A focused range', text: 'Nine ophthalmic brands across four therapy areas.' },
+const benefitsFor = (brands: number, areas: number) => [
+  { icon: Layers, title: 'A focused range', text: `${brands} ophthalmic brands across ${areas} therapy areas.` },
   { icon: Factory, title: 'Made in our plant', text: 'WHO-GMP certified, EU-compliant manufacturing.' },
   { icon: Package, title: 'Premium packs', text: 'Cartons doctors and patients recognise.' },
   { icon: Building2, title: 'Backed by HQ', text: 'Sales and supply support from Ahmedabad.' },
 ];
 
-const RANGES = [
-  { icon: Eye, count: ALL_PRODUCTS.length, title: 'Ophthalmic range', text: `Prescription eye drops and eye nutrition across ${THERAPY_CATEGORIES.length} therapy areas.`, href: '/profile#portfolio', cta: 'See the brands' },
-  { icon: Sparkles, count: INNOVATION_PRODUCTS.length, title: 'Innovation range', text: 'Warmers, cooling and field-care products for tough conditions.', href: '/innovation', cta: 'See the products' },
+const rangesFor = (brands: number, areas: number, innovationCount: number) => [
+  { icon: Eye, count: brands, title: 'Ophthalmic range', text: `Prescription eye drops and eye nutrition across ${areas} therapy areas.`, href: '/profile#portfolio', cta: 'See the brands' },
+  { icon: Sparkles, count: innovationCount, title: 'Innovation range', text: 'Warmers, cooling and field-care products for tough conditions.', href: '/innovation', cta: 'See the products' },
 ];
 
 const STEPS = [
@@ -42,6 +41,9 @@ const TYPES = [
 
 export function ChannelPartnerClient() {
   const reduce = useReducedMotion();
+  const { products, categories, innovation } = useCatalogue();
+  const BENEFITS = benefitsFor(products.length, categories.length);
+  const RANGES = rangesFor(products.length, categories.length, innovation.length);
   return (
     <>
       <PageHero

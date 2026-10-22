@@ -3,27 +3,25 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
-import { ALL_PRODUCTS, type Product, type TherapyCategory } from '@/lib/therapies-data';
-import {
-  getProductBySlug,
-  getAllProductSlugs,
-  getCategoryBySlug as getSanityCategoryBySlug,
-  adaptProduct,
-  adaptCategory,
-} from '@/lib/sanity';
-import { getCategoryBySlug, getProductById } from '@/lib/therapies-data';
+import type { Product, TherapyCategory } from '@/lib/catalogue';
+import { getCatalogue } from '@/lib/sanity';
 import { ProductClient } from './product-client';
 import { JsonLd } from '@/components/seo/json-ld';
 import { PageLoader } from '@/components/ui/states';
 import { breadcrumbLd, productLd, productMetadata } from '@/lib/seo';
 
-// Generate static params — try Sanity first, fall back to static data
+/** The product and its therapy area from Sanity, or nothing if either is missing. */
+async function findProduct(id: string) {
+  const { products, categories } = await getCatalogue();
+  const product = products.find((p) => p.id === id);
+  const category = product && categories.find((c) => c.slug === product.categorySlug);
+  return product && category ? { product, category } : null;
+}
+
+// One page per published product.
 export async function generateStaticParams() {
-  try {
-    const slugs = await getAllProductSlugs();
-    if (slugs.length > 0) return slugs.map((id) => ({ id }));
-  } catch {}
-  return ALL_PRODUCTS.map((prod) => ({ id: prod.id }));
+  const { products } = await getCatalogue();
+  return products.map((p) => ({ id: p.id }));
 }
 
 export async function generateMetadata({
@@ -31,21 +29,9 @@ export async function generateMetadata({
 }: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
-
-  // Try Sanity first
-  try {
-    const sanityProduct = await getProductBySlug(id);
-    if (sanityProduct) {
-      const product = adaptProduct(sanityProduct);
-      return productMetadata(product, getCategoryBySlug(product.categorySlug));
-    }
-  } catch {}
-
-  // Fall back to static data
-  const product = getProductById(id);
-  if (!product) return { title: 'Product not found', robots: { index: false } };
-  return productMetadata(product, getCategoryBySlug(product.categorySlug));
+  const found = await findProduct((await params).id);
+  if (!found) return { title: 'Product not found', robots: { index: false } };
+  return productMetadata(found.product, found.category);
 }
 
 /** Product page body plus its structured data (medicine + breadcrumb trail). */
@@ -68,31 +54,9 @@ function ProductWithSchema({ product, category }: { product: Product; category: 
 }
 
 async function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-
-  // ── 1. Try Sanity (data only — rendering stays outside the try) ───────────
-  let fromSanity: { product: Product; category: TherapyCategory | undefined } | null = null;
-  try {
-    const sanityProduct = await getProductBySlug(id);
-    if (sanityProduct) {
-      const product = adaptProduct(sanityProduct);
-      const sanityCategory = await getSanityCategoryBySlug(product.categorySlug);
-      fromSanity = { product, category: sanityCategory ? adaptCategory(sanityCategory) : getCategoryBySlug(product.categorySlug) };
-    }
-  } catch {
-    // Sanity unavailable — fall through to static data
-  }
-  if (fromSanity) {
-    if (!fromSanity.category) notFound();
-    return <ProductWithSchema product={fromSanity.product} category={fromSanity.category} />;
-  }
-
-  // ── 2. Fall back to static data ────────────────────────────────────────────
-  const product = getProductById(id);
-  if (!product) notFound();
-  const category = getCategoryBySlug(product.categorySlug);
-  if (!category) notFound();
-  return <ProductWithSchema product={product} category={category} />;
+  const found = await findProduct((await params).id);
+  if (!found) notFound();
+  return <ProductWithSchema product={found.product} category={found.category} />;
 }
 
 export default function ProductPage({

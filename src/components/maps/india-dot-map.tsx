@@ -74,7 +74,7 @@ export function IndiaDotMap({ className }: { className?: string }) {
   const loop = onScreen && !reduce;
 
   return (
-    <div ref={ref} className={`relative ${className ?? ''}`}>
+    <div ref={ref} className={`@container relative ${className ?? ''}`}>
       {/* layer 1: static dots, revealed once by a mask growing out from Ahmedabad */}
       <svg
         viewBox={`0 0 ${W} ${H}`}
@@ -142,7 +142,7 @@ export function IndiaDotMap({ className }: { className?: string }) {
           transition={{ duration: 1.4, delay: 0.8, ease: expoOut }}
         />
 
-        {/* leader lines from pins to their labels (labels only show from tablet up) */}
+        {/* leader lines from pins to their labels */}
         {NETWORK.map((n, i) => (
           <motion.line
             key={`${n.name}-leader`}
@@ -153,7 +153,6 @@ export function IndiaDotMap({ className }: { className?: string }) {
             stroke="#0B4A8F"
             strokeOpacity={0.35}
             strokeWidth="1"
-            className="hidden tablet:block"
             initial={reduce ? false : { opacity: 0 }}
             animate={play ? { opacity: 1 } : undefined}
             transition={{ duration: 0.5, delay: 2 + i * 0.06 }}
@@ -236,7 +235,10 @@ export function IndiaDotMap({ className }: { className?: string }) {
 
 const SIDE = { left: '-translate-x-full -translate-y-1/2', right: '-translate-y-1/2', below: '-translate-x-1/2' } as const;
 
-/** State name pill. Network labels are hidden on phones, where they would cover the whole map. */
+/**
+ * State name pill. Text and padding are sized in container units, so labels shrink with the map and
+ * keep the same overlap-free layout from phone to desktop.
+ */
 function MapLabel({ x, y, side, play, delay, state, strong, small }: {
   x: number;
   y: number;
@@ -255,12 +257,12 @@ function MapLabel({ x, y, side, play, delay, state, strong, small }: {
       animate={play ? { opacity: 1 } : undefined}
       transition={{ duration: 0.6, delay, ease: expoOut }}
       className={`absolute w-max rounded-lg border bg-white shadow-[0_8px_22px_-14px_rgba(11,74,143,0.55)] ${SIDE[side]} ${
-        small ? 'hidden border-revora-cobalt/10 px-2 py-1 tablet:block' : 'border-revora-cobalt/20 px-2 py-0.5 tablet:px-2.5 tablet:py-1.5'
+        small ? 'border-revora-cobalt/10 px-[0.7em] py-[0.35em] text-[clamp(7.5px,2.28cqw,12px)]' : 'border-revora-cobalt/20 px-[0.75em] py-[0.4em] text-[clamp(8.5px,2.55cqw,13.5px)]'
       }`}
       style={{ left: `${(x / W) * 100}%`, top: `${(y / H) * 100}%` }}
     >
-      <p className={`font-heading font-extrabold leading-tight text-revora-slate ${small ? 'text-[10.5px] desktop:text-[12px]' : 'text-[11px] tablet:text-[12px] desktop:text-[13.5px]'}`}>
-        {strong && <span className="mr-1.5 font-sans text-[10px] font-semibold uppercase tracking-[0.12em] text-revora-crimson-dark">{strong}</span>}
+      <p className="font-heading font-extrabold leading-tight text-revora-slate">
+        {strong && <span className="mr-[0.5em] font-sans text-[0.75em] font-semibold uppercase tracking-[0.12em] text-revora-crimson-dark">{strong}</span>}
         {state}
       </p>
     </motion.div>

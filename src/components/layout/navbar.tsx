@@ -8,7 +8,7 @@ import { AnimatePresence, motion, useScroll, useSpring, useMotionValueEvent } fr
 import { ArrowRight, ArrowUpRight, ChevronDown, ChevronRight, Globe, Mail, Menu, Phone, ShieldCheck, X } from 'lucide-react';
 import { useLenis } from 'lenis/react';
 import { expoOut } from '@/lib/easings';
-import { THERAPY_CATEGORIES, ALL_PRODUCTS } from '@/lib/therapies-data';
+import { useCatalogue } from '@/components/catalogue/catalogue-context';
 import { productKind } from '@/lib/seo';
 import { PARTNER_CATEGORIES, partnerHref } from '@/lib/partner-categories';
 import { AnchorLink, Magnetic, Tick } from '@/components/ui/primitives';
@@ -50,7 +50,11 @@ const NAV_ITEMS: NavItem[] = [
 const PHONE = { label: '+91 (079) 4890-REVORA', href: 'tel:+919876543210' };
 const EMAIL = 'info@revorahealthcare.com';
 
-const productsOf = (slug: string) => ALL_PRODUCTS.filter((p) => p.categorySlug === slug);
+/** Therapy areas with their brands, as published in Sanity. */
+function useTherapyMenu() {
+  const { categories, products } = useCatalogue();
+  return categories.map((cat) => ({ ...cat, products: products.filter((p) => p.categorySlug === cat.slug) }));
+}
 
 /** Route items light up on their own page and its sub-pages. */
 function isActive(item: NavItem, pathname: string) {
@@ -61,6 +65,7 @@ function isActive(item: NavItem, pathname: string) {
 }
 
 export function Navbar() {
+  const therapyMenu = useTherapyMenu();
   const pathname = usePathname();
   const { scrollY, scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.3 });
@@ -378,14 +383,14 @@ export function Navbar() {
                           )}
                           {item.mega && (
                             <div className="grid gap-5 pb-6 sm:grid-cols-2">
-                              {THERAPY_CATEGORIES.map((cat) => (
+                              {therapyMenu.map((cat) => (
                                 <div key={cat.slug}>
                                   <p className="flex items-center gap-2 font-heading text-[16px] font-bold text-revora-slate">
                                     <span className="h-2 w-2 rounded-full" style={{ background: cat.color }} />
                                     {cat.shortName}
                                   </p>
                                   <div className="mt-2 grid grid-cols-2 gap-2 pl-4">
-                                    {productsOf(cat.slug).map((p) => (
+                                    {cat.products.map((p) => (
                                       <Link
                                         key={p.id}
                                         href={`/products/${p.id}`}
@@ -529,6 +534,7 @@ function DropdownPanel({ className, children }: { className?: string; children: 
 
 /** "Healthcare" — every therapy area with its brands, plus portfolio shortcuts. */
 function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
+  const therapyMenu = useTherapyMenu();
   return (
     <DropdownPanel className="left-1/2 w-[min(880px,calc(100vw-48px))] -translate-x-1/2">
       <div className="grid grid-cols-[1fr_250px]">
@@ -544,14 +550,14 @@ function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
             </Link>
           </div>
           <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-6">
-            {THERAPY_CATEGORIES.map((cat) => (
+            {therapyMenu.map((cat) => (
               <div key={cat.slug}>
                 <p className="flex items-center gap-2 font-heading text-[16px] font-bold text-revora-slate">
                   <span className="h-2 w-2 rounded-full" style={{ background: cat.color }} />
                   {cat.shortName}
                 </p>
                 <div className="mt-2.5 grid grid-cols-2 gap-2 pl-4">
-                  {productsOf(cat.slug).map((p) => (
+                  {cat.products.map((p) => (
                     <Link
                       key={p.id}
                       href={`/products/${p.id}`}

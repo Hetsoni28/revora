@@ -66,109 +66,111 @@ export function WorldDotMap({ className }: { className?: string }) {
   const loop = onScreen && !reduce;
 
   return (
-    <div ref={ref} className={`relative ${className ?? ''}`}>
-      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`World map: Revora in India and ${MARKETS.length} countries — ${MARKETS.map((m) => m.name).join(', ')}`}>
-        <defs>
-          <linearGradient id="wd-route" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#94B6E5" />
-            <stop offset="100%" stopColor="#FFFFFF" />
-          </linearGradient>
-        </defs>
+    <div ref={ref} className={`overflow-hidden ${className ?? ''}`}>
+      {/* phones: the map is drawn ~1.9× wider and shifted so only x 440–960 (Africa → Philippines) shows */}
+      <div className="@container relative -ml-[84.6%] w-[192.3%] tablet:ml-0 tablet:w-full">
+        <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`World map: Revora in India and ${MARKETS.length} countries — ${MARKETS.map((m) => m.name).join(', ')}`}>
+          <defs>
+            <linearGradient id="wd-route" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#94B6E5" />
+              <stop offset="100%" stopColor="#FFFFFF" />
+            </linearGradient>
+          </defs>
 
-        <motion.g initial={reduce ? false : { opacity: 0 }} animate={play ? { opacity: 1 } : undefined} transition={{ duration: 1.2, ease: expoOut }}>
-          <path d={PATH_LAND} fill="rgba(148,182,229,0.45)" />
-          <path d={PATH_INDIA} fill="#FFFFFF" />
-        </motion.g>
-      </svg>
+          <motion.g initial={reduce ? false : { opacity: 0 }} animate={play ? { opacity: 1 } : undefined} transition={{ duration: 1.2, ease: expoOut }}>
+            <path d={PATH_LAND} fill="rgba(148,182,229,0.45)" />
+            <path d={PATH_INDIA} fill="#FFFFFF" />
+          </motion.g>
+        </svg>
 
-      {/* moving parts on their own compositor layer, so they never repaint the dots */}
-      <svg viewBox={`0 0 ${W} ${H}`} className="pointer-events-none absolute inset-0 h-full w-full transform-[translateZ(0)]" aria-hidden>
-        {/* routes */}
-        {MARKETS.map((m, i) => (
-          <g key={m.name}>
-            <motion.path
-              d={m.route}
-              fill="none"
-              stroke="url(#wd-route)"
-              strokeOpacity={0.7}
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              initial={reduce ? false : { pathLength: 0, opacity: 0 }}
-              animate={play ? { pathLength: 1, opacity: 1 } : undefined}
-              transition={{ duration: 1.3, delay: 0.8 + i * 0.07, ease: expoOut }}
+        {/* moving parts on their own compositor layer, so they never repaint the dots */}
+        <svg viewBox={`0 0 ${W} ${H}`} className="pointer-events-none absolute inset-0 h-full w-full transform-[translateZ(0)]" aria-hidden>
+          {/* routes */}
+          {MARKETS.map((m, i) => (
+            <g key={m.name}>
+              <motion.path
+                d={m.route}
+                fill="none"
+                stroke="url(#wd-route)"
+                strokeOpacity={0.7}
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                initial={reduce ? false : { pathLength: 0, opacity: 0 }}
+                animate={play ? { pathLength: 1, opacity: 1 } : undefined}
+                transition={{ duration: 1.3, delay: 0.8 + i * 0.07, ease: expoOut }}
+              />
+              {loop && inView && (
+                <circle r="2.6" fill="#FFFFFF">
+                  <animateMotion dur={`${2.6 + (i % 4) * 0.45}s`} begin={`${2.2 + (i % 6) * 0.4}s`} repeatCount="indefinite" path={m.route} />
+                </circle>
+              )}
+            </g>
+          ))}
+
+          {/* leader lines to labels */}
+          {MARKETS.map((m, i) => (
+            <motion.line
+              key={`${m.name}-leader`}
+              x1={m.at[0]}
+              y1={m.at[1]}
+              x2={m.label.x}
+              y2={m.label.y}
+              stroke="#FFFFFF"
+              strokeOpacity={0.4}
+              strokeWidth="0.8"
+              initial={reduce ? false : { opacity: 0 }}
+              animate={play ? { opacity: 1 } : undefined}
+              transition={{ duration: 0.5, delay: 1.8 + i * 0.05 }}
             />
-            {loop && inView && (
-              <circle r="2.6" fill="#FFFFFF">
-                <animateMotion dur={`${2.6 + (i % 4) * 0.45}s`} begin={`${2.2 + (i % 6) * 0.4}s`} repeatCount="indefinite" path={m.route} />
-              </circle>
-            )}
-          </g>
-        ))}
+          ))}
 
-        {/* leader lines to labels (labels show from tablet up) */}
+          {/* country pins */}
+          {MARKETS.map((m, i) => (
+            <motion.circle
+              key={`${m.name}-pin`}
+              cx={m.at[0]}
+              cy={m.at[1]}
+              r="4.2"
+              fill="#D7262E"
+              stroke="#FFFFFF"
+              strokeWidth="1.8"
+              initial={reduce ? false : { scale: 0 }}
+              animate={play ? { scale: 1 } : undefined}
+              style={{ transformOrigin: `${m.at[0]}px ${m.at[1]}px` }}
+              transition={{ duration: 0.5, delay: 1.5 + i * 0.07, ease: [0.34, 1.56, 0.64, 1] }}
+            />
+          ))}
+
+          {/* origin */}
+          {loop && inView && (
+            <motion.circle cx={ORIGIN[0]} cy={ORIGIN[1]} fill="#FFFFFF" initial={{ r: 6, opacity: 0.5 }} animate={{ r: 30, opacity: 0 }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut' }} />
+          )}
+          <circle cx={ORIGIN[0]} cy={ORIGIN[1]} r="7" fill="#0B4A8F" stroke="#FFFFFF" strokeWidth="3" />
+        </svg>
+
+        {/* country labels */}
         {MARKETS.map((m, i) => (
-          <motion.line
-            key={`${m.name}-leader`}
-            x1={m.at[0]}
-            y1={m.at[1]}
-            x2={m.label.x}
-            y2={m.label.y}
-            stroke="#FFFFFF"
-            strokeOpacity={0.4}
-            strokeWidth="0.8"
-            className="hidden tablet:block"
+          <motion.span
+            key={m.name}
             initial={reduce ? false : { opacity: 0 }}
             animate={play ? { opacity: 1 } : undefined}
-            transition={{ duration: 0.5, delay: 1.8 + i * 0.05 }}
-          />
+            transition={{ duration: 0.5, delay: 1.9 + i * 0.05, ease: expoOut }}
+            className={`absolute w-max rounded-full bg-white/12 px-[0.8em] py-[0.2em] font-sans text-[clamp(8.5px,1.42cqw,11px)] font-semibold text-white backdrop-blur-sm ${SIDE[m.label.side]}`}
+            style={{ left: `${(m.label.x / W) * 100}%`, top: `${(m.label.y / H) * 100}%` }}
+          >
+            {m.name}
+          </motion.span>
         ))}
-
-        {/* country pins */}
-        {MARKETS.map((m, i) => (
-          <motion.circle
-            key={`${m.name}-pin`}
-            cx={m.at[0]}
-            cy={m.at[1]}
-            r="4.2"
-            fill="#D7262E"
-            stroke="#FFFFFF"
-            strokeWidth="1.8"
-            initial={reduce ? false : { scale: 0 }}
-            animate={play ? { scale: 1 } : undefined}
-            style={{ transformOrigin: `${m.at[0]}px ${m.at[1]}px` }}
-            transition={{ duration: 0.5, delay: 1.5 + i * 0.07, ease: [0.34, 1.56, 0.64, 1] }}
-          />
-        ))}
-
-        {/* origin */}
-        {loop && inView && (
-          <motion.circle cx={ORIGIN[0]} cy={ORIGIN[1]} fill="#FFFFFF" initial={{ r: 6, opacity: 0.5 }} animate={{ r: 30, opacity: 0 }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut' }} />
-        )}
-        <circle cx={ORIGIN[0]} cy={ORIGIN[1]} r="7" fill="#0B4A8F" stroke="#FFFFFF" strokeWidth="3" />
-      </svg>
-
-      {/* country labels */}
-      {MARKETS.map((m, i) => (
         <motion.span
-          key={m.name}
           initial={reduce ? false : { opacity: 0 }}
           animate={play ? { opacity: 1 } : undefined}
-          transition={{ duration: 0.5, delay: 1.9 + i * 0.05, ease: expoOut }}
-          className={`absolute hidden w-max rounded-full bg-white/12 px-2 py-0.5 font-sans text-[10px] font-semibold text-white backdrop-blur-sm tablet:block desktop:text-[11px] ${SIDE[m.label.side]}`}
-          style={{ left: `${(m.label.x / W) * 100}%`, top: `${(m.label.y / H) * 100}%` }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="absolute w-max -translate-x-1/2 translate-y-3 rounded-full bg-white px-[0.9em] py-[0.25em] font-sans text-[clamp(9px,1.5cqw,11.5px)] font-bold text-revora-cobalt"
+          style={{ left: `${(ORIGIN[0] / W) * 100}%`, top: `${(ORIGIN[1] / H) * 100}%` }}
         >
-          {m.name}
+          India<span className="hidden desktop:inline"> · Ahmedabad</span>
         </motion.span>
-      ))}
-      <motion.span
-        initial={reduce ? false : { opacity: 0 }}
-        animate={play ? { opacity: 1 } : undefined}
-        transition={{ duration: 0.6, delay: 0.6 }}
-        className="absolute hidden w-max -translate-x-1/2 translate-y-3 rounded-full bg-white px-2.5 py-0.5 font-sans text-[10.5px] font-bold text-revora-cobalt tablet:block desktop:px-3 desktop:py-1 desktop:text-[11.5px]"
-        style={{ left: `${(ORIGIN[0] / W) * 100}%`, top: `${(ORIGIN[1] / H) * 100}%` }}
-      >
-        India<span className="hidden desktop:inline"> · Ahmedabad</span>
-      </motion.span>
+      </div>
     </div>
   );
 }

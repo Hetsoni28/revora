@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Building2, Compass, Factory, Layers, Rocket, Sparkles, Target } from 'lucide-react';
-import { ALL_PRODUCTS, THERAPY_CATEGORIES } from '@/lib/therapies-data';
+import { useCatalogue } from '@/components/catalogue/catalogue-context';
 import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
@@ -24,15 +24,17 @@ const PURPOSE = [
   },
 ];
 
-const JOURNEY = [
+const journeyFor = (brands: number, areas: number) => [
   { icon: Building2, when: 'March 2026', title: 'Founded in Ahmedabad', text: 'Revora Healthcare Private Limited is incorporated on 10 March 2026.' },
   { icon: Factory, when: 'Manufacturing', title: 'Our own plant', text: 'Eye drops made at our WHO-GMP plant in Paonta Sahib, Himachal Pradesh.' },
-  { icon: Layers, when: 'Portfolio', title: `${ALL_PRODUCTS.length} eye-care brands`, text: `Covering ${THERAPY_CATEGORIES.length} therapy areas, from dry eye to infection.` },
+  { icon: Layers, when: 'Portfolio', title: `${brands} eye-care brands`, text: `Covering ${areas} therapy areas, from dry eye to infection.` },
   { icon: Sparkles, when: 'Innovation', title: 'A new range', text: 'Warmers, cooling and field-care products for everyday comfort.' },
   { icon: Rocket, when: 'Next', title: 'Beyond the eye', text: 'Specialty healthcare products and medical devices.', next: true },
 ];
 
 export function AboutClient() {
+  const { products, categories } = useCatalogue();
+  const JOURNEY = journeyFor(products.length, categories.length);
   return (
     <>
       <PageHero

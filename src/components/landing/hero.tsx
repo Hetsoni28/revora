@@ -4,18 +4,19 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
-import { ALL_PRODUCTS } from '@/lib/therapies-data';
-import { INNOVATION_PRODUCTS } from '@/lib/innovation-products';
+import { useCatalogue } from '@/components/catalogue/catalogue-context';
 import { AnchorLink, Counter, Eyebrow, Magnetic, SplitWords } from '@/components/ui/primitives';
 import { IrisBurst } from './iris-burst';
 
-const FACTS = [
+const factsFor = (brands: number, innovationCount: number) => [
   { value: 15, suffix: '+', label: 'Years in ophthalmology' },
-  { value: ALL_PRODUCTS.length, suffix: '', label: 'Eye-care brands' },
-  { value: INNOVATION_PRODUCTS.length, suffix: '', label: 'Innovation products' },
+  { value: brands, suffix: '', label: 'Eye-care brands' },
+  { value: innovationCount, suffix: '', label: 'Innovation products' },
 ];
 
 export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
+  const { products, innovation } = useCatalogue();
+  const FACTS = factsFor(products.length, innovation.length);
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });

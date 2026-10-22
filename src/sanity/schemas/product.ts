@@ -22,6 +22,13 @@ export const product = defineType({
       description: 'Carton and bottle, square.',
       type: 'image',
       options: { hotspot: true },
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'logo',
+      title: 'Brand logo',
+      description: 'Transparent PNG or WebP. Shown on the homepage and product cards.',
+      type: 'image',
     }),
     defineField({ name: 'badge', title: 'Type', description: 'e.g. Antibacterial + Steroid', type: 'string', validation: (r) => r.max(40) }),
     defineField({ name: 'volume', title: 'Pack size', description: 'e.g. 5 ml Sterile Dropper Vial', type: 'string', validation: (r) => r.max(50) }),

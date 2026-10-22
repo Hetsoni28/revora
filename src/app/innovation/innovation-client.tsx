@@ -2,15 +2,16 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { INNOVATION_PRODUCTS } from '@/lib/innovation-products';
 import { onTabListKeyDown } from '@/lib/a11y';
+import { Sparkles } from 'lucide-react';
+import { useCatalogue } from '@/components/catalogue/catalogue-context';
 import { FadeUp } from '@/components/ui/primitives';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
+import { EmptyState } from '@/components/ui/states';
 import { ProductShowcase } from '@/components/innovation/innovation-products';
 import { FaqList, InnovationProductCard, NeedTiles, PromoBanner } from '@/components/innovation/innovation-blocks';
 
-const FEATURED = INNOVATION_PRODUCTS[0];
 
 const NEEDS = [
   { label: 'Defence personnel', image: '/images/innovation/defence-snow.webp', alt: 'Soldiers in winter gear in a snowy forest', href: '#hypothermia-kit' },
@@ -21,8 +22,22 @@ const NEEDS = [
 
 /** Innovation — a storefront-style page for Revora's products beyond the ophthalmic range. */
 export function InnovationClient() {
-  const [faqFor, setFaqFor] = useState(INNOVATION_PRODUCTS[0].id);
-  const faqProduct = INNOVATION_PRODUCTS.find((p) => p.id === faqFor) ?? INNOVATION_PRODUCTS[0];
+  const products = useCatalogue().innovation;
+  const FEATURED = products[0];
+  // grouped by range, in catalogue order
+  const CATEGORIES = [...new Set(products.map((p) => p.category))].map((category) => ({
+    category,
+    products: products.filter((p) => p.category === category),
+  }));
+  const [faqFor, setFaqFor] = useState(products[0]?.id ?? '');
+  const faqProduct = products.find((p) => p.id === faqFor) ?? products[0];
+  if (!FEATURED) {
+    return (
+      <section className="px-5 py-28 tablet:px-8">
+        <EmptyState icon={Sparkles} title="Innovation products coming soon" text="Our new range is being added. Check back shortly." action={<Button href="/channel-partner">Become a partner</Button>} />
+      </section>
+    );
+  }
   return (
     <>
       <PromoBanner product={FEATURED} />
@@ -38,13 +53,25 @@ export function InnovationClient() {
       </section>
 
       {/* ── our products — shown once there is more than one product to browse ── */}
-      {INNOVATION_PRODUCTS.length > 1 && (
+      {products.length > 1 && (
       <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Our products" lines={['New from Revora.']} highlight={{ 'Revora.': 'text-revora-crimson' }} />
-          <div className="mt-12 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-3">
-            {INNOVATION_PRODUCTS.map((p, i) => (
-              <InnovationProductCard key={p.id} product={p} index={i} />
+          <div className="mt-12 space-y-12">
+            {CATEGORIES.map(({ category, products }) => (
+              <div key={category}>
+                <h3 className="flex items-baseline gap-3 font-heading text-[1.4rem] font-extrabold text-revora-slate">
+                  {category}
+                  <span className="font-sans text-[13px] font-semibold text-revora-slate-muted">
+                    {products.length} {products.length === 1 ? 'product' : 'products'}
+                  </span>
+                </h3>
+                <div className="mt-5 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-3">
+                  {products.map((p) => (
+                    <InnovationProductCard key={p.id} product={p} index={products.indexOf(p)} />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -54,7 +81,7 @@ export function InnovationClient() {
       {/* ── experience each product ── */}
       <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
         <div className="mx-auto max-w-330 space-y-8">
-          {INNOVATION_PRODUCTS.map((p, i) => (
+          {products.map((p, i) => (
             <div key={p.id}>
               <FadeUp>
                 <p className="mb-6 font-heading text-[clamp(1.6rem,3vw,2.4rem)] font-extrabold tracking-[-0.02em] text-revora-slate">
@@ -75,9 +102,9 @@ export function InnovationClient() {
             <div
               role="tablist"
               aria-label="Choose a product"
-              onKeyDown={(e) => onTabListKeyDown(e, INNOVATION_PRODUCTS.map((p) => p.id), faqFor, setFaqFor)}
+              onKeyDown={(e) => onTabListKeyDown(e, products.map((p) => p.id), faqFor, setFaqFor)}
               className="-mx-5 mb-5 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] tablet:mx-0 tablet:flex-wrap tablet:px-0">
-              {INNOVATION_PRODUCTS.map((p) => {
+              {products.map((p) => {
                 const on = p.id === faqFor;
                 return (
                   <button

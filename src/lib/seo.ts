@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import type { Product, TherapyCategory } from '@/lib/therapies-data';
+import type { Product, TherapyCategory } from '@/lib/catalogue';
 
 /** Public site address. Set NEXT_PUBLIC_SITE_URL per environment (no trailing slash). */
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://revorahealthcare.com').replace(/\/$/, '');

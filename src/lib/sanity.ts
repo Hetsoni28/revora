@@ -1,6 +1,8 @@
 import { createClient } from 'next-sanity';
 import { cacheLife } from 'next/cache';
 import { createImageUrlBuilder } from '@sanity/image-url';
+import { EMPTY_CATALOGUE, type Catalogue, type Product, type TherapyCategory } from '@/lib/catalogue';
+import { INNOVATION_CATEGORIES, type InnovationProduct } from '@/lib/innovation-products';
 
 // Use a broad type since @sanity/image-url sub-path types vary by version
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,158 +18,117 @@ const config = {
   useCdn: !token,
   // Read-only (Viewer) token. Local .env.local uses SANITY_API_TOKEN; the Sanity–Vercel integration sets SANITY_API_READ_TOKEN.
   token,
+  // Only what's been published in the Studio — never unpublished drafts.
+  perspective: 'published' as const,
 };
 
 export const sanityClient = createClient(config);
-
-/**
- * Run a Sanity query; on failure (bad token, offline, project missing) return `fallback`.
- * Errors thrown inside a 'use cache' scope would otherwise fail the prerender, so callers
- * get an empty result and fall back to the static catalogue in lib/therapies-data.
- */
-async function safeFetch<T>(query: string, params: Record<string, unknown>, fallback: T): Promise<T> {
-  try {
-    return await sanityClient.fetch<T>(query, params);
-  } catch (err) {
-    console.warn('[sanity] query failed, using static data:', (err as Error).message);
-    return fallback;
-  }
-}
 
 const builder = createImageUrlBuilder(sanityClient);
 export function urlFor(source: SanityImageSource) {
   return builder.image(source);
 }
 
-// ─── TypeScript Types (mirrors therapies-data.ts but with Sanity refs) ────────
+// ─── Shapes returned by the query ─────────────────────────────────────────────
 
-export interface SanityProduct {
-  _id: string;
-  id: { current: string };
-  name: string;
-  genericName: string;
-  category: SanityTherapyCategory;
-  badge?: string;
-  volume?: string;
-  image?: SanityImageSource;
-  summary?: string;
-  composition?: string[];
-  indications?: string[];
-  dosage?: string;
-  storage?: string;
-  schedule?: string;
-  order?: number;
-}
-
-export interface SanityTherapyCategory {
-  _id: string;
-  slug: { current: string };
+interface SanityTherapyCategory {
+  slug: string;
   title: string;
-  shortName: string;
+  shortName?: string;
   subtitle?: string;
   description?: string;
   clinicalRationale?: string;
   badge?: string;
   color?: string;
   subTherapies?: string[];
-  order?: number;
 }
 
-// ─── GROQ Queries ─────────────────────────────────────────────────────────────
+interface SanityProduct {
+  id: string;
+  name: string;
+  genericName?: string;
+  categorySlug?: string;
+  badge?: string;
+  volume?: string;
+  image?: SanityImageSource;
+  logo?: SanityImageSource;
+  summary?: string;
+  composition?: string[];
+  indications?: string[];
+  dosage?: string;
+  storage?: string;
+  schedule?: string;
+}
 
-const PRODUCT_FIELDS = `
-  _id,
-  "id": id,
-  name,
-  genericName,
-  category->{
-    _id,
-    slug,
-    title,
-    shortName,
-    subtitle,
-    badge,
-    color
+interface SanityInnovationProduct {
+  id: string;
+  category: InnovationProduct['category'];
+  name: string;
+  accent?: string;
+  tagline?: string;
+  description?: string;
+  image?: SanityImageSource & { alt?: string };
+  square?: boolean;
+  pack?: string;
+  badge?: string;
+  includes?: string[];
+  features?: InnovationProduct['features'];
+  uses?: InnovationProduct['uses'];
+  highlight?: string;
+  faqs?: InnovationProduct['faqs'];
+}
+
+const CATALOGUE_QUERY = `{
+  "categories": *[_type == "therapyCategory" && defined(slug.current)] | order(order asc, title asc) {
+    "slug": slug.current, title, shortName, subtitle, description, clinicalRationale, badge, color, subTherapies
   },
-  badge,
-  volume,
-  image,
-  summary,
-  composition,
-  indications,
-  dosage,
-  storage,
-  schedule,
-  order
-`;
+  "products": *[_type == "product" && defined(id.current) && defined(category->slug.current) && defined(image.asset)] | order(category->order asc, order asc, name asc) {
+    "id": id.current, name, genericName, "categorySlug": category->slug.current,
+    badge, volume, image, logo, summary, composition, indications, dosage, storage, schedule
+  },
+  "innovation": *[_type == "innovationProduct" && defined(slug.current) && defined(category) && defined(image.asset)] | order(order asc, name asc) {
+    "id": slug.current, category, name, accent, tagline, description,
+    image { asset, hotspot, crop, alt },
+    square, pack, badge, includes,
+    features[] { icon, label, value },
+    uses[] { icon, label },
+    highlight,
+    faqs[] { q, a }
+  }
+}`;
 
-const CATEGORY_FIELDS = `
-  _id,
-  slug,
-  title,
-  shortName,
-  subtitle,
-  description,
-  clinicalRationale,
-  badge,
-  color,
-  subTherapies,
-  order
-`;
+// ─── Sanity → site shapes ─────────────────────────────────────────────────────
 
-/** Fetch single category by slug */
-export async function getCategoryBySlug(slug: string): Promise<SanityTherapyCategory | null> {
-  'use cache';
-  cacheLife('minutes');
-  return safeFetch(
-    `*[_type == "therapyCategory" && slug.current == $slug][0] { ${CATEGORY_FIELDS} }`,
-    { slug },
-    null
-  );
-}
+const DEFAULT_COLOR = '#0B4A8F';
 
-/** Fetch single product by slug */
-export async function getProductBySlug(slug: string): Promise<SanityProduct | null> {
-  'use cache';
-  cacheLife('minutes');
-  return safeFetch(
-    `*[_type == "product" && id.current == $slug][0] { ${PRODUCT_FIELDS} }`,
-    { slug },
-    null
-  );
-}
-
-/** Fetch all product slugs (for generateStaticParams) */
-export async function getAllProductSlugs(): Promise<string[]> {
-  'use cache';
-  cacheLife('minutes');
-  const results: { id: { current: string } }[] = await safeFetch(
-    `*[_type == "product"]{ "id": id }`,
-    {},
-    [] as { id: { current: string } }[]
-  );
-  return results.map((r) => r.id.current);
-}
-
-// ─── Helpers to adapt Sanity types → legacy Product/TherapyCategory types ──────
-// (lets existing client components work unchanged)
-
-import { getProductById, type Product, type TherapyCategory } from '@/lib/therapies-data';
-
-export function adaptProduct(p: SanityProduct): Product {
+function adaptCategory(c: SanityTherapyCategory): TherapyCategory {
   return {
-    id: p.id.current,
+    slug: c.slug,
+    title: c.title,
+    shortName: c.shortName ?? c.title,
+    subtitle: c.subtitle ?? '',
+    description: c.description ?? '',
+    clinicalRationale: c.clinicalRationale ?? '',
+    badge: c.badge ?? '',
+    color: c.color ?? DEFAULT_COLOR,
+    subTherapies: c.subTherapies ?? [],
+  };
+}
+
+function adaptProduct(p: SanityProduct, categories: TherapyCategory[]): Product {
+  const image = urlFor(p.image).width(800).height(800).url();
+  return {
+    id: p.id,
     name: p.name,
-    genericName: p.genericName,
-    categorySlug: p.category?.slug?.current ?? '',
+    genericName: p.genericName ?? '',
+    categorySlug: p.categorySlug ?? '',
     badge: p.badge ?? '',
     volume: p.volume ?? '',
-    image: p.image
-      ? urlFor(p.image).width(800).height(800).url()
-      : `/images/products/${p.id.current}.jpg`,
-    logo: `/images/brand-logos/${p.id.current}.webp`,
-    // brand colour isn't edited in Studio — it follows the site's own data, then the category
-    color: getProductById(p.id.current)?.color ?? p.category?.color ?? '#0B4A8F',
+    image,
+    // no logo uploaded yet → show the product photo instead
+    logo: p.logo?.asset ? urlFor(p.logo).width(800).fit('max').url() : image,
+    // a brand takes its therapy area's colour
+    color: categories.find((c) => c.slug === p.categorySlug)?.color ?? DEFAULT_COLOR,
     summary: p.summary ?? '',
     composition: p.composition ?? [],
     indications: p.indications ?? [],
@@ -177,17 +138,49 @@ export function adaptProduct(p: SanityProduct): Product {
   };
 }
 
-export function adaptCategory(c: SanityTherapyCategory): TherapyCategory {
+function adaptInnovationProduct(p: SanityInnovationProduct): InnovationProduct {
   return {
-    slug: c.slug.current,
-    title: c.title,
-    shortName: c.shortName,
-    subtitle: c.subtitle ?? '',
-    description: c.description ?? '',
-    clinicalRationale: c.clinicalRationale ?? '',
-    badge: c.badge ?? '',
-    color: c.color ?? '#0B4A8F',
-    subTherapies: c.subTherapies ?? [],
-    productIds: [], // populated separately if needed
+    id: p.id,
+    category: p.category,
+    name: p.name,
+    accent: p.accent || undefined,
+    tagline: p.tagline ?? '',
+    description: p.description ?? '',
+    image: urlFor(p.image).width(1600).fit('max').auto('format').url(),
+    imageAlt: p.image?.alt ?? [p.name, p.accent].filter(Boolean).join(' '),
+    square: p.square || undefined,
+    pack: p.pack ?? '',
+    badge: p.badge || undefined,
+    includes: p.includes?.length ? p.includes : undefined,
+    features: p.features ?? [],
+    uses: p.uses ?? [],
+    highlight: p.highlight || undefined,
+    faqs: p.faqs ?? [],
+  };
+}
+
+/**
+ * Therapy areas, eye-care products and innovation products — all from Sanity, in one query.
+ * Innovation products are sorted by range (Warmers → Cooling → Field kits → Field food), keeping
+ * each range's own order. If Sanity can't be reached, the lists are empty and pages show their
+ * empty states.
+ */
+export async function getCatalogue(): Promise<Catalogue> {
+  'use cache';
+  cacheLife('minutes');
+  let raw: { categories: SanityTherapyCategory[]; products: SanityProduct[]; innovation: SanityInnovationProduct[] };
+  try {
+    raw = await sanityClient.fetch(CATALOGUE_QUERY);
+  } catch (err) {
+    // Throwing inside 'use cache' would fail the prerender, so log and show nothing instead.
+    console.warn('[sanity] catalogue query failed:', (err as Error).message);
+    return EMPTY_CATALOGUE;
+  }
+  const categories = raw.categories.map(adaptCategory);
+  const rank = (c: InnovationProduct['category']) => INNOVATION_CATEGORIES.indexOf(c);
+  return {
+    categories,
+    products: raw.products.map((p) => adaptProduct(p, categories)),
+    innovation: raw.innovation.map(adaptInnovationProduct).sort((a, b) => rank(a.category) - rank(b.category)),
   };
 }

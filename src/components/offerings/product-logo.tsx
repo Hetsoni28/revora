@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Product } from '@/lib/therapies-data';
+import type { Product } from '@/lib/catalogue';
 import { productKind } from '@/lib/seo';
 
 interface ProductLogoProps {

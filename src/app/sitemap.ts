@@ -1,9 +1,10 @@
 import type { MetadataRoute } from 'next';
-import { ALL_PRODUCTS } from '@/lib/therapies-data';
+import { getCatalogue } from '@/lib/sanity';
 import { SITE_URL } from '@/lib/seo';
 
 /** /sitemap.xml — every public page, products included. */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const { products } = await getCatalogue();
   const now = new Date();
   const page = (path: string, priority: number, changeFrequency: 'weekly' | 'monthly' | 'yearly' = 'monthly') => ({
     url: `${SITE_URL}${path}`,
@@ -14,9 +15,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     page('/', 1, 'weekly'),
-    ...ALL_PRODUCTS.map((p) => ({
+    ...products.map((p) => ({
       ...page(`/products/${p.id}`, 0.9),
-      images: [`${SITE_URL}${p.image}`],
+      images: [p.image],
     })),
     page('/about', 0.8),
     page('/profile', 0.8),
