@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { NetworkHub } from '@/components/illustrations/presence-illustrations';
 import { PresenceLinks } from '@/components/presence/presence-links';
 import { IndiaDotMap } from '@/components/maps/india-dot-map';
+import { DOMESTIC_NETWORK } from '@/lib/network';
 
 const AUDIENCES = [
   {
@@ -78,7 +79,7 @@ export function DomesticClient() {
             <SectionHeading eyebrow="Across India" lines={['Made in the hills.', 'Sent across India.']} highlight={{ 'India.': 'text-revora-cobalt' }} />
             <FadeUp delay={0.15}>
               <p className="mt-6 max-w-md font-sans text-[16.5px] leading-[1.75] text-revora-slate-light">
-                Made in Paonta Sahib, run from Ahmedabad, delivered across India by our partners.
+                Made in Paonta Sahib, run from Ahmedabad and delivered through our partners in {DOMESTIC_NETWORK.length} states and union territories.
               </p>
               <ul className="mt-8 space-y-4">
                 {[
@@ -94,9 +95,23 @@ export function DomesticClient() {
                   </li>
                 ))}
               </ul>
+              <div className="mt-8 border-t border-revora-cobalt/10 pt-6">
+                <p className="flex items-center gap-3 font-heading text-[17px] font-extrabold text-revora-slate">
+                  <span aria-hidden className="h-3 w-3 shrink-0 rounded-full border-2 border-revora-cobalt bg-white ring-4 ring-revora-sky" />
+                  Our network · {DOMESTIC_NETWORK.length} states &amp; UTs
+                </p>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {DOMESTIC_NETWORK.map((s) => (
+                    <li key={s.name} className="rounded-full border border-revora-cobalt/15 bg-[#F6F9FC] px-3 py-1.5 font-sans text-[13px] text-revora-slate">
+                      <span className="font-semibold">{s.name}</span>
+                      <span className="text-revora-slate-muted"> · {s.city}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </FadeUp>
           </div>
-          <IndiaDotMap className="mx-auto w-full max-w-[460px]" />
+          <IndiaDotMap className="mx-auto w-full max-w-[460px] desktop:max-w-[540px]" />
         </div>
       </section>
 

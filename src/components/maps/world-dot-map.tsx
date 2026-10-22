@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { expoOut } from '@/lib/easings';
 import { WORLD_DOTS, WORLD_PINS, WORLD_VIEWBOX } from './map-data';
+import { GLOBAL_NETWORK, toWorldMap } from '@/lib/network';
 
 const [W, H] = WORLD_VIEWBOX;
 const ORIGIN = WORLD_PINS.ahmedabad;
@@ -21,6 +22,9 @@ export const WORLD_REGIONS = [
   { key: 'cis', label: 'CIS' },
   { key: 'latinAmerica', label: 'Latin America' },
 ] as const;
+
+/** Countries where we are present today (see lib/network.ts). */
+const MARKETS = GLOBAL_NETWORK.map((m) => ({ ...m, at: toWorldMap(m.lon, m.lat) }));
 
 /** Curved arc from India to a region, bowing upward. */
 function arc(to: readonly number[]) {
@@ -43,7 +47,7 @@ export function WorldDotMap({ className }: { className?: string }) {
 
   return (
     <div ref={ref} className={`relative ${className ?? ''}`}>
-      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label="World map with India highlighted and routes to partnership regions">
+      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`World map with India highlighted, present in ${MARKETS.map((m) => m.name).join(', ')}, and routes to partnership regions`}>
         <defs>
           <linearGradient id="wd-route" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#94B6E5" />
@@ -96,6 +100,40 @@ export function WorldDotMap({ className }: { className?: string }) {
           );
         })}
 
+        {/* markets we are present in — solid white route and a larger pin */}
+        {MARKETS.map((m, i) => {
+          const d = arc(m.at);
+          return (
+            <g key={m.name}>
+              <motion.path
+                d={d}
+                fill="none"
+                stroke="#FFFFFF"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                initial={reduce ? false : { pathLength: 0, opacity: 0 }}
+                animate={play ? { pathLength: 1, opacity: 1 } : undefined}
+                transition={{ duration: 1.4, delay: 0.6 + i * 0.2, ease: expoOut }}
+              />
+              {loop && inView && (
+                <motion.circle cx={m.at[0]} cy={m.at[1]} fill="#FFFFFF" initial={{ r: 6, opacity: 0.6 }} animate={{ r: 26, opacity: 0 }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut', delay: 1.8 }} />
+              )}
+              <motion.circle
+                cx={m.at[0]}
+                cy={m.at[1]}
+                r="7"
+                fill="#FFFFFF"
+                stroke="#D7262E"
+                strokeWidth="3"
+                initial={reduce ? false : { scale: 0 }}
+                animate={play ? { scale: 1 } : undefined}
+                style={{ transformOrigin: `${m.at[0]}px ${m.at[1]}px` }}
+                transition={{ duration: 0.6, delay: 1.6 + i * 0.2, ease: [0.34, 1.56, 0.64, 1] }}
+              />
+            </g>
+          );
+        })}
+
         {/* origin */}
         {loop && inView && (
           <motion.circle cx={ORIGIN[0]} cy={ORIGIN[1]} fill="#FFFFFF" initial={{ r: 6, opacity: 0.5 }} animate={{ r: 30, opacity: 0 }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut' }} />
@@ -119,6 +157,18 @@ export function WorldDotMap({ className }: { className?: string }) {
           </motion.span>
         );
       })}
+      {MARKETS.map((m, i) => (
+        <motion.span
+          key={m.name}
+          initial={reduce ? false : { opacity: 0, y: 6 }}
+          animate={play ? { opacity: 1, y: 0 } : undefined}
+          transition={{ duration: 0.6, delay: 1.8 + i * 0.2, ease: expoOut }}
+          className="absolute w-max -translate-x-1/2 translate-y-4 rounded-full bg-white px-2.5 py-1 font-sans text-[11px] font-bold text-revora-crimson-dark shadow-[0_8px_20px_-10px_rgba(0,0,0,0.5)]"
+          style={{ left: `${(m.at[0] / W) * 100}%`, top: `${(m.at[1] / H) * 100}%` }}
+        >
+          {m.name} · {m.city}
+        </motion.span>
+      ))}
       <motion.span
         initial={reduce ? false : { opacity: 0 }}
         animate={play ? { opacity: 1 } : undefined}

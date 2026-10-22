@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { MediaFrame } from '@/components/ui/media-frame';
 import { PresenceLinks } from '@/components/presence/presence-links';
 import { WorldDotMap, WORLD_REGIONS } from '@/components/maps/world-dot-map';
+import { GLOBAL_NETWORK } from '@/lib/network';
 
 const PARTNER_EMAIL = 'exports@revorahealthcare.com';
 
@@ -111,8 +112,20 @@ export function GlobalClient() {
             eyebrow="Global reach"
             lines={['From Ahmedabad', 'to the world.']}
             highlight={{ 'world.': 'text-revora-cobalt-pale' }}
-            aside="Regions where we welcome import, distribution and licensing partners."
+            aside={`Now present in ${GLOBAL_NETWORK.map((m) => m.name).join(', ')} — and welcoming import, distribution and licensing partners across these regions.`}
           />
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            {GLOBAL_NETWORK.map((m) => (
+              <span key={m.name} className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 font-sans text-[13px] font-bold text-revora-cobalt">
+                <span aria-hidden className="h-2.5 w-2.5 rounded-full border-2 border-revora-crimson bg-white" />
+                Present in {m.name}
+              </span>
+            ))}
+            <span className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-white/75">
+              <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-revora-crimson" />
+              Partnership regions
+            </span>
+          </div>
           <FadeUp delay={0.1}>
             <WorldDotMap className="mt-12" />
           </FadeUp>
