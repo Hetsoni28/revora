@@ -23,6 +23,8 @@ const config = {
 };
 
 export const sanityClient = createClient(config);
+// The dataset is public, so a rejected token (revoked, expired) shouldn't take the site down — read without it.
+const publicClient = token ? createClient({ ...config, token: undefined, useCdn: true }) : null;
 
 const builder = createImageUrlBuilder(sanityClient);
 export function urlFor(source: SanityImageSource) {
@@ -172,9 +174,16 @@ export async function getCatalogue(): Promise<Catalogue> {
   try {
     raw = await sanityClient.fetch(CATALOGUE_QUERY);
   } catch (err) {
-    // Throwing inside 'use cache' would fail the prerender, so log and show nothing instead.
     console.warn('[sanity] catalogue query failed:', (err as Error).message);
-    return EMPTY_CATALOGUE;
+    if (!publicClient) return EMPTY_CATALOGUE;
+    try {
+      raw = await publicClient.fetch(CATALOGUE_QUERY);
+      console.warn('[sanity] read the public dataset without the token — renew or remove SANITY_API_TOKEN / SANITY_API_READ_TOKEN');
+    } catch (retryErr) {
+      // Throwing inside 'use cache' would fail the prerender, so log and show nothing instead.
+      console.warn('[sanity] catalogue query failed without the token too:', (retryErr as Error).message);
+      return EMPTY_CATALOGUE;
+    }
   }
   const categories = raw.categories.map(adaptCategory);
   const rank = (c: InnovationProduct['category']) => INNOVATION_CATEGORIES.indexOf(c);
