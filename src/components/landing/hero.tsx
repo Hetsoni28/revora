@@ -4,13 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
+import { ALL_PRODUCTS } from '@/lib/therapies-data';
+import { INNOVATION_PRODUCTS } from '@/lib/innovation-products';
 import { AnchorLink, Counter, Eyebrow, Magnetic, SplitWords } from '@/components/ui/primitives';
 import { IrisBurst } from './iris-burst';
 
 const FACTS = [
   { value: 15, suffix: '+', label: 'Years in ophthalmology' },
-  { value: 9, suffix: '', label: 'Launch brands' },
-  { value: 4, suffix: '', label: 'Therapy areas' },
+  { value: ALL_PRODUCTS.length, suffix: '', label: 'Eye-care brands' },
+  { value: INNOVATION_PRODUCTS.length, suffix: '', label: 'Innovation products' },
 ];
 
 export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
@@ -56,7 +58,7 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: d, ease: expoOut }}
           >
-            <Eyebrow>A dedicated ophthalmic company</Eyebrow>
+            <Eyebrow>Eye care · Innovation</Eyebrow>
           </motion.div>
 
           <h1 className="mt-6 font-heading text-[clamp(3rem,8.4vw,7.4rem)] font-extrabold leading-[0.95] tracking-[-0.03em] text-revora-slate">
@@ -76,8 +78,8 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: d + 0.7, ease: expoOut }}
           >
-            Trusted eye-care medicines for doctors and patients across India — made in our own
-            WHO-GMP certified plant.
+            Trusted eye-care medicines from our own WHO-GMP plant — and innovation products for
+            comfort in extreme conditions. Serving doctors, pharmacies and partners across India.
           </motion.p>
 
           <motion.div
@@ -92,7 +94,7 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
                 className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-revora-cobalt py-3.5 pl-7 pr-3.5 font-sans text-[15px] font-semibold text-white shadow-[0_18px_40px_-14px_rgba(11,74,143,0.7)]"
               >
                 <span className="absolute inset-0 -translate-x-full bg-revora-crimson transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
-                <span className="relative">Explore the portfolio</span>
+                <span className="relative">Explore our products</span>
                 <span className="relative grid h-8 w-8 place-items-center rounded-full bg-white text-revora-cobalt transition-transform duration-500 group-hover:rotate-45">
                   <ArrowUpRight className="h-4 w-4" />
                 </span>

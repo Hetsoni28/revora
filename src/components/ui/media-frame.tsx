@@ -67,15 +67,36 @@ export function MediaFrame({ src, alt, aspect = 'aspect-[4/3]', sizes = '(min-wi
 function FrameVideo({ video, poster, label, reduce }: { video: { mp4: string; webm?: string }; poster: string; label: string; reduce: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
   const visible = useInView(ref, { amount: 0.25 });
+  // start downloading a little before it scrolls into view, so it is ready to play — not a still poster
+  const near = useInView(ref, { once: true, margin: '600px 0px' });
   const [choice, setChoice] = useState<boolean | null>(null); // the visitor's play/pause, once they press it
-  const playing = choice ?? !reduce;
+  const [isPlaying, setIsPlaying] = useState(false); // what the video is actually doing
+  const wantPlay = choice ?? !reduce;
 
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
-    if (playing && visible) v.play().catch(() => {});
-    else v.pause();
-  }, [playing, visible]);
+    const sync = () => {
+      if (wantPlay && visible && document.visibilityState === 'visible') {
+        v.muted = true;
+        // may still be refused (e.g. battery saver) — the button then offers Play
+        v.play().catch(() => {});
+      } else v.pause();
+    };
+    sync();
+    // browsers pause video in background tabs; pick it up again on return
+    document.addEventListener('visibilitychange', sync);
+    return () => document.removeEventListener('visibilitychange', sync);
+  }, [wantPlay, visible]);
+
+  const toggle = () => {
+    const v = ref.current;
+    if (!v) return;
+    setChoice(!isPlaying);
+    // call play() inside the tap itself so phones in low-power mode allow it
+    if (isPlaying) v.pause();
+    else v.play().catch(() => {});
+  };
 
   return (
     <>
@@ -84,9 +105,11 @@ function FrameVideo({ video, poster, label, reduce }: { video: { mp4: string; we
         muted
         loop
         playsInline
-        preload="metadata"
+        preload={near ? 'auto' : 'none'}
         poster={poster}
         aria-label={label}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
         className="absolute inset-0 h-full w-full object-cover"
       >
         {video.webm && <source src={video.webm} type="video/webm" />}
@@ -94,11 +117,11 @@ function FrameVideo({ video, poster, label, reduce }: { video: { mp4: string; we
       </video>
       <button
         type="button"
-        onClick={() => setChoice(!playing)}
-        aria-label={playing ? 'Pause video' : 'Play video'}
+        onClick={toggle}
+        aria-label={isPlaying ? 'Pause video' : 'Play video'}
         className="absolute bottom-4 right-4 z-10 grid h-11 w-11 place-items-center rounded-full border border-white/50 bg-white/85 text-revora-slate backdrop-blur-md transition-colors hover:bg-white"
       >
-        {playing ? <Pause className="h-4 w-4" /> : <Play className="ml-0.5 h-4 w-4" />}
+        {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="ml-0.5 h-4 w-4" />}
       </button>
     </>
   );
