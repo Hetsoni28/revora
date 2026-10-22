@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Building2, Compass, Factory, Layers, Rocket, Sparkles, Target } from 'lucide-react';
 import { useCatalogue } from '@/components/catalogue/catalogue-context';
+import { SITE } from '@/lib/seo';
 import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
@@ -123,15 +124,15 @@ export function AboutClient() {
                 <div className="relative aspect-square w-full overflow-hidden rounded-[28px] border border-revora-cobalt/15 bg-revora-cobalt-deep shadow-[0_24px_60px_-20px_rgba(11,74,143,0.25)]">
                   <Image
                     src="/images/leadership/founder.webp"
-                    alt="Founder & Managing Director — Revora Healthcare"
+                    alt={`${SITE.founder.name}, ${SITE.founder.title} of Revora Healthcare`}
                     fill
                     loading="eager"
                     sizes="(min-width: 1024px) 40vw, 85vw"
                     className="object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
                   />
                   <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-revora-slate/90 via-revora-slate/40 to-transparent p-6 text-white">
-                    <p className="font-heading text-xl font-bold">Founder & Managing Director</p>
-                    <p className="mt-0.5 font-sans text-[13px] text-white/80">Revora Healthcare Private Limited</p>
+                    <p className="font-heading text-xl font-bold">{SITE.founder.name}</p>
+                    <p className="mt-0.5 font-sans text-[13px] text-white/80">{SITE.founder.title} · {SITE.legalName}</p>
                   </div>
                 </div>
               </div>
@@ -156,8 +157,8 @@ export function AboutClient() {
 
                 <div className="flex flex-wrap items-center gap-4 border-t border-revora-cobalt/10 pt-6">
                   <div>
-                    <p className="font-heading text-[17px] font-extrabold text-revora-slate">Founder & Managing Director</p>
-                    <p className="font-sans text-[13px] text-revora-slate-muted">Ahmedabad, Gujarat</p>
+                    <p className="font-heading text-[17px] font-extrabold text-revora-slate">{SITE.founder.name}</p>
+                    <p className="font-sans text-[13px] text-revora-slate-muted">{SITE.founder.title} · Ahmedabad, Gujarat</p>
                   </div>
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-revora-sky px-4 py-2 font-sans text-[12px] font-semibold text-revora-cobalt">
                     <span className="h-2 w-2 rounded-full bg-revora-cobalt" />

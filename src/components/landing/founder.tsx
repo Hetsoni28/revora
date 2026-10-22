@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight, Quote, ShieldCheck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { Eyebrow, FadeUp } from '@/components/ui/primitives';
+import { SITE } from '@/lib/seo';
 
 export function FounderSection() {
   const reduce = useReducedMotion();
@@ -38,7 +39,7 @@ export function FounderSection() {
               <div className="relative aspect-square w-full overflow-hidden rounded-[24px] bg-revora-cobalt-deep">
                 <Image
                   src="/images/leadership/founder.webp"
-                  alt="Founder & Managing Director — Revora Healthcare"
+                  alt={`${SITE.founder.name}, ${SITE.founder.title} of Revora Healthcare`}
                   fill
                   sizes="(min-width: 1024px) 45vw, 90vw"
                   className="object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
@@ -55,10 +56,10 @@ export function FounderSection() {
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl border border-white/20 bg-white/90 px-4 py-3 backdrop-blur-md">
                   <div>
                     <p className="font-heading text-[15px] font-bold text-revora-slate">
-                      Founder & Managing Director
+                      {SITE.founder.name}
                     </p>
                     <p className="font-sans text-[12px] text-revora-slate-light">
-                      Revora Healthcare Private Limited
+                      {SITE.founder.title} · {SITE.legalName}
                     </p>
                   </div>
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-revora-cobalt text-white shadow-sm">
@@ -115,10 +116,10 @@ export function FounderSection() {
               <div className="mt-9 flex flex-wrap items-center justify-between gap-6 border-t border-revora-cobalt/10 pt-7">
                 <div>
                   <p className="font-heading text-xl font-extrabold text-revora-slate">
-                    Founder & Managing Director
+                    {SITE.founder.name}
                   </p>
                   <p className="font-sans text-[13px] font-medium text-revora-slate-light">
-                    Revora Healthcare Private Limited · Ahmedabad, Gujarat
+                    {SITE.founder.title} · {SITE.legalName} · Ahmedabad, Gujarat
                   </p>
                 </div>
 

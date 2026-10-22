@@ -11,6 +11,7 @@ export const SITE = {
   email: 'info@revorahealthcare.com',
   cin: 'U21000GJ2026PTC174674',
   foundingDate: '2026-03-10',
+  founder: { name: 'Rajnikant Labhshankar Dave', title: 'Founder & Managing Director' },
   logo: '/logo.png',
   address: {
     streetAddress: '3rd Floor, S.G. Business Hub, A/303, Sarkhej–Gandhinagar Highway, near Gota Overbridge, Ognaj',
@@ -122,6 +123,7 @@ export const organizationLd = {
   logo: abs(SITE.logo),
   email: SITE.email,
   foundingDate: SITE.foundingDate,
+  founder: { '@type': 'Person', name: SITE.founder.name, jobTitle: SITE.founder.title },
   identifier: { '@type': 'PropertyValue', propertyID: 'CIN', value: SITE.cin },
   address: { '@type': 'PostalAddress', ...SITE.address },
   areaServed: { '@type': 'Country', name: 'India' },
