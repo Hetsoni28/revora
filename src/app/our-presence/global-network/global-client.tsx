@@ -11,15 +11,17 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
 import { MediaFrame } from '@/components/ui/media-frame';
 import { PresenceLinks } from '@/components/presence/presence-links';
-import { WorldDotMap, WORLD_REGIONS } from '@/components/maps/world-dot-map';
+import { WorldDotMap } from '@/components/maps/world-dot-map';
 import { GLOBAL_NETWORK } from '@/lib/network';
 
 const PARTNER_EMAIL = 'exports@revorahealthcare.com';
 
+const REGIONS = (['Asia', 'Africa'] as const).map((region) => ({ region, countries: GLOBAL_NETWORK.filter((m) => m.region === region) }));
+
+// counted from lib/network.ts, so they stay true as countries are added
 const STATS = [
-  { value: 15, suffix: '+', label: 'Export Markets Target' },
-  { value: 100, suffix: '%', label: 'WHO-GMP Compliant' },
-  { value: 4, suffix: '', label: 'Therapy Verticals' },
+  { value: GLOBAL_NETWORK.length, suffix: '', label: 'Countries outside India' },
+  ...REGIONS.map((r) => ({ value: r.countries.length, suffix: '', label: `Countries in ${r.region}` })),
 ];
 
 const CAPABILITIES = [
@@ -112,32 +114,31 @@ export function GlobalClient() {
             eyebrow="Global reach"
             lines={['From Ahmedabad', 'to the world.']}
             highlight={{ 'world.': 'text-revora-cobalt-pale' }}
-            aside={
-              GLOBAL_NETWORK.length
-                ? `Now present in ${GLOBAL_NETWORK.map((m) => m.name).join(', ')} — and welcoming import, distribution and licensing partners across these regions.`
-                : 'Regions where we welcome import, distribution and licensing partners.'
-            }
+            aside={`Present in ${GLOBAL_NETWORK.length} countries across Asia and Africa — supplied from our plant in India.`}
           />
-          {GLOBAL_NETWORK.length > 0 && (
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            {GLOBAL_NETWORK.map((m) => (
-              <span key={m.name} className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 font-sans text-[13px] font-bold text-revora-cobalt">
-                <span aria-hidden className="h-2.5 w-2.5 rounded-full border-2 border-revora-crimson bg-white" />
-                Present in {m.name}
-              </span>
-            ))}
-            <span className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-white/75">
-              <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-revora-crimson" />
-              Partnership regions
-            </span>
-          </div>
-          )}
           <FadeUp delay={0.1}>
             <WorldDotMap className="mt-12" />
           </FadeUp>
-          <div className="mt-8 flex flex-wrap gap-2 tablet:hidden">
-            {WORLD_REGIONS.map((r) => (
-              <span key={r.key} className="rounded-full bg-white/10 px-3 py-1.5 font-sans text-[12.5px] font-semibold">{r.label}</span>
+          {/* key to the pins — on phones the map has no labels */}
+          <p className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-sans text-[12.5px] font-semibold text-white/80">
+            <span className="inline-flex items-center gap-2"><span aria-hidden className="h-3 w-3 rounded-full border-2 border-white bg-revora-cobalt" /> India · HQ Ahmedabad</span>
+            <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2.5 w-2.5 rounded-full bg-revora-crimson ring-2 ring-white/70" /> Countries we serve</span>
+          </p>
+          <div className="mt-8 grid gap-6 border-t border-white/10 pt-8 tablet:grid-cols-2">
+            {REGIONS.map((r) => (
+              <div key={r.region}>
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-cobalt-pale">
+                  {r.region} · {r.countries.length} countries
+                </p>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {r.countries.map((m) => (
+                    <li key={m.name} className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 font-sans text-[13px] font-semibold">
+                      <span aria-hidden className="h-2 w-2 rounded-full bg-revora-crimson ring-2 ring-white/70" />
+                      {m.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>
