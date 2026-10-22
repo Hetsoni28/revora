@@ -28,7 +28,6 @@ const NAV_ITEMS: NavItem[] = [
     label: 'About Us',
     href: '/about',
     sublinks: [
-      { label: 'About Us', href: '/about' },
       { label: 'Profile', href: '/profile' },
       { label: 'Philosophy & Values', href: '/philosophy' },
       { label: 'Certifications', href: '/certifications' },
