@@ -112,8 +112,13 @@ export function GlobalClient() {
             eyebrow="Global reach"
             lines={['From Ahmedabad', 'to the world.']}
             highlight={{ 'world.': 'text-revora-cobalt-pale' }}
-            aside={`Now present in ${GLOBAL_NETWORK.map((m) => m.name).join(', ')} — and welcoming import, distribution and licensing partners across these regions.`}
+            aside={
+              GLOBAL_NETWORK.length
+                ? `Now present in ${GLOBAL_NETWORK.map((m) => m.name).join(', ')} — and welcoming import, distribution and licensing partners across these regions.`
+                : 'Regions where we welcome import, distribution and licensing partners.'
+            }
           />
+          {GLOBAL_NETWORK.length > 0 && (
           <div className="mt-8 flex flex-wrap items-center gap-3">
             {GLOBAL_NETWORK.map((m) => (
               <span key={m.name} className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 font-sans text-[13px] font-bold text-revora-cobalt">
@@ -126,6 +131,7 @@ export function GlobalClient() {
               Partnership regions
             </span>
           </div>
+          )}
           <FadeUp delay={0.1}>
             <WorldDotMap className="mt-12" />
           </FadeUp>

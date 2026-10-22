@@ -1,8 +1,9 @@
 /**
  * Where Revora is present. Add a state or country here and it appears on the maps and lists.
  * Each state is shown at its capital city; coordinates are in degrees.
+ * `hq` marks the state our head office is in — the HQ pin stands for it, so it gets no route of its own.
  */
-export const DOMESTIC_NETWORK: { name: string; city: string; lon: number; lat: number }[] = [
+export const DOMESTIC_NETWORK: { name: string; city: string; lon: number; lat: number; hq?: boolean }[] = [
   { name: 'Jammu & Kashmir', city: 'Srinagar', lon: 74.8, lat: 34.08 },
   { name: 'Himachal Pradesh', city: 'Shimla', lon: 77.17, lat: 31.1 },
   { name: 'Punjab', city: 'Chandigarh', lon: 76.78, lat: 30.73 },
@@ -10,6 +11,7 @@ export const DOMESTIC_NETWORK: { name: string; city: string; lon: number; lat: n
   { name: 'Delhi', city: 'New Delhi', lon: 77.21, lat: 28.61 },
   { name: 'Uttar Pradesh', city: 'Lucknow', lon: 80.95, lat: 26.85 },
   { name: 'Rajasthan', city: 'Jaipur', lon: 75.79, lat: 26.91 },
+  { name: 'Gujarat', city: 'Ahmedabad', lon: 72.5714, lat: 23.0225, hq: true },
   { name: 'Madhya Pradesh', city: 'Bhopal', lon: 77.41, lat: 23.26 },
   { name: 'Maharashtra', city: 'Mumbai', lon: 72.88, lat: 19.08 },
   { name: 'Telangana', city: 'Hyderabad', lon: 78.49, lat: 17.39 },
@@ -18,9 +20,8 @@ export const DOMESTIC_NETWORK: { name: string; city: string; lon: number; lat: n
   { name: 'Kerala', city: 'Thiruvananthapuram', lon: 76.94, lat: 8.52 },
 ];
 
-export const GLOBAL_NETWORK: { name: string; city: string; lon: number; lat: number }[] = [
-  { name: 'Ghana', city: 'Accra', lon: -0.19, lat: 5.6 },
-];
+/** Countries outside India where we are present. Add one and it gets its own pin and route on the world map. */
+export const GLOBAL_NETWORK: { name: string; city: string; lon: number; lat: number }[] = [];
 
 /* ── map projections (match the generated dot maps in components/maps/map-data.ts) ── */
 
