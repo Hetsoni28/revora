@@ -104,7 +104,7 @@ export function DomesticClient() {
                   {DOMESTIC_NETWORK.map((s) => (
                     <li key={s.name} className="rounded-full border border-revora-cobalt/15 bg-[#F6F9FC] px-3 py-1.5 font-sans text-[13px] text-revora-slate">
                       <span className="font-semibold">{s.name}</span>
-                      <span className="text-revora-slate-muted"> · {s.city}</span>
+                      {s.hq && <span className="text-revora-crimson-dark font-medium"> (HQ)</span>}
                     </li>
                   ))}
                 </ul>

@@ -54,7 +54,8 @@ const LABEL_AT: Record<string, { x: number; y: number; side: 'left' | 'right' }>
   Kerala: { x: 160, y: 486, side: 'right' },
 };
 
-const NETWORK = DOMESTIC_NETWORK.map((s) => {
+// the HQ state is shown by the HQ pin, so it gets no route or pin of its own
+const NETWORK = DOMESTIC_NETWORK.filter((s) => !s.hq).map((s) => {
   const at = toIndiaMap(s.lon, s.lat);
   const label = LABEL_AT[s.name] ?? { x: at[0] + 12, y: at[1], side: 'right' as const };
   return { ...s, at, label, route: arc(at) };
@@ -224,10 +225,10 @@ export function IndiaDotMap({ className }: { className?: string }) {
       </svg>
 
       {/* labels */}
-      <MapLabel x={HQ[0]} y={HQ[1] + 9} side="below" play={play} delay={0.5} strong="HQ" city="Ahmedabad" state="Gujarat" />
-      <MapLabel x={PLANT_LABEL.x} y={PLANT_LABEL.y} side="right" play={play} delay={1.3} strong="Plant" city="Paonta Sahib" state="Himachal Pradesh" />
+      <MapLabel x={HQ[0]} y={HQ[1] + 9} side="below" play={play} delay={0.5} strong="HQ" state="Gujarat" />
+      <MapLabel x={PLANT_LABEL.x} y={PLANT_LABEL.y} side="right" play={play} delay={1.3} strong="Plant" state="Himachal Pradesh" />
       {NETWORK.map((n, i) => (
-        <MapLabel key={n.name} x={n.label.x} y={n.label.y} side={n.label.side} play={play} delay={2 + i * 0.06} city={n.city} state={n.name} small />
+        <MapLabel key={n.name} x={n.label.x} y={n.label.y} side={n.label.side} play={play} delay={2 + i * 0.06} state={n.name} small />
       ))}
     </div>
   );
@@ -235,15 +236,15 @@ export function IndiaDotMap({ className }: { className?: string }) {
 
 const SIDE = { left: '-translate-x-full -translate-y-1/2', right: '-translate-y-1/2', below: '-translate-x-1/2' } as const;
 
-/** City + state pill. Network labels are hidden on phones, where they would cover the whole map. */
-function MapLabel({ x, y, side, play, delay, city, state, strong, small }: {
+/** State name pill. Network labels are hidden on phones, where they would cover the whole map. */
+function MapLabel({ x, y, side, play, delay, state, strong, small }: {
   x: number;
   y: number;
   side: 'left' | 'right' | 'below';
   play: boolean;
   delay: number;
-  city: string;
   state: string;
+  city?: string;
   strong?: string;
   small?: boolean;
 }) {
@@ -258,11 +259,10 @@ function MapLabel({ x, y, side, play, delay, city, state, strong, small }: {
       }`}
       style={{ left: `${(x / W) * 100}%`, top: `${(y / H) * 100}%` }}
     >
-      <p className={`font-heading font-extrabold leading-tight text-revora-slate ${small ? 'text-[10px] desktop:text-[11.5px]' : 'text-[10.5px] tablet:text-[11.5px] desktop:text-[13px]'}`}>
-        {strong && <span className="mr-1 font-sans text-[10px] font-semibold uppercase tracking-[0.12em] text-revora-crimson-dark">{strong}</span>}
-        {city}
+      <p className={`font-heading font-extrabold leading-tight text-revora-slate ${small ? 'text-[10.5px] desktop:text-[12px]' : 'text-[11px] tablet:text-[12px] desktop:text-[13.5px]'}`}>
+        {strong && <span className="mr-1.5 font-sans text-[10px] font-semibold uppercase tracking-[0.12em] text-revora-crimson-dark">{strong}</span>}
+        {state}
       </p>
-      <p className={`font-sans leading-tight text-revora-slate-muted ${small ? 'text-[9px] desktop:text-[10px]' : 'text-[9px] tablet:text-[10px] desktop:text-[10.5px]'}`}>{state}</p>
     </motion.div>
   );
 }
