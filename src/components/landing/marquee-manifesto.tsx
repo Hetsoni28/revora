@@ -114,7 +114,19 @@ export function Manifesto() {
   const words = MANIFESTO.split(' ');
 
   return (
-    <section id="philosophy" className="relative bg-white px-5 py-28 tablet:px-8 tablet:py-40">
+    <section id="philosophy" className="relative isolate overflow-hidden bg-white px-5 py-28 tablet:px-8 tablet:py-40">
+      {/* eye-drop filling line behind the copy; a white wash from the left keeps the text crisp */}
+      <Image
+        src="/images/photos/eye-drop-filling-line.webp"
+        alt=""
+        fill
+        sizes="100vw"
+        className="-z-20 object-cover object-[70%_center] tablet-lg:object-right"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-white/80 tablet-lg:bg-transparent tablet-lg:bg-[linear-gradient(90deg,#fff_0%,rgba(255,255,255,0.94)_38%,rgba(255,255,255,0.55)_62%,rgba(255,255,255,0.05)_100%)]"
+      />
       <div className="mx-auto max-w-[1320px]">
         <h2 className="font-heading text-[clamp(2.6rem,6.4vw,5.6rem)] font-extrabold leading-[1] tracking-[-0.03em] text-revora-slate">
           <SplitWords text="Our philosophy." highlight={{ 'philosophy.': 'text-revora-cobalt' }} />

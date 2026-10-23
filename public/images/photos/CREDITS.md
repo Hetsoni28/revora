@@ -19,3 +19,9 @@ Photos from [Pexels](https://www.pexels.com) under the [Pexels License](https://
 | innovation/defence-snow.webp | https://www.pexels.com/photo/6786309/ |
 | innovation/industrial-snow.webp | https://www.pexels.com/photo/11677751/ |
 | innovation/warm-hands.webp | https://www.pexels.com/photo/30185635/ |
+
+Supplied by Revora Healthcare:
+
+| File | Source |
+|---|---|
+| eye-drop-filling-line.webp | provided by the client (homepage "Our philosophy" background) |
