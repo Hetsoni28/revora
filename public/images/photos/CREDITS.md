@@ -25,3 +25,4 @@ Supplied by Revora Healthcare:
 | File | Source |
 |---|---|
 | eye-drop-filling-line.webp | provided by the client (homepage "Our philosophy" background) |
+| about-cleanroom.webp | provided by the client (About Us hero background) |

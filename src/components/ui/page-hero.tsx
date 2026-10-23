@@ -16,10 +16,12 @@ interface PageHeroProps {
   visual?: React.ReactNode;
   /** Full-width photo behind the whole hero (instead of a visual beside the copy); the copy turns white. */
   background?: { src: string; alt: string };
+  /** Pale, decorative photo behind the hero; the copy stays dark and the visual stays beside it. */
+  backdrop?: string;
 }
 
 /** Inner-page hero: breadcrumb, headline and one line of copy, with a visual on the right or a full-width photo behind. */
-export function PageHero({ crumbs, eyebrow, lines, highlight, text, actions, visual, background }: PageHeroProps) {
+export function PageHero({ crumbs, eyebrow, lines, highlight, text, actions, visual, background, backdrop }: PageHeroProps) {
   const tone = background ? 'light' : 'dark';
   const copy = (
     <div className={background ? 'max-w-2xl' : undefined}>
@@ -39,7 +41,7 @@ export function PageHero({ crumbs, eyebrow, lines, highlight, text, actions, vis
     return (
       // one full screen tall; the copy sits centred in the space below the fixed navbar
       <section className="relative isolate flex min-h-svh items-center overflow-hidden px-5 pb-14 pt-28 tablet:px-8 tablet:pb-16 tablet:pt-32">
-        <Image src={background.src} alt={background.alt} fill priority sizes="100vw" className="-z-20 object-cover object-[70%_center]" />
+        <Image src={background.src} alt={background.alt} fill loading="eager" sizes="100vw" className="-z-20 object-cover object-[70%_center]" />
         {/* navy fade behind the copy: from below on phones, from the left on wider screens */}
         <div
           aria-hidden
@@ -55,7 +57,16 @@ export function PageHero({ crumbs, eyebrow, lines, highlight, text, actions, vis
 
   return (
     <section className="relative isolate overflow-hidden px-5 pb-16 pt-32 tablet:px-8 tablet:pb-24 tablet:pt-40 desktop:pt-48">
-      <div aria-hidden className="absolute -left-40 top-10 -z-10 h-[480px] w-[480px] rounded-full bg-revora-sky blur-3xl" />
+      {backdrop ? (
+        <>
+          <Image src={backdrop} alt="" fill loading="eager" sizes="100vw" className="-z-20 object-cover object-right" />
+          {/* keeps the copy crisp on phones, where it sits over the busier right side, and blends into the page below */}
+          <div aria-hidden className="absolute inset-0 -z-10 bg-white/55 tablet-lg:bg-transparent" />
+          <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-linear-to-b from-transparent to-[#F6F9FC]" />
+        </>
+      ) : (
+        <div aria-hidden className="absolute -left-40 top-10 -z-10 h-[480px] w-[480px] rounded-full bg-revora-sky blur-3xl" />
+      )}
       <div className="mx-auto max-w-330">
         <Breadcrumb items={crumbs} />
         <div className="mt-8 grid grid-cols-[minmax(0,1fr)] items-center gap-12 tablet-lg:grid-cols-[1.1fr_0.9fr]">

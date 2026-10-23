@@ -41,6 +41,7 @@ export function AboutClient() {
       <PageHero
         crumbs={[{ label: 'Home', href: '/' }, { label: 'About Us' }]}
         eyebrow="About Us"
+        backdrop="/images/photos/about-cleanroom.webp"
         lines={['Our story', 'so far.']}
         highlight={{ 'story': 'text-revora-cobalt', 'far.': 'text-revora-crimson' }}
         text="A young Ahmedabad company with one clear purpose — eye care that India can rely on."
