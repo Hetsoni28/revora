@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { Eye, Factory, HeartHandshake, ShieldCheck, Users } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
-import { Eyebrow, FadeUp, Tick } from '@/components/ui/primitives';
+import { FadeUp, SplitWords, Tick } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
@@ -118,8 +118,10 @@ function PromiseStatement() {
   return (
     <section className="px-5 py-20 tablet:px-8 tablet:py-28">
       <div className="mx-auto max-w-[1100px]">
-        <Eyebrow>Our promise</Eyebrow>
-        <p ref={ref} className="mt-8 font-heading text-[clamp(1.9rem,4.4vw,3.6rem)] font-bold leading-[1.15] tracking-[-0.02em] text-revora-slate">
+        <h2 className="font-heading text-[clamp(2.6rem,6.4vw,5.6rem)] font-extrabold leading-[1] tracking-[-0.03em] text-revora-slate">
+          <SplitWords text="Our promise." highlight={{ 'promise.': 'text-revora-cobalt' }} />
+        </h2>
+        <p ref={ref} className="mt-8 max-w-3xl font-heading text-[clamp(1.15rem,1.9vw,1.6rem)] font-semibold leading-[1.5] tracking-[-0.01em] text-revora-slate">
           <span className="sr-only">{PROMISE}</span>
           {words.map((w, i) => (
             <Word key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} reduce={!!reduce} emphasis={EMPHASIS.has(w)}>

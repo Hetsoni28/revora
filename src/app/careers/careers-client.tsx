@@ -3,22 +3,17 @@
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { toast } from 'sonner';
-import { Briefcase, Building2, Eye, Factory, MapPin, Rocket, Send, Sprout, Stethoscope, Truck } from 'lucide-react';
+import { Eye, MapPin, Rocket, Send, Sprout } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
-import { AnchorLink, FadeUp, Tick } from '@/components/ui/primitives';
+import { FadeUp, Tick } from '@/components/ui/primitives';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
 
 const CAREERS_EMAIL = 'info@revorahealthcare.com';
 
-/** Teams we hire into — not a list of live vacancies. */
-const TEAMS = [
-  { icon: Stethoscope, name: 'Sales & marketing', where: 'Field roles across India', roles: ['Medical representatives', 'Area & regional managers', 'Product marketing'] },
-  { icon: Truck, name: 'Distribution & supply', where: 'Ahmedabad', roles: ['Supply planning', 'Distributor relations', 'Logistics'] },
-  { icon: Factory, name: 'Manufacturing & quality', where: 'Paonta Sahib, H.P.', roles: ['Production', 'Quality control', 'Quality assurance'] },
-  { icon: Building2, name: 'Corporate office', where: 'Ahmedabad HQ', roles: ['Accounts & finance', 'HR & administration', 'Pharmacovigilance'] },
-];
+/** Teams an applicant can pick in the form — not a list of live vacancies. */
+const TEAMS = ['Sales & marketing', 'Distribution & supply', 'Manufacturing & quality', 'Corporate office'];
 
 const VALUES = [
   { icon: Eye, title: 'Only eye care', text: 'Go deep in one specialty, not wide across many.' },
@@ -47,14 +42,12 @@ function Rise({ children, i = 0, className }: { children: React.ReactNode; i?: n
 }
 
 export function CareersClient() {
-  // Shared so "Apply for …" on a team card pre-selects that team in the form.
-  const [team, setTeam] = useState(TEAMS[0].name);
   return (
     <>
       <Hero />
       <Values />
-      <Teams onPick={setTeam} />
-      <Apply team={team} setTeam={setTeam} />
+      <HowWeHire />
+      <Apply />
     </>
   );
 }
@@ -77,7 +70,7 @@ function Hero() {
             </FadeUp>
             <FadeUp delay={0.55} className="mt-9 flex flex-wrap gap-3">
               <Button href="#apply" arrow="down" magnetic>Send your CV</Button>
-              <Button href="#teams" variant="outline">Teams we hire for</Button>
+              <Button href="#how-we-hire" variant="outline">How we hire</Button>
             </FadeUp>
           </div>
 
@@ -145,49 +138,18 @@ function Values() {
   );
 }
 
-/* ── teams ────────────────────────────────────────────────── */
-function Teams({ onPick }: { onPick: (team: string) => void }) {
+/* ── how we hire ───────────────────────────────────────────── */
+function HowWeHire() {
   return (
-    <section id="teams" className="px-5 py-20 tablet:px-8 tablet:py-28">
+    <section id="how-we-hire" className="px-5 py-20 tablet:px-8 tablet:py-28">
       <div className="mx-auto max-w-330">
         <SectionHeading
-          eyebrow="Teams we hire for"
-          lines={['Find where you fit.']}
-          highlight={{ fit: 'text-revora-cobalt', 'fit.': 'text-revora-cobalt' }}
+          eyebrow="How we hire"
+          lines={['Four simple steps.']}
+          highlight={{ 'steps.': 'text-revora-cobalt' }}
           aside="No fixed openings — send your CV and we’ll be in touch."
         />
-        <div className="mt-12 grid gap-5 tablet:grid-cols-2">
-          {TEAMS.map((t, i) => (
-            <Rise key={t.name} i={i} className="group flex flex-col rounded-[28px] border border-revora-cobalt/10 bg-white p-7 transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_rgba(11,74,143,0.45)] tablet:p-9">
-              <div className="flex items-start justify-between gap-4">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-revora-sky text-revora-cobalt transition-transform duration-500 group-hover:rotate-[-8deg]">
-                  <t.icon className="h-5 w-5" />
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F6F9FC] px-3 py-1.5 font-sans text-[12px] font-semibold text-revora-slate-light">
-                  <MapPin className="h-3.5 w-3.5 text-revora-crimson" /> {t.where}
-                </span>
-              </div>
-              <h3 className="mt-8 font-heading text-[1.6rem] font-extrabold tracking-[-0.01em] text-revora-slate">{t.name}</h3>
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {t.roles.map((r) => (
-                  <li key={r} className="rounded-full border border-revora-cobalt/15 px-3.5 py-1.5 font-sans text-[13px] font-medium text-revora-slate">
-                    {r}
-                  </li>
-                ))}
-              </ul>
-              <AnchorLink
-                href="#apply"
-                onClick={() => onPick(t.name)}
-                className="mt-auto inline-flex w-fit items-center gap-2 pt-8 font-sans text-[14px] font-semibold text-revora-cobalt"
-              >
-                Apply for {t.name.toLowerCase()} <Briefcase className="h-4 w-4 transition-transform duration-500 group-hover:-rotate-12" />
-              </AnchorLink>
-            </Rise>
-          ))}
-        </div>
-
-        {/* hiring steps */}
-        <ol className="mt-16 grid gap-3 rounded-[28px] border border-revora-cobalt/10 bg-white p-6 tablet:grid-cols-4 tablet:p-8">
+        <ol className="mt-12 grid gap-3 rounded-[28px] border border-revora-cobalt/10 bg-white p-6 tablet:grid-cols-4 tablet:p-8">
           {STEPS.map((s, i) => (
             <li key={s}>
               <Rise i={i} className="flex items-center gap-3">
@@ -203,7 +165,8 @@ function Teams({ onPick }: { onPick: (team: string) => void }) {
 }
 
 /* ── apply ────────────────────────────────────────────────── */
-function Apply({ team, setTeam }: { team: string; setTeam: (team: string) => void }) {
+function Apply() {
+  const [team, setTeam] = useState(TEAMS[0]);
   const [form, setForm] = useState({ name: '', email: '', phone: '', city: '', experience: EXPERIENCE[1], message: '' });
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [k]: e.target.value });
@@ -253,7 +216,7 @@ function Apply({ team, setTeam }: { team: string; setTeam: (team: string) => voi
                 <span className={label}>Team</span>
                 <select value={team} onChange={(e) => setTeam(e.target.value)} className={field}>
                   {TEAMS.map((t) => (
-                    <option key={t.name}>{t.name}</option>
+                    <option key={t}>{t}</option>
                   ))}
                 </select>
               </label>
