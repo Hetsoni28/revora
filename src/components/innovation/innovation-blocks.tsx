@@ -79,7 +79,7 @@ export function PromoBanner({ product: p }: { product: InnovationProduct }) {
               transition={{ duration: 0.9, delay: 0.65, ease: expoOut }}
               className="mt-9 flex flex-wrap gap-3"
             >
-              <Button href={`#${p.id}`} variant="light" arrow="down" magnetic>Explore {p.name} {p.accent}</Button>
+              <Button href={`/innovation/${p.id}`} variant="light" arrow="up-right" magnetic>Explore {p.name} {p.accent}</Button>
               <Button href="/channel-partner" variant="outline-light">Become a distributor</Button>
             </motion.div>
           </div>
@@ -157,7 +157,7 @@ export function InnovationProductCard({ product: p, index = 0 }: { product: Inno
       transition={{ duration: 0.8, delay: index * 0.08, ease: expoOut }}
       className="group flex flex-col overflow-hidden rounded-[24px] border border-revora-cobalt/10 bg-white transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_rgba(11,74,143,0.5)]"
     >
-      <Link href={`#${p.id}`} className="relative block aspect-[4/3] overflow-hidden bg-white">
+      <Link href={`/innovation/${p.id}`} className="relative block aspect-[4/3] overflow-hidden bg-white">
         <Image src={p.image} alt={p.imageAlt} fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-contain p-3 transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]" />
         <span className="absolute left-4 top-4 rounded-full bg-revora-crimson px-3 py-1 font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-white">New</span>
       </Link>
@@ -173,7 +173,7 @@ export function InnovationProductCard({ product: p, index = 0 }: { product: Inno
           ))}
         </div>
         <div className="mt-auto flex items-center justify-between gap-3 pt-6">
-          <Link href={`#${p.id}`} className="inline-flex min-h-6 items-center gap-1.5 font-sans text-[14px] font-semibold text-revora-cobalt">
+          <Link href={`/innovation/${p.id}`} className="inline-flex min-h-6 items-center gap-1.5 font-sans text-[14px] font-semibold text-revora-cobalt">
             View details <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />
           </Link>
           <a

@@ -7,7 +7,14 @@ export const product = defineType({
   type: 'document',
   fields: [
     defineField({ name: 'name', title: 'Brand name', type: 'string', validation: (r) => r.required() }),
-    defineField({ name: 'id', title: 'URL slug', type: 'slug', options: { source: 'name' }, validation: (r) => r.required() }),
+    defineField({
+      name: 'id',
+      title: 'URL slug',
+      description: 'The product page and QR code use it: /products/moxora and /p/moxora. Changing it breaks printed QR codes.',
+      type: 'slug',
+      options: { source: 'name' },
+      validation: (r) => r.required(),
+    }),
     defineField({ name: 'genericName', title: 'Generic name', type: 'string', validation: (r) => r.required() }),
     defineField({
       name: 'category',

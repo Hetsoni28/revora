@@ -35,7 +35,7 @@ export const innovationProduct = defineType({
     defineField({
       name: 'slug',
       title: 'URL id',
-      description: 'Used in links like /innovation#hand-warmer.',
+      description: 'The product page and QR code use it: /innovation/hand-warmer and /p/hand-warmer. Changing it breaks printed QR codes.',
       type: 'slug',
       group: 'basics',
       options: { source: (doc) => [doc.name, doc.accent].filter(Boolean).join(' ') },

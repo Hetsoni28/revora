@@ -14,10 +14,10 @@ import { FaqList, InnovationProductCard, NeedTiles, PromoBanner } from '@/compon
 
 
 const NEEDS = [
-  { label: 'Defence personnel', image: '/images/innovation/defence-snow.webp', alt: 'Soldiers in winter gear in a snowy forest', href: '#hypothermia-kit' },
-  { label: 'Trekking & outdoors', image: '/images/innovation/outdoor-trek.webp', alt: 'Trekkers climbing a snowy Himalayan trail', href: '#sleeping-bag-warmer' },
-  { label: 'Industrial workforce', image: '/images/innovation/industrial-snow.webp', alt: 'Workers in safety vests clearing snow', href: '#cooling-vest' },
-  { label: 'Everyday comfort', image: '/images/innovation/warm-hands.webp', alt: 'Mittened hands holding a warm cup in the snow', href: '#quiqool-cool-pack' },
+  { label: 'Defence personnel', image: '/images/innovation/defence-snow.webp', alt: 'Soldiers in winter gear in a snowy forest', href: '/innovation/hypothermia-kit' },
+  { label: 'Trekking & outdoors', image: '/images/innovation/outdoor-trek.webp', alt: 'Trekkers climbing a snowy Himalayan trail', href: '/innovation/sleeping-bag-warmer' },
+  { label: 'Industrial workforce', image: '/images/innovation/industrial-snow.webp', alt: 'Workers in safety vests clearing snow', href: '/innovation/cooling-vest' },
+  { label: 'Everyday comfort', image: '/images/innovation/warm-hands.webp', alt: 'Mittened hands holding a warm cup in the snow', href: '/innovation/quiqool-cool-pack' },
 ];
 
 /** Innovation — a storefront-style page for Revora's products beyond the ophthalmic range. */

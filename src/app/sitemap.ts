@@ -4,7 +4,7 @@ import { SITE_URL } from '@/lib/seo';
 
 /** /sitemap.xml — every public page, products included. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { products } = await getCatalogue();
+  const { products, innovation } = await getCatalogue();
   const now = new Date();
   const page = (path: string, priority: number, changeFrequency: 'weekly' | 'monthly' | 'yearly' = 'monthly') => ({
     url: `${SITE_URL}${path}`,
@@ -23,6 +23,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     page('/profile', 0.8),
     page('/certifications', 0.7),
     page('/innovation', 0.7),
+    ...innovation.map((p) => ({
+      ...page(`/innovation/${p.id}`, 0.7),
+      images: [p.image],
+    })),
     page('/channel-partner', 0.7),
     page('/our-presence', 0.6),
     page('/our-presence/domestic-network', 0.6),

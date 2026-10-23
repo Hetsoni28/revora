@@ -48,7 +48,7 @@ const portfolioRows = ({ products, categories, innovation }: Catalogue) => [
   ...INNOVATION_CATEGORIES.map((cat) => ({
     area: cat,
     innovation: true,
-    items: innovation.filter((p) => p.category === cat).map((p) => ({ label: [p.name, p.accent].filter(Boolean).join(' '), href: `/innovation#${p.id}` })),
+    items: innovation.filter((p) => p.category === cat).map((p) => ({ label: [p.name, p.accent].filter(Boolean).join(' '), href: `/innovation/${p.id}` })),
   })),
 ];
 

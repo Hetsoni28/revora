@@ -222,7 +222,7 @@ function InnovationRow() {
         {products.map((p) => (
           <li key={p.id} className="w-[82%] shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] tablet:w-[calc((100%-1.25rem)/2)] desktop:w-[calc((100%-2.5rem)/3)]">
             <Link
-              href={`/innovation#${p.id}`}
+              href={`/innovation/${p.id}`}
               className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_rgba(11,74,143,0.45)]"
             >
               <span className="relative block aspect-4/3 bg-[#F6F9FC]">

@@ -16,8 +16,8 @@ const FEATURE_ICON: Record<FeatureIcon, typeof Clock> = {
 };
 const USE_ICON: Record<UseIcon, typeof Clock> = { defence: Shield, outdoor: Mountain, industrial: HardHat, expedition: Tent, hot: Sun, coldOps: Flame };
 
-/** Full product feature: tilting photo, key specs, who it is for, and enquiry buttons. */
-export function ProductShowcase({ product: p, flip = false }: { product: InnovationProduct; flip?: boolean }) {
+/** Full product feature: tilting photo, key specs, who it is for, and enquiry buttons. `as="h1"` on the product's own page. */
+export function ProductShowcase({ product: p, flip = false, as: Heading = 'h3' }: { product: InnovationProduct; flip?: boolean; as?: 'h1' | 'h3' }) {
   const reduce = useReducedMotion();
   // Gentle 3D tilt toward the cursor.
   const rx = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
@@ -64,9 +64,9 @@ export function ProductShowcase({ product: p, flip = false }: { product: Innovat
               <Shield className="h-3.5 w-3.5" /> {p.badge}
             </span>
           )}
-          <h3 className="mt-5 font-heading text-[clamp(2rem,3.8vw,3.2rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-revora-slate">
+          <Heading className="mt-5 font-heading text-[clamp(2rem,3.8vw,3.2rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-revora-slate">
             {p.name} {p.accent && <span className="text-revora-crimson">{p.accent}</span>}
-          </h3>
+          </Heading>
           <p className="mt-2 font-heading text-[1.15rem] font-semibold text-revora-cobalt">{p.tagline}</p>
           <p className="mt-4 max-w-md font-sans text-[16px] leading-[1.7] text-revora-slate-light">{p.description}</p>
           {p.includes && (
