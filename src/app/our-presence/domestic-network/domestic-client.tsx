@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { BadgeCheck, Hospital, Pill, Stethoscope, Truck } from 'lucide-react';
+import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion';
+import { BadgeCheck, Hospital, Pause, Pill, Play, Stethoscope, Truck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { onTabListKeyDown } from '@/lib/a11y';
 import { FadeUp } from '@/components/ui/primitives';
@@ -58,6 +58,7 @@ export function DomesticClient() {
   return (
     <>
       <PageHero
+        backdrop="/images/heroes/hero-domestic-network.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Our Presence', href: '/our-presence' }, { label: 'Domestic Network' }]}
         eyebrow="Domestic Network"
         lines={['Every link in', 'the eye-care chain.']}
@@ -132,42 +133,101 @@ export function DomesticClient() {
   );
 }
 
-/* ── who we serve: tabs with a photo panel ───────────────── */
+/** How long each tab shows before moving on by itself. */
+const TAB_MS = 2500;
+
+/* ── who we serve: tabs with a photo panel that move on by themselves ── */
 function WhoWeServe() {
   const reduce = useReducedMotion();
   const [active, setActive] = useState(AUDIENCES[0].id);
   const a = AUDIENCES.find((x) => x.id === active) ?? AUDIENCES[0];
+
+  // Auto-advance only while the section is on screen, nobody is pointing at or tabbing through it,
+  // and the visitor hasn't paused it (or asked for reduced motion).
+  const sectionRef = useRef<HTMLElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(sectionRef, { amount: 0.35 });
+  const [hold, setHold] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const running = inView && !hold && !paused && !reduce;
+
+  useEffect(() => {
+    if (!running) return;
+    const i = AUDIENCES.findIndex((x) => x.id === active);
+    const t = setTimeout(() => setActive(AUDIENCES[(i + 1) % AUDIENCES.length].id), TAB_MS);
+    return () => clearTimeout(t);
+  }, [running, active]);
+
+  // keep the active tab visible in the sideways-scrolling row on phones (without moving the page)
+  useEffect(() => {
+    const list = listRef.current;
+    const tab = list?.querySelector<HTMLElement>(`[data-tab="${active}"]`);
+    if (!list || !tab || list.scrollWidth <= list.clientWidth) return;
+    list.scrollTo({ left: tab.offsetLeft - (list.clientWidth - tab.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
+  }, [active, reduce]);
+
   return (
-    <section id="who" className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
-      <div className="mx-auto max-w-330">
+    <section ref={sectionRef} id="who" className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+      <div
+        className="mx-auto max-w-330"
+        onPointerEnter={(e) => e.pointerType === 'mouse' && setHold(true)}
+        onPointerLeave={() => setHold(false)}
+        onFocus={() => setHold(true)}
+        onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && setHold(false)}
+      >
         <SectionHeading eyebrow="Who we serve" lines={['Four partners.', 'One promise.']} highlight={{ 'promise.': 'text-revora-crimson' }} />
 
-        <div
-          role="tablist"
-          aria-label="Who we serve"
-          onKeyDown={(e) => onTabListKeyDown(e, AUDIENCES.map((x) => x.id), active, setActive)}
-          className="-mx-5 mt-10 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] tablet:mx-0 tablet:px-0">
-          {AUDIENCES.map((x) => {
-            const on = x.id === active;
-            return (
-              <button
-                key={x.id}
-                type="button"
-                role="tab"
-                id={`who-tab-${x.id}`}
-                data-tab={x.id}
-                aria-selected={on}
-                aria-controls="who-panel"
-                tabIndex={on ? 0 : -1}
-                onClick={() => setActive(x.id)}
-                className={`relative inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-3 font-sans text-[14.5px] font-semibold transition-colors duration-300 ${on ? 'text-white' : 'text-revora-slate hover:text-revora-cobalt'}`}
-              >
-                {on && <motion.span layoutId="serve-pill" className="absolute inset-0 rounded-full bg-revora-cobalt" transition={{ type: 'spring', stiffness: 380, damping: 32 }} />}
-                <x.icon className="relative h-4 w-4" />
-                <span className="relative">{x.name}</span>
-              </button>
-            );
-          })}
+        <div className="mt-10 flex items-center gap-3">
+          <div
+            ref={listRef}
+            role="tablist"
+            aria-label="Who we serve"
+            onKeyDown={(e) => onTabListKeyDown(e, AUDIENCES.map((x) => x.id), active, setActive)}
+            className="relative -ml-5 flex min-w-0 flex-1 gap-2 overflow-x-auto pb-1 pl-5 [scrollbar-width:none] tablet:ml-0 tablet:pl-0">
+            {AUDIENCES.map((x) => {
+              const on = x.id === active;
+              return (
+                <button
+                  key={x.id}
+                  type="button"
+                  role="tab"
+                  id={`who-tab-${x.id}`}
+                  data-tab={x.id}
+                  aria-selected={on}
+                  aria-controls="who-panel"
+                  tabIndex={on ? 0 : -1}
+                  onClick={() => setActive(x.id)}
+                  className={`relative inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-3 font-sans text-[14.5px] font-semibold transition-colors duration-300 ${on ? 'text-white' : 'text-revora-slate hover:text-revora-cobalt'}`}
+                >
+                  {on && <motion.span layoutId="serve-pill" className="absolute inset-0 rounded-full bg-revora-cobalt" transition={{ type: 'spring', stiffness: 380, damping: 32 }} />}
+                  {/* time left before the next tab */}
+                  {on && running && (
+                    <motion.span
+                      key={active}
+                      aria-hidden
+                      className="absolute inset-x-5 bottom-1.5 h-0.5 origin-left rounded-full bg-white/70"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: TAB_MS / 1000, ease: 'linear' }}
+                    />
+                  )}
+                  <x.icon className="relative h-4 w-4" />
+                  <span className="relative">{x.name}</span>
+                </button>
+              );
+            })}
+          </div>
+          {!reduce && (
+            <button
+              type="button"
+              onClick={() => setPaused((v) => !v)}
+              aria-label={paused ? 'Play: move through the tabs automatically' : 'Pause: stop the tabs moving automatically'}
+              aria-pressed={paused}
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-revora-cobalt/15 text-revora-cobalt transition-colors hover:bg-revora-sky"
+            >
+              {paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+            </button>
+          )}
         </div>
 
         <div

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Award, Building2, FileCheck2, Globe2, Mail, MapPin, ShieldCheck } from 'lucide-react';
 import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
@@ -19,6 +20,8 @@ const CERTS = [
     text: 'Our eye-drop plant follows WHO Good Manufacturing Practice.',
     where: 'Paonta Sahib, H.P.',
     featured: true,
+    image: '/images/photos/cert-who-gmp.webp',
+    imageAlt: 'Automated eye-drop filling line in a cleanroom',
   },
   {
     icon: Globe2,
@@ -26,6 +29,8 @@ const CERTS = [
     scope: 'Manufacturing plant',
     text: 'The plant is built and run to EU-compliant standards.',
     where: 'Paonta Sahib, H.P.',
+    image: '/images/photos/cert-eu-compliant.webp',
+    imageAlt: 'Stainless-steel formulation vessels in a sterile production suite',
   },
   {
     icon: Award,
@@ -33,6 +38,8 @@ const CERTS = [
     scope: 'Quality management',
     text: 'A certified quality management system.',
     where: 'Revora Healthcare',
+    image: '/images/photos/cert-iso-quality.webp',
+    imageAlt: 'Quality-control chemist running tests in a pharmaceutical laboratory',
   },
   {
     icon: Building2,
@@ -40,6 +47,8 @@ const CERTS = [
     scope: 'Ministry of Corporate Affairs',
     text: 'CIN U21000GJ2026PTC174674 · incorporated 10 March 2026.',
     where: 'Ahmedabad, Gujarat',
+    image: '/images/photos/cert-registered-corp.webp',
+    imageAlt: 'Modern office building with landscaped grounds',
   },
 ];
 
@@ -47,6 +56,7 @@ export function CertificationsClient() {
   return (
     <>
       <PageHero
+        backdrop="/images/heroes/hero-certifications.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Certifications' }]}
         eyebrow="Certifications"
         lines={['Quality,', 'certified.']}
@@ -74,36 +84,37 @@ export function CertificationsClient() {
             {CERTS.map((c, i) => (
               <FadeUp key={c.name} delay={(i % 2) * 0.1}>
                 <article
-                  className={`group relative isolate flex h-full flex-col overflow-hidden rounded-[28px] p-7 tablet:p-9 ${
-                    c.featured ? 'bg-revora-cobalt-deep text-white' : 'border border-revora-cobalt/10 bg-[#F6F9FC]'
-                  }`}
+                  className={`group relative isolate flex h-full min-h-105 flex-col overflow-hidden rounded-[28px] bg-revora-slate p-7 text-white tablet:min-h-115 tablet:p-9`}
                 >
-                  {c.featured && (
-                    <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(58,130,200,0.55),transparent_60%)]" />
-                  )}
+                  {/* the photo fills the card; a colour wash rising from the bottom keeps the copy readable */}
+                  <Image
+                    src={c.image}
+                    alt={c.imageAlt}
+                    fill
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="-z-20 object-cover transition-transform duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+                  />
+                  <div
+                    aria-hidden
+                    className={`absolute inset-0 -z-10 ${
+                      c.featured
+                        ? 'bg-[linear-gradient(to_top,rgba(6,38,80,0.97)_0%,rgba(11,74,143,0.82)_40%,rgba(11,74,143,0.2)_78%,rgba(11,74,143,0.1)_100%)]'
+                        : 'bg-[linear-gradient(to_top,rgba(9,20,38,0.95)_0%,rgba(9,20,38,0.74)_42%,rgba(9,20,38,0.15)_80%,rgba(9,20,38,0.08)_100%)]'
+                    }`}
+                  />
                   <div className="flex items-start justify-between gap-4">
-                    <span
-                      className={`grid h-14 w-14 place-items-center rounded-2xl transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-105 ${
-                        c.featured ? 'bg-white/15' : 'bg-white text-revora-cobalt shadow-sm'
-                      }`}
-                    >
+                    <span className="grid h-14 w-14 place-items-center rounded-2xl bg-revora-slate/45 ring-1 ring-white/20 backdrop-blur-md transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-105">
                       <c.icon className="h-6 w-6" />
                     </span>
-                    <span
-                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-sans text-[12px] font-semibold ${
-                        c.featured ? 'bg-white/10 text-white/85' : 'bg-white text-revora-slate-light'
-                      }`}
-                    >
-                      <MapPin className={`h-3.5 w-3.5 ${c.featured ? 'text-revora-cobalt-pale' : 'text-revora-crimson'}`} /> {c.where}
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-revora-slate/55 px-3 py-1.5 font-sans text-[12px] font-semibold text-white ring-1 ring-white/15 backdrop-blur-md">
+                      <MapPin className="h-3.5 w-3.5 text-revora-cobalt-pale" /> {c.where}
                     </span>
                   </div>
-                  <p className={`mt-10 font-sans text-[11px] font-semibold uppercase tracking-[0.16em] ${c.featured ? 'text-revora-cobalt-pale' : 'text-revora-slate-muted'}`}>
-                    {c.scope}
-                  </p>
-                  <h3 className={`mt-1.5 font-heading text-[clamp(1.8rem,3vw,2.4rem)] font-extrabold leading-[1.05] tracking-[-0.02em] ${c.featured ? '' : 'text-revora-slate'}`}>
-                    {c.name}
-                  </h3>
-                  <p className={`mt-3 max-w-md font-sans text-[15px] leading-[1.65] ${c.featured ? 'text-white/75' : 'text-revora-slate-light'}`}>{c.text}</p>
+                  <div className="mt-auto pt-20">
+                    <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-revora-cobalt-pale">{c.scope}</p>
+                    <h3 className="mt-1.5 font-heading text-[clamp(1.8rem,3vw,2.4rem)] font-extrabold leading-[1.05] tracking-[-0.02em]">{c.name}</h3>
+                    <p className="mt-3 max-w-md font-sans text-[15px] leading-[1.65] text-white/85">{c.text}</p>
+                  </div>
                   <span
                     aria-hidden
                     className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-linear-to-r from-revora-cobalt-light to-revora-crimson transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"

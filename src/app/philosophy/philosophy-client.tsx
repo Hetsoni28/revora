@@ -58,6 +58,7 @@ export function PhilosophyClient() {
   return (
     <>
       <PageHero
+        backdrop="/images/heroes/hero-philosophy.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Philosophy & Values' }]}
         eyebrow="Philosophy & Values"
         lines={['Beyond', 'the cure.']}

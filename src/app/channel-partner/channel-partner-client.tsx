@@ -47,6 +47,7 @@ export function ChannelPartnerClient() {
   return (
     <>
       <PageHero
+        backdrop="/images/heroes/hero-channel-partner.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Channel Partner' }]}
         eyebrow="Channel Partner"
         lines={['Grow with', 'Revora.']}

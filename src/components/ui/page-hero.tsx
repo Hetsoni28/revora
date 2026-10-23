@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { FadeUp } from './primitives';
 import { Breadcrumb, type Crumb } from './breadcrumb';
 import { SectionHeading } from './section-heading';
+import { HeroBackdrop } from './hero-backdrop';
 
 interface PageHeroProps {
   crumbs: Crumb[];
@@ -58,12 +59,7 @@ export function PageHero({ crumbs, eyebrow, lines, highlight, text, actions, vis
   return (
     <section className="relative isolate overflow-hidden px-5 pb-16 pt-32 tablet:px-8 tablet:pb-24 tablet:pt-40 desktop:pt-48">
       {backdrop ? (
-        <>
-          <Image src={backdrop} alt="" fill loading="eager" sizes="100vw" className="-z-20 object-cover object-right" />
-          {/* keeps the copy crisp on phones, where it sits over the busier right side, and blends into the page below */}
-          <div aria-hidden className="absolute inset-0 -z-10 bg-white/55 tablet-lg:bg-transparent" />
-          <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-linear-to-b from-transparent to-[#F6F9FC]" />
-        </>
+        <HeroBackdrop src={backdrop} />
       ) : (
         <div aria-hidden className="absolute -left-40 top-10 -z-10 h-[480px] w-[480px] rounded-full bg-revora-sky blur-3xl" />
       )}

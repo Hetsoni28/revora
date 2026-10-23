@@ -9,6 +9,7 @@ import { FadeUp, Tick } from '@/components/ui/primitives';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
+import { HeroBackdrop } from '@/components/ui/hero-backdrop';
 
 const CAREERS_EMAIL = 'info@revorahealthcare.com';
 
@@ -57,7 +58,7 @@ function Hero() {
   const reduce = useReducedMotion();
   return (
     <section className="relative isolate overflow-hidden px-5 pb-16 pt-32 tablet:px-8 tablet:pb-24 tablet:pt-40 desktop:pt-48">
-      <div aria-hidden className="absolute -left-40 top-10 -z-10 h-[480px] w-[480px] rounded-full bg-revora-sky blur-3xl" />
+      <HeroBackdrop src="/images/heroes/hero-careers.webp" />
       <div className="mx-auto max-w-330">
         <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Careers' }]} />
         <div className="mt-8 grid grid-cols-[minmax(0,1fr)] items-center gap-12 tablet-lg:grid-cols-[1.1fr_0.9fr]">

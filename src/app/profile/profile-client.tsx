@@ -61,6 +61,7 @@ export function ProfileClient() {
   return (
     <>
       <PageHero
+        backdrop="/images/heroes/hero-profile.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'About Us', href: '/about' }, { label: 'Profile' }]}
         eyebrow="Company profile"
         lines={['Revora at', 'a glance.']}

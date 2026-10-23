@@ -10,6 +10,7 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
 import { SupplyFlow } from '@/components/presence/supply-flow';
 import { PresenceLinks } from '@/components/presence/presence-links';
+import { HeroBackdrop } from '@/components/ui/hero-backdrop';
 
 const mapsUrl = (q: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 
@@ -67,7 +68,7 @@ export function PresenceClient() {
     <>
       {/* ── hero ── */}
       <section className="relative isolate overflow-hidden px-5 pb-16 pt-36 tablet:px-8 tablet:pb-24 tablet:pt-44 desktop:pt-52">
-        <div aria-hidden className="absolute -left-40 top-10 -z-10 h-120 w-120 rounded-full bg-revora-sky blur-3xl" />
+        <HeroBackdrop src="/images/heroes/hero-our-presence.webp" />
         <div className="mx-auto max-w-330">
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Our Presence' }]} />
           <div className="mt-8 grid grid-cols-[minmax(0,1fr)] items-center gap-12 tablet-lg:grid-cols-[1.15fr_0.85fr] desktop:gap-16">
