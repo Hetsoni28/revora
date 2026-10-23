@@ -28,6 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       images: [p.image],
     })),
     page('/channel-partner', 0.7),
+    page('/contact', 0.7),
     page('/our-presence', 0.6),
     page('/our-presence/domestic-network', 0.6),
     page('/our-presence/global-network', 0.5),

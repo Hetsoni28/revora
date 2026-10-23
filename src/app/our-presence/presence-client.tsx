@@ -28,7 +28,7 @@ const FACILITIES = [
     mapQuery: 'S.G. Business Hub, Gota, Ahmedabad, Gujarat 380060',
     images: ['/images/photos/ahmedabad-skyline.webp'],
     logos: false,
-    second: { label: 'Contact us', href: '/#contact', icon: undefined },
+    second: { label: 'Contact us', href: '/contact', icon: undefined },
   },
   {
     index: '02',

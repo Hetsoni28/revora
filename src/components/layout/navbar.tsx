@@ -242,14 +242,14 @@ export function Navbar() {
 
             <div className="flex items-center gap-2">
               <AnchorLink
-                href="/#contact"
+                href="/channel-partner"
                 className="hidden rounded-full border border-revora-cobalt/25 px-4 py-2.5 font-sans text-[14px] font-semibold text-revora-cobalt transition-colors hover:bg-revora-sky desktop-lg:inline-flex"
               >
                 Partner With Us
               </AnchorLink>
               <Magnetic className="hidden tablet:inline-block">
                 <AnchorLink
-                  href="/#contact"
+                  href="/contact"
                   className="group inline-flex items-center gap-2 rounded-full bg-revora-cobalt py-2.5 pl-5 pr-2.5 font-sans text-[14px] font-semibold text-white transition-colors hover:bg-revora-cobalt-dark"
                 >
                   Contact Us
@@ -435,14 +435,14 @@ export function Navbar() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <AnchorLink
-                href="/#contact"
+                href="/contact"
                 onClick={() => setOpen(false)}
                 className="inline-flex justify-center rounded-full bg-revora-cobalt px-6 py-3.5 font-sans text-[15px] font-semibold text-white"
               >
                 Contact Corporate Office
               </AnchorLink>
               <AnchorLink
-                href="/#contact"
+                href="/channel-partner"
                 onClick={() => setOpen(false)}
                 className="inline-flex justify-center rounded-full border border-revora-cobalt/25 px-6 py-3.5 font-sans text-[15px] font-semibold text-revora-cobalt"
               >

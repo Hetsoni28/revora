@@ -37,7 +37,7 @@ const COLUMNS: { title: string; href?: string; links: [string, string | null][] 
       ['Innovation', '/innovation'],
       ['Channel Partner', '/channel-partner'],
       ['Careers at Revora', '/careers'],
-      ['Institutional Inquiries', '/#contact'],
+      ['Contact Us', '/contact'],
     ],
   },
 ];
@@ -149,7 +149,7 @@ export function Footer() {
 
             <Magnetic className="mt-8">
               <AnchorLink
-                href="/#contact"
+                href="/channel-partner"
                 className="group inline-flex items-center gap-3 rounded-full bg-revora-crimson py-3 pl-6 pr-3 font-sans text-[14px] font-semibold text-white"
               >
                 Partner with Revora

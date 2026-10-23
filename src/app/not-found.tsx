@@ -31,7 +31,7 @@ export default function NotFound() {
           actions={
             <>
               <Button href="/" arrow="up-right" magnetic>Back to home</Button>
-              <Button href="/#contact" variant="outline">Contact us</Button>
+              <Button href="/contact" variant="outline">Contact us</Button>
             </>
           }
         >

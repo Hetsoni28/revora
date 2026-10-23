@@ -54,8 +54,9 @@ export function SplitWords({
           <motion.span
             className={`inline-block will-change-transform ${wordClassName ?? ''} ${highlight[w] ?? ''}`}
             initial={reduce ? false : { y: '110%', rotate: 4 }}
-            animate={play ? { y: '0%', rotate: 0 } : undefined}
-            transition={{ duration: 1, ease: expoOut, delay: delay + i * stagger }}
+            // reduced motion is only known after hydration, so words may already sit hidden: show them at once
+            animate={play || reduce ? { y: '0%', rotate: 0 } : undefined}
+            transition={reduce ? { duration: 0 } : { duration: 1, ease: expoOut, delay: delay + i * stagger }}
           >
             {w}
           </motion.span>
