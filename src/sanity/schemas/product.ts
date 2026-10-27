@@ -65,6 +65,16 @@ export const product = defineType({
     defineField({ name: 'dosage', title: 'How to use', type: 'text', rows: 2, validation: (r) => r.max(160) }),
     defineField({ name: 'storage', title: 'Storage', type: 'string', validation: (r) => r.max(100) }),
     defineField({ name: 'schedule', title: 'Supply', description: 'e.g. Schedule H Prescription Drug', type: 'string' }),
+    defineField({
+      name: 'prescribingInfo',
+      title: 'Prescribing information (PDF)',
+      description: 'The package insert / prescribing information leaflet. Doctors open it from the product page. Upload the approved version only.',
+      type: 'file',
+      options: { accept: 'application/pdf' },
+      fields: [
+        defineField({ name: 'updated', title: 'Leaflet date', description: 'Revision date printed on the leaflet, shown next to the download.', type: 'date' }),
+      ],
+    }),
     defineField({ name: 'order', title: 'Order in therapy area', type: 'number' }),
     defineField({ name: 'seo', title: 'Search & sharing (SEO)', type: 'seo' }),
   ],

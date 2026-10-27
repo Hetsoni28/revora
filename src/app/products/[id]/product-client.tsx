@@ -31,6 +31,14 @@ function parseIngredient(line: string) {
   return { name: line };
 }
 
+/** ", 240 KB · Mar 2026" — size and leaflet date for the download button. */
+function piMeta({ size, updated }: { size?: number; updated?: string }) {
+  const kb = size ? `${Math.max(1, Math.round(size / 1024))} KB` : '';
+  const date = updated ? new Date(updated).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' }) : '';
+  const parts = [kb, date].filter(Boolean).join(' · ');
+  return parts ? `, ${parts}` : '';
+}
+
 /** Dose, frequency and duration inside the dosage text, so they stand out. */
 const DOSE_RE = /(\d+(?:\s(?:to|or)\s\d+)?\s(?:drops?|tablets?)|\d+(?:\sto\s\d+)?\stimes daily|for (?:up to )?\d+ days|as needed)/gi;
 
@@ -127,7 +135,13 @@ export function ProductClient({ product, category }: ProductClientProps) {
               <FadeUp delay={0.5}>
                 <div ref={ctaRef} className="mt-8 flex flex-wrap items-center gap-3">
                   <Button onClick={() => setModalOpen(true)} arrow="up-right" magnetic>Request samples</Button>
-                  <Button onClick={() => setModalOpen(true)} variant="outline" icon={<FileText />}>Prescribing info</Button>
+                  {product.prescribingInfo ? (
+                    <Button href={product.prescribingInfo.url} variant="outline" icon={<FileText />}>
+                      Prescribing info <span className="font-normal opacity-70">(PDF{piMeta(product.prescribingInfo)})</span>
+                    </Button>
+                  ) : (
+                    <Button onClick={() => setModalOpen(true)} variant="outline" icon={<FileText />}>Request prescribing info</Button>
+                  )}
                 </div>
               </FadeUp>
             </div>

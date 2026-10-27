@@ -28,6 +28,8 @@ export interface Product {
   dosage: string;
   storage: string;
   schedule: string;
+  /** Prescribing information leaflet uploaded in Sanity. */
+  prescribingInfo?: { url: string; size?: number; updated?: string };
   seo?: SeoFields;
 }
 

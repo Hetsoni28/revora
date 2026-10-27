@@ -55,6 +55,7 @@ interface SanitySeo {
 interface SanityProduct {
   id: string;
   seo?: SanitySeo;
+  pi?: { url?: string; size?: number; updated?: string };
   name: string;
   genericName?: string;
   categorySlug?: string;
@@ -95,7 +96,8 @@ const CATALOGUE_QUERY = `{
   },
   "products": *[_type == "product" && defined(id.current) && defined(category->slug.current) && defined(image.asset)] | order(category->order asc, order asc, name asc) {
     "id": id.current, name, genericName, "categorySlug": category->slug.current,
-    badge, volume, image, logo, summary, composition, indications, dosage, storage, schedule, seo
+    badge, volume, image, logo, summary, composition, indications, dosage, storage, schedule, seo,
+    "pi": prescribingInfo { "url": asset->url, "size": asset->size, updated }
   },
   "innovation": *[_type == "innovationProduct" && defined(slug.current) && defined(category) && defined(image.asset)] | order(order asc, name asc) {
     "id": slug.current, category, name, accent, tagline, description,
@@ -160,6 +162,7 @@ function adaptProduct(p: SanityProduct, categories: TherapyCategory[]): Product 
     dosage: p.dosage ?? '',
     storage: p.storage ?? '',
     schedule: p.schedule ?? '',
+    prescribingInfo: p.pi?.url ? { url: p.pi.url, size: p.pi.size, updated: p.pi.updated } : undefined,
     seo: adaptSeo(p.seo),
   };
 }
