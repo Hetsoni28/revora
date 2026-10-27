@@ -60,7 +60,7 @@ export function PhilosophyClient() {
       <PageHero
         backdrop="/images/heroes/hero-philosophy.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Philosophy & Values' }]}
-        eyebrow="Philosophy & Values"
+        eyebrow="Our philosophy & values"
         lines={['Beyond', 'the cure.']}
         highlight={{ 'cure.': 'text-revora-crimson' }}
         text="Our job ends only when the patient can trust the medicine completely."

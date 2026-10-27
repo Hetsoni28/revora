@@ -84,7 +84,7 @@ export function ProfileClient() {
       <PageHero
         backdrop="/images/heroes/hero-profile.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'About Us', href: '/about' }, { label: 'Profile' }]}
-        eyebrow="Company profile"
+        eyebrow="Revora Healthcare company profile"
         lines={['Revora at', 'a glance.']}
         highlight={{ 'glance.': 'text-revora-cobalt' }}
         text="The key facts about Revora Healthcare Private Limited, in one place."

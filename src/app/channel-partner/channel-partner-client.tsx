@@ -49,7 +49,7 @@ export function ChannelPartnerClient() {
       <PageHero
         backdrop="/images/heroes/hero-channel-partner.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Channel Partner' }]}
-        eyebrow="Channel Partner"
+        eyebrow="Pharma channel partner"
         lines={['Grow with', 'Revora.']}
         highlight={{ 'Revora.': 'text-revora-cobalt' }}
         text="Bring our eye-care range to your territory."

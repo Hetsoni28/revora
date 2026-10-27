@@ -88,9 +88,9 @@ export function CookieConsent() {
               <Cookie className="h-5 w-5" />
             </span>
             <div className="min-w-0 flex-1">
-              <h2 id={`${uid}-title`} className="font-heading text-[1.1rem] font-extrabold text-revora-slate">
+              <p id={`${uid}-title`} className="font-heading text-[1.1rem] font-extrabold text-revora-slate">
                 {custom ? 'Cookie settings' : 'We use cookies'}
-              </h2>
+              </p>
               <p id={`${uid}-text`} className="mt-1 font-sans text-[13.5px] leading-[1.6] text-revora-slate-light">
                 {custom
                   ? 'Choose which cookies we may use. You can change this any time from the footer.'

@@ -27,7 +27,7 @@ export function ContactClient() {
       <PageHero
         backdrop="/images/heroes/hero-contact.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Contact Us' }]}
-        eyebrow="Contact Us"
+        eyebrow="Contact Revora Healthcare"
         lines={['Let’s talk', 'eye care.']}
         highlight={{ 'eye': 'text-revora-cobalt', 'care.': 'text-revora-cobalt' }}
         text="Questions about our products, a distributorship or working with us — write to the right team and we’ll get back to you."

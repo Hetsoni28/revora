@@ -34,24 +34,27 @@ export function PromoBanner({ product: p }: { product: InnovationProduct }) {
 
         <div className="grid grid-cols-[minmax(0,1fr)] items-center gap-10 px-6 py-12 tablet:px-12 tablet:py-16 tablet-lg:grid-cols-[1.05fr_0.95fr] desktop:px-16 desktop:py-20">
           <div>
-            <motion.span
-              initial={reduce ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: expoOut }}
-              className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-cobalt-pale backdrop-blur"
-            >
-              Revora Innovation · New
-            </motion.span>
-            <motion.h1
-              initial={reduce ? false : { opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.3, ease: expoOut }}
-              className="mt-5 font-heading text-[clamp(2.6rem,6vw,5.2rem)] font-extrabold leading-[0.98] tracking-[-0.03em]"
-            >
-              Warmth that
-              <br />
-              <span className="text-[#FF7A2F]">lasts.</span>
-            </motion.h1>
+            <h1 className="font-heading text-[clamp(2.6rem,6vw,5.2rem)] font-extrabold leading-[0.98] tracking-[-0.03em]">
+              <motion.span
+                initial={reduce ? false : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.2, ease: expoOut }}
+                className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 font-sans text-[11px] font-semibold uppercase leading-none tracking-[0.18em] text-revora-cobalt-pale backdrop-blur"
+              >
+                Revora innovation products
+              </motion.span>
+              <span className="sr-only">: </span>
+              <motion.span
+                initial={reduce ? false : { opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.3, ease: expoOut }}
+                className="block"
+              >
+                Warmth that{' '}
+                <br />
+                <span className="text-[#FF7A2F]">lasts.</span>
+              </motion.span>
+            </h1>
             <motion.p
               initial={reduce ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -147,7 +150,7 @@ export function NeedTiles({ tiles }: { tiles: NeedTile[] }) {
 }
 
 /* ── Product card ─────────────────────────────────────────── */
-export function InnovationProductCard({ product: p, index = 0 }: { product: InnovationProduct; index?: number }) {
+export function InnovationProductCard({ product: p, index = 0, as: Heading = 'h3' }: { product: InnovationProduct; index?: number; as?: 'h3' | 'h4' }) {
   const reduce = useReducedMotion();
   return (
     <motion.article
@@ -163,9 +166,9 @@ export function InnovationProductCard({ product: p, index = 0 }: { product: Inno
       </Link>
       <div className="flex flex-1 flex-col p-6">
         <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-revora-slate-muted">{p.category}</span>
-        <h3 className="mt-1.5 font-heading text-[1.4rem] font-extrabold leading-tight text-revora-slate">
+        <Heading className="mt-1.5 font-heading text-[1.4rem] font-extrabold leading-tight text-revora-slate">
           {p.name} {p.accent && <span className="text-revora-crimson">{p.accent}</span>}
-        </h3>
+        </Heading>
         <p className="mt-1 font-sans text-[14px] text-revora-slate-light">{p.pack}</p>
         <div className="mt-4 flex flex-wrap gap-2">
           {p.features.slice(0, 2).map((f) => (

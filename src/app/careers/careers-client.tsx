@@ -82,7 +82,7 @@ function Hero() {
         <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Careers' }]} />
         <div className="mt-8 grid grid-cols-[minmax(0,1fr)] items-center gap-12 tablet-lg:grid-cols-[1.1fr_0.9fr]">
           <div>
-            <SectionHeading level="page" eyebrow="Careers" lines={['Proud to be', 'a Revorian.']} highlight={{ 'Revorian.': 'text-revora-cobalt' }} />
+            <SectionHeading level="page" eyebrow="Pharma careers in Ahmedabad" lines={['Proud to be', 'a Revorian.']} highlight={{ 'Revorian.': 'text-revora-cobalt' }} />
             <FadeUp delay={0.45}>
               <p className="mt-6 max-w-lg font-sans text-[17px] leading-[1.7] text-revora-slate-light">
                 Help us build trusted eye-care brands for doctors and patients across India.

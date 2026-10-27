@@ -58,7 +58,7 @@ export function CertificationsClient() {
       <PageHero
         backdrop="/images/heroes/hero-certifications.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Certifications' }]}
-        eyebrow="Certifications"
+        eyebrow="WHO-GMP & ISO certifications"
         lines={['Quality,', 'certified.']}
         highlight={{ 'certified.': 'text-revora-cobalt' }}
         text="Made in our own WHO-GMP certified, EU-compliant plant."

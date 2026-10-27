@@ -74,7 +74,7 @@ export function GlobalClient() {
           { label: 'Our Presence', href: '/our-presence' },
           { label: 'Global Network' },
         ]}
-        eyebrow="Global Network"
+        eyebrow="Ophthalmic exports · Global network"
         lines={['Expanding vision,', 'worldwide.']}
         highlight={{ 'worldwide.': 'text-revora-cobalt-pale' }}
         text="Taking Revora's precision ophthalmic eye-care formulations to international markets through dedicated distribution and institutional partnerships."

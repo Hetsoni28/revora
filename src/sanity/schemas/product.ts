@@ -66,6 +66,7 @@ export const product = defineType({
     defineField({ name: 'storage', title: 'Storage', type: 'string', validation: (r) => r.max(100) }),
     defineField({ name: 'schedule', title: 'Supply', description: 'e.g. Schedule H Prescription Drug', type: 'string' }),
     defineField({ name: 'order', title: 'Order in therapy area', type: 'number' }),
+    defineField({ name: 'seo', title: 'Search & sharing (SEO)', type: 'seo' }),
   ],
   preview: {
     select: {

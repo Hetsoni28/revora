@@ -96,9 +96,11 @@ export function ProductClient({ product, category }: ProductClientProps) {
                 className="mt-4 font-heading text-[clamp(2.8rem,6vw,5rem)] font-extrabold leading-[0.95] tracking-[-0.035em] text-revora-slate"
               >
                 {product.name}
+                {/* the generic name belongs to the H1: it's what doctors and pharmacists search for */}
+                <span className="sr-only"> — </span>
+                <span className="mt-4 block font-heading text-[clamp(1.1rem,1.8vw,1.3rem)] font-semibold leading-snug tracking-normal text-revora-cobalt">{product.genericName}</span>
               </motion.h1>
               <FadeUp delay={0.3}>
-                <p className="mt-4 font-heading text-[clamp(1.1rem,1.8vw,1.3rem)] font-semibold leading-snug text-revora-cobalt">{product.genericName}</p>
                 <p className="mt-4 max-w-lg font-sans text-[16.5px] leading-[1.7] text-revora-slate-light">{product.summary}</p>
               </FadeUp>
 

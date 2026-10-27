@@ -54,16 +54,18 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
 
       <div className="mx-auto grid w-full max-w-[1320px] items-center gap-10 px-5 tablet:px-8 tablet-lg:grid-cols-[1.1fr_0.9fr] desktop:gap-4">
         <motion.div style={parallax ? { y: copyY } : undefined} className="relative z-10">
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: d, ease: expoOut }}
-          >
-            <Eyebrow>Eye care · Innovation</Eyebrow>
-          </motion.div>
-
-          <h1 className="mt-6 font-heading text-[clamp(3rem,8.4vw,7.4rem)] font-extrabold leading-[0.95] tracking-[-0.03em] text-revora-slate">
-            <SplitWords text="Healthcare," trigger="mount" delay={d + 0.1} />
+          <h1 className="font-heading text-[clamp(3rem,8.4vw,7.4rem)] font-extrabold leading-[0.95] tracking-[-0.03em] text-revora-slate">
+            {/* the label is part of the H1, so search engines read what we do with the headline */}
+            <motion.span
+              className="mb-6 block leading-none"
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: d, ease: expoOut }}
+            >
+              <Eyebrow>Ophthalmic pharmaceuticals · Innovation</Eyebrow>
+              <span className="sr-only">: </span>
+            </motion.span>
+            <SplitWords text="Healthcare," trigger="mount" delay={d + 0.1} />{' '}
             <br />
             <SplitWords
               text="beyond the cure."

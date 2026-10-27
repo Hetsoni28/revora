@@ -14,6 +14,7 @@ export const innovationProduct = defineType({
     { name: 'pack', title: 'Pack & photo' },
     { name: 'features', title: 'Features & uses' },
     { name: 'faqs', title: 'FAQs' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
     defineField({
@@ -128,6 +129,7 @@ export const innovationProduct = defineType({
         }),
       ],
     }),
+    defineField({ name: 'seo', title: 'Search & sharing (SEO)', type: 'seo', group: 'seo', options: { collapsed: false } }),
   ],
   orderings: [
     { title: 'Range, then order', name: 'rangeOrder', by: [{ field: 'category', direction: 'asc' }, { field: 'order', direction: 'asc' }] },

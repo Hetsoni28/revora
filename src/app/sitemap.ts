@@ -15,7 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     page('/', 1, 'weekly'),
-    ...products.map((p) => ({
+    ...products.filter((p) => !p.seo?.noIndex).map((p) => ({
       ...page(`/products/${p.id}`, 0.9),
       images: [p.image],
     })),
@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     page('/profile', 0.8),
     page('/certifications', 0.7),
     page('/innovation', 0.7),
-    ...innovation.map((p) => ({
+    ...innovation.filter((p) => !p.seo?.noIndex).map((p) => ({
       ...page(`/innovation/${p.id}`, 0.7),
       images: [p.image],
     })),

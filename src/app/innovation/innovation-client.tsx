@@ -61,14 +61,14 @@ export function InnovationClient() {
             {CATEGORIES.map(({ category, products }) => (
               <div key={category}>
                 <h3 className="flex items-baseline gap-3 font-heading text-[1.4rem] font-extrabold text-revora-slate">
-                  {category}
+                  {category}{' '}
                   <span className="font-sans text-[13px] font-semibold text-revora-slate-muted">
                     {products.length} {products.length === 1 ? 'product' : 'products'}
                   </span>
                 </h3>
                 <div className="mt-5 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-3">
                   {products.map((p) => (
-                    <InnovationProductCard key={p.id} product={p} index={products.indexOf(p)} />
+                    <InnovationProductCard key={p.id} product={p} index={products.indexOf(p)} as="h4" />
                   ))}
                 </div>
               </div>
@@ -84,9 +84,9 @@ export function InnovationClient() {
           {products.map((p, i) => (
             <div key={p.id}>
               <FadeUp>
-                <p className="mb-6 font-heading text-[clamp(1.6rem,3vw,2.4rem)] font-extrabold tracking-[-0.02em] text-revora-slate">
+                <h2 className="mb-6 font-heading text-[clamp(1.6rem,3vw,2.4rem)] font-extrabold tracking-[-0.02em] text-revora-slate">
                   Experience <span className="text-revora-cobalt">{p.name} {p.accent}</span>
-                </p>
+                </h2>
               </FadeUp>
               <ProductShowcase product={p} flip={i % 2 === 1} />
             </div>

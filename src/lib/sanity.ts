@@ -1,7 +1,7 @@
 import { createClient } from 'next-sanity';
 import { cacheLife } from 'next/cache';
 import { createImageUrlBuilder } from '@sanity/image-url';
-import { EMPTY_CATALOGUE, type Catalogue, type Product, type TherapyCategory } from '@/lib/catalogue';
+import { EMPTY_CATALOGUE, type Catalogue, type Product, type SeoFields, type TherapyCategory } from '@/lib/catalogue';
 import { INNOVATION_CATEGORIES, type InnovationProduct } from '@/lib/innovation-products';
 
 // Use a broad type since @sanity/image-url sub-path types vary by version
@@ -45,8 +45,16 @@ interface SanityTherapyCategory {
   subTherapies?: string[];
 }
 
+interface SanitySeo {
+  title?: string;
+  description?: string;
+  image?: SanityImageSource & { alt?: string };
+  noIndex?: boolean;
+}
+
 interface SanityProduct {
   id: string;
+  seo?: SanitySeo;
   name: string;
   genericName?: string;
   categorySlug?: string;
@@ -64,6 +72,7 @@ interface SanityProduct {
 
 interface SanityInnovationProduct {
   id: string;
+  seo?: SanitySeo;
   category: InnovationProduct['category'];
   name: string;
   accent?: string;
@@ -86,7 +95,7 @@ const CATALOGUE_QUERY = `{
   },
   "products": *[_type == "product" && defined(id.current) && defined(category->slug.current) && defined(image.asset)] | order(category->order asc, order asc, name asc) {
     "id": id.current, name, genericName, "categorySlug": category->slug.current,
-    badge, volume, image, logo, summary, composition, indications, dosage, storage, schedule
+    badge, volume, image, logo, summary, composition, indications, dosage, storage, schedule, seo
   },
   "innovation": *[_type == "innovationProduct" && defined(slug.current) && defined(category) && defined(image.asset)] | order(order asc, name asc) {
     "id": slug.current, category, name, accent, tagline, description,
@@ -95,11 +104,25 @@ const CATALOGUE_QUERY = `{
     features[] { icon, label, value },
     uses[] { icon, label },
     highlight,
-    faqs[] { q, a }
+    faqs[] { q, a },
+    seo
   }
 }`;
 
 // ─── Sanity → site shapes ─────────────────────────────────────────────────────
+
+/** Only the SEO fields an editor actually filled in. Share images are cropped to 1200 × 630. */
+function adaptSeo(s: SanitySeo | undefined): SeoFields | undefined {
+  if (!s) return undefined;
+  const seo: SeoFields = {
+    title: s.title?.trim() || undefined,
+    description: s.description?.trim() || undefined,
+    image: s.image?.asset ? urlFor(s.image).width(1200).height(630).fit('crop').url() : undefined,
+    imageAlt: s.image?.alt?.trim() || undefined,
+    noIndex: s.noIndex || undefined,
+  };
+  return Object.values(seo).some((v) => v !== undefined) ? seo : undefined;
+}
 
 const DEFAULT_COLOR = '#0B4A8F';
 
@@ -137,6 +160,7 @@ function adaptProduct(p: SanityProduct, categories: TherapyCategory[]): Product 
     dosage: p.dosage ?? '',
     storage: p.storage ?? '',
     schedule: p.schedule ?? '',
+    seo: adaptSeo(p.seo),
   };
 }
 
@@ -158,6 +182,7 @@ function adaptInnovationProduct(p: SanityInnovationProduct): InnovationProduct {
     uses: p.uses ?? [],
     highlight: p.highlight || undefined,
     faqs: p.faqs ?? [],
+    seo: adaptSeo(p.seo),
   };
 }
 

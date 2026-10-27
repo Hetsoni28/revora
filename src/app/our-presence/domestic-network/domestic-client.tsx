@@ -60,7 +60,7 @@ export function DomesticClient() {
       <PageHero
         backdrop="/images/heroes/hero-domestic-network.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Our Presence', href: '/our-presence' }, { label: 'Domestic Network' }]}
-        eyebrow="Domestic Network"
+        eyebrow="Eye-care distribution across India"
         lines={['Every link in', 'the eye-care chain.']}
         highlight={{ 'eye-care': 'text-revora-cobalt' }}
         text="From our plant to every doctor, hospital and pharmacy across India."

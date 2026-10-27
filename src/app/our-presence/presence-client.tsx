@@ -75,7 +75,7 @@ export function PresenceClient() {
             <div>
               <SectionHeading
                 level="page"
-                eyebrow="Our presence"
+                eyebrow="Our presence · Ahmedabad HQ"
                 lines={['Rooted in Ahmedabad.', 'Serving India.']}
                 highlight={{ 'Ahmedabad.': 'text-revora-cobalt' }}
               />

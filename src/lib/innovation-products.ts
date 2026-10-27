@@ -4,6 +4,8 @@
  * Every feature, use and FAQ answer must match what is printed on the pack.
  */
 
+import type { SeoFields } from '@/lib/catalogue';
+
 /** Ranges, in display order. */
 export const INNOVATION_CATEGORIES = ['Warmers', 'Cooling', 'Field kits', 'Field food'] as const;
 
@@ -61,4 +63,5 @@ export interface InnovationProduct {
   uses: { icon: UseIcon; label: string }[];
   highlight?: string;
   faqs: { q: string; a: string }[];
+  seo?: SeoFields;
 }

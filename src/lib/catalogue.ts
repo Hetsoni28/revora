@@ -1,5 +1,15 @@
 import type { InnovationProduct } from '@/lib/innovation-products';
 
+/** Optional search & sharing overrides edited in Sanity (empty fields fall back to defaults). */
+export interface SeoFields {
+  title?: string;
+  description?: string;
+  /** Absolute image URL for social sharing. */
+  image?: string;
+  imageAlt?: string;
+  noIndex?: boolean;
+}
+
 /** An eye-care product, as the site shows it (adapted from Sanity in lib/sanity.ts). */
 export interface Product {
   id: string;
@@ -18,6 +28,7 @@ export interface Product {
   dosage: string;
   storage: string;
   schedule: string;
+  seo?: SeoFields;
 }
 
 export interface TherapyCategory {

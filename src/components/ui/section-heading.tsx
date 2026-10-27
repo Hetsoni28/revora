@@ -24,13 +24,21 @@ const SIZES = {
 export function SectionHeading({ eyebrow, lines, highlight, aside, tone = 'dark', level = 'section', className }: SectionHeadingProps) {
   const Tag = level === 'page' ? 'h1' : 'h2';
   const trigger = level === 'page' ? 'mount' : 'view';
+  // On a page hero the small label is part of the H1, so search engines read the topic with the headline.
+  const label = <Eyebrow tone={tone}>{eyebrow}</Eyebrow>;
   const heading = (
     <div>
-      <Eyebrow tone={tone}>{eyebrow}</Eyebrow>
-      <Tag className={`mt-5 font-heading font-extrabold ${SIZES[level]} ${tone === 'dark' ? 'text-revora-slate' : 'text-white'}`}>
+      {level === 'section' && label}
+      <Tag className={`font-heading font-extrabold ${level === 'section' ? 'mt-5' : ''} ${SIZES[level]} ${tone === 'dark' ? 'text-revora-slate' : 'text-white'}`}>
+        {level === 'page' && (
+          <span className="mb-5 block leading-none">
+            {label}
+            <span className="sr-only">: </span>
+          </span>
+        )}
         {lines.map((line, i) => (
           <span key={line}>
-            {i > 0 && <br />}
+            {i > 0 && <>{' '}<br /></>}
             <SplitWords text={line} trigger={trigger} delay={0.1 + i * 0.2} highlight={highlight} />
           </span>
         ))}

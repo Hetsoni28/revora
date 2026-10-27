@@ -40,7 +40,7 @@ export function AboutClient() {
     <>
       <PageHero
         crumbs={[{ label: 'Home', href: '/' }, { label: 'About Us' }]}
-        eyebrow="About Us"
+        eyebrow="About Revora Healthcare"
         backdrop="/images/photos/about-cleanroom.webp"
         lines={['Our story', 'so far.']}
         highlight={{ 'story': 'text-revora-cobalt', 'far.': 'text-revora-crimson' }}

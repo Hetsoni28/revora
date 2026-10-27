@@ -6,7 +6,7 @@ import { Footer } from '@/components/layout/footer';
 import { JsonLd } from '@/components/seo/json-ld';
 import { PageLoader } from '@/components/ui/states';
 import { getCatalogue } from '@/lib/sanity';
-import { breadcrumbLd, pageMetadata } from '@/lib/seo';
+import { breadcrumbLd, faqLd, innovationLd, innovationMetadata, innovationName } from '@/lib/seo';
 import { InnovationProductClient } from './innovation-product-client';
 
 async function findInnovationProduct(slug: string) {
@@ -23,23 +23,22 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const product = await findInnovationProduct((await params).slug);
   if (!product) return { title: 'Product not found', robots: { index: false } };
-  const name = [product.name, product.accent].filter(Boolean).join(' ');
-  return pageMetadata({
-    title: `${name} — ${product.tagline || product.category}`,
-    description: product.description || `${name} from Revora Healthcare: ${product.pack}.`,
-    path: `/innovation/${product.id}`,
-    keywords: [name, `Revora ${name}`, product.category, ...product.uses.map((u) => `${name} for ${u.label.toLowerCase()}`)],
-    image: { url: product.image, alt: product.imageAlt },
-  });
+  return innovationMetadata(product);
 }
 
 async function ProductDetails({ params }: { params: Promise<{ slug: string }> }) {
   const product = await findInnovationProduct((await params).slug);
   if (!product) notFound();
-  const name = [product.name, product.accent].filter(Boolean).join(' ');
+  const name = innovationName(product);
   return (
     <>
-      <JsonLd data={breadcrumbLd([['Home', '/'], ['Innovation', '/innovation'], [name, `/innovation/${product.id}`]])} />
+      <JsonLd
+        data={[
+          innovationLd(product),
+          breadcrumbLd([['Home', '/'], ['Innovation', '/innovation'], [name, `/innovation/${product.id}`]]),
+          ...(product.faqs.length ? [faqLd(product.faqs)] : []),
+        ]}
+      />
       <InnovationProductClient product={product} />
     </>
   );
