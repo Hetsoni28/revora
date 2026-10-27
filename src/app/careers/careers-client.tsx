@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { toast } from 'sonner';
 import { Eye, MapPin, Rocket, Send, Sprout } from 'lucide-react';
@@ -17,9 +18,27 @@ const CAREERS_EMAIL = 'info@revorahealthcare.com';
 const TEAMS = ['Sales & marketing', 'Distribution & supply', 'Manufacturing & quality', 'Corporate office'];
 
 const VALUES = [
-  { icon: Eye, title: 'Only eye care', text: 'Go deep in one specialty, not wide across many.' },
-  { icon: Sprout, title: 'Build brands', text: 'Help shape our eye-care brands from the very start.' },
-  { icon: Rocket, title: 'Grow early', text: 'A young company: your work shapes how we grow.' },
+  {
+    icon: Eye,
+    title: 'Only eye care',
+    text: 'Go deep in one specialty, not wide across many.',
+    image: '/images/photos/career-eyecare.webp',
+    imageAlt: 'Ophthalmologist specialist examining a patient with precision ophthalmic equipment',
+  },
+  {
+    icon: Sprout,
+    title: 'Build brands',
+    text: 'Help shape our eye-care brands from the very start.',
+    image: '/images/photos/career-brands.webp',
+    imageAlt: 'Energetic brand and marketing team collaborating around modern studio table',
+  },
+  {
+    icon: Rocket,
+    title: 'Grow early',
+    text: 'A young company: your work shapes how we grow.',
+    image: '/images/photos/career-growth.webp',
+    imageAlt: 'Ambitious young corporate professional working thoughtfully at a bright office desk',
+  },
 ];
 
 const STEPS = ['Send your CV', 'A first conversation', 'Meet the team', 'Welcome aboard'];
@@ -124,13 +143,24 @@ function Values() {
         <SectionHeading eyebrow="Why join us" lines={['Small team. Clear focus.']} highlight={{ 'focus.': 'text-revora-crimson' }} />
         <div className="mt-12 grid gap-5 tablet:grid-cols-3">
           {VALUES.map((v, i) => (
-            <Rise key={v.title} i={i} className="group relative isolate overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] p-8">
+            <Rise key={v.title} i={i} className="group relative isolate flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] p-8">
               <span aria-hidden className="absolute inset-0 -z-10 translate-y-full bg-revora-cobalt transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
-              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white text-revora-cobalt shadow-sm transition-all duration-500 group-hover:rotate-[-8deg] group-hover:bg-white/15 group-hover:text-white">
-                <v.icon className="h-5 w-5" />
-              </span>
-              <h3 className="mt-10 font-heading text-2xl font-extrabold tracking-tight text-revora-slate transition-colors duration-500 group-hover:text-white">{v.title}</h3>
-              <p className="mt-2.5 font-sans text-[15px] leading-[1.65] text-revora-slate-light transition-colors duration-500 group-hover:text-white/80">{v.text}</p>
+              <div>
+                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white text-revora-cobalt shadow-sm transition-all duration-500 group-hover:rotate-[-8deg] group-hover:bg-white/15 group-hover:text-white">
+                  <v.icon className="h-5 w-5" />
+                </span>
+                <h3 className="mt-8 font-heading text-2xl font-extrabold tracking-tight text-revora-slate transition-colors duration-500 group-hover:text-white">{v.title}</h3>
+                <p className="mt-2.5 font-sans text-[15px] leading-[1.65] text-revora-slate-light transition-colors duration-500 group-hover:text-white/80">{v.text}</p>
+              </div>
+              <div className="relative mt-6 aspect-[4/3] w-full overflow-hidden rounded-2xl border border-revora-cobalt/10 transition-colors duration-500 group-hover:border-white/20">
+                <Image
+                  src={v.image}
+                  alt={v.imageAlt}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                  className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                />
+              </div>
             </Rise>
           ))}
         </div>
