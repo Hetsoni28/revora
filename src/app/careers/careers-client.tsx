@@ -23,21 +23,21 @@ const VALUES = [
     title: 'Only eye care',
     text: 'Go deep in one specialty, not wide across many.',
     image: '/images/photos/career-eyecare.webp',
-    imageAlt: 'Ophthalmologist specialist examining a patient with precision ophthalmic equipment',
+    imageAlt: 'Eye doctor examining a patient with a phoropter',
   },
   {
     icon: Sprout,
     title: 'Build brands',
     text: 'Help shape our eye-care brands from the very start.',
     image: '/images/photos/career-brands.webp',
-    imageAlt: 'Energetic brand and marketing team collaborating around modern studio table',
+    imageAlt: 'Team working together around a table',
   },
   {
     icon: Rocket,
     title: 'Grow early',
     text: 'A young company: your work shapes how we grow.',
     image: '/images/photos/career-growth.webp',
-    imageAlt: 'Ambitious young corporate professional working thoughtfully at a bright office desk',
+    imageAlt: 'Young professional at a desk in a bright office',
   },
 ];
 
@@ -143,23 +143,16 @@ function Values() {
         <SectionHeading eyebrow="Why join us" lines={['Small team. Clear focus.']} highlight={{ 'focus.': 'text-revora-crimson' }} />
         <div className="mt-12 grid gap-5 tablet:grid-cols-3">
           {VALUES.map((v, i) => (
-            <Rise key={v.title} i={i} className="group relative isolate flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] p-8">
-              <span aria-hidden className="absolute inset-0 -z-10 translate-y-full bg-revora-cobalt transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
-              <div>
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white text-revora-cobalt shadow-sm transition-all duration-500 group-hover:rotate-[-8deg] group-hover:bg-white/15 group-hover:text-white">
-                  <v.icon className="h-5 w-5" />
-                </span>
-                <h3 className="mt-8 font-heading text-2xl font-extrabold tracking-tight text-revora-slate transition-colors duration-500 group-hover:text-white">{v.title}</h3>
-                <p className="mt-2.5 font-sans text-[15px] leading-[1.65] text-revora-slate-light transition-colors duration-500 group-hover:text-white/80">{v.text}</p>
-              </div>
-              <div className="relative mt-6 aspect-[4/3] w-full overflow-hidden rounded-2xl border border-revora-cobalt/10 transition-colors duration-500 group-hover:border-white/20">
-                <Image
-                  src={v.image}
-                  alt={v.imageAlt}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, 100vw"
-                  className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-                />
+            <Rise key={v.title} i={i} className="group relative isolate flex h-full min-h-100 flex-col overflow-hidden rounded-[28px] bg-revora-slate p-8 text-white tablet:min-h-110">
+              {/* the photo fills the card; a dark wash rising from the bottom keeps the copy readable */}
+              <Image src={v.image} alt={v.imageAlt} fill sizes="(min-width: 768px) 33vw, 100vw" className="-z-20 object-cover transition-transform duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]" />
+              <div aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(to_top,rgba(9,20,38,0.95)_0%,rgba(9,20,38,0.74)_42%,rgba(9,20,38,0.15)_80%,rgba(9,20,38,0.06)_100%)]" />
+              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-revora-slate/45 ring-1 ring-white/20 backdrop-blur-md transition-transform duration-500 group-hover:rotate-[-8deg]">
+                <v.icon className="h-5 w-5" />
+              </span>
+              <div className="mt-auto pt-16">
+                <h3 className="font-heading text-2xl font-extrabold tracking-tight">{v.title}</h3>
+                <p className="mt-2.5 font-sans text-[15px] leading-[1.65] text-white/85">{v.text}</p>
               </div>
             </Rise>
           ))}

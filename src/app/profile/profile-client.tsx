@@ -40,7 +40,7 @@ const businessFor = (brands: number, areas: number) => [
     text: `${brands} brands across ${areas} therapy areas.`,
     tag: 'Core',
     image: '/images/photos/business-ophthalmic.webp',
-    imageAlt: 'Premium sterile ophthalmic eye-drop bottles arranged on a clinical surface',
+    imageAlt: 'Eye-drop bottles on a laboratory bench',
   },
   {
     icon: Sparkles,
@@ -48,7 +48,7 @@ const businessFor = (brands: number, areas: number) => [
     text: 'Warmers, cooling and field-care products.',
     tag: 'Growing',
     image: '/images/photos/business-innovation.webp',
-    imageAlt: 'Compact thermal hand-warmer device held in gloved hands against alpine snow backdrop',
+    imageAlt: 'Gloved hands holding a warmer in snowy mountains',
   },
   {
     icon: ShieldCheck,
@@ -56,7 +56,7 @@ const businessFor = (brands: number, areas: number) => [
     text: 'Expanding into new categories.',
     tag: 'Expanding',
     image: '/images/photos/business-specialty.webp',
-    imageAlt: 'Physician in a sunlit consultation room operating a modern specialty medical device',
+    imageAlt: 'Doctor using a medical device at his desk',
   },
 ];
 
@@ -152,24 +152,19 @@ export function ProfileClient() {
           <div className="mt-12 grid gap-5 tablet:grid-cols-3">
             {BUSINESS.map((b, i) => (
               <FadeUp key={b.title} delay={i * 0.1}>
-                <div className="group relative isolate flex h-full flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white p-7">
-                  <span aria-hidden className="absolute inset-0 -z-10 translate-y-full bg-revora-cobalt transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
+                {/* the photo fills the card; a dark wash rising from the bottom keeps the copy readable */}
+                <div className="group relative isolate flex h-full min-h-100 flex-col overflow-hidden rounded-[28px] bg-revora-slate p-7 text-white tablet:min-h-110">
+                  <Image src={b.image} alt={b.imageAlt} fill sizes="(min-width: 768px) 33vw, 100vw" className="-z-20 object-cover transition-transform duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]" />
+                  <div aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(to_top,rgba(9,20,38,0.95)_0%,rgba(9,20,38,0.74)_42%,rgba(9,20,38,0.15)_80%,rgba(9,20,38,0.06)_100%)]" />
                   <div className="flex items-start justify-between">
-                    <span className="grid h-12 w-12 place-items-center rounded-2xl bg-revora-sky text-revora-cobalt transition-all duration-500 group-hover:rotate-[-8deg] group-hover:bg-white">
+                    <span className="grid h-12 w-12 place-items-center rounded-2xl bg-revora-slate/45 ring-1 ring-white/20 backdrop-blur-md transition-transform duration-500 group-hover:rotate-[-8deg]">
                       <b.icon className="h-5 w-5" />
                     </span>
-                    <span className="rounded-full bg-revora-crimson-tint px-3 py-1 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-crimson-dark transition-colors duration-500 group-hover:bg-white/15 group-hover:text-white">{b.tag}</span>
+                    <span className="rounded-full bg-white px-3 py-1 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-crimson-dark">{b.tag}</span>
                   </div>
-                  <h3 className="mt-6 font-heading text-[1.35rem] font-extrabold leading-tight text-revora-slate transition-colors duration-500 group-hover:text-white">{b.title}</h3>
-                  <p className="mt-2 font-sans text-[14.5px] leading-[1.6] text-revora-slate-light transition-colors duration-500 group-hover:text-white/80">{b.text}</p>
-                  <div className="relative mt-6 aspect-[4/3] w-full overflow-hidden rounded-2xl border border-revora-cobalt/10 transition-colors duration-500 group-hover:border-white/20">
-                    <Image
-                      src={b.image}
-                      alt={b.imageAlt}
-                      fill
-                      sizes="(min-width: 1024px) 33vw, 100vw"
-                      className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-                    />
+                  <div className="mt-auto pt-16">
+                    <h3 className="font-heading text-[1.5rem] font-extrabold leading-tight">{b.title}</h3>
+                    <p className="mt-2 font-sans text-[14.5px] leading-[1.6] text-white/85">{b.text}</p>
                   </div>
                 </div>
               </FadeUp>
