@@ -139,7 +139,6 @@ export function FormularyModal({
                 id={`${uid}-f1`}
                 type="text"
                 required
-                placeholder="Dr. Rajesh Patel"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
@@ -174,7 +173,6 @@ export function FormularyModal({
                 id={`${uid}-f3`}
                 type="text"
                 required
-                placeholder="Aavkar Eye Institute"
                 value={formData.institution}
                 onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
                 className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
@@ -189,7 +187,6 @@ export function FormularyModal({
                 id={`${uid}-f4`}
                 type="text"
                 required
-                placeholder="Ahmedabad, Gujarat"
                 value={formData.city}
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                 className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
@@ -206,7 +203,6 @@ export function FormularyModal({
                 id={`${uid}-f5`}
                 type="email"
                 required
-                placeholder="dr.patel@eyehospital.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
@@ -221,7 +217,6 @@ export function FormularyModal({
                 id={`${uid}-f6`}
                 type="tel"
                 required
-                placeholder="+91 98765 43210"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
@@ -253,7 +248,6 @@ export function FormularyModal({
             <textarea
                 id={`${uid}-f8`}
               rows={2}
-              placeholder="e.g. Please include Certificate of Analysis (CoA) and product stability data."
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               className="w-full rounded-lg px-3 py-2.5 text-[16px] tablet:py-2 tablet:text-xs border border-[#D9DFE8] focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
