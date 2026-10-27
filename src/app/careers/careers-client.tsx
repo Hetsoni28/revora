@@ -4,6 +4,9 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { toast } from 'sonner';
+import { useEnquiry } from '@/lib/use-enquiry';
+import { CV_ACCEPT, CV_MAX_BYTES, CV_TYPES } from '@/lib/enquiry';
+import { Honeypot } from '@/components/ui/honeypot';
 import { Eye, MapPin, Rocket, Send, Sprout } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { FadeUp, Tick } from '@/components/ui/primitives';
@@ -192,27 +195,31 @@ function HowWeHire() {
 function Apply() {
   const [team, setTeam] = useState(TEAMS[0]);
   const [form, setForm] = useState({ name: '', email: '', phone: '', city: '', experience: EXPERIENCE[1], message: '' });
+  const [cv, setCv] = useState<File | null>(null);
+  const [cvKey, setCvKey] = useState(0);
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [k]: e.target.value });
+  const { send, sending, honeypot } = useEnquiry('career');
 
-  // No backend yet: open the visitor's email app with everything filled in.
-  const submit = (e: React.FormEvent) => {
+  const pickCv = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    if (file && (file.size > CV_MAX_BYTES || !CV_TYPES.includes(file.type))) {
+      toast.error('Please choose a PDF or Word file up to 4 MB.');
+      e.target.value = '';
+      setCv(null);
+      return;
+    }
+    setCv(file);
+  };
+
+  // Sent straight to our inbox (CV attached); falls back to the visitor's email app until email is set up.
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = `Job application — ${team} — ${form.name}`;
-    const body = [
-      `Team: ${team}`,
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      `Phone: ${form.phone}`,
-      `City: ${form.city}`,
-      `Experience: ${form.experience}`,
-      '',
-      form.message,
-      '',
-      '(CV attached)',
-    ].join('\n');
-    window.location.href = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    toast.success('Your email app is opening', { description: 'Attach your CV and press send.' });
+    if (await send({ team, ...form }, cv)) {
+      setForm({ name: '', email: '', phone: '', city: '', experience: EXPERIENCE[1], message: '' });
+      setCv(null);
+      setCvKey((k) => k + 1);
+    }
   };
 
   const field = 'w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-3 font-sans text-[16px] text-revora-slate outline-none transition-[border-color,box-shadow] placeholder:text-revora-slate-muted focus:border-revora-cobalt focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)] tablet:text-[15px]';
@@ -225,7 +232,7 @@ function Apply() {
           <SectionHeading eyebrow="Apply" lines={['Send us your CV.']} highlight={{ 'CV.': 'text-revora-cobalt' }} />
           <FadeUp delay={0.15}>
             <p className="mt-6 max-w-sm font-sans text-[16px] leading-[1.7] text-revora-slate-light">
-              Fill in your details, attach your CV, send.
+              Fill in your details, attach your CV and send — it comes straight to our team.
             </p>
             <a href={`mailto:${CAREERS_EMAIL}`} className="mt-6 inline-flex min-h-6 items-center gap-2 font-sans text-[15px] font-semibold text-revora-cobalt hover:underline">
               <Send className="h-4 w-4" /> {CAREERS_EMAIL}
@@ -234,7 +241,8 @@ function Apply() {
         </div>
 
         <Rise>
-          <form onSubmit={submit} className="rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] p-6 tablet:p-9">
+          <form onSubmit={submit} className="relative rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] p-6 tablet:p-9">
+            <Honeypot inputRef={honeypot} />
             <div className="grid gap-5 tablet:grid-cols-2">
               <label className="tablet:col-span-2">
                 <span className={label}>Team</span>
@@ -282,10 +290,20 @@ function Apply() {
                 <span className={label}>A few words about you</span>
                 <textarea rows={4} value={form.message} onChange={set('message')} placeholder="Your current role and what you’d like to do at Revora" className={field} />
               </label>
+              <label className="tablet:col-span-2">
+                <span className={label}>CV (PDF or Word, up to 4 MB)</span>
+                <input
+                  key={cvKey}
+                  type="file"
+                  accept={CV_ACCEPT}
+                  onChange={pickCv}
+                  className={`${field} cursor-pointer file:mr-4 file:cursor-pointer file:rounded-full file:border-0 file:bg-revora-sky file:px-4 file:py-2 file:font-sans file:text-[13px] file:font-semibold file:text-revora-cobalt`}
+                />
+              </label>
             </div>
             <div className="mt-7 flex flex-wrap items-center justify-between gap-4">
-              <p className="font-sans text-[13px] text-revora-slate-muted">Attach your CV in the email that opens.</p>
-              <Button type="submit" arrow="up-right" magnetic>Send application</Button>
+              <p className="font-sans text-[13px] text-revora-slate-muted">{cv ? `Attached: ${cv.name}` : 'Goes to our HR team.'}</p>
+              <Button type="submit" arrow="up-right" magnetic disabled={sending}>{sending ? 'Sending…' : 'Send application'}</Button>
             </div>
           </form>
         </Rise>

@@ -1,15 +1,15 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
-import { toast } from 'sonner';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 import { X, Building2, Send, ShieldCheck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import type { Product } from '@/lib/catalogue';
 import { useFocusTrap } from '@/lib/a11y';
+import { useEnquiry } from '@/lib/use-enquiry';
+import { Honeypot } from '@/components/ui/honeypot';
 
-const REQUEST_EMAIL = 'depot@revorahealthcare.com';
 
 interface FormularyModalProps {
   isOpen: boolean;
@@ -24,7 +24,6 @@ export function FormularyModal({
   product,
   categoryName,
 }: FormularyModalProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     designation: 'Ophthalmologist / Surgeon',
@@ -50,29 +49,18 @@ export function FormularyModal({
   useFocusTrap(dialogRef, isOpen, onClose);
   const uid = useId();
 
-  // No backend yet: hand the request to the visitor's email app, pre-filled.
-  const handleSubmit = (e: React.FormEvent) => {
+  const { send, sending: isSubmitting, honeypot } = useEnquiry('samples');
+
+  // Sent straight to our sales inbox; falls back to the visitor's email app until email is set up.
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    const subject = `Sample request — ${product ? product.name : categoryName || 'Ophthalmic products'}`;
-    const body = [
-      `Product: ${product ? `${product.name} (${product.genericName})` : categoryName || 'General enquiry'}`,
-      `Name: ${formData.name}`,
-      `Designation: ${formData.designation}`,
-      `Institution: ${formData.institution}`,
-      `City / State: ${formData.city}, ${formData.state}`,
-      `Email: ${formData.email}`,
-      `Phone: ${formData.phone}`,
-      `Quantity: ${formData.quantityNeeded}`,
-      '',
-      formData.message,
-    ].join('\n');
-    window.location.href = `mailto:${REQUEST_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    toast.success('Your email app is opening', {
-      description: `The request is pre-filled — just press send to reach ${REQUEST_EMAIL}.`,
+    const { quantityNeeded, ...rest } = formData;
+    const ok = await send({
+      ...rest,
+      quantity: quantityNeeded,
+      product: product ? `${product.name} (${product.genericName})` : categoryName || 'General enquiry',
     });
-    setIsSubmitting(false);
-    onClose();
+    if (ok) onClose();
   };
 
   return (
@@ -127,8 +115,9 @@ export function FormularyModal({
         <form
           onSubmit={handleSubmit}
           data-lenis-prevent="true"
-          className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-5 tablet:p-6"
+          className="relative min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-5 tablet:p-6"
         >
+          <Honeypot inputRef={honeypot} />
           {product && (
             <div className="bg-revora-sky/60 p-3 rounded-lg border border-revora-cobalt/15 flex items-center justify-between text-xs">
               <div>
@@ -292,7 +281,7 @@ export function FormularyModal({
               className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-revora-cobalt hover:bg-revora-cobalt-dark text-white text-xs font-semibold transition-colors shadow-xs disabled:opacity-50"
             >
               <Send size={14} />
-              <span>{isSubmitting ? 'Opening email…' : 'Send request by email'}</span>
+              <span>{isSubmitting ? 'Sending…' : 'Send request'}</span>
             </button>
           </div>
         </form>

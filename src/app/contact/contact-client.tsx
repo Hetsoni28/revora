@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { toast } from 'sonner';
 import { AlertCircle, ArrowUpRight, Briefcase, Globe2, Mail, MapPin, Send, Stethoscope, Truck } from 'lucide-react';
 import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
 import { SITE } from '@/lib/seo';
+import { useEnquiry } from '@/lib/use-enquiry';
+import { Honeypot } from '@/components/ui/honeypot';
 
 /** Who to write to. Each enquiry type in the form goes to the matching inbox. */
 const DESKS = [
@@ -111,13 +112,13 @@ function MessageForm() {
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setForm({ ...form, [k]: e.target.value });
   const desk = DESKS.find((d) => d.id === form.desk) ?? DESKS[0];
 
-  // No backend yet: open the visitor's email app with the message addressed to the right team.
-  const submit = (e: React.FormEvent) => {
+  const { send, sending, honeypot } = useEnquiry(`contact-${desk.id}`);
+
+  // Sent straight to the chosen team's inbox; falls back to the visitor's email app until email is set up.
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = `${desk.title} enquiry — ${form.organisation || form.name}`;
-    const body = [`Enquiry: ${desk.title}`, `Name: ${form.name}`, `Organisation: ${form.organisation}`, `Email: ${form.email}`, `Phone: ${form.phone}`, '', form.message].join('\n');
-    window.location.href = `mailto:${desk.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    toast.success('Your email app is opening', { description: `Press send to reach ${desk.email}.` });
+    const { name, organisation, email, phone, message } = form;
+    if (await send({ name, organisation, email, phone, message })) setForm({ ...form, name: '', email: '', phone: '', organisation: '', message: '' });
   };
 
   const field = 'w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-3 font-sans text-[16px] text-revora-slate outline-none transition-[border-color,box-shadow] placeholder:text-revora-slate-muted focus:border-revora-cobalt focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)] tablet:text-[15px]';
@@ -136,7 +137,8 @@ function MessageForm() {
         </div>
 
         <FadeUp delay={0.1}>
-          <form onSubmit={submit} className="rounded-[28px] border border-revora-cobalt/10 bg-white p-6 tablet:p-9">
+          <form onSubmit={submit} className="relative rounded-[28px] border border-revora-cobalt/10 bg-white p-6 tablet:p-9">
+            <Honeypot inputRef={honeypot} />
             <div className="grid gap-5 tablet:grid-cols-2">
               <label className="tablet:col-span-2">
                 <span className={label}>About</span>
@@ -169,7 +171,7 @@ function MessageForm() {
             </div>
             <div className="mt-7 flex flex-wrap items-center justify-between gap-4">
               <p className="font-sans text-[13px] text-revora-slate-muted">Goes to {desk.email}</p>
-              <Button type="submit" arrow="up-right" magnetic icon={<Send />}>Send message</Button>
+              <Button type="submit" arrow="up-right" magnetic icon={<Send />} disabled={sending}>{sending ? 'Sending…' : 'Send message'}</Button>
             </div>
           </form>
         </FadeUp>

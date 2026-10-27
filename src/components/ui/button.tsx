@@ -20,6 +20,8 @@ interface ButtonProps {
   className?: string;
   /** For a <button>: "submit" inside forms. */
   type?: 'button' | 'submit';
+  /** For a <button>: greyed out and not clickable (e.g. while a form is sending). */
+  disabled?: boolean;
 }
 
 const BASE = 'group relative inline-flex items-center gap-3 overflow-hidden rounded-full font-sans text-[15px] font-semibold';
@@ -32,7 +34,7 @@ const VARIANTS: Record<Variant, string> = {
 };
 
 /** The site's one button: a crimson sweep and rotating arrow on the filled variants. */
-export function Button({ children, href, onClick, variant = 'primary', arrow, icon, magnetic, className, type = 'button' }: ButtonProps) {
+export function Button({ children, href, onClick, variant = 'primary', arrow, icon, magnetic, className, type = 'button', disabled }: ButtonProps) {
   const filled = variant === 'primary' || variant === 'light';
   const hasArrow = filled && arrow;
   const cls = `${BASE} ${VARIANTS[variant]} ${hasArrow ? 'py-3.5 pl-7 pr-3.5' : 'px-6 py-3.5'} ${className ?? ''}`;
@@ -58,7 +60,7 @@ export function Button({ children, href, onClick, variant = 'primary', arrow, ic
   );
 
   const el = !href ? (
-    <button type={type} onClick={onClick} className={cls}>
+    <button type={type} onClick={onClick} disabled={disabled} className={`${cls} disabled:cursor-wait disabled:opacity-60`}>
       {inner}
     </button>
   ) : href.startsWith('#') ? (

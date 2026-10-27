@@ -9,11 +9,12 @@ import { Counter, FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
+import { useEnquiry } from '@/lib/use-enquiry';
+import { Honeypot } from '@/components/ui/honeypot';
 import { PresenceLinks } from '@/components/presence/presence-links';
 import { WorldDotMap } from '@/components/maps/world-dot-map';
 import { GLOBAL_NETWORK } from '@/lib/network';
 
-const PARTNER_EMAIL = 'exports@revorahealthcare.com';
 
 const REGIONS = (['Asia', 'Africa'] as const).map((region) => ({ region, countries: GLOBAL_NETWORK.filter((m) => m.region === region) }));
 
@@ -55,15 +56,21 @@ export function GlobalClient() {
   const [country, setCountry] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { send, sending, honeypot } = useEnquiry('export');
+
+  // Sent straight to our exports inbox; falls back to the visitor's email app until email is set up.
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !email.trim()) {
       toast.error('Please fill in your name and email.');
       return;
     }
-    const body = `Name: ${name}\nCountry: ${country}\nType: ${partnerType}\n\nMessage:\n${message}`;
-    window.location.href = `mailto:${PARTNER_EMAIL}?subject=International Partnership Inquiry - ${encodeURIComponent(name)}&body=${encodeURIComponent(body)}`;
-    toast.success('Opening email client for global inquiry...');
+    if (await send({ name, email, country, type: partnerType, message })) {
+      setName('');
+      setEmail('');
+      setCountry('');
+      setMessage('');
+    }
   };
 
   return (
@@ -199,7 +206,8 @@ export function GlobalClient() {
               Direct connection with our Global Business Development team.
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
+            <form onSubmit={handleSubmit} className="relative mt-6 flex flex-col gap-4">
+              <Honeypot inputRef={honeypot} />
               <div>
                 <label htmlFor={`${uid}-f1`} className="block font-sans text-xs font-semibold text-revora-slate">Your Name</label>
                 <input
@@ -250,8 +258,8 @@ export function GlobalClient() {
                 />
               </div>
 
-              <Button type="submit" className="mt-2 w-full justify-center">
-                Send Global Inquiry
+              <Button type="submit" className="mt-2 w-full justify-center" disabled={sending}>
+                {sending ? 'Sending…' : 'Send Global Inquiry'}
               </Button>
             </form>
           </div>

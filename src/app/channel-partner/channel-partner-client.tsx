@@ -3,7 +3,6 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, useReducedMotion } from 'framer-motion';
-import { toast } from 'sonner';
 import { Building2, Eye, Factory, Handshake, Layers, MapPin, MessageSquare, Package, Rocket, Send, Sparkles, Store, Truck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { useCatalogue } from '@/components/catalogue/catalogue-context';
@@ -11,6 +10,8 @@ import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
+import { useEnquiry } from '@/lib/use-enquiry';
+import { Honeypot } from '@/components/ui/honeypot';
 
 const PARTNER_EMAIL = 'depot@revorahealthcare.com';
 
@@ -149,13 +150,12 @@ function ApplyForm() {
   const [form, setForm] = useState({ type: TYPES[0].label, name: '', company: '', city: '', phone: '', email: '', message: '' });
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm({ ...form, [k]: e.target.value });
 
-  // No backend yet: open the visitor's email app with the enquiry filled in.
-  const submit = (e: React.FormEvent) => {
+  const { send, sending, honeypot } = useEnquiry('partner');
+
+  // Sent straight to our inbox; falls back to the visitor's email app until email is set up.
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = `Channel partner enquiry — ${form.company || form.name} (${form.city})`;
-    const body = [`Partner type: ${form.type}`, `Name: ${form.name}`, `Company: ${form.company}`, `City / territory: ${form.city}`, `Phone: ${form.phone}`, `Email: ${form.email}`, '', form.message].join('\n');
-    window.location.href = `mailto:${PARTNER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    toast.success('Your email app is opening', { description: `Press send to reach ${PARTNER_EMAIL}.` });
+    if (await send(form)) setForm({ type: TYPES[0].label, name: '', company: '', city: '', phone: '', email: '', message: '' });
   };
 
   const field = 'w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-3 font-sans text-[16px] text-revora-slate outline-none transition-[border-color,box-shadow] placeholder:text-revora-slate-muted focus:border-revora-cobalt focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)] tablet:text-[15px]';
@@ -178,7 +178,8 @@ function ApplyForm() {
           <Suspense fallback={null}>
             <InterestPrefill onInterest={(it) => setForm((f) => ({ ...f, message: `Interested in: ${it}` }))} />
           </Suspense>
-          <form onSubmit={submit} className="rounded-[28px] border border-revora-cobalt/10 bg-white p-6 tablet:p-9">
+          <form onSubmit={submit} className="relative rounded-[28px] border border-revora-cobalt/10 bg-white p-6 tablet:p-9">
+            <Honeypot inputRef={honeypot} />
             <div className="grid gap-5 tablet:grid-cols-2">
               <div className="tablet:col-span-2">
                 <span className={label}>I am a</span>
@@ -226,7 +227,7 @@ function ApplyForm() {
               </label>
             </div>
             <div className="mt-7 flex justify-end">
-              <Button type="submit" arrow="up-right" magnetic>Send enquiry</Button>
+              <Button type="submit" arrow="up-right" magnetic disabled={sending}>{sending ? 'Sending…' : 'Send enquiry'}</Button>
             </div>
           </form>
         </FadeUp>
