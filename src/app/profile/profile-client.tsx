@@ -34,9 +34,30 @@ const DETAILS = [
 ];
 
 const businessFor = (brands: number, areas: number) => [
-  { icon: Layers, title: 'Ophthalmic pharmaceuticals', text: `${brands} brands across ${areas} therapy areas.`, tag: 'Core' },
-  { icon: Sparkles, title: 'Innovation products', text: 'Warmers, cooling and field-care products.', tag: 'Growing' },
-  { icon: ShieldCheck, title: 'Specialty healthcare & devices', text: 'Expanding into new categories.', tag: 'Expanding' },
+  {
+    icon: Layers,
+    title: 'Ophthalmic pharmaceuticals',
+    text: `${brands} brands across ${areas} therapy areas.`,
+    tag: 'Core',
+    image: '/images/photos/business-ophthalmic.webp',
+    imageAlt: 'Premium sterile ophthalmic eye-drop bottles arranged on a clinical surface',
+  },
+  {
+    icon: Sparkles,
+    title: 'Innovation products',
+    text: 'Warmers, cooling and field-care products.',
+    tag: 'Growing',
+    image: '/images/photos/business-innovation.webp',
+    imageAlt: 'Compact thermal hand-warmer device held in gloved hands against alpine snow backdrop',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Specialty healthcare & devices',
+    text: 'Expanding into new categories.',
+    tag: 'Expanding',
+    image: '/images/photos/business-specialty.webp',
+    imageAlt: 'Physician in a sunlit consultation room operating a modern specialty medical device',
+  },
 ];
 
 const portfolioRows = ({ products, categories, innovation }: Catalogue) => [
@@ -131,7 +152,7 @@ export function ProfileClient() {
           <div className="mt-12 grid gap-5 tablet:grid-cols-3">
             {BUSINESS.map((b, i) => (
               <FadeUp key={b.title} delay={i * 0.1}>
-                <div className="group relative isolate flex h-full min-h-55 flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white p-7">
+                <div className="group relative isolate flex h-full flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white p-7">
                   <span aria-hidden className="absolute inset-0 -z-10 translate-y-full bg-revora-cobalt transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
                   <div className="flex items-start justify-between">
                     <span className="grid h-12 w-12 place-items-center rounded-2xl bg-revora-sky text-revora-cobalt transition-all duration-500 group-hover:rotate-[-8deg] group-hover:bg-white">
@@ -139,8 +160,17 @@ export function ProfileClient() {
                     </span>
                     <span className="rounded-full bg-revora-crimson-tint px-3 py-1 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-crimson-dark transition-colors duration-500 group-hover:bg-white/15 group-hover:text-white">{b.tag}</span>
                   </div>
-                  <h3 className="mt-auto pt-10 font-heading text-[1.35rem] font-extrabold leading-tight text-revora-slate transition-colors duration-500 group-hover:text-white">{b.title}</h3>
+                  <h3 className="mt-6 font-heading text-[1.35rem] font-extrabold leading-tight text-revora-slate transition-colors duration-500 group-hover:text-white">{b.title}</h3>
                   <p className="mt-2 font-sans text-[14.5px] leading-[1.6] text-revora-slate-light transition-colors duration-500 group-hover:text-white/80">{b.text}</p>
+                  <div className="relative mt-6 aspect-[4/3] w-full overflow-hidden rounded-2xl border border-revora-cobalt/10 transition-colors duration-500 group-hover:border-white/20">
+                    <Image
+                      src={b.image}
+                      alt={b.imageAlt}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, 100vw"
+                      className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                    />
+                  </div>
                 </div>
               </FadeUp>
             ))}
