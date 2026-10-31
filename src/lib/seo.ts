@@ -3,7 +3,7 @@ import type { Product, SeoFields, TherapyCategory } from '@/lib/catalogue';
 import type { InnovationProduct } from '@/lib/innovation-products';
 
 /** Public site address. Set NEXT_PUBLIC_SITE_URL per environment (no trailing slash). */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://revorahealthcare.com').replace(/\/$/, '');
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.revorahealthcare.com').replace(/\/$/, '');
 
 export const SITE = {
   name: 'Revora Healthcare',
