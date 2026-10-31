@@ -7,9 +7,9 @@ import { ArrowUpRight } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 
 const PAGES = [
-  { href: '/our-presence', label: 'Our Presence', text: 'Our office, our plant and how we reach India.', image: '/images/photos/ahmedabad-skyline.webp', alt: 'Aerial view of Ahmedabad and the Sabarmati river' },
+  { href: '/our-presence', label: 'Our Presence', text: 'Our headquarters, our manufacturing facility and how we reach partners.', image: '/images/photos/ahmedabad-skyline.webp', alt: 'Aerial view of Ahmedabad and the Sabarmati river' },
   { href: '/our-presence/domestic-network', label: 'Domestic Network', text: 'Doctors, hospitals, pharmacies and distributors across India.', image: '/images/photos/warehouse-inventory.webp', alt: 'Worker checking medicine stock in a warehouse' },
-  { href: '/our-presence/global-network', label: 'Global Network', text: 'International reach, export dossiers and global distribution.', image: '/images/photos/warehouse-dispatch.webp', alt: 'Global logistics and distribution dispatch' },
+  { href: '/our-presence/global-network', label: 'Export', text: 'Export partnerships across Asia and Africa.', image: '/images/photos/warehouse-dispatch.webp', alt: 'Global logistics and distribution dispatch' },
 ];
 
 /** Photo cards linking the Our Presence pages; the current page is left out. */

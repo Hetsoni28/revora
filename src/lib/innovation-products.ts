@@ -56,7 +56,7 @@ export interface InnovationProduct {
   /** Square pack shots are shown 1:1 so nothing is cropped. */
   square?: boolean;
   pack: string;
-  /** Short badge printed on the pack, e.g. "Specially made for Indian Army". */
+  /** Short badge printed on the pack, e.g. "Built for defence & extreme-condition use". */
   badge?: string;
   includes?: string[];
   features: { icon: FeatureIcon; label: string; value: string }[];

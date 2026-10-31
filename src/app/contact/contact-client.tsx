@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AlertCircle, ArrowUpRight, Briefcase, Globe2, Mail, MapPin, Send, Stethoscope, Truck } from 'lucide-react';
+import { AlertCircle, ArrowUpRight, Briefcase, Factory, Globe2, Mail, MapPin, Phone, Send, Stethoscope, Truck } from 'lucide-react';
 import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
@@ -12,11 +12,12 @@ import { Honeypot } from '@/components/ui/honeypot';
 
 /** Who to write to. Each enquiry type in the form goes to the matching inbox. */
 const DESKS = [
-  { id: 'general', icon: Mail, title: 'General & corporate', text: 'Company information, certificates and media.', email: 'info@revorahealthcare.com' },
-  { id: 'products', icon: Stethoscope, title: 'Doctors & products', text: 'Samples, product literature or a visit from our representative.', email: 'depot@revorahealthcare.com' },
-  { id: 'distribution', icon: Truck, title: 'Distribution in India', text: 'Distributors, stockists and institutional supply.', email: 'depot@revorahealthcare.com' },
-  { id: 'exports', icon: Globe2, title: 'Exports', text: 'Importers and partners outside India.', email: 'exports@revorahealthcare.com' },
+  { id: 'products', icon: Stethoscope, title: 'Product enquiry', text: 'Doctors and hospitals: samples, literature or a visit from our representative.', email: 'depot@revorahealthcare.com' },
+  { id: 'distribution', icon: Truck, title: 'Distributor enquiry', text: 'Distributors, stockists and institutional supply in India.', email: 'depot@revorahealthcare.com' },
+  { id: 'manufacturing', icon: Factory, title: 'Manufacturing enquiry', text: 'Third-party and contract manufacturing under WHO-GMP.', email: 'info@revorahealthcare.com' },
+  { id: 'exports', icon: Globe2, title: 'Export enquiry', text: 'Importers and distribution partners outside India.', email: 'export@revorahealthcare.com' },
   { id: 'careers', icon: Briefcase, title: 'Careers', text: 'Send your CV — we’ll be in touch.', email: 'info@revorahealthcare.com' },
+  { id: 'general', icon: Mail, title: 'General & corporate', text: 'Company information, certificates and media.', email: 'info@revorahealthcare.com' },
 ] as const;
 
 const ADDRESS = [SITE.address.streetAddress, `${SITE.address.addressLocality}, ${SITE.address.addressRegion} ${SITE.address.postalCode}`];
@@ -29,9 +30,9 @@ export function ContactClient() {
         backdrop="/images/heroes/hero-contact.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Contact Us' }]}
         eyebrow="Contact Revora Healthcare"
-        lines={['Let’s talk', 'eye care.']}
-        highlight={{ 'eye': 'text-revora-cobalt', 'care.': 'text-revora-cobalt' }}
-        text="Questions about our products, a distributorship or working with us — write to the right team and we’ll get back to you."
+        lines={['Let’s talk', 'healthcare.']}
+        highlight={{ 'healthcare.': 'text-revora-cobalt' }}
+        text="Questions about our products, a distributorship, manufacturing, export or working with us — write to the right team and we’ll get back to you."
         actions={
           <>
             <Button href="#message" arrow="down" magnetic icon={<Send />}>Send a message</Button>
@@ -66,6 +67,9 @@ function OfficeCard() {
         <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/15 pt-6 font-sans text-[14.5px]">
           <a href={`mailto:${SITE.email}`} className="inline-flex min-h-6 items-center gap-2 font-semibold hover:underline">
             <Mail className="h-4 w-4 text-revora-cobalt-pale" /> {SITE.email}
+          </a>
+          <a href={SITE.phone.href} className="inline-flex min-h-6 items-center gap-2 font-semibold hover:underline">
+            <Phone className="h-4 w-4 text-revora-cobalt-pale" /> {SITE.phone.label}
           </a>
           <a href={MAP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-6 items-center gap-1.5 font-semibold hover:underline">
             Open in Google Maps <ArrowUpRight className="h-4 w-4" />

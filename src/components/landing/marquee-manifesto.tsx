@@ -82,8 +82,8 @@ export function BrandMarquee() {
    Manifesto — words light up as the paragraph scrolls past.
    ───────────────────────────────────────────────────────────── */
 const MANIFESTO =
-  'Every drop that leaves our plant carries one promise — that the doctor who prescribes it, and the patient who uses it, can trust it completely. That is what beyond the cure means to us.';
-const EMPHASIS = new Set(['promise', 'trust', 'completely.', 'beyond', 'cure']);
+  'Every product that leaves our facility carries one promise: the doctor who prescribes it, and the patient who uses it, can trust it completely. That is what Beyond the Cure means to us.';
+const EMPHASIS = new Set(['promise:', 'trust', 'completely.', 'Beyond', 'Cure']);
 
 function Word({
   children,

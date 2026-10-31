@@ -17,6 +17,13 @@ export const product = defineType({
     }),
     defineField({ name: 'genericName', title: 'Generic name', type: 'string', validation: (r) => r.required() }),
     defineField({
+      name: 'distributed',
+      title: 'Distributed by Revora',
+      description: 'Turn on for brands made by another company and distributed by Revora (e.g. HYSTRIDE). Shown on the product page.',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
       name: 'category',
       title: 'Therapy area',
       type: 'reference',
@@ -65,6 +72,12 @@ export const product = defineType({
     defineField({ name: 'dosage', title: 'How to use', type: 'text', rows: 2, validation: (r) => r.max(160) }),
     defineField({ name: 'storage', title: 'Storage', type: 'string', validation: (r) => r.max(100) }),
     defineField({ name: 'schedule', title: 'Supply', description: 'e.g. Schedule H Prescription Drug', type: 'string' }),
+    defineField({
+      name: 'fssaiLicence',
+      title: 'FSSAI licence number',
+      description: 'Nutraceuticals only (e.g. REVOPT). Shown with the statutory “Not for medicinal use” line.',
+      type: 'string',
+    }),
     defineField({
       name: 'prescribingInfo',
       title: 'Prescribing information (PDF)',

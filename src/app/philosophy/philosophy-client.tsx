@@ -13,8 +13,8 @@ import { IrisPromise } from '@/components/illustrations/illustrations';
 import { MediaFrame } from '@/components/ui/media-frame';
 
 const PROMISE =
-  'Every drop that leaves our plant carries one promise — that the doctor who prescribes it, and the patient who uses it, can trust it completely.';
-const EMPHASIS = new Set(['promise', 'trust', 'completely.']);
+  'Every product that leaves our facility carries one promise: the doctor who prescribes it, and the patient who uses it, can trust it completely.';
+const EMPHASIS = new Set(['promise:', 'trust', 'completely.']);
 
 const VALUES = [
   {
@@ -27,14 +27,14 @@ const VALUES = [
   {
     icon: Eye,
     title: 'Focus',
-    text: 'Ophthalmology is all we do — and it shows in every brand.',
+    text: 'We choose our therapies carefully, and go deep in every one of them.',
     image: '/images/photos/value-focus.webp',
     alt: 'Close-up of a slit-lamp eye examination microscope',
   },
   {
     icon: Factory,
     title: 'Quality',
-    text: 'Our eye drops are made in our own WHO-GMP certified plant.',
+    text: 'Every product is made in a WHO-GMP certified facility and released only after testing by an in-house QC lab.',
     image: '/images/photos/value-quality.webp',
     alt: 'Quality-control scientist inspecting eye-drop vials in a cleanroom',
   },

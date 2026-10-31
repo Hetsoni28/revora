@@ -65,7 +65,7 @@ export const innovationProduct = defineType({
     }),
     defineField({ name: 'square', title: 'Square photo', description: 'Turn on for 1:1 pack shots so nothing is cropped.', type: 'boolean', group: 'pack', initialValue: false }),
     defineField({ name: 'pack', title: 'Pack contents', description: 'e.g. "10 single-use warmer pads".', type: 'string', group: 'pack', validation: (r) => r.required().max(60) }),
-    defineField({ name: 'badge', title: 'Pack badge', description: 'e.g. "Specially made for Indian Army".', type: 'string', group: 'pack', validation: (r) => r.max(60) }),
+    defineField({ name: 'badge', title: 'Pack badge', description: 'e.g. "Built for defence & extreme-condition use". Only claim what an order, trial or approval supports.', type: 'string', group: 'pack', validation: (r) => r.max(60) }),
     defineField({
       name: 'includes',
       title: 'What’s in the kit',

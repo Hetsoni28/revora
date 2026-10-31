@@ -55,7 +55,7 @@ const MARKETS = GLOBAL_NETWORK.map((m) => {
 
 const SIDE = { left: '-translate-x-full -translate-y-1/2', right: '-translate-y-1/2', below: '-translate-x-1/2' } as const;
 
-/** Dotted world map with India highlighted and routes out to every country we are present in. */
+/** Dotted world map with India highlighted and routes out to each priority export market. */
 export function WorldDotMap({ className }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-10% 0px' });
@@ -69,7 +69,7 @@ export function WorldDotMap({ className }: { className?: string }) {
     <div ref={ref} className={`overflow-hidden ${className ?? ''}`}>
       {/* phones: the map is drawn ~1.9× wider and shifted so only x 440–960 (Africa → Philippines) shows */}
       <div className="@container relative -ml-[84.6%] w-[192.3%] tablet:ml-0 tablet:w-full">
-        <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`World map: Revora in India and ${MARKETS.length} countries — ${MARKETS.map((m) => m.name).join(', ')}`}>
+        <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`World map: Revora in India and ${MARKETS.length} priority export markets — ${MARKETS.map((m) => m.name).join(', ')}`}>
           <defs>
             <linearGradient id="wd-route" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="#94B6E5" />

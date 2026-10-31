@@ -2,15 +2,16 @@
 
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { Droplets, FlaskConical, MapPin, PackageCheck, ShieldCheck, Shield, Activity } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowUpRight, Droplets, FlaskConical, MapPin, PackageCheck, ShieldCheck, Shield, Activity } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { MediaFrame } from '@/components/ui/media-frame';
 
 const STEPS = [
   { icon: FlaskConical, title: 'Formulate', body: 'Each brand built around a distinct ingredient.' },
-  { icon: Droplets, title: 'Fill', body: 'Sterile filling in a dedicated eye-drop facility.' },
-  { icon: ShieldCheck, title: 'Verify', body: 'WHO-GMP quality, in an EU-compliant plant.' },
+  { icon: Droplets, title: 'Fill', body: 'Sterile filling at a WHO-GMP facility.' },
+  { icon: ShieldCheck, title: 'Verify', body: 'Checked in the in-house quality control lab.' },
   { icon: PackageCheck, title: 'Present', body: 'Premium cartons, ready for the pharmacy shelf.' },
 ];
 
@@ -29,9 +30,9 @@ export function Plant() {
         <SectionHeading
           tone="light"
           eyebrow="Manufacturing"
-          lines={['Made in our own plant.']}
-          highlight={{ own: 'text-revora-cobalt-pale' }}
-          aside="We make our eye drops ourselves — so quality stays in our hands."
+          lines={['Made to WHO-GMP standards.']}
+          highlight={{ 'WHO-GMP': 'text-revora-cobalt-pale' }}
+          aside="Our products are manufactured at a WHO-GMP certified facility in Paonta Sahib, with every batch released by an in-house QC lab. The same facility is open to partners for third-party and contract manufacturing."
         />
 
         <MediaFrame
@@ -44,6 +45,26 @@ export function Plant() {
           caption={<b className="font-semibold">Sterile eye-drop filling</b>}
         />
 
+        {/* what the facility makes, and the way in for manufacturing partners */}
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+          <ul className="flex flex-wrap gap-2" aria-label="Dosage forms">
+            {['Sterile eye drops', 'Ophthalmic ointments', 'Nasal sprays', 'Tablets'].map((c) => (
+              <li key={c} className="rounded-full border border-white/15 bg-white/5 px-4 py-2 font-sans text-[13.5px] font-semibold text-white/90">
+                {c}
+              </li>
+            ))}
+          </ul>
+          <Link
+            href="/manufacturing"
+            className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-white py-2.5 pl-5 pr-2.5 font-sans text-[14px] font-semibold text-revora-cobalt"
+          >
+            Manufacture with us
+            <span className="grid h-7 w-7 place-items-center rounded-full bg-revora-cobalt text-white transition-transform duration-500 group-hover:rotate-45">
+              <ArrowUpRight className="h-4 w-4" />
+            </span>
+          </Link>
+        </div>
+
         {/* location card */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 40 }}
@@ -54,8 +75,8 @@ export function Plant() {
         >
           {[
             { icon: MapPin, k: 'Location', v: 'Paonta Sahib, Himachal Pradesh' },
-            { icon: ShieldCheck, k: 'Certification', v: 'WHO-GMP certified' },
-            { icon: Shield, k: 'Standards', v: 'EU-compliant facility' },
+            { icon: ShieldCheck, k: 'Standard', v: 'WHO-GMP facility' },
+            { icon: Shield, k: 'Quality', v: 'In-house QC lab' },
           ].map((item, i) => (
             <div key={item.k} className={`flex items-start gap-4 p-7 tablet:p-9 ${i > 0 ? 'border-t border-white/10 tablet:border-l tablet:border-t-0' : ''}`}>
               <item.icon className="mt-1 h-5 w-5 shrink-0 text-revora-cobalt-pale" />

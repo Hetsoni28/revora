@@ -9,7 +9,7 @@ import { ArrowRight, ArrowUpRight, ChevronDown, ChevronRight, Globe, Mail, Menu,
 import { useLenis } from 'lenis/react';
 import { expoOut } from '@/lib/easings';
 import { useCatalogue } from '@/components/catalogue/catalogue-context';
-import { productKind } from '@/lib/seo';
+import { productKind, SITE } from '@/lib/seo';
 import { PARTNER_CATEGORIES, partnerHref } from '@/lib/partner-categories';
 import { AnchorLink, Magnetic, Tick } from '@/components/ui/primitives';
 import { useFocusTrap } from '@/lib/a11y';
@@ -33,21 +33,22 @@ const NAV_ITEMS: NavItem[] = [
       { label: 'Certifications', href: '/certifications' },
     ],
   },
-  { label: 'Healthcare', href: '', mega: true },
+  { label: 'Our Products', href: '', mega: true },
+  { label: 'Manufacturing', href: '/manufacturing' },
+  { label: 'Export', href: '/our-presence/global-network' },
   {
     label: 'Our Presence',
     href: '/our-presence',
     sublinks: [
       { label: 'Domestic Network', href: '/our-presence/domestic-network' },
-      { label: 'Global Network', href: '/our-presence/global-network' },
+      { label: 'Export markets', href: '/our-presence/global-network' },
     ],
   },
-  { label: 'Innovation', href: '/innovation' },
   { label: 'Channel Partner', href: '/channel-partner', categories: true },
   { label: 'Careers', href: '/careers' },
 ];
 
-const PHONE = { label: '+91 (079) 4890-REVORA', href: 'tel:+919876543210' };
+const PHONE = SITE.phone;
 const EMAIL = 'info@revorahealthcare.com';
 
 /** Therapy areas with their brands, as published in Sanity. */
@@ -59,7 +60,7 @@ function useTherapyMenu() {
 /** Route items light up on their own page and its sub-pages. */
 function isActive(item: NavItem, pathname: string) {
   if (item.href.startsWith('/#')) return false;
-  if (item.mega) return pathname.startsWith('/products');
+  if (item.mega) return pathname.startsWith('/products') || pathname.startsWith('/innovation');
   if (item.sublinks?.some((s) => !s.href.includes('#') && pathname.startsWith(s.href))) return true;
   return pathname.startsWith(item.href);
 }
@@ -72,7 +73,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState<string | null>(null);
-  const [mobileGroup, setMobileGroup] = useState<string | null>('Healthcare');
+  const [mobileGroup, setMobileGroup] = useState<string | null>('Our Products');
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Close menus whenever the page changes — including the browser's Back button.
@@ -139,7 +140,7 @@ export function Navbar() {
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1.5 font-medium text-revora-slate">
                   <ShieldCheck className="h-3.5 w-3.5 text-revora-cobalt" />
-                  WHO-GMP &amp; ISO 9001:2015 Certified
+                  WHO-GMP manufacturing
                 </span>
                 <span className="h-3 w-px bg-revora-cobalt/15" />
                 <span className="font-mono text-[11px]">CIN: U21000GJ2026PTC174674 · Ahmedabad, Gujarat</span>
@@ -241,16 +242,10 @@ export function Navbar() {
             </ul>
 
             <div className="flex items-center gap-2">
-              <AnchorLink
-                href="/channel-partner"
-                className="hidden rounded-full border border-revora-cobalt/25 px-4 py-2.5 font-sans text-[14px] font-semibold text-revora-cobalt transition-colors hover:bg-revora-sky desktop-lg:inline-flex"
-              >
-                Partner With Us
-              </AnchorLink>
               <Magnetic className="hidden tablet:inline-block">
                 <AnchorLink
                   href="/contact"
-                  className="group inline-flex items-center gap-2 rounded-full bg-revora-cobalt py-2.5 pl-5 pr-2.5 font-sans text-[14px] font-semibold text-white transition-colors hover:bg-revora-cobalt-dark"
+                  className="group inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-revora-cobalt py-2.5 pl-5 pr-2.5 font-sans text-[14px] font-semibold text-white transition-colors hover:bg-revora-cobalt-dark"
                 >
                   Contact Us
                   <span className="grid h-7 w-7 place-items-center rounded-full bg-white/15 transition-transform duration-500 group-hover:rotate-45">
@@ -423,7 +418,7 @@ export function Navbar() {
 
             <div className="mt-8 flex flex-col gap-3 font-sans text-[14px] text-revora-slate-light">
               <span className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 shrink-0 text-revora-cobalt" /> WHO-GMP &amp; ISO 9001:2015 Certified
+                <ShieldCheck className="h-4 w-4 shrink-0 text-revora-cobalt" /> WHO-GMP manufacturing
               </span>
               <a href={`mailto:${EMAIL}`} className="flex items-center gap-2">
                 <Mail className="h-4 w-4 shrink-0 text-revora-cobalt" /> {EMAIL}
@@ -540,7 +535,7 @@ function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
       <div className="grid grid-cols-[1fr_250px]">
         <div className="p-6">
           <div className="flex items-center justify-between">
-            <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-slate-muted">Our Therapies</span>
+            <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-slate-muted">Our products</span>
             <Link
               href="/profile#portfolio"
               onClick={onNavigate}
@@ -581,7 +576,8 @@ function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
             <div className="mt-4 flex flex-col gap-1">
               {[
                 ['Company profile & portfolio', '/profile#portfolio'],
-                ['Hospital & Distribution Network', '/our-presence/domestic-network'],
+                ['Manufacturing & CDMO', '/manufacturing'],
+                ['Hospital & distribution network', '/our-presence/domestic-network'],
               ].map(([label, href]) => (
                 <Link
                   key={label}
@@ -600,7 +596,7 @@ function OfferingsMegaMenu({ onNavigate }: { onNavigate: () => void }) {
             onClick={onNavigate}
             className="group inline-flex items-center justify-between gap-2 rounded-full bg-revora-cobalt py-2.5 pl-5 pr-2.5 font-sans text-[13px] font-semibold text-white transition-colors hover:bg-revora-cobalt-dark"
           >
-            Explore our innovation range
+            Thermal care & innovation
             <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/15 transition-transform duration-500 group-hover:rotate-45">
               <ArrowUpRight className="h-4 w-4" />
             </span>

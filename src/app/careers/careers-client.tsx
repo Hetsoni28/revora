@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { useEnquiry } from '@/lib/use-enquiry';
 import { CV_ACCEPT, CV_MAX_BYTES, CV_TYPES } from '@/lib/enquiry';
 import { Honeypot } from '@/components/ui/honeypot';
-import { Eye, MapPin, Rocket, Send, Sprout } from 'lucide-react';
+import { Flag, MapPin, Rocket, Send, Sprout } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { FadeUp, Tick } from '@/components/ui/primitives';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
@@ -18,13 +18,13 @@ import { HeroBackdrop } from '@/components/ui/hero-backdrop';
 const CAREERS_EMAIL = 'info@revorahealthcare.com';
 
 /** Teams an applicant can pick in the form — not a list of live vacancies. */
-const TEAMS = ['Sales & marketing', 'Distribution & supply', 'Manufacturing & quality', 'Corporate office'];
+const TEAMS = ['Sales & Marketing', 'Manufacturing & QA/QC', 'Export & International Business', 'Medical & Regulatory', 'Accounts & Admin'];
 
 const VALUES = [
   {
-    icon: Eye,
-    title: 'Only eye care',
-    text: 'Go deep in one specialty, not wide across many.',
+    icon: Flag,
+    title: 'Build from day one',
+    text: 'Join early and shape brands, systems and markets as we grow.',
     image: '/images/photos/career-eyecare.webp',
     imageAlt: 'Eye doctor examining a patient with a phoropter',
   },
@@ -88,7 +88,7 @@ function Hero() {
             <SectionHeading level="page" eyebrow="Pharma careers in Ahmedabad" lines={['Proud to be', 'a Revorian.']} highlight={{ 'Revorian.': 'text-revora-cobalt' }} />
             <FadeUp delay={0.45}>
               <p className="mt-6 max-w-lg font-sans text-[17px] leading-[1.7] text-revora-slate-light">
-                Help us build trusted eye-care brands for doctors and patients across India.
+                Help us build a new-generation pharmaceutical company, from the field to the factory to the world.
               </p>
             </FadeUp>
             <FadeUp delay={0.55} className="mt-9 flex flex-wrap gap-3">
@@ -120,7 +120,7 @@ function Hero() {
               </span>
               <div>
                 <p className="font-heading text-[clamp(1.5rem,2.6vw,2.1rem)] font-extrabold leading-[1.15] tracking-[-0.01em]">
-                  “We don’t just sell products — we build brands and relationships.”
+                  “Proud to be a REVORIAN. We don’t just sell products — we build brands, relationships and Revora.”
                 </p>
                 <div className="mt-7 flex flex-wrap gap-2">
                   {['Ahmedabad HQ', 'Paonta Sahib plant', 'Across India'].map((t) => (

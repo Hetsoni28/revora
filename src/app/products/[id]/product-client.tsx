@@ -7,6 +7,7 @@ import { AnimatePresence, motion, useInView, useMotionValue, useReducedMotion, u
 import { ArrowLeft, ArrowRight, Clock, FileText, FlaskConical, ListChecks, PackageSearch, ShieldAlert, ShieldCheck, Thermometer } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import type { Product, TherapyCategory } from '@/lib/catalogue';
+import { productKind } from '@/lib/seo';
 import { useCatalogue } from '@/components/catalogue/catalogue-context';
 import { Eyebrow, FadeUp } from '@/components/ui/primitives';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
@@ -14,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { EmptyState } from '@/components/ui/states';
 import { ProductLogo, ProductLogoLink } from '@/components/offerings/product-logo';
 import { LazyFormularyModal as FormularyModal } from '@/components/offerings/lazy-formulary-modal';
+import { HcpGate } from '@/components/offerings/hcp-gate';
 
 interface ProductClientProps {
   product: Product;
@@ -55,6 +57,9 @@ export function ProductClient({ product, category }: ProductClientProps) {
   const sameArea = others.filter((p) => p.categorySlug === category.slug);
   const related = (sameArea.length ? sameArea : others).slice(0, 3);
   const isRx = /schedule/i.test(product.schedule);
+  // FSSAI nutraceuticals (e.g. REVOPT) get "product info" wording and their own statutory line
+  const isNutra = !isRx && /supplement|nutraceutical|fssai/i.test(product.schedule);
+  const infoLabel = isNutra ? 'Product info' : 'Prescribing info';
   const [supply] = product.schedule.split(' — ');
   const perUnit = /tablet/i.test(product.volume) ? 'Each tablet contains' : 'Each ml contains';
 
@@ -108,6 +113,11 @@ export function ProductClient({ product, category }: ProductClientProps) {
                 <span className="sr-only"> — </span>
                 <span className="mt-4 block font-heading text-[clamp(1.1rem,1.8vw,1.3rem)] font-semibold leading-snug tracking-normal text-revora-cobalt">{product.genericName}</span>
               </motion.h1>
+              {product.distributed && (
+                <p className="mt-3 inline-flex rounded-full bg-revora-sky px-3 py-1 font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-revora-cobalt">
+                  Distributed by Revora
+                </p>
+              )}
               <FadeUp delay={0.3}>
                 <p className="mt-4 max-w-lg font-sans text-[16.5px] leading-[1.7] text-revora-slate-light">{product.summary}</p>
               </FadeUp>
@@ -128,7 +138,15 @@ export function ProductClient({ product, category }: ProductClientProps) {
                   className={`mt-3 flex items-start gap-2.5 font-sans text-[13px] leading-[1.55] ${isRx ? 'text-revora-crimson-dark' : 'text-revora-cobalt-dark'}`}
                 >
                   {isRx ? <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" /> : <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" />}
-                  {product.schedule}
+                  <span>
+                    {/* the same statutory wording on every Schedule H product */}
+                    {isRx
+                      ? 'Schedule H Prescription Drug – Caution: Not to be sold by retail without the prescription of a Registered Medical Practitioner.'
+                      : isNutra
+                        ? `Nutraceutical. Not for medicinal use.${product.fssaiLicence ? ` FSSAI Lic. No. ${product.fssaiLicence}` : ''}`
+                        : product.schedule}
+                    {isRx && productKind(product) !== 'tablets' && <span className="mt-1 block">For topical ophthalmic use only.</span>}
+                  </span>
                 </p>
               </FadeUp>
 
@@ -137,10 +155,10 @@ export function ProductClient({ product, category }: ProductClientProps) {
                   <Button onClick={() => setModalOpen(true)} arrow="up-right" magnetic>Request samples</Button>
                   {product.prescribingInfo ? (
                     <Button href={product.prescribingInfo.url} variant="outline" icon={<FileText />}>
-                      Prescribing info <span className="font-normal opacity-70">(PDF{piMeta(product.prescribingInfo)})</span>
+                      {infoLabel} <span className="font-normal opacity-70">(PDF{piMeta(product.prescribingInfo)})</span>
                     </Button>
                   ) : (
-                    <Button onClick={() => setModalOpen(true)} variant="outline" icon={<FileText />}>Request prescribing info</Button>
+                    <Button onClick={() => setModalOpen(true)} variant="outline" icon={<FileText />}>Request {infoLabel.toLowerCase()}</Button>
                   )}
                 </div>
               </FadeUp>
@@ -280,6 +298,7 @@ export function ProductClient({ product, category }: ProductClientProps) {
       </AnimatePresence>
 
       <FormularyModal isOpen={modalOpen} onClose={() => setModalOpen(false)} product={product} categoryName={category.title} />
+      {isRx && <HcpGate />}
     </>
   );
 }

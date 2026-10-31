@@ -28,13 +28,20 @@ export interface Product {
   dosage: string;
   storage: string;
   schedule: string;
+  /** Nutraceuticals: FSSAI licence number. */
+  fssaiLicence?: string;
+  /** Made by another company, distributed by Revora. */
+  distributed?: boolean;
   /** Prescribing information leaflet uploaded in Sanity. */
   prescribingInfo?: { url: string; size?: number; updated?: string };
   seo?: SeoFields;
 }
 
+export type Division = 'ophthalmology' | 'orthopaedics';
+
 export interface TherapyCategory {
   slug: string;
+  division: Division;
   title: string;
   shortName: string;
   subtitle: string;

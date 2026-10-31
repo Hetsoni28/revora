@@ -6,9 +6,9 @@ import { Footer } from '@/components/layout/footer';
 import { AboutClient } from './about-client';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'About Us — Ophthalmic Pharma Company',
+  title: 'About Us — New Name, Proven Experience',
   description:
-    'Revora Healthcare, founded in Ahmedabad in 2026, makes ophthalmic eye drops and eye-care nutrition and is growing into specialty healthcare and medical devices.',
+    'Revora Healthcare, incorporated in Ahmedabad in 2026, brings 15+ years of pharmaceutical leadership: specialty brands, WHO-GMP manufacturing and export.',
   path: '/about',
   keywords: ['about Revora Healthcare', 'ophthalmic company Ahmedabad', 'eye care company Gujarat'],
 });

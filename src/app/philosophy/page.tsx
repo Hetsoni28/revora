@@ -8,7 +8,7 @@ import { PhilosophyClient } from './philosophy-client';
 export const metadata: Metadata = pageMetadata({
   title: 'Philosophy & Values',
   description:
-    'Trust, focus, quality, relationships and care — the values behind every Revora Healthcare eye-care product, from our plant to the patient.',
+    'Trust, focus, quality, relationships and care — the values behind every Revora Healthcare product, from our facility to the patient.',
   path: '/philosophy',
   keywords: ['Revora Healthcare values', 'patient-first eye care'],
 });

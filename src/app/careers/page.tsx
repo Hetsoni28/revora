@@ -8,7 +8,7 @@ import { CareersClient } from './careers-client';
 export const metadata: Metadata = pageMetadata({
   title: 'Careers — Pharma Jobs in Ahmedabad',
   description:
-    'Join Revora Healthcare: roles in sales, distribution, manufacturing and our Ahmedabad office. Help build trusted eye-care brands — send us your CV.',
+    'Join Revora Healthcare: sales & marketing, manufacturing & QA/QC, export, medical & regulatory and accounts roles. Send us your CV.',
   path: '/careers',
   keywords: ['pharma jobs Ahmedabad', 'medical representative jobs', 'pharmaceutical careers Gujarat'],
 });

@@ -35,6 +35,7 @@ export function urlFor(source: SanityImageSource) {
 
 interface SanityTherapyCategory {
   slug: string;
+  division?: string;
   title: string;
   shortName?: string;
   subtitle?: string;
@@ -54,6 +55,8 @@ interface SanitySeo {
 
 interface SanityProduct {
   id: string;
+  distributed?: boolean;
+  fssaiLicence?: string;
   seo?: SanitySeo;
   pi?: { url?: string; size?: number; updated?: string };
   name: string;
@@ -92,11 +95,11 @@ interface SanityInnovationProduct {
 
 const CATALOGUE_QUERY = `{
   "categories": *[_type == "therapyCategory" && defined(slug.current)] | order(order asc, title asc) {
-    "slug": slug.current, title, shortName, subtitle, description, clinicalRationale, badge, color, subTherapies
+    "slug": slug.current, title, shortName, division, subtitle, description, clinicalRationale, badge, color, subTherapies
   },
   "products": *[_type == "product" && defined(id.current) && defined(category->slug.current) && defined(image.asset)] | order(category->order asc, order asc, name asc) {
     "id": id.current, name, genericName, "categorySlug": category->slug.current,
-    badge, volume, image, logo, summary, composition, indications, dosage, storage, schedule, seo,
+    badge, volume, image, logo, summary, composition, indications, dosage, storage, schedule, seo, distributed, fssaiLicence,
     "pi": prescribingInfo { "url": asset->url, "size": asset->size, updated }
   },
   "innovation": *[_type == "innovationProduct" && defined(slug.current) && defined(category) && defined(image.asset)] | order(order asc, name asc) {
@@ -131,6 +134,7 @@ const DEFAULT_COLOR = '#0B4A8F';
 function adaptCategory(c: SanityTherapyCategory): TherapyCategory {
   return {
     slug: c.slug,
+    division: c.division === 'orthopaedics' ? 'orthopaedics' : 'ophthalmology',
     title: c.title,
     shortName: c.shortName ?? c.title,
     subtitle: c.subtitle ?? '',
@@ -162,6 +166,8 @@ function adaptProduct(p: SanityProduct, categories: TherapyCategory[]): Product 
     dosage: p.dosage ?? '',
     storage: p.storage ?? '',
     schedule: p.schedule ?? '',
+    distributed: p.distributed || undefined,
+    fssaiLicence: p.fssaiLicence?.trim() || undefined,
     prescribingInfo: p.pi?.url ? { url: p.pi.url, size: p.pi.size, updated: p.pi.updated } : undefined,
     seo: adaptSeo(p.seo),
   };

@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Building2, CalendarDays, Factory, FileText, Globe2, Layers, Mail, MapPin, ShieldCheck, Sparkles } from 'lucide-react';
+import { Building2, CalendarDays, Factory, FileText, Globe2, Layers, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
+import { SITE } from '@/lib/seo';
 import { expoOut } from '@/lib/easings';
 import { INNOVATION_CATEGORIES } from '@/lib/innovation-products';
 import type { Catalogue } from '@/lib/catalogue';
@@ -16,7 +17,7 @@ const EMAIL = 'info@revorahealthcare.com';
 const REQUEST = `mailto:${EMAIL}?subject=${encodeURIComponent('Request for company profile')}`;
 
 const atAGlance = ({ products, categories, innovation }: Catalogue) => [
-  { value: products.length, label: 'Eye-care brands' },
+  { value: products.length, label: 'Healthcare brands' },
   { value: categories.length, label: 'Therapy areas' },
   { value: innovation.length, label: 'Innovation products' },
   { value: 2, label: 'Locations' },
@@ -26,45 +27,50 @@ const DETAILS = [
   { icon: Building2, k: 'Company', v: 'Revora Healthcare Private Limited' },
   { icon: FileText, k: 'CIN', v: 'U21000GJ2026PTC174674', mono: true },
   { icon: CalendarDays, k: 'Incorporated', v: '10 March 2026' },
-  { icon: Globe2, k: 'Market', v: 'Across India' },
-  { icon: Factory, k: 'Manufacturing', v: 'Paonta Sahib, Himachal Pradesh' },
-  { icon: ShieldCheck, k: 'Quality', v: 'WHO-GMP · ISO 9001:2015' },
-  { icon: MapPin, k: 'Registered office', v: '3rd Floor, S.G. Business Hub, A/303, Sarkhej–Gandhinagar Highway, near Gota Overbridge, Ognaj, Ahmedabad, Gujarat 380060', wide: true },
-  { icon: Mail, k: 'Email', v: EMAIL, wide: true },
+  { icon: Globe2, k: 'Market', v: 'India + export partnerships (Asia & Africa)' },
+  { icon: Factory, k: 'Manufacturing facility', v: 'Paonta Sahib, H.P. (WHO-GMP) — loan licence' },
+  { icon: ShieldCheck, k: 'Quality', v: 'WHO-GMP certified manufacturing' },
+  { icon: FileText, k: 'GSTIN', v: SITE.gstin, mono: true },
+  { icon: FileText, k: 'Drug licences', v: SITE.drugLicences.join(' · '), mono: true },
+  { icon: MapPin, k: 'Registered office', v: 'A-303, 3rd Floor, S.G. Business Hub, B/s Bhagvat Petrol Pump, Nr. Gota Over Bridge, S.G. Highway, Ahmedabad, Gujarat 382470', wide: true },
+  { icon: Phone, k: 'Phone', v: SITE.phone.label },
+  { icon: Mail, k: 'Email', v: EMAIL },
 ];
 
-const businessFor = (brands: number, areas: number) => [
+const BUSINESS = [
   {
     icon: Layers,
-    title: 'Ophthalmic pharmaceuticals',
-    text: `${brands} brands across ${areas} therapy areas.`,
+    title: 'India Business',
+    text: 'Specialty brands across ophthalmology, orthopaedics and nutrition, plus the thermal innovation range.',
     tag: 'Core',
     image: '/images/photos/business-ophthalmic.webp',
     imageAlt: 'Eye-drop bottles on a laboratory bench',
   },
   {
-    icon: Sparkles,
-    title: 'Innovation products',
-    text: 'Warmers, cooling and field-care products.',
-    tag: 'Growing',
-    image: '/images/photos/business-innovation.webp',
-    imageAlt: 'Gloved hands holding a warmer in snowy mountains',
+    icon: Factory,
+    title: 'Manufacturing & CDMO',
+    text: 'Eye drops, ointments, nasal sprays and tablets for partners, under WHO-GMP.',
+    tag: 'Partners',
+    image: '/images/photos/cert-who-gmp.webp',
+    imageAlt: 'Automated eye-drop filling line in a cleanroom',
   },
   {
-    icon: ShieldCheck,
-    title: 'Specialty healthcare & devices',
-    text: 'Expanding into new categories.',
-    tag: 'Expanding',
-    image: '/images/photos/business-specialty.webp',
-    imageAlt: 'Doctor using a medical device at his desk',
+    icon: Globe2,
+    title: 'International Business',
+    text: 'Export partnerships with importers and distributors across Asia and Africa.',
+    tag: 'Growing',
+    image: '/images/photos/warehouse-dispatch.webp',
+    imageAlt: 'Cartons being prepared for dispatch in a warehouse',
   },
 ];
 
 const portfolioRows = ({ products, categories, innovation }: Catalogue) => [
   ...categories.map((c) => ({
-    area: c.shortName,
+    area: c.division === 'orthopaedics' ? `Orthopaedics · ${c.shortName}` : c.shortName,
     innovation: false,
-    items: products.filter((p) => p.categorySlug === c.slug).map((p) => ({ label: p.name, href: `/products/${p.id}` })),
+    items: products
+      .filter((p) => p.categorySlug === c.slug)
+      .map((p) => ({ label: p.distributed ? `${p.name} (distributed by Revora)` : p.name, href: `/products/${p.id}` })),
   })),
   ...INNOVATION_CATEGORIES.map((cat) => ({
     area: cat,
@@ -77,7 +83,6 @@ export function ProfileClient() {
   const reduce = useReducedMotion();
   const catalogue = useCatalogue();
   const AT_A_GLANCE = atAGlance(catalogue);
-  const BUSINESS = businessFor(catalogue.products.length, catalogue.categories.length);
   const PORTFOLIO = portfolioRows(catalogue);
   return (
     <>

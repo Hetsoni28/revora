@@ -6,9 +6,9 @@ import { Footer } from '@/components/layout/footer';
 import { PresenceClient } from './presence-client';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Our Presence — Ahmedabad & Eye Drop Plant',
+  title: 'Our Presence — Ahmedabad HQ & Manufacturing',
   description:
-    'Revora Healthcare runs from its Ahmedabad head office and makes eye drops at its WHO-GMP plant in Paonta Sahib, supplying doctors and pharmacies across India.',
+    'Revora Healthcare runs from its Ahmedabad headquarters, manufactures at a WHO-GMP facility in Paonta Sahib (H.P.) and works with partners in India and abroad.',
   path: '/our-presence',
   keywords: ['eye drop plant Paonta Sahib', 'pharma company Ahmedabad office'],
 });

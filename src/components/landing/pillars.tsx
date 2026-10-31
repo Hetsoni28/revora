@@ -4,17 +4,16 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowUpRight, Eye, Handshake, Lightbulb } from 'lucide-react';
+import { ArrowUpRight, Eye, Factory, Globe2, Handshake, Lightbulb } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { SplitWords } from '@/components/ui/primitives';
-import { useCatalogue } from '@/components/catalogue/catalogue-context';
 
 const PILLARS = [
   {
     icon: Eye,
     kicker: '01 · Healthcare',
-    title: 'Only ophthalmology.',
-    body: (brands: number, areas: number) => `${brands} eye-care brands across ${areas} therapy areas.`,
+    title: 'Specialty brands.',
+    body: 'Ophthalmology and orthopaedics today, more therapies coming.',
     href: '/profile#portfolio',
     cta: 'Our products',
     span: 'tablet-lg:col-span-7',
@@ -24,13 +23,39 @@ const PILLARS = [
     focus: 'object-[center_40%]',
   },
   {
+    icon: Factory,
+    kicker: '02 · Manufacturing',
+    title: 'Your formulation. Our discipline.',
+    body: 'Eye drops, ointments, nasal sprays and tablets under WHO-GMP.',
+    href: '/manufacturing',
+    cta: 'Manufacture with us',
+    span: 'tablet-lg:col-span-5',
+    tone: 'navy' as const,
+    image: '/images/photos/cert-who-gmp.webp',
+    imageAlt: 'Automated eye-drop filling line in a cleanroom',
+    focus: 'object-center',
+  },
+  {
+    icon: Globe2,
+    kicker: '03 · Export',
+    title: 'Indian quality, export-ready.',
+    body: 'Partnering with importers across Asia and Africa.',
+    href: '/our-presence/global-network',
+    cta: 'Export enquiry',
+    span: 'tablet-lg:col-span-4',
+    tone: 'navy' as const,
+    image: '/images/photos/warehouse-dispatch.webp',
+    imageAlt: 'Cartons being prepared for dispatch in a warehouse',
+    focus: 'object-center',
+  },
+  {
     icon: Lightbulb,
-    kicker: '02 · Innovation',
+    kicker: '04 · Innovation',
     title: 'Distinct by design.',
-    body: () => 'Warmers, cooling and field-care products for extreme conditions.',
+    body: 'Warmers, cooling and field-care products for extreme conditions.',
     href: '/innovation',
     cta: 'Explore innovation',
-    span: 'tablet-lg:col-span-5',
+    span: 'tablet-lg:col-span-4',
     tone: 'navy' as const,
     image: '/images/photos/pillar-innovation.webp',
     imageAlt: 'Gloved hands holding a warming pack in snowy mountains',
@@ -38,12 +63,12 @@ const PILLARS = [
   },
   {
     icon: Handshake,
-    kicker: '03 · Channel Partner',
+    kicker: '05 · Channel Partner',
     title: 'Grow with Revora.',
-    body: () => 'Bring Revora to your territory — with full support from our Ahmedabad team.',
+    body: 'Bring Revora to your territory — with full support from our Ahmedabad team.',
     href: '/channel-partner',
     cta: 'Become a partner',
-    span: 'tablet-lg:col-span-12',
+    span: 'tablet-lg:col-span-4',
     tone: 'slate' as const,
     image: '/images/photos/pillar-partnership.webp',
     imageAlt: 'Two business partners shaking hands in an office',
@@ -52,14 +77,13 @@ const PILLARS = [
 ];
 
 /**
- * Colour wash over each photo, in the card's tone: rising from the bottom on the two top cards,
- * and from the left on the wide partner card (from the bottom on phones), where the copy sits.
+ * Colour wash over each photo, in the card's tone, rising from the bottom where the copy sits.
  */
 const WASH = {
   cobalt: 'bg-[linear-gradient(to_top,rgba(8,52,104,0.96)_0%,rgba(11,74,143,0.78)_42%,rgba(11,74,143,0.12)_100%)]',
   navy: 'bg-[linear-gradient(to_top,rgba(9,20,38,0.95)_0%,rgba(9,20,38,0.7)_42%,rgba(9,20,38,0.08)_100%)]',
   slate:
-    'bg-[linear-gradient(to_top,rgba(30,36,43,0.96)_0%,rgba(30,36,43,0.75)_45%,rgba(30,36,43,0.15)_100%)] tablet-lg:bg-[linear-gradient(90deg,rgba(30,36,43,0.97)_0%,rgba(30,36,43,0.88)_34%,rgba(30,36,43,0.25)_68%,rgba(30,36,43,0)_100%)]',
+    'bg-[linear-gradient(to_top,rgba(30,36,43,0.96)_0%,rgba(30,36,43,0.75)_45%,rgba(30,36,43,0.15)_100%)]',
 };
 
 function PillarCard({ p, i, body }: { p: (typeof PILLARS)[number]; i: number; body: string }) {
@@ -68,7 +92,7 @@ function PillarCard({ p, i, body }: { p: (typeof PILLARS)[number]; i: number; bo
   const mx = useMotionValue(-400);
   const my = useMotionValue(-400);
   const spot = useMotionTemplate`radial-gradient(420px circle at ${mx}px ${my}px, rgba(255,255,255,0.14), transparent 70%)`;
-  const wide = p.tone === 'slate';
+  const wide = p.span.includes('col-span-12');
   const Icon = p.icon;
 
   return (
@@ -133,7 +157,6 @@ function PillarCard({ p, i, body }: { p: (typeof PILLARS)[number]; i: number; bo
 }
 
 export function Pillars() {
-  const { products, categories } = useCatalogue();
   return (
     <section id="why" className="relative bg-[#F6F9FC] px-5 pb-12 pt-24 tablet:px-8 tablet:pb-16 tablet:pt-36">
       <div className="mx-auto max-w-[1320px]">
@@ -143,7 +166,7 @@ export function Pillars() {
 
         <div className="mt-14 grid grid-cols-1 gap-4 tablet:mt-20 tablet-lg:grid-cols-12 tablet-lg:gap-5">
           {PILLARS.map((p, i) => (
-            <PillarCard key={p.title} p={p} i={i} body={p.body(products.length, categories.length)} />
+            <PillarCard key={p.title} p={p} i={i} body={p.body} />
           ))}
         </div>
       </div>

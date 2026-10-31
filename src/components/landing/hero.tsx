@@ -6,11 +6,13 @@ import { ArrowUpRight } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { useCatalogue } from '@/components/catalogue/catalogue-context';
 import { AnchorLink, Counter, Eyebrow, Magnetic, SplitWords } from '@/components/ui/primitives';
+import Link from 'next/link';
 import { IrisBurst } from './iris-burst';
 
 const factsFor = (brands: number, innovationCount: number) => [
-  { value: 15, suffix: '+', label: 'Years in ophthalmology' },
-  { value: brands, suffix: '', label: 'Eye-care brands' },
+  { value: 15, suffix: '+', label: 'Years of industry leadership' },
+  { value: brands, suffix: '', label: 'Healthcare brands' },
+  { value: 4, suffix: '', label: 'Dosage forms manufactured' },
   { value: innovationCount, suffix: '', label: 'Innovation products' },
 ];
 
@@ -62,7 +64,7 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: d, ease: expoOut }}
             >
-              <Eyebrow>Ophthalmic pharmaceuticals · Innovation</Eyebrow>
+              <Eyebrow>Pharmaceuticals · Manufacturing · Export</Eyebrow>
               <span className="sr-only">: </span>
             </motion.span>
             <SplitWords text="Healthcare," trigger="mount" delay={d + 0.1} />{' '}
@@ -81,8 +83,8 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: d + 0.7, ease: expoOut }}
           >
-            Trusted eye-care medicines from our own WHO-GMP plant — and innovation products for
-            comfort in extreme conditions. Serving doctors, pharmacies and partners across India.
+            We develop, manufacture and market trusted medicines across ophthalmology, orthopaedics, nutrition and thermal care, for doctors
+            and partners in India and abroad.
           </motion.p>
 
           <motion.div
@@ -103,18 +105,18 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
                 </span>
               </AnchorLink>
             </Magnetic>
-            <AnchorLink
-              href="#plant"
+            <Link
+              href="/manufacturing"
               className="group inline-flex items-center gap-2 rounded-full px-5 py-3.5 font-sans text-[15px] font-semibold text-revora-slate"
             >
               <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1.5px] bg-left-bottom bg-no-repeat pb-0.5 transition-[background-size] duration-500 group-hover:bg-[length:100%_1.5px]">
-                See our plant
+                Manufacture with us
               </span>
-            </AnchorLink>
+            </Link>
           </motion.div>
 
           <motion.dl
-            className="mt-14 grid max-w-xl grid-cols-3 gap-4 border-t border-revora-cobalt/10 pt-7"
+            className="mt-14 grid max-w-2xl grid-cols-2 gap-x-4 gap-y-6 border-t border-revora-cobalt/10 pt-7 sm:grid-cols-4"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: d + 1.05 }}

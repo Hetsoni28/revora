@@ -27,6 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...page(`/innovation/${p.id}`, 0.7),
       images: [p.image],
     })),
+    page('/manufacturing', 0.8),
     page('/channel-partner', 0.7),
     page('/contact', 0.7),
     page('/our-presence', 0.6),
@@ -35,5 +36,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     page('/philosophy', 0.5, 'yearly'),
     page('/careers', 0.5),
     page('/cookie-policy', 0.2, 'yearly'),
+    page('/privacy-policy', 0.2, 'yearly'),
+    page('/terms-of-use', 0.2, 'yearly'),
+    page('/pharmacovigilance-policy', 0.3, 'yearly'),
   ];
 }

@@ -3,7 +3,9 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Building2, Eye, Factory, Handshake, Layers, MapPin, MessageSquare, Package, Rocket, Send, Sparkles, Store, Truck } from 'lucide-react';
+import { Bone, Building2, Eye, Factory, Handshake, Layers, MapPin, MessageSquare, Package, Phone, Rocket, Send, Sparkles, Store, Truck, Users } from 'lucide-react';
+import type { Product } from '@/lib/catalogue';
+import { SITE } from '@/lib/seo';
 import { expoOut } from '@/lib/easings';
 import { useCatalogue } from '@/components/catalogue/catalogue-context';
 import { FadeUp } from '@/components/ui/primitives';
@@ -15,15 +17,19 @@ import { Honeypot } from '@/components/ui/honeypot';
 
 const PARTNER_EMAIL = 'depot@revorahealthcare.com';
 
-const benefitsFor = (brands: number, areas: number) => [
-  { icon: Layers, title: 'A focused range', text: `${brands} ophthalmic brands across ${areas} therapy areas.` },
-  { icon: Factory, title: 'Made in our plant', text: 'WHO-GMP certified, EU-compliant manufacturing.' },
+const benefitsFor = (brands: number, orthopaedics: boolean) => [
+  { icon: Layers, title: 'A specialty range', text: `${brands} brands across ophthalmology${orthopaedics ? ' and orthopaedics' : ''}.` },
+  { icon: Users, title: 'Field-force backed', text: 'Our territory managers create demand with doctors in your area, so your stock moves.' },
+  { icon: Factory, title: 'WHO-GMP made', text: 'Manufactured at a WHO-GMP facility, with in-house quality control.' },
   { icon: Package, title: 'Premium packs', text: 'Cartons doctors and patients recognise.' },
   { icon: Building2, title: 'Backed by HQ', text: 'Sales and supply support from Ahmedabad.' },
 ];
 
-const rangesFor = (brands: number, areas: number, innovationCount: number) => [
-  { icon: Eye, count: brands, title: 'Ophthalmic range', text: `Prescription eye drops and eye nutrition across ${areas} therapy areas.`, href: '/profile#portfolio', cta: 'See the brands' },
+const rangesFor = (ophthalmic: Product[], orthopaedic: Product[], innovationCount: number) => [
+  { icon: Eye, count: ophthalmic.length, title: 'Ophthalmic range', text: 'Prescription eye drops and eye nutrition.', href: '/profile#portfolio', cta: 'See the brands' },
+  ...(orthopaedic.length
+    ? [{ icon: Bone, count: orthopaedic.length, title: 'Orthopaedic range', text: orthopaedic.map((p) => `${p.name}, ${p.genericName}`).join(' · '), href: `/products/${orthopaedic[0].id}`, cta: orthopaedic.length === 1 ? 'See the product' : 'See the brands' }]
+    : []),
   { icon: Sparkles, count: innovationCount, title: 'Innovation range', text: 'Warmers, cooling and field-care products for tough conditions.', href: '/innovation', cta: 'See the products' },
 ];
 
@@ -43,8 +49,10 @@ const TYPES = [
 export function ChannelPartnerClient() {
   const reduce = useReducedMotion();
   const { products, categories, innovation } = useCatalogue();
-  const BENEFITS = benefitsFor(products.length, categories.length);
-  const RANGES = rangesFor(products.length, categories.length, innovation.length);
+  const division = (p: Product) => categories.find((c) => c.slug === p.categorySlug)?.division ?? 'ophthalmology';
+  const orthopaedic = products.filter((p) => division(p) === 'orthopaedics');
+  const RANGES = rangesFor(products.filter((p) => division(p) === 'ophthalmology'), orthopaedic, innovation.length);
+  const BENEFITS = benefitsFor(products.length, orthopaedic.length > 0);
   return (
     <>
       <PageHero
@@ -53,7 +61,7 @@ export function ChannelPartnerClient() {
         eyebrow="Pharma channel partner"
         lines={['Grow with', 'Revora.']}
         highlight={{ 'Revora.': 'text-revora-cobalt' }}
-        text="Bring our eye-care range to your territory."
+        text="Bring Revora’s specialty range of eye care, joint care and thermal innovation to your territory."
         actions={
           <>
             <Button href="#apply" arrow="down" magnetic>Become a partner</Button>
@@ -69,7 +77,7 @@ export function ChannelPartnerClient() {
       <section className="px-5 py-20 tablet:px-8 tablet:py-28">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Why partner with us" lines={['Everything you need', 'to grow.']} highlight={{ 'grow.': 'text-revora-crimson' }} />
-          <div className="mt-12 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-4">
+          <div className="mt-12 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-5">
             {BENEFITS.map((b, i) => (
               <FadeUp key={b.title} delay={i * 0.08}>
                 <div className="group relative isolate flex h-full min-h-55 flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-white p-7">
@@ -89,8 +97,8 @@ export function ChannelPartnerClient() {
       {/* ── the ranges ── */}
       <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
         <div className="mx-auto max-w-330">
-          <SectionHeading eyebrow="What you’ll carry" lines={['Two ranges.', 'One partner.']} highlight={{ 'One': 'text-revora-crimson' }} />
-          <div className="mt-12 grid gap-5 tablet-lg:grid-cols-2">
+          <SectionHeading eyebrow="What you’ll carry" lines={['Our ranges.', 'One partner.']} highlight={{ 'One': 'text-revora-crimson' }} />
+          <div className={`mt-12 grid gap-5 ${RANGES.length > 2 ? 'tablet-lg:grid-cols-3' : 'tablet-lg:grid-cols-2'}`}>
             {RANGES.map((r, i) => (
               <FadeUp key={r.title} delay={i * 0.1}>
                 <a href={r.href} className="group relative isolate flex h-full min-h-65 flex-col overflow-hidden rounded-[28px] border border-revora-cobalt/10 bg-[#F6F9FC] p-8 tablet:p-10">
@@ -170,6 +178,9 @@ function ApplyForm() {
             <p className="mt-6 max-w-sm font-sans text-[16px] leading-[1.7] text-revora-slate-light">Tell us about your business. Our team will get back to you.</p>
             <a href={`mailto:${PARTNER_EMAIL}`} className="mt-6 inline-flex min-h-6 items-center gap-2 font-sans text-[15px] font-semibold text-revora-cobalt hover:underline">
               <Send className="h-4 w-4" /> {PARTNER_EMAIL}
+            </a>
+            <a href={SITE.phone.href} className="mt-2 flex min-h-6 items-center gap-2 font-sans text-[15px] font-semibold text-revora-cobalt hover:underline">
+              <Phone className="h-4 w-4" /> {SITE.phone.label}
             </a>
           </FadeUp>
         </div>
@@ -279,7 +290,7 @@ function PartnerCard() {
           </motion.li>
         ))}
       </ul>
-      <p className="mt-8 border-t border-white/10 pt-5 font-sans text-[13px] text-white/60">Supported from Ahmedabad · Supplied from our own plant</p>
+      <p className="mt-8 border-t border-white/10 pt-5 font-sans text-[13px] text-white/60">Supported from Ahmedabad · Made at a WHO-GMP facility</p>
     </motion.div>
   );
 }

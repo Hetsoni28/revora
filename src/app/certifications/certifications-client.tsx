@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Award, Building2, FileCheck2, Globe2, Mail, MapPin, ShieldCheck } from 'lucide-react';
+import { Award, Building2, FileCheck2, Mail, MapPin, ShieldCheck } from 'lucide-react';
 import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
@@ -16,28 +16,28 @@ const CERTS = [
   {
     icon: ShieldCheck,
     name: 'WHO-GMP',
-    scope: 'Manufacturing plant',
-    text: 'Our eye-drop plant follows WHO Good Manufacturing Practice.',
+    scope: 'Manufacturing facility',
+    text: 'Our products are made under loan licence at a WHO-GMP facility.',
     where: 'Paonta Sahib, H.P.',
     featured: true,
     image: '/images/photos/cert-who-gmp.webp',
     imageAlt: 'Automated eye-drop filling line in a cleanroom',
   },
   {
-    icon: Globe2,
-    name: 'EU-compliant',
-    scope: 'Manufacturing plant',
-    text: 'The plant is built and run to EU-compliant standards.',
-    where: 'Paonta Sahib, H.P.',
-    image: '/images/photos/cert-eu-compliant.webp',
+    icon: FileCheck2,
+    name: 'Wholesale drug licence',
+    scope: 'Form 20B & 21B',
+    text: '20B GJ-AD2-265245 · 21B GJ-AD2-265246.',
+    where: 'Ahmedabad, Gujarat',
+    image: '/images/photos/cert-manufacturing-suite.webp',
     imageAlt: 'Stainless-steel formulation vessels in a sterile production suite',
   },
   {
     icon: Award,
-    name: 'ISO 9001:2015',
-    scope: 'Quality management',
-    text: 'A certified quality management system.',
-    where: 'Revora Healthcare',
+    name: 'Loan licence',
+    scope: 'Manufacturing',
+    text: 'Our products are made under loan licence at the Paonta Sahib facility.',
+    where: 'Paonta Sahib, H.P.',
     image: '/images/photos/cert-iso-quality.webp',
     imageAlt: 'Quality-control chemist running tests in a pharmaceutical laboratory',
   },
@@ -45,7 +45,7 @@ const CERTS = [
     icon: Building2,
     name: 'Registered company',
     scope: 'Ministry of Corporate Affairs',
-    text: 'CIN U21000GJ2026PTC174674 · incorporated 10 March 2026.',
+    text: 'CIN U21000GJ2026PTC174674 · GST registration 24AAPCR6391D1Z4 · incorporated 10 March 2026.',
     where: 'Ahmedabad, Gujarat',
     image: '/images/photos/cert-registered-corp.webp',
     imageAlt: 'Modern office building with landscaped grounds',
@@ -58,10 +58,10 @@ export function CertificationsClient() {
       <PageHero
         backdrop="/images/heroes/hero-certifications.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Certifications' }]}
-        eyebrow="WHO-GMP & ISO certifications"
+        eyebrow="WHO-GMP manufacturing & licences"
         lines={['Quality,', 'certified.']}
         highlight={{ 'certified.': 'text-revora-cobalt' }}
-        text="Made in our own WHO-GMP certified, EU-compliant plant."
+        text="Made in a WHO-GMP certified facility, with every batch released by our in-house QC lab."
         actions={
           <>
             <Button href="#certificates" arrow="down" magnetic>See certifications</Button>
@@ -143,16 +143,16 @@ export function CertificationsClient() {
         <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] items-center gap-12 tablet-lg:grid-cols-2 tablet-lg:gap-20">
           <PlantLine />
           <div>
-            <SectionHeading eyebrow="Where it’s made" lines={['Our own', 'eye-drop plant.']} highlight={{ own: 'text-revora-cobalt' }} />
+            <SectionHeading eyebrow="Where it’s made" lines={['A WHO-GMP', 'facility.']} highlight={{ 'WHO-GMP': 'text-revora-cobalt' }} />
             <FadeUp delay={0.15}>
               <p className="mt-6 max-w-md font-sans text-[16.5px] leading-[1.75] text-revora-slate-light">
-                A dedicated ophthalmic plant — so quality stays in our control.
+                A multi-dosage facility for sterile eye drops, ointments, nasal sprays and tablets, so quality stays under one roof.
               </p>
               <ul className="mt-8 space-y-3">
                 {[
                   { icon: MapPin, t: 'Paonta Sahib, Himachal Pradesh' },
-                  { icon: ShieldCheck, t: 'WHO-GMP certified' },
-                  { icon: Globe2, t: 'EU-compliant facility' },
+                  { icon: ShieldCheck, t: 'WHO-GMP facility' },
+                  { icon: FileCheck2, t: 'In-house quality control lab' },
                 ].map((x) => (
                   <li key={x.t} className="flex items-center gap-3 font-sans text-[15.5px] font-semibold text-revora-slate">
                     <span className="grid h-9 w-9 place-items-center rounded-xl bg-revora-sky text-revora-cobalt">

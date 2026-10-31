@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Building2, Compass, Factory, Layers, Rocket, Sparkles, Target } from 'lucide-react';
+import { Bone, Building2, Compass, Factory, Globe2, History, Layers, Rocket, Sparkles, Target } from 'lucide-react';
 import { useCatalogue } from '@/components/catalogue/catalogue-context';
 import { SITE } from '@/lib/seo';
 import { FadeUp } from '@/components/ui/primitives';
@@ -14,23 +14,26 @@ const PURPOSE = [
   {
     icon: Target,
     tag: 'Our mission',
-    text: 'Make dependable eye-care medicines easy to find for every doctor, hospital and pharmacy in India.',
+    text: 'To develop, manufacture and deliver dependable, differentiated medicines for every doctor, hospital and partner we serve, in India and beyond.',
     filled: true,
   },
   {
     icon: Compass,
     tag: 'Our vision',
-    text: 'Grow from eye care into specialty healthcare and medical devices — with the same care for quality.',
+    text: 'To become one of India’s most trusted pharmaceutical companies, recognised for differentiated medicines, uncompromising quality and partnerships that grow across borders.',
     filled: false,
   },
 ];
 
 const journeyFor = (brands: number, areas: number) => [
+  { icon: History, when: 'The foundation', title: '15+ years of leadership', text: 'Across sales, marketing, manufacturing and export.' },
   { icon: Building2, when: 'March 2026', title: 'Founded in Ahmedabad', text: 'Revora Healthcare Private Limited is incorporated on 10 March 2026.' },
-  { icon: Factory, when: 'Manufacturing', title: 'Our own plant', text: 'Eye drops made at our WHO-GMP plant in Paonta Sahib, Himachal Pradesh.' },
-  { icon: Layers, when: 'Portfolio', title: `${brands} eye-care brands`, text: `Covering ${areas} therapy areas, from dry eye to infection.` },
-  { icon: Sparkles, when: 'Innovation', title: 'A new range', text: 'Warmers, cooling and field-care products for everyday comfort.' },
-  { icon: Rocket, when: 'Next', title: 'Beyond the eye', text: 'Specialty healthcare products and medical devices.', next: true },
+  { icon: Factory, when: 'Manufacturing', title: 'WHO-GMP facility', text: 'Paonta Sahib, Himachal Pradesh: eye drops, ointments, nasal sprays and tablets.' },
+  { icon: Layers, when: 'Portfolio', title: `${brands} healthcare brands`, text: `Across ${areas} therapy areas.` },
+  { icon: Bone, when: 'Orthopaedics', title: 'Entry with HYSTRIDE', text: 'Our first step into joint care.' },
+  { icon: Sparkles, when: 'Innovation', title: 'Thermal care range', text: 'Warmers, cooling and field-care products for extreme conditions.' },
+  { icon: Globe2, when: 'Now', title: 'Manufacturing & export', text: 'Third-party manufacturing and export partnerships.' },
+  { icon: Rocket, when: 'Next', title: 'New therapy areas', text: 'Specialty healthcare and medical devices.', next: true },
 ];
 
 export function AboutClient() {
@@ -42,9 +45,9 @@ export function AboutClient() {
         crumbs={[{ label: 'Home', href: '/' }, { label: 'About Us' }]}
         eyebrow="About Revora Healthcare"
         backdrop="/images/photos/about-cleanroom.webp"
-        lines={['Our story', 'so far.']}
-        highlight={{ 'story': 'text-revora-cobalt', 'far.': 'text-revora-crimson' }}
-        text="A young Ahmedabad company with one clear purpose — eye care that India can rely on."
+        lines={['New name.', 'Proven experience.', 'Bigger ambition.']}
+        highlight={{ 'experience.': 'text-revora-cobalt', 'ambition.': 'text-revora-crimson' }}
+        text="Revora Healthcare brings 15+ years of pharmaceutical leadership to a new-generation company that develops, manufactures and markets trusted medicines for India and the world."
         actions={
           <>
             <Button href="/profile" arrow="up-right" magnetic>Company profile</Button>
@@ -53,6 +56,21 @@ export function AboutClient() {
         }
         visual={<EyeDropScene />}
       />
+
+      {/* ── the Revora story ── */}
+      <section className="px-5 pb-16 tablet:px-8 tablet:pb-20">
+        <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] gap-8 tablet-lg:grid-cols-[0.8fr_1.2fr] tablet-lg:gap-16">
+          <SectionHeading eyebrow="Our story" lines={['The Revora story.']} highlight={{ 'story.': 'text-revora-cobalt' }} />
+          <FadeUp delay={0.1}>
+            <p className="font-sans text-[17px] leading-[1.8] text-revora-slate-light">
+              Revora Healthcare was incorporated in Ahmedabad in March 2026. The experience behind it goes back more than fifteen years, across
+              sales, marketing, manufacturing and export, including oncology and supplies to India’s defence sector. Revora began where precision
+              matters most, in ophthalmology. That discipline now shapes everything we do: orthopaedics, nutrition, thermal innovation,
+              manufacturing for partners and export. <span className="font-semibold text-revora-slate">The name is new. The standards are not.</span>
+            </p>
+          </FadeUp>
+        </div>
+      </section>
 
       {/* ── mission & vision ── */}
       <section className="px-5 pb-20 tablet:px-8 tablet:pb-28">
@@ -88,7 +106,7 @@ export function AboutClient() {
             highlight={{ 'step.': 'text-revora-crimson' }}
             aside="Where we started, where we are, and where we’re heading."
           />
-          <div className="relative mt-14 grid gap-8 border-l border-revora-cobalt/15 pl-8 desktop:grid-cols-5 desktop:gap-5 desktop:border-l-0 desktop:border-t desktop:pl-0 desktop:pt-10">
+          <div className="relative mt-14 grid gap-8 border-l border-revora-cobalt/15 pl-8 desktop:grid-cols-4 desktop:gap-x-5 desktop:gap-y-14 desktop:border-l-0 desktop:border-t desktop:pl-0 desktop:pt-10">
             {JOURNEY.map((j, i) => (
               <FadeUp key={j.title} delay={i * 0.08} className="relative">
                 <div>
@@ -116,7 +134,7 @@ export function AboutClient() {
             eyebrow="Leadership & Direction"
             lines={['Vision from the founder.']}
             highlight={{ 'founder.': 'text-revora-cobalt' }}
-            aside="Steering Revora's journey with a singular commitment to ophthalmic excellence."
+            aside="Steering Revora’s growth with a commitment to quality, integrity and ambition."
           />
 
           <div className="mt-14 grid grid-cols-[minmax(0,1fr)] items-center gap-10 tablet-lg:grid-cols-[0.85fr_1.15fr] tablet-lg:gap-16">
@@ -143,16 +161,19 @@ export function AboutClient() {
               <div className="space-y-6">
                 <div className="rounded-[24px] border border-revora-cobalt/15 bg-revora-sky/40 p-6 tablet:p-8">
                   <p className="font-heading text-lg font-bold italic leading-relaxed text-revora-slate tablet:text-xl">
-                    “Healthcare is about earning trust — of the surgeon in theatre and the patient at home, every day.”
+                    “Every great pharmaceutical company in India started small. What separated the ones that endured was how seriously they took the
+                    trust placed in them.”
                   </p>
                 </div>
 
                 <div className="space-y-4 font-sans text-[15.5px] leading-[1.8] text-revora-slate-light">
                   <p>
-                    Revora started with a simple idea — eye-care medicines that doctors can rely on and patients can trust.
+                    I have spent more than fifteen years in this industry, in the field, in marketing, in manufacturing and in export. Revora is
+                    everything I learned, built into one company.
                   </p>
                   <p>
-                    Every decision since, from where we manufacture to which brands we build, comes back to that idea.
+                    Our promise to every doctor, partner and Revorian is the same: we will grow fast, but never at the cost of quality or integrity.
+                    This is only the beginning.
                   </p>
                 </div>
 
@@ -163,7 +184,7 @@ export function AboutClient() {
                   </div>
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-revora-sky px-4 py-2 font-sans text-[12px] font-semibold text-revora-cobalt">
                     <span className="h-2 w-2 rounded-full bg-revora-cobalt" />
-                    WHO-GMP & ISO 9001:2015 Direction
+                    15+ Years · Pharmaceutical Leadership
                   </span>
                 </div>
               </div>

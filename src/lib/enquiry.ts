@@ -24,7 +24,7 @@ interface EnquiryKind {
 
 const INFO = 'info@revorahealthcare.com';
 const DEPOT = 'depot@revorahealthcare.com';
-const EXPORTS = 'exports@revorahealthcare.com';
+const EXPORTS = 'export@revorahealthcare.com';
 
 const NAME: EnquiryField = { name: 'name', label: 'Name', required: true, max: 100 };
 const EMAIL: EnquiryField = { name: 'email', label: 'Email', required: true, max: 160 };
@@ -44,6 +44,21 @@ export const ENQUIRIES = {
   'contact-distribution': contact('Distribution in India enquiry', DEPOT),
   'contact-exports': contact('Exports enquiry', EXPORTS),
   'contact-careers': contact('Careers enquiry', INFO),
+  'contact-manufacturing': contact('Manufacturing (CDMO) enquiry', INFO),
+  manufacturing: {
+    title: 'Manufacturing (CDMO) enquiry',
+    to: INFO,
+    fields: [
+      NAME,
+      { name: 'company', label: 'Company', required: true, max: 160 },
+      EMAIL,
+      { ...PHONE, required: true },
+      { name: 'dosageForm', label: 'Dosage form', max: 60 },
+      { name: 'country', label: 'Country', max: 80 },
+      { ...MESSAGE, required: true },
+    ],
+    subject: (v) => `Manufacturing enquiry — ${v.company}${v.dosageForm ? ` (${v.dosageForm})` : ''}`,
+  },
   partner: {
     title: 'Channel partner enquiry',
     to: DEPOT,

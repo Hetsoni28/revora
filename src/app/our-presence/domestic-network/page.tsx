@@ -6,9 +6,9 @@ import { Footer } from '@/components/layout/footer';
 import { DomesticClient } from './domestic-client';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Domestic Network — Eye Care Supply in India',
+  title: 'Domestic Network — Launch States in India',
   description:
-    'How Revora Healthcare serves doctors, hospitals, eye clinics, pharmacies and distributors across India with ophthalmic eye drops made in its own plant.',
+    'Revora Healthcare serves doctors, hospitals, pharmacies, distributors and institutions in Gujarat, Madhya Pradesh, Karnataka, Bihar, Jharkhand and Odisha.',
   path: '/our-presence/domestic-network',
   keywords: ['eye drops supplier India', 'ophthalmic products for hospitals', 'eye care distributor India'],
 });

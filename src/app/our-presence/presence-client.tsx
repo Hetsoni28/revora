@@ -21,11 +21,11 @@ const FACILITIES = [
     badge: 'Registered office',
     name: 'Corporate headquarters',
     city: 'Ahmedabad, Gujarat',
-    address: '3rd Floor, S.G. Business Hub, A/303, Sarkhej–Gandhinagar Highway, near Gota Overbridge, Ognaj, Ahmedabad, Gujarat 380060',
-    detail: 'Sales, distribution and partnerships for all of India.',
+    address: 'A-303, 3rd Floor, S.G. Business Hub, B/s Bhagvat Petrol Pump, Nr. Gota Over Bridge, S.G. Highway, Ahmedabad, Gujarat 382470',
+    detail: 'Sales, distribution, partnerships and export, run from Ahmedabad.',
     roles: ['Sales & marketing', 'Distribution & supply planning', 'Partnerships & institutional supply', 'Pharmacovigilance'],
-    facts: [['Role', 'Head office'], ['Reach', 'All of India']],
-    mapQuery: 'S.G. Business Hub, Gota, Ahmedabad, Gujarat 380060',
+    facts: [['Role', 'Head office'], ['Reach', 'India + export markets']],
+    mapQuery: 'S.G. Business Hub, Nr. Gota Over Bridge, S.G. Highway, Ahmedabad, Gujarat 382470',
     images: ['/images/photos/ahmedabad-skyline.webp'],
     logos: false,
     second: { label: 'Contact us', href: '/contact', icon: undefined },
@@ -33,13 +33,13 @@ const FACILITIES = [
   {
     index: '02',
     icon: Factory,
-    badge: 'WHO-GMP certified',
-    name: 'Ophthalmic manufacturing plant',
+    badge: 'WHO-GMP facility',
+    name: 'Manufacturing facility',
     city: 'Paonta Sahib, Himachal Pradesh',
     address: 'Paonta Sahib, Himachal Pradesh',
-    detail: 'Our own eye-drop plant — WHO-GMP certified and EU-compliant.',
-    roles: ['Sterile eye-drop filling', 'Dedicated ophthalmic lines', 'Quality control & release', 'Packing in premium cartons'],
-    facts: [['Standard', 'WHO-GMP'], ['Compliance', 'EU-compliant']],
+    detail: 'Our manufacturing facility: WHO-GMP certified, with in-house quality control.',
+    roles: ['Sterile eye drops', 'Ophthalmic ointments', 'Nasal sprays', 'Tablets', 'In-house QC & release'],
+    facts: [['Standard', 'WHO-GMP'], ['Basis', 'Loan licence']],
     mapQuery: 'Paonta Sahib, Himachal Pradesh',
     images: ['/images/site/eye-drop-filling-line.webp'],
     logos: false,
@@ -76,12 +76,12 @@ export function PresenceClient() {
               <SectionHeading
                 level="page"
                 eyebrow="Our presence · Ahmedabad HQ"
-                lines={['Rooted in Ahmedabad.', 'Serving India.']}
+                lines={['Rooted in Ahmedabad.', 'Growing beyond.']}
                 highlight={{ 'Ahmedabad.': 'text-revora-cobalt' }}
               />
               <FadeUp delay={0.5}>
                 <p className="mt-7 max-w-xl font-sans text-[17px] leading-[1.7] text-revora-slate-light">
-                  An Ahmedabad office and our own eye-drop plant — serving doctors, hospitals, pharmacies and distributors across India.
+                  An Ahmedabad headquarters, a WHO-GMP manufacturing facility, and partners across India and abroad.
                 </p>
               </FadeUp>
               <FadeUp delay={0.6} className="mt-9 flex flex-wrap gap-3">
@@ -99,9 +99,9 @@ export function PresenceClient() {
         <div className="mx-auto max-w-330">
           <SectionHeading
             eyebrow="Where we operate"
-            lines={['One office. One plant.', 'One focus.']}
-            highlight={{ 'focus.': 'text-revora-crimson' }}
-            aside="Ahmedabad office. Himachal Pradesh plant."
+            lines={['One headquarters. One standard.', 'Three businesses.']}
+            highlight={{ 'businesses.': 'text-revora-crimson' }}
+            aside="Ahmedabad headquarters. Himachal Pradesh manufacturing."
           />
           <div className="mt-14 grid grid-cols-[minmax(0,1fr)] gap-5 tablet-lg:grid-cols-2">
             {FACILITIES.map((f, i) => (

@@ -2,24 +2,38 @@
 
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, Stethoscope, Truck, Users } from 'lucide-react';
+import { ArrowUpRight, Factory, Globe2, Stethoscope, Truck, Users } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { Eyebrow, SplitWords } from '@/components/ui/primitives';
 
 const PATHS = [
   {
     icon: Stethoscope,
-    who: 'Ophthalmologists',
+    who: 'Doctors & hospitals',
     line: 'Samples, literature or a visit from our medical representative.',
     cta: 'Talk to our team',
-    href: 'mailto:depot@revorahealthcare.com?subject=Doctor%20enquiry',
+    href: '/contact#message',
   },
   {
     icon: Truck,
     who: 'Distributors & stockists',
-    line: 'Bring our eye-care range to your territory.',
+    line: 'Bring our specialty range to your territory.',
     cta: 'Become a partner',
-    href: 'mailto:depot@revorahealthcare.com?subject=Distribution%20enquiry',
+    href: '/channel-partner',
+  },
+  {
+    icon: Factory,
+    who: 'Brand owners',
+    line: 'WHO-GMP manufacturing for your formulations.',
+    cta: 'Manufacture with us',
+    href: '/manufacturing',
+  },
+  {
+    icon: Globe2,
+    who: 'International buyers',
+    line: 'Importer and distribution partnerships abroad.',
+    cta: 'Export enquiry',
+    href: '/our-presence/global-network',
   },
   {
     icon: Users,
@@ -38,11 +52,11 @@ export function ContactBand() {
         <div className="text-center">
           <Eyebrow>Work with us</Eyebrow>
           <h2 className="mx-auto mt-5 max-w-4xl font-heading text-[clamp(2.6rem,6.4vw,5.6rem)] font-extrabold leading-[0.98] tracking-[-0.03em] text-revora-slate">
-            <SplitWords text="Let’s build clearer vision, together." highlight={{ clearer: 'text-revora-cobalt', 'together.': 'text-revora-crimson' }} />
+            <SplitWords text="Let’s build healthier futures, together." highlight={{ healthier: 'text-revora-cobalt', 'together.': 'text-revora-crimson' }} />
           </h2>
         </div>
 
-        <div className="mt-16 grid gap-4 tablet-lg:grid-cols-3 tablet-lg:gap-5">
+        <div className="mt-16 grid gap-4 tablet:grid-cols-2 tablet-lg:grid-cols-3 tablet-lg:gap-5 desktop:grid-cols-5">
           {PATHS.map((p, i) => {
             const internal = p.href.startsWith('/');
             const Comp = internal ? Link : 'a';

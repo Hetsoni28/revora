@@ -36,22 +36,12 @@ function arc(to: readonly number[], bow = 0.22) {
  * in the crowded north. A state without an entry gets a label just to the right of its pin.
  */
 const LABEL_AT: Record<string, { x: number; y: number; side: 'left' | 'right' }> = {
-  // left column (north to south), ~40+ units apart
-  'Jammu & Kashmir': { x: 96, y: 58, side: 'left' },
-  'Himachal Pradesh': { x: 126, y: 98, side: 'left' },
-  Punjab: { x: 120, y: 140, side: 'left' },
-  Rajasthan: { x: 110, y: 198, side: 'left' },
-  Maharashtra: { x: 68, y: 330, side: 'left' },
-  // right column, below the plant label
-  Uttarakhand: { x: 184, y: 132, side: 'right' },
-  // kept above Lucknow's pin
-  Delhi: { x: 178, y: 170, side: 'right' },
-  'Uttar Pradesh': { x: 222, y: 228, side: 'right' },
-  'Madhya Pradesh': { x: 172, y: 274, side: 'right' },
-  Telangana: { x: 186, y: 330, side: 'right' },
-  'Andhra Pradesh': { x: 216, y: 376, side: 'right' },
+  'Madhya Pradesh': { x: 168, y: 232, side: 'right' },
   Karnataka: { x: 172, y: 420, side: 'right' },
-  Kerala: { x: 160, y: 486, side: 'right' },
+  // the east: labels to the right of their pins, stacked so they never overlap
+  Bihar: { x: 290, y: 206, side: 'right' },
+  Jharkhand: { x: 298, y: 252, side: 'right' },
+  Odisha: { x: 304, y: 300, side: 'right' },
 };
 
 // the HQ state is shown by the HQ pin, so it gets no route or pin of its own

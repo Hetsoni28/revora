@@ -18,32 +18,32 @@ import { GLOBAL_NETWORK } from '@/lib/network';
 
 const REGIONS = (['Asia', 'Africa'] as const).map((region) => ({ region, countries: GLOBAL_NETWORK.filter((m) => m.region === region) }));
 
-// counted from lib/network.ts, so they stay true as countries are added
+// Target markets (no registrations or supply yet) — counted from lib/network.ts
 const STATS = [
-  { value: GLOBAL_NETWORK.length, suffix: '', label: 'Countries outside India' },
-  ...REGIONS.map((r) => ({ value: r.countries.length, suffix: '', label: `Countries in ${r.region}` })),
+  { value: GLOBAL_NETWORK.length, suffix: '', label: 'Priority export markets' },
+  ...REGIONS.map((r) => ({ value: r.countries.length, suffix: '', label: `In ${r.region}` })),
 ];
 
 const CAPABILITIES = [
   {
     icon: ShieldCheck,
-    title: 'International Quality Standards',
-    desc: 'Sterile ophthalmic manufacturing strictly adhering to WHO-GMP and international cGMP guidelines.',
+    title: 'WHO-GMP manufacturing',
+    desc: 'Eye drops, ointments, nasal sprays and tablets from a WHO-GMP certified facility, released by an in-house QC lab.',
   },
   {
     icon: FileCheck,
-    title: 'Regulatory & Dossier Support',
-    desc: 'CTD/eCTD dossier documentation ready for registration across overseas drug authorities and ministries.',
+    title: 'Regulatory support',
+    desc: 'CTD-format dossier preparation for your market’s registration, working alongside your regulatory team.',
   },
   {
     icon: Plane,
-    title: 'Global Supply Logistics',
-    desc: 'Validated cold chain and temperature-controlled air/sea logistics ensuring product stability across borders.',
+    title: 'Export logistics',
+    desc: 'Export-grade packing and shipping coordination via Mundra and Nhava Sheva.',
   },
   {
     icon: Award,
-    title: 'Contract & Out-Licensing',
-    desc: 'Flexible partnership models including private labeling, out-licensing, and country-exclusive distribution.',
+    title: 'Private label & distribution',
+    desc: 'Supply under the Revora brand or your own label, with country-exclusive distribution options.',
   },
 ];
 
@@ -84,7 +84,7 @@ export function GlobalClient() {
         eyebrow="Ophthalmic exports · Global network"
         lines={['Expanding vision,', 'worldwide.']}
         highlight={{ 'worldwide.': 'text-revora-cobalt-pale' }}
-        text="Taking Revora's precision ophthalmic eye-care formulations to international markets through dedicated distribution and institutional partnerships."
+        text="Taking Revora’s WHO-GMP formulations (eye drops, ointments, nasal sprays and tablets) to international markets through importer and institutional partnerships."
         background={{ src: '/images/photos/warehouse-dispatch.webp', alt: 'International dispatch of ophthalmic formulations' }}
       />
 
@@ -114,7 +114,7 @@ export function GlobalClient() {
             eyebrow="Global reach"
             lines={['From Ahmedabad', 'to the world.']}
             highlight={{ 'world.': 'text-revora-cobalt-pale' }}
-            aside={`Present in ${GLOBAL_NETWORK.length} countries across Asia and Africa — supplied from our plant in India.`}
+            aside={`${GLOBAL_NETWORK.length} priority markets across Asia and Africa. Now appointing importers and distribution partners.`}
           />
           <FadeUp delay={0.1}>
             <WorldDotMap className="mt-12" />
@@ -122,13 +122,13 @@ export function GlobalClient() {
           {/* key to the pins */}
           <p className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-sans text-[12.5px] font-semibold text-white/80">
             <span className="inline-flex items-center gap-2"><span aria-hidden className="h-3 w-3 rounded-full border-2 border-white bg-revora-cobalt" /> India · HQ Ahmedabad</span>
-            <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2.5 w-2.5 rounded-full bg-revora-crimson ring-2 ring-white/70" /> Countries we serve</span>
+            <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2.5 w-2.5 rounded-full bg-revora-crimson ring-2 ring-white/70" /> Priority markets</span>
           </p>
           <div className="mt-8 grid gap-6 border-t border-white/10 pt-8 tablet:grid-cols-2">
             {REGIONS.map((r) => (
               <div key={r.region}>
                 <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-cobalt-pale">
-                  {r.region} · {r.countries.length} countries
+                  {r.region} · {r.countries.length} priority markets
                 </p>
                 <ul className="mt-3 flex flex-wrap gap-2">
                   {r.countries.map((m) => (
@@ -186,12 +186,12 @@ export function GlobalClient() {
               Partner with Revora in your country.
             </h2>
             <p className="mt-4 font-sans text-base text-revora-slate-light leading-relaxed">
-              Importers, distributors and licensing partners — let’s talk.
+              Importers and distribution partners — let’s talk.
             </p>
             <div className="mt-8 flex flex-col gap-3 font-sans text-sm text-revora-slate">
               <div className="flex items-center gap-2">
                 <Globe className="h-4 w-4 text-revora-cobalt" />
-                <span>Dedicated Export Regulatory Cell</span>
+                <span>Dedicated export desk at our Ahmedabad HQ</span>
               </div>
               <div className="flex items-center gap-2">
                 <Ship className="h-4 w-4 text-revora-cobalt" />

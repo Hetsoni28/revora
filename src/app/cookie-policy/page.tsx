@@ -17,7 +17,8 @@ const breadcrumbs = breadcrumbLd([['Home', '/'], ['Cookie Policy', '/cookie-poli
 /** What the site actually stores today. Update this table whenever a new cookie or tag is added. */
 const STORED = [
   { name: 'revora_consent', type: 'Cookie', category: 'Necessary', duration: '6 months', purpose: 'Remembers your cookie choice so we don’t ask on every visit.' },
-  { name: 'revora-intro-seen', type: 'Session storage', category: 'Necessary', duration: 'Until you close the tab', purpose: 'Plays the opening animation once per visit.' },
+  { name: 'revora-intro-seen', type: 'Local storage', category: 'Necessary', duration: '30 days', purpose: 'Plays the opening animation once, then not again for 30 days.' },
+  { name: 'revora-hcp-confirmed', type: 'Local storage', category: 'Necessary', duration: 'Until you clear it', purpose: 'Remembers that you confirmed you are a healthcare professional, so prescription product pages don’t ask again.' },
 ];
 
 export default function CookiePolicyPage() {

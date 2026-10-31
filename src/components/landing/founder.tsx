@@ -87,8 +87,8 @@ export function FounderSection() {
             <FadeUp>
               <Eyebrow>Leadership & Direction</Eyebrow>
               <h2 className="mt-5 font-heading text-[clamp(2.2rem,4.4vw,3.8rem)] font-extrabold leading-[1.05] tracking-[-0.02em] text-revora-slate">
-                Dedicated to ocular health.{' '}
-                <span className="text-revora-cobalt">Driven by trust.</span>
+                Built on trust.{' '}
+                <span className="text-revora-cobalt">Driven by ambition.</span>
               </h2>
             </FadeUp>
 
@@ -97,7 +97,7 @@ export function FounderSection() {
               <div className="relative mt-8 rounded-[24px] border border-revora-cobalt/15 bg-revora-sky/30 p-6 tablet:p-8">
                 <Quote className="h-9 w-9 text-revora-cobalt/30" />
                 <blockquote className="mt-2 font-heading text-[clamp(1.15rem,2vw,1.45rem)] font-bold italic leading-relaxed text-revora-slate">
-                  “Every formulation must give the doctor confidence and the patient lasting comfort.”
+                  “We are a young company with an old-fashioned belief: trust is earned one prescription, one batch and one partnership at a time.”
                 </blockquote>
               </div>
             </FadeUp>
@@ -105,8 +105,8 @@ export function FounderSection() {
             <FadeUp delay={0.25}>
               <div className="mt-7 space-y-4 font-sans text-[15.5px] leading-[1.8] text-revora-slate-light">
                 <p>
-                  From our Ahmedabad headquarters to our WHO-GMP eye-drop plant at Paonta Sahib, eye care isn’t a side line — it’s
-                  all we do.
+                  From our Ahmedabad headquarters, Revora brings 15+ years of pharmaceutical leadership to doctors, partners and markets in India and
+                  abroad.
                 </p>
               </div>
             </FadeUp>

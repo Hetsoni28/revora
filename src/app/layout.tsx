@@ -37,11 +37,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Revora Healthcare | Ophthalmic Eye Drops Company, Ahmedabad',
+    default: 'Revora Healthcare | Pharmaceutical Company in Ahmedabad',
     template: '%s | Revora Healthcare',
   },
   description:
-    'Revora Healthcare is an Ahmedabad pharmaceutical company making ophthalmic eye drops for infection, inflammation and dry eye in its own WHO-GMP plant.',
+    'Revora Healthcare is an Ahmedabad pharmaceutical company: specialty brands in ophthalmology and orthopaedics, WHO-GMP manufacturing for partners, and exports.',
   applicationName: SITE.name,
   keywords: KEYWORDS,
   authors: [{ name: SITE.legalName, url: SITE_URL }],

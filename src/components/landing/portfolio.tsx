@@ -4,23 +4,37 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Eye, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Bone, Eye, Sparkles } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
-import type { Catalogue } from '@/lib/catalogue';
+import type { Catalogue, Division, Product } from '@/lib/catalogue';
 import { useCatalogue } from '@/components/catalogue/catalogue-context';
 import { onTabListKeyDown } from '@/lib/a11y';
 import { ProductLogo, ProductLogoLink } from '@/components/offerings/product-logo';
 import { Eyebrow, SplitWords } from '@/components/ui/primitives';
 
+/** Products in one division (ophthalmology or orthopaedics), by their therapy area. */
+const inDivision = ({ products, categories }: Catalogue, division: Division) =>
+  products.filter((p) => (categories.find((c) => c.slug === p.categorySlug)?.division ?? 'ophthalmology') === division);
+const brandCount = (list: Product[]) => (list.length === 1 ? list[0].name : `${list.length} brands`);
+
 const RANGES = [
   {
-    id: 'healthcare',
+    id: 'ophthalmology',
     icon: Eye,
-    label: 'Healthcare',
-    count: ({ products }: Catalogue) => `${products.length} eye-care brands`,
-    text: 'Eye drops, eye gel and retinal nutrition for doctors, hospitals and pharmacies.',
+    label: 'Ophthalmology',
+    count: (c: Catalogue) => brandCount(inDivision(c, 'ophthalmology')),
+    text: 'Prescription eye care and retinal nutrition for doctors, hospitals and pharmacies.',
     href: '/profile#portfolio',
-    cta: 'View all eye-care brands',
+    cta: 'View all brands',
+  },
+  {
+    id: 'orthopaedics',
+    icon: Bone,
+    label: 'Orthopaedics',
+    count: (c: Catalogue) => brandCount(inDivision(c, 'orthopaedics')),
+    text: 'Joint care for orthopaedic specialists.',
+    href: '/profile#portfolio',
+    cta: 'View all brands',
   },
   {
     id: 'innovation',
@@ -36,21 +50,23 @@ const RANGES = [
 type RangeId = (typeof RANGES)[number]['id'];
 
 /**
- * Our products: one switch, two ranges.
+ * Our products: one switch, one tab per range (Orthopaedics appears once it has a product in Sanity).
  * Healthcare on desktop keeps the pinned rail — scrolling down slides the brand logos sideways;
  * on smaller screens (or with reduced motion) the brands sit in a grid. Innovation is a swipeable row.
  */
 export function Portfolio() {
   const reduce = useReducedMotion();
-  const [range, setRange] = useState<RangeId>('healthcare');
+  const [range, setRange] = useState<RangeId>('ophthalmology');
   const catalogue = useCatalogue();
-  const active = RANGES.find((r) => r.id === range) ?? RANGES[0];
+  const ranges = RANGES.filter((r) => r.id !== 'orthopaedics' || inDivision(catalogue, 'orthopaedics').length > 0);
+  const active = ranges.find((r) => r.id === range) ?? ranges[0];
+  const brands = range === 'innovation' ? [] : inDivision(catalogue, range === 'orthopaedics' ? 'orthopaedics' : 'ophthalmology');
 
   const sectionRef = useRef<HTMLElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const [wide, setWide] = useState(false);
   const [distance, setDistance] = useState(0);
-  const pinned = wide && !reduce && range === 'healthcare';
+  const pinned = wide && !reduce && range === 'ophthalmology';
 
   useEffect(() => {
     const measure = () => {
@@ -85,7 +101,7 @@ export function Portfolio() {
             <div className="max-w-2xl">
               <Eyebrow>Our products</Eyebrow>
               <h2 className="mt-5 font-heading text-[clamp(2.3rem,5.4vw,4.6rem)] font-extrabold leading-none tracking-[-0.02em] text-revora-slate">
-                <SplitWords text="Two ranges. One promise." highlight={{ 'promise.': 'text-revora-crimson' }} />
+                <SplitWords text="Our ranges. One promise." highlight={{ 'promise.': 'text-revora-crimson' }} />
               </h2>
               <p className="mt-4 font-sans text-[16px] leading-[1.7] text-revora-slate-light">{active.text}</p>
             </div>
@@ -93,10 +109,10 @@ export function Portfolio() {
             <div
               role="tablist"
               aria-label="Product ranges"
-              onKeyDown={(e) => onTabListKeyDown(e, RANGES.map((r) => r.id), range, setRange)}
+              onKeyDown={(e) => onTabListKeyDown(e, ranges.map((r) => r.id), range, setRange)}
               className="flex w-full shrink-0 gap-1 rounded-full border border-revora-cobalt/10 bg-white p-1 sm:w-auto"
             >
-              {RANGES.map((r) => {
+              {ranges.map((r) => {
                 const on = r.id === range;
                 return (
                   <button
@@ -131,7 +147,7 @@ export function Portfolio() {
                 style={{ x }}
                 className="mt-10 flex w-max items-center gap-24 px-8 desktop:pl-[max(2rem,calc((100vw-1320px)/2+2rem))] [@media(max-height:820px)]:mt-6"
               >
-                {catalogue.products.map((p) => (
+                {brands.map((p) => (
                   <ProductLogoLink key={p.id} product={p} eager className="h-[min(240px,26vh)] w-115 shrink-0" />
                 ))}
               </motion.div>
@@ -151,7 +167,7 @@ export function Portfolio() {
                   exit={reduce ? undefined : { opacity: 0, y: -8 }}
                   transition={{ duration: 0.4, ease: expoOut }}
                 >
-                  {range === 'healthcare' ? <BrandGrid /> : <InnovationRow />}
+                  {range === 'innovation' ? <InnovationRow /> : <BrandGrid products={brands} />}
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -169,9 +185,8 @@ export function Portfolio() {
   );
 }
 
-/* ── Healthcare: every brand fully visible ───────────────── */
-function BrandGrid() {
-  const { products } = useCatalogue();
+/* ── Brands of one range, every one fully visible ─────────── */
+function BrandGrid({ products }: { products: Product[] }) {
   return (
     <ul className="grid grid-cols-2 gap-3 tablet:grid-cols-3 tablet:gap-4">
       {products.map((p) => (

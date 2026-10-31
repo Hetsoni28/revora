@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion';
-import { BadgeCheck, Hospital, Pause, Pill, Play, Stethoscope, Truck } from 'lucide-react';
+import { BadgeCheck, Hospital, Pause, Pill, Play, ShieldCheck, Stethoscope, Truck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { onTabListKeyDown } from '@/lib/a11y';
 import { FadeUp } from '@/components/ui/primitives';
@@ -50,7 +50,16 @@ const AUDIENCES = [
     image: '/images/photos/warehouse-inventory.webp',
     alt: 'Worker checking medicine stock in a warehouse',
     text: 'Our range, in new territories.',
-    points: ['Dedicated eye-care range', 'Made in our own plant', 'Support from Ahmedabad HQ'],
+    points: ['Specialty range', 'Made at a WHO-GMP facility', 'Support from Ahmedabad HQ'],
+  },
+  {
+    id: 'institutions',
+    icon: ShieldCheck,
+    name: 'Institutions & Defence',
+    image: '/images/photos/value-quality.webp',
+    alt: 'Quality-control scientist inspecting eye-drop vials in a cleanroom',
+    text: 'Reliable supply for hospitals, government and the armed forces.',
+    points: ['Key account management', 'Documentation for tenders', 'WHO-GMP manufacturing'],
   },
 ];
 
@@ -60,10 +69,10 @@ export function DomesticClient() {
       <PageHero
         backdrop="/images/heroes/hero-domestic-network.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Our Presence', href: '/our-presence' }, { label: 'Domestic Network' }]}
-        eyebrow="Eye-care distribution across India"
-        lines={['Every link in', 'the eye-care chain.']}
-        highlight={{ 'eye-care': 'text-revora-cobalt' }}
-        text="From our plant to every doctor, hospital and pharmacy across India."
+        eyebrow="Healthcare distribution in India"
+        lines={['Every link in', 'the healthcare chain.']}
+        highlight={{ healthcare: 'text-revora-cobalt' }}
+        text="From our manufacturing facility to doctors, hospitals and pharmacies in our launch states."
         actions={
           <>
             <Button href="/channel-partner" arrow="up-right" magnetic>Become a partner</Button>
@@ -77,10 +86,10 @@ export function DomesticClient() {
       <section className="px-5 pb-20 tablet:px-8 tablet:pb-28">
         <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] items-center gap-12 overflow-hidden rounded-[32px] border border-revora-cobalt/10 bg-white p-6 tablet:p-12 tablet-lg:grid-cols-[0.9fr_1.1fr] tablet-lg:gap-16">
           <div>
-            <SectionHeading eyebrow="Across India" lines={['Made in the hills.', 'Sent across India.']} highlight={{ 'India.': 'text-revora-cobalt' }} />
+            <SectionHeading eyebrow="Our network" lines={['Launching in 6 states.', 'Expanding across India.']} highlight={{ 'India.': 'text-revora-cobalt' }} />
             <FadeUp delay={0.15}>
               <p className="mt-6 max-w-md font-sans text-[16.5px] leading-[1.75] text-revora-slate-light">
-                Made in Paonta Sahib, run from Ahmedabad and delivered through our partners in {DOMESTIC_NETWORK.length} states and union territories.
+                Made in Paonta Sahib (Himachal Pradesh), run from Ahmedabad, with our field team in {DOMESTIC_NETWORK.length} states.
               </p>
               <ul className="mt-8 space-y-4">
                 {[
@@ -99,7 +108,7 @@ export function DomesticClient() {
               <div className="mt-8 border-t border-revora-cobalt/10 pt-6">
                 <p className="flex items-center gap-3 font-heading text-[17px] font-extrabold text-revora-slate">
                   <span aria-hidden className="h-3 w-3 shrink-0 rounded-full border-2 border-revora-cobalt bg-white ring-4 ring-revora-sky" />
-                  Our network · {DOMESTIC_NETWORK.length} states &amp; UTs
+                  Launch states · {DOMESTIC_NETWORK.length}
                 </p>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {DOMESTIC_NETWORK.map((s) => (
@@ -175,7 +184,7 @@ function WhoWeServe() {
         onFocus={() => setHold(true)}
         onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && setHold(false)}
       >
-        <SectionHeading eyebrow="Who we serve" lines={['Four partners.', 'One promise.']} highlight={{ 'promise.': 'text-revora-crimson' }} />
+        <SectionHeading eyebrow="Who we serve" lines={['Five partners.', 'One promise.']} highlight={{ 'promise.': 'text-revora-crimson' }} />
 
         <div className="mt-10 flex items-center gap-3">
           <div
