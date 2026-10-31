@@ -75,13 +75,14 @@ export async function POST(request: NextRequest) {
     if (f.max && v.length > f.max) return fail(400, `${f.label} is too long.`);
     values[f.name] = f.name === 'message' ? v : oneLine(v);
   }
-  if (!EMAIL_RE.test(values.email)) return fail(400, 'Please enter a valid email address.');
+  if (values.email && !EMAIL_RE.test(values.email)) return fail(400, 'Please enter a valid email address.');
 
   let attachment: { filename: string; content: Buffer; contentType: string } | undefined;
   const cv = form.get('cv');
   if ('cv' in kind && kind.cv && cv instanceof File && cv.size > 0) {
     if (cv.size > CV_MAX_BYTES) return fail(400, 'Your CV must be 4 MB or smaller.');
-    if (!CV_TYPES.includes(cv.type)) return fail(400, 'Please attach your CV as a PDF or Word file.');
+    const ALLOWED_TYPES = [...CV_TYPES, 'image/jpeg', 'image/png', 'image/webp'];
+    if (!ALLOWED_TYPES.includes(cv.type)) return fail(400, 'Please attach a PDF, Word or image file.');
     const safeName = cv.name.replace(/[^\w.\- ]+/g, '_').slice(-120) || 'cv';
     attachment = { filename: safeName, content: Buffer.from(await cv.arrayBuffer()), contentType: cv.type };
   }
