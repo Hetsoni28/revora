@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { AlertCircle, ArrowUpRight, Award, Building2, Globe, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
 import { SITE } from '@/lib/seo';
-import { AnchorLink, Magnetic, Tick } from '@/components/ui/primitives';
+import { AnchorLink, Tick } from '@/components/ui/primitives';
+import { Button } from '@/components/ui/button';
 import { CookieSettingsLink } from '@/components/consent/cookie-settings-link';
 
 const COLUMNS: { title: string; href?: string; links: [string, string | null][] }[] = [
@@ -102,18 +103,12 @@ export function Footer() {
             </p>
           </div>
           <div className="flex shrink-0 flex-col gap-2 tablet:items-end">
-            <AnchorLink
-              href="/pharmacovigilance-policy#report"
-              className="rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-center font-sans text-[13px] font-semibold transition-colors hover:bg-white/15"
-            >
-              Report online →
-            </AnchorLink>
-            <a
-              href="mailto:safety@revorahealthcare.com?subject=Adverse%20drug%20reaction%20report"
-              className="rounded-full border border-white/10 bg-transparent px-5 py-2.5 text-center font-sans text-[13px] font-semibold text-white/60 transition-colors hover:bg-white/5 hover:text-white/80"
-            >
+            <Button href="/pharmacovigilance-policy#report" variant="outline-light" arrow="up-right">
+              Report online
+            </Button>
+            <Button href="mailto:safety@revorahealthcare.com?subject=Adverse%20drug%20reaction%20report" variant="outline-light">
               Email Drug Safety Team
-            </a>
+            </Button>
           </div>
         </div>
 
@@ -164,17 +159,11 @@ export function Footer() {
               ))}
             </div>
 
-            <Magnetic className="mt-8">
-              <AnchorLink
-                href="/channel-partner"
-                className="group inline-flex items-center gap-3 rounded-full bg-revora-crimson py-3 pl-6 pr-3 font-sans text-[14px] font-semibold text-white"
-              >
+            <div className="mt-8">
+              <Button href="/channel-partner" variant="primary" arrow="up-right" magnetic>
                 Partner with Revora
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/15 transition-transform duration-500 group-hover:rotate-45">
-                  <ArrowUpRight className="h-4 w-4" />
-                </span>
-              </AnchorLink>
-            </Magnetic>
+              </Button>
+            </div>
           </div>
 
           {COLUMNS.map((col) => (
