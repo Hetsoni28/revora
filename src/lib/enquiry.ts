@@ -25,6 +25,7 @@ interface EnquiryKind {
 const INFO = 'info@revorahealthcare.com';
 const DEPOT = 'depot@revorahealthcare.com';
 const EXPORTS = 'export@revorahealthcare.com';
+const SAFETY = 'safety@revorahealthcare.com';
 
 const NAME: EnquiryField = { name: 'name', label: 'Name', required: true, max: 100 };
 const EMAIL: EnquiryField = { name: 'email', label: 'Email', required: true, max: 160 };
@@ -110,6 +111,32 @@ export const ENQUIRIES = {
       MESSAGE,
     ],
     subject: (v) => `Sample request — ${v.product || 'Ophthalmic products'}`,
+  },
+  adr: {
+    title: 'Adverse Drug Reaction / Safety Report',
+    to: SAFETY,
+    cv: true,
+    fields: [
+      { name: 'reporter_type', label: 'I am a', max: 80 },
+      NAME,
+      EMAIL,
+      PHONE,
+      { name: 'city', label: 'City / State', max: 120 },
+      { name: 'patient_initials', label: 'Patient initials (or anonymous)', max: 40 },
+      { name: 'patient_gender', label: 'Patient gender', max: 20 },
+      { name: 'patient_age', label: 'Patient age', max: 20 },
+      { name: 'product_name', label: 'Product name', required: true, max: 200 },
+      { name: 'batch_number', label: 'Batch number', max: 80 },
+      { name: 'expiry_date', label: 'Expiry date (on pack)', max: 40 },
+      { name: 'indication', label: 'What was the product being used for?', max: 500 },
+      { name: 'dose', label: 'Dose and frequency', max: 200 },
+      { name: 'event_description', label: 'What happened? (describe the reaction or quality issue)', required: true, max: 3000 },
+      { name: 'onset_date', label: 'Date / approximate date of onset', max: 80 },
+      { name: 'seriousness', label: 'Seriousness', max: 200 },
+      { name: 'outcome', label: 'Current outcome', max: 200 },
+      { name: 'other_medicines', label: 'Other medicines being taken at the same time', max: 500 },
+    ],
+    subject: (v) => `ADR / Safety report — ${v.product_name || 'product'} — ${v.name || 'anonymous'}`,
   },
 } satisfies Record<string, EnquiryKind>;
 

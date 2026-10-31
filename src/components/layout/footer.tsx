@@ -90,23 +90,31 @@ export function Footer() {
             </span>
             <p className="max-w-3xl font-sans text-[14px] leading-[1.7] text-white/70">
               <span className="font-semibold text-white">Pharmacovigilance &amp; Patient Safety. </span>
-              To report an adverse drug reaction or product quality issue, contact our Drug Safety Team at{' '}
+              To report a side effect or a product quality issue, email our Drug Safety Team at{' '}
               <a href="mailto:safety@revorahealthcare.com" className="font-medium text-revora-cobalt-pale hover:underline">
                 safety@revorahealthcare.com
               </a>{' '}
               or call{' '}
-              <a href={SITE.phone.href} className="font-medium text-revora-cobalt-pale hover:underline">
-                {SITE.phone.label}
+              <a href="tel:+918866644642" className="font-medium text-revora-cobalt-pale hover:underline">
+                +91 88666 44642
               </a>
               .
             </p>
           </div>
-          <a
-            href="mailto:safety@revorahealthcare.com?subject=Adverse%20drug%20reaction%20report"
-            className="shrink-0 rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-center font-sans text-[13px] font-semibold transition-colors hover:bg-white/15"
-          >
-            Report a side effect
-          </a>
+          <div className="flex shrink-0 flex-col gap-2 tablet:items-end">
+            <AnchorLink
+              href="/pharmacovigilance-policy#report"
+              className="rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-center font-sans text-[13px] font-semibold transition-colors hover:bg-white/15"
+            >
+              Report online →
+            </AnchorLink>
+            <a
+              href="mailto:safety@revorahealthcare.com?subject=Adverse%20drug%20reaction%20report"
+              className="rounded-full border border-white/10 bg-transparent px-5 py-2.5 text-center font-sans text-[13px] font-semibold text-white/60 transition-colors hover:bg-white/5 hover:text-white/80"
+            >
+              Email Drug Safety Team
+            </a>
+          </div>
         </div>
 
         {/* ── company + link columns ── */}
