@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Award, Building2, FileCheck2, Mail, MapPin, ShieldCheck } from 'lucide-react';
+import { Building2, FileCheck2, Mail, MapPin, ShieldCheck } from 'lucide-react';
 import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
@@ -17,35 +17,17 @@ const CERTS = [
     icon: ShieldCheck,
     name: 'WHO-GMP',
     scope: 'Manufacturing facility',
-    text: 'Our products are made under loan licence at a WHO-GMP facility.',
+    text: 'Our products are made at a WHO-GMP certified facility, with in-house quality control.',
     where: 'Paonta Sahib, H.P.',
     featured: true,
     image: '/images/photos/cert-who-gmp.webp',
     imageAlt: 'Automated eye-drop filling line in a cleanroom',
   },
   {
-    icon: FileCheck2,
-    name: 'Wholesale drug licence',
-    scope: 'Form 20B & 21B',
-    text: '20B GJ-AD2-265245 · 21B GJ-AD2-265246.',
-    where: 'Ahmedabad, Gujarat',
-    image: '/images/photos/cert-manufacturing-suite.webp',
-    imageAlt: 'Stainless-steel formulation vessels in a sterile production suite',
-  },
-  {
-    icon: Award,
-    name: 'Loan licence',
-    scope: 'Manufacturing',
-    text: 'Our products are made under loan licence at the Paonta Sahib facility.',
-    where: 'Paonta Sahib, H.P.',
-    image: '/images/photos/cert-iso-quality.webp',
-    imageAlt: 'Quality-control chemist running tests in a pharmaceutical laboratory',
-  },
-  {
     icon: Building2,
     name: 'Registered company',
     scope: 'Ministry of Corporate Affairs',
-    text: 'CIN U21000GJ2026PTC174674 · GST registration 24AAPCR6391D1Z4 · incorporated 10 March 2026.',
+    text: 'Revora Healthcare Private Limited, incorporated on 10 March 2026.',
     where: 'Ahmedabad, Gujarat',
     image: '/images/photos/cert-registered-corp.webp',
     imageAlt: 'Modern office building with landscaped grounds',
@@ -58,7 +40,7 @@ export function CertificationsClient() {
       <PageHero
         backdrop="/images/heroes/hero-certifications.webp"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Certifications' }]}
-        eyebrow="WHO-GMP manufacturing & licences"
+        eyebrow="WHO-GMP manufacturing & quality"
         lines={['Quality,', 'certified.']}
         highlight={{ 'certified.': 'text-revora-cobalt' }}
         text="Made in a WHO-GMP certified facility, with every batch released by our in-house QC lab."

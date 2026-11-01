@@ -6,11 +6,11 @@ import { Footer } from '@/components/layout/footer';
 import { CertificationsClient } from './certifications-client';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'WHO-GMP Manufacturing & Drug Licences',
+  title: 'WHO-GMP Manufacturing & Quality',
   description:
-    'Revora products are made in a WHO-GMP certified facility in Paonta Sahib, H.P., released by an in-house QC lab. Wholesale drug licences 20B & 21B, GST registered.',
+    'Revora products are made in a WHO-GMP certified facility in Paonta Sahib, H.P., released by an in-house QC lab.',
   path: '/certifications',
-  keywords: ['WHO-GMP eye drops', 'eye drop manufacturing Himachal Pradesh', 'pharma drug licence 20B 21B Gujarat'],
+  keywords: ['WHO-GMP eye drops', 'eye drop manufacturing Himachal Pradesh', 'WHO-GMP certified pharma company Gujarat'],
 });
 
 const breadcrumbs = breadcrumbLd([['Home', '/'], ['About Us', '/about'], ['Certifications', '/certifications']]);

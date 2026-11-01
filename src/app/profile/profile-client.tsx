@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Building2, CalendarDays, Factory, FileText, Globe2, Layers, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
+import { Building2, CalendarDays, Factory, Globe2, Layers, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
 import { SITE } from '@/lib/seo';
 import { expoOut } from '@/lib/easings';
 import { INNOVATION_CATEGORIES } from '@/lib/innovation-products';
@@ -25,13 +25,10 @@ const atAGlance = ({ products, categories, innovation }: Catalogue) => [
 
 const DETAILS = [
   { icon: Building2, k: 'Company', v: 'Revora Healthcare Private Limited' },
-  { icon: FileText, k: 'CIN', v: 'U21000GJ2026PTC174674', mono: true },
   { icon: CalendarDays, k: 'Incorporated', v: '10 March 2026' },
   { icon: Globe2, k: 'Market', v: 'India + export partnerships (Asia & Africa)' },
-  { icon: Factory, k: 'Manufacturing facility', v: 'Paonta Sahib, H.P. (WHO-GMP) — loan licence' },
+  { icon: Factory, k: 'Manufacturing facility', v: 'Paonta Sahib, H.P. (WHO-GMP)' },
   { icon: ShieldCheck, k: 'Quality', v: 'WHO-GMP certified manufacturing' },
-  { icon: FileText, k: 'GSTIN', v: SITE.gstin, mono: true },
-  { icon: FileText, k: 'Drug licences', v: SITE.drugLicences.join(' · '), mono: true },
   { icon: MapPin, k: 'Registered office', v: 'A-303, 3rd Floor, S.G. Business Hub, B/s Bhagvat Petrol Pump, Nr. Gota Over Bridge, S.G. Highway, Ahmedabad, Gujarat 382470', wide: true },
   { icon: Phone, k: 'Phone', v: SITE.phone.label },
   { icon: Mail, k: 'Email', v: EMAIL },
@@ -141,7 +138,7 @@ export function ProfileClient() {
                   </span>
                   <div className="min-w-0">
                     <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-revora-slate-muted">{d.k}</p>
-                    <p className={`mt-1 wrap-break-word font-heading text-[16px] font-bold leading-snug text-revora-slate ${d.mono ? 'font-mono text-[15px]' : ''}`}>{d.v}</p>
+                    <p className={`mt-1 wrap-break-word font-heading text-[16px] font-bold leading-snug text-revora-slate`}>{d.v}</p>
                   </div>
                 </div>
               </FadeUp>

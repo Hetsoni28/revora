@@ -111,18 +111,9 @@ export function FounderSection() {
               </div>
             </FadeUp>
 
-            {/* signatory block & CTA */}
+            {/* CTA */}
             <FadeUp delay={0.35}>
-              <div className="mt-9 flex flex-wrap items-center justify-between gap-6 border-t border-revora-cobalt/10 pt-7">
-                <div>
-                  <p className="font-heading text-xl font-extrabold text-revora-slate">
-                    {SITE.founder.name}
-                  </p>
-                  <p className="font-sans text-[13px] font-medium text-revora-slate-light">
-                    {SITE.founder.title} · {SITE.legalName} · Ahmedabad, Gujarat
-                  </p>
-                </div>
-
+              <div className="mt-9 border-t border-revora-cobalt/10 pt-7">
                 <Link
                   href="/about"
                   className="group inline-flex items-center gap-2 rounded-full border border-revora-cobalt/20 bg-white px-5 py-3 font-sans text-[14px] font-semibold text-revora-cobalt transition-all duration-300 hover:border-revora-cobalt hover:bg-revora-cobalt hover:text-white"

@@ -143,7 +143,7 @@ export function Navbar() {
                   WHO-GMP manufacturing
                 </span>
                 <span className="h-3 w-px bg-revora-cobalt/15" />
-                <span className="font-mono text-[11px]">CIN: U21000GJ2026PTC174674 · Ahmedabad, Gujarat</span>
+                <span>Ahmedabad, Gujarat</span>
               </div>
               <div className="flex items-center gap-4">
                 <Link href="/profile#portfolio" className="font-medium transition-colors hover:text-revora-cobalt">

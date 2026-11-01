@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { AlertCircle, ArrowUpRight, Award, Building2, Globe, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
+import { AlertCircle, ArrowUpRight, Globe, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
 import { SITE } from '@/lib/seo';
 import { AnchorLink, Tick } from '@/components/ui/primitives';
 import { Button } from '@/components/ui/button';
@@ -26,7 +26,7 @@ const COLUMNS: { title: string; href?: string; links: [string, string | null][] 
       ['Manufacturing & CDMO', '/manufacturing'],
       ['WHO-GMP facility', '/certifications'],
       ['In-house QC lab', '/manufacturing'],
-      ['Licences & registrations', '/certifications'],
+      ['Certifications', '/certifications'],
     ],
   },
   {
@@ -45,7 +45,6 @@ const COLUMNS: { title: string; href?: string; links: [string, string | null][] 
 
 const BADGES = [
   { icon: ShieldCheck, label: 'WHO-GMP' },
-  { icon: Award, label: 'Drug licence 20B · 21B' },
   { icon: Globe, label: 'Serving Across India' },
 ];
 
@@ -125,10 +124,6 @@ export function Footer() {
             </p>
 
             <ul className="mt-6 space-y-3 font-sans text-[13.5px] leading-[1.6] text-white/70">
-              <li className="flex gap-3">
-                <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
-                <span className="font-mono text-[12.5px]">CIN: U21000GJ2026PTC174674 · GSTIN: {SITE.gstin}</span>
-              </li>
               <li className="flex gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
                 Registered Office: A-303, 3rd Floor, S.G. Business Hub, B/s Bhagvat Petrol Pump, Nr. Gota Over Bridge, S.G. Highway, Ahmedabad, Gujarat 382470, India.

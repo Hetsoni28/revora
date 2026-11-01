@@ -8,9 +8,9 @@ import { ProfileClient } from './profile-client';
 export const metadata: Metadata = pageMetadata({
   title: 'Company Profile & Product Portfolio',
   description:
-    'Revora Healthcare Private Limited at a glance: CIN U21000GJ2026PTC174674, registered office in Ahmedabad, WHO-GMP manufacturing and the full product list.',
+    'Revora Healthcare Private Limited at a glance: registered office in Ahmedabad, WHO-GMP manufacturing and the full product list.',
   path: '/profile',
-  keywords: ['Revora Healthcare company profile', 'Revora Healthcare CIN', 'ophthalmic product list'],
+  keywords: ['Revora Healthcare company profile', 'Revora Healthcare Ahmedabad', 'ophthalmic product list'],
 });
 
 const breadcrumbs = breadcrumbLd([['Home', '/'], ['About Us', '/about'], ['Profile', '/profile']]);

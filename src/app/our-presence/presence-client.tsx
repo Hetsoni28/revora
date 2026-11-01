@@ -39,7 +39,7 @@ const FACILITIES = [
     address: 'Paonta Sahib, Himachal Pradesh',
     detail: 'Our manufacturing facility: WHO-GMP certified, with in-house quality control.',
     roles: ['Sterile eye drops', 'Ophthalmic ointments', 'Nasal sprays', 'Tablets', 'In-house QC & release'],
-    facts: [['Standard', 'WHO-GMP'], ['Basis', 'Loan licence']],
+    facts: [['Standard', 'WHO-GMP'], ['Quality control', 'In-house QC']],
     mapQuery: 'Paonta Sahib, Himachal Pradesh',
     images: ['/images/site/eye-drop-filling-line.webp'],
     logos: false,

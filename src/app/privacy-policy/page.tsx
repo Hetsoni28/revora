@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
           body: (
             <>
               <p>
-                This website is operated by {SITE.legalName} (&ldquo;Revora&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;), CIN {SITE.cin}, with
+                This website is operated by {SITE.legalName} (&ldquo;Revora&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;), with
                 its registered office at {address}, India.
               </p>
               <p>

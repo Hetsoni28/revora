@@ -45,7 +45,7 @@ export function ManufacturingClient() {
         actions={
           <>
             <Button href="#enquiry" variant="light" arrow="down" magnetic>Manufacture with us</Button>
-            <Button href="/certifications" variant="outline-light">Licences & registrations</Button>
+            <Button href="/certifications" variant="outline-light">Certifications</Button>
           </>
         }
       />
