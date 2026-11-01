@@ -35,6 +35,7 @@ const NAV_ITEMS: NavItem[] = [
     ],
   },
   { label: 'Our Products', href: '', mega: true },
+  { label: 'Innovation', href: '/innovation' },
   { label: 'Manufacturing', href: '/manufacturing' },
   { label: 'Export', href: '/our-presence/global-network' },
   {
@@ -61,7 +62,7 @@ function useTherapyMenu() {
 /** Route items light up on their own page and its sub-pages. */
 function isActive(item: NavItem, pathname: string) {
   if (item.href.startsWith('/#')) return false;
-  if (item.mega) return pathname.startsWith('/products') || pathname.startsWith('/innovation');
+  if (item.mega) return pathname.startsWith('/products');
   if (item.sublinks?.some((s) => !s.href.includes('#') && pathname.startsWith(s.href))) return true;
   return pathname.startsWith(item.href);
 }
@@ -176,7 +177,7 @@ export function Navbar() {
               </span>
             </Link>
 
-            <ul className="hidden items-center gap-1 desktop:flex">
+            <ul className="hidden items-center gap-0.5 desktop:flex desktop-lg:gap-1">
               {NAV_ITEMS.map((item) => {
                 const active = isActive(item, pathname);
                 const hasMenu = !!item.sublinks || !!item.mega || !!item.categories;
@@ -199,7 +200,7 @@ export function Navbar() {
                       aria-haspopup={hasMenu || undefined}
                       aria-expanded={hasMenu ? isOpen : undefined}
                       onClick={() => setDropdown(item.mega && !isOpen ? item.label : null)}
-                      className={`group relative flex items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-full px-3 py-2 font-sans desktop-lg:px-4 text-[14px] font-medium transition-colors hover:text-revora-cobalt ${
+                      className={`group relative flex items-center gap-1 overflow-hidden whitespace-nowrap rounded-full px-2.5 py-2 font-sans text-[13.5px] font-medium desktop-lg:gap-1.5 desktop-lg:px-4 desktop-lg:text-[14px] transition-colors hover:text-revora-cobalt ${
                         active || isOpen ? 'text-revora-cobalt' : 'text-revora-slate'
                       }`}
                     >
