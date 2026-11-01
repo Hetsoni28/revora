@@ -51,6 +51,7 @@ export function SplitWords({
           className="inline-block overflow-hidden align-bottom pb-[0.08em] mb-[-0.08em]"
         >
           <motion.span
+            data-reveal
             className={`inline-block will-change-transform ${wordClassName ?? ''} ${highlight[w] ?? ''}`}
             initial={reduce ? false : { y: '110%', rotate: 4 }}
             // reduced motion is only known after hydration, so words may already sit hidden: show them at once
@@ -83,6 +84,7 @@ export function FadeUp({
   const reduce = useReducedMotion();
   return (
     <motion.div
+      data-reveal
       className={className}
       initial={reduce ? false : { opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}

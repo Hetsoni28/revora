@@ -31,6 +31,7 @@ export function MediaFrame({ src, alt, aspect = 'aspect-[4/3]', sizes = '(min-wi
   return (
     <figure ref={ref} className={`relative ${aspect} ${className ?? ''}`}>
       <motion.div
+        data-reveal
         initial={false}
         animate={{ clipPath: shown ? 'inset(0% 0 0 0 round 28px)' : 'inset(100% 0 0 0 round 28px)' }}
         transition={{ duration: 1.2, ease: expoOut }}

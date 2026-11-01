@@ -27,7 +27,9 @@ export function ProductShowcase({ product: p, flip = false, as: Heading = 'h3' }
     <article id={p.id} className="scroll-mt-32 desktop:scroll-mt-48 grid grid-cols-[minmax(0,1fr)] items-center gap-10 overflow-hidden rounded-[32px] border border-revora-cobalt/10 bg-[#F6F9FC] p-5 tablet:p-8 tablet-lg:grid-cols-2 tablet-lg:gap-14 desktop:p-12">
       {/* image */}
       <motion.div
-        initial={reduce ? false : { opacity: 0, y: 40, scale: 0.97 }}
+        data-reveal
+        // on its own page (QR scans land here) the product shows at once, with no entrance animation
+        initial={reduce || Heading === 'h1' ? false : { opacity: 0, y: 40, scale: 0.97 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, margin: '-10% 0px' }}
         transition={{ duration: 1, ease: expoOut }}
@@ -90,7 +92,8 @@ export function ProductShowcase({ product: p, flip = false, as: Heading = 'h3' }
             return (
               <motion.div
                 key={f.value}
-                initial={reduce ? false : { opacity: 0, y: 16 }}
+                data-reveal
+                initial={reduce || Heading === 'h1' ? false : { opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-5% 0px' }}
                 transition={{ duration: 0.6, delay: 0.1 + i * 0.08, ease: expoOut }}

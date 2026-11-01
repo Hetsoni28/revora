@@ -89,10 +89,8 @@ export function ProductClient({ product, category }: ProductClientProps) {
             <ZoomStage product={product} reduce={!!reduce} />
 
             <div>
-              <motion.p
-                initial={reduce ? false : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1, ease: expoOut }}
+              {/* the hero shows at once, with no entrance animation: QR scans land here, often before scripts load */}
+              <p
                 className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 font-sans text-[12px] font-semibold uppercase tracking-[0.14em] text-revora-slate-muted"
               >
                 <span className="inline-flex items-center gap-2 whitespace-nowrap">
@@ -101,28 +99,25 @@ export function ProductClient({ product, category }: ProductClientProps) {
                 </span>
                 <span aria-hidden>·</span>
                 <span className="whitespace-nowrap" style={{ color: product.color }}>{product.badge}</span>
-              </motion.p>
-              <motion.h1
-                initial={reduce ? false : { opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.15, ease: expoOut }}
+              </p>
+              <h1
                 className="mt-4 font-heading text-[clamp(2.8rem,6vw,5rem)] font-extrabold leading-[0.95] tracking-[-0.035em] text-revora-slate"
               >
                 {product.name}
                 {/* the generic name belongs to the H1: it's what doctors and pharmacists search for */}
                 <span className="sr-only"> — </span>
                 <span className="mt-4 block font-heading text-[clamp(1.1rem,1.8vw,1.3rem)] font-semibold leading-snug tracking-normal text-revora-cobalt">{product.genericName}</span>
-              </motion.h1>
+              </h1>
               {product.distributed && (
                 <p className="mt-3 inline-flex rounded-full bg-revora-sky px-3 py-1 font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-revora-cobalt">
                   Distributed by Revora
                 </p>
               )}
-              <FadeUp delay={0.3}>
+              <div>
                 <p className="mt-4 max-w-lg font-sans text-[16.5px] leading-[1.7] text-revora-slate-light">{product.summary}</p>
-              </FadeUp>
+              </div>
 
-              <FadeUp delay={0.4}>
+              <div>
                 <dl className="mt-7 grid grid-cols-2 gap-px overflow-hidden rounded-[18px] border border-revora-cobalt/10 bg-revora-cobalt/10">
                   {[
                     { label: 'Pack', value: product.volume },
@@ -148,9 +143,9 @@ export function ProductClient({ product, category }: ProductClientProps) {
                     {isRx && productKind(product) !== 'tablets' && <span className="mt-1 block">For topical ophthalmic use only.</span>}
                   </span>
                 </p>
-              </FadeUp>
+              </div>
 
-              <FadeUp delay={0.5}>
+              <div>
                 <div ref={ctaRef} className="mt-8 flex flex-wrap items-center gap-3">
                   <Button onClick={() => setModalOpen(true)} arrow="up-right" magnetic>Request samples</Button>
                   {product.prescribingInfo ? (
@@ -161,7 +156,7 @@ export function ProductClient({ product, category }: ProductClientProps) {
                     <Button onClick={() => setModalOpen(true)} variant="outline" icon={<FileText />}>Request {infoLabel.toLowerCase()}</Button>
                   )}
                 </div>
-              </FadeUp>
+              </div>
             </div>
           </div>
         </div>
@@ -330,9 +325,6 @@ function ZoomStage({ product, reduce }: { product: Product; reduce: boolean }) {
 
   return (
     <motion.div
-      initial={reduce ? false : { clipPath: 'inset(0 0 100% 0 round 32px)' }}
-      animate={{ clipPath: 'inset(0 0 0% 0 round 32px)' }}
-      transition={{ duration: 1.1, ease: expoOut }}
       className="relative mx-auto aspect-square w-full max-w-140 overflow-hidden rounded-3xl bg-white shadow-[0_40px_80px_-40px_rgba(11,74,143,0.45)] tablet:rounded-4xl tablet-lg:max-w-none"
       onPointerMove={(e) => {
         if (reduce || e.pointerType !== 'mouse') return;

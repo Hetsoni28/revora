@@ -21,6 +21,14 @@ function NetworkStatus() {
   return null;
 }
 
+/** Marks the page as running: until then, globals.css shows any [data-reveal] content the animations would hide. */
+function HydrationMark() {
+  React.useEffect(() => {
+    document.documentElement.setAttribute("data-hydrated", "");
+  }, []);
+  return null;
+}
+
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <NextThemesProvider
@@ -34,6 +42,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         {/* on phones, sit above the product page's sticky "Request samples" bar */}
         <Toaster richColors position="bottom-right" closeButton mobileOffset={{ bottom: 96 }} />
         <NetworkStatus />
+        <HydrationMark />
         <CookieConsent />
       </ReactLenis>
     </NextThemesProvider>
