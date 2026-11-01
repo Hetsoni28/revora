@@ -310,3 +310,15 @@ html:not([data-hydrated]) [data-reveal] {
     clip-path: none;
   }
 }
+
+/* Page titles use Poppins. Deliberately outside any @layer so it wins over the font-heading utility the
+   h1s (and the words inside them) carry, without touching every page. */
+h1,
+h1 * {
+  font-family: var(--font-poppins), var(--font-plus-jakarta-sans), var(--font-inter), sans-serif;
+}
+/* the small label some titles carry inside their h1 (for SEO) keeps the body font */
+h1 .font-sans,
+h1 .font-sans * {
+  font-family: var(--font-inter), sans-serif;
+}

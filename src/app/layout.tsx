@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono, Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import { Providers } from "@/components/providers";
 import { WithCatalogue } from "@/components/catalogue/catalogue-data";
@@ -8,6 +8,7 @@ import { KEYWORDS, SITE, SITE_URL, organizationLd, websiteLd } from "@/lib/seo";
 import "./globals.css";
 
 /* Revora Brand Typography (Official Design System)
+   - Page titles (h1): Poppins
    - Headlines: Plus Jakarta Sans
    - Body/Labels: Inter
    - Mono: Geist Mono (code & data) */
@@ -23,6 +24,14 @@ const plusJakartaSans = localFont({
   src: "./fonts/plus-jakarta-sans-latin-variable.woff2",
   variable: "--font-plus-jakarta-sans",
   weight: "200 800",
+  display: "swap",
+});
+
+// Page titles only (every h1). next/font downloads it at build time and serves it from our own domain.
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
   display: "swap",
 });
 
@@ -80,7 +89,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-IN"
-      className={`${inter.variable} ${plusJakartaSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${plusJakartaSans.variable} ${poppins.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
