@@ -95,7 +95,7 @@ export function PresenceClient() {
       </section>
 
       {/* ── where we operate ── */}
-      <section id="ahmedabad" className="bg-white px-5 py-24 tablet:px-8 tablet:py-32">
+      <section id="ahmedabad" className="bg-white px-5 py-16 tablet:px-8 tablet:py-24">
         <div className="mx-auto max-w-330">
           <SectionHeading
             eyebrow="Where we operate"

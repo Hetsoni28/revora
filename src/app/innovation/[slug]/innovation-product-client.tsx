@@ -29,7 +29,7 @@ export function InnovationProductClient({ product }: { product: InnovationProduc
       </section>
 
       {product.faqs.length > 0 && (
-        <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+        <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
           <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] gap-10 tablet-lg:grid-cols-[0.8fr_1.2fr] tablet-lg:gap-16">
             <SectionHeading eyebrow="FAQs" lines={['Good to know.']} highlight={{ 'know.': 'text-revora-cobalt' }} aside={`Common questions about ${name}.`} />
             <FadeUp delay={0.1}>
@@ -40,7 +40,7 @@ export function InnovationProductClient({ product }: { product: InnovationProduc
       )}
 
       {more.length > 0 && (
-        <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+        <section className="px-5 py-14 tablet:px-8 tablet:py-20">
           <div className="mx-auto max-w-330">
             <SectionHeading
               eyebrow={sameRange.length ? product.category : 'Revora Innovation'}

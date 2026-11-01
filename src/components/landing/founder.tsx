@@ -12,7 +12,7 @@ export function FounderSection() {
   const reduce = useReducedMotion();
 
   return (
-    <section id="leadership" className="relative isolate overflow-hidden bg-white px-5 py-24 tablet:px-8 tablet:py-36">
+    <section id="leadership" className="relative isolate overflow-hidden bg-white px-5 py-16 tablet:px-8 tablet:py-24">
       {/* subtle ambient background glow */}
       <div
         aria-hidden

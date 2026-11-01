@@ -15,7 +15,7 @@ const AREAS = [
 /** The four business areas, side by side. */
 export function BusinessAreas() {
   return (
-    <section id="business" className="bg-white px-5 py-24 tablet:px-8 tablet:py-32">
+    <section id="business" className="bg-white px-5 py-16 tablet:px-8 tablet:py-24">
       <div className="mx-auto max-w-[1320px]">
         <SectionHeading eyebrow="Business areas" lines={['Four ways Revora', 'creates value.']} highlight={{ value: 'text-revora-cobalt', 'value.': 'text-revora-cobalt' }} />
         <div className="mt-12 grid gap-4 tablet:grid-cols-2 desktop:grid-cols-4">

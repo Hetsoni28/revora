@@ -25,7 +25,7 @@ export function SupplyFlow({ image = '/images/site/sterile-formulation-lab.webp'
   const line = useTransform(scrollYProgress, (v) => Math.min(Math.max(v, 0), 1));
 
   return (
-    <section className="relative isolate overflow-hidden bg-revora-cobalt-deep px-5 py-24 text-white tablet:px-8 tablet:py-32">
+    <section className="relative isolate overflow-hidden bg-revora-cobalt-deep px-5 py-16 text-white tablet:px-8 tablet:py-24">
       <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(11,74,143,0.9),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(58,130,200,0.18),transparent_55%)]" />
       <div className="mx-auto max-w-330">
         <div className="grid grid-cols-[minmax(0,1fr)] items-center gap-12 tablet-lg:grid-cols-2">

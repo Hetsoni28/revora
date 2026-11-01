@@ -114,7 +114,7 @@ export function Manifesto() {
   const words = MANIFESTO.split(' ');
 
   return (
-    <section id="philosophy" className="relative isolate overflow-hidden bg-white px-5 py-28 tablet:px-8 tablet:py-40">
+    <section id="philosophy" className="relative isolate overflow-hidden bg-white px-5 py-20 tablet:px-8 tablet:py-28">
       {/* eye-drop filling line behind the copy; a white wash from the left keeps the text crisp */}
       <Image
         src="/images/photos/eye-drop-filling-line.webp"

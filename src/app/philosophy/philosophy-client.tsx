@@ -71,7 +71,7 @@ export function PhilosophyClient() {
       <PromiseStatement />
 
       {/* ── care photo ── */}
-      <section className="px-5 pb-20 tablet:px-8 tablet:pb-28">
+      <section className="px-5 pb-14 tablet:px-8 tablet:pb-20">
         <div className="mx-auto max-w-330">
           <MediaFrame
             src="/images/photos/eye-drops-care.webp"
@@ -84,7 +84,7 @@ export function PhilosophyClient() {
       </section>
 
       {/* ── values ── */}
-      <section id="values" className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+      <section id="values" className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Our values" lines={['What we stand for.']} highlight={{ 'for.': 'text-revora-cobalt' }} />
           <div className="mt-12 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-3">
@@ -131,7 +131,7 @@ export function PhilosophyClient() {
       </section>
 
       {/* ── revorian band ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="px-5 py-14 tablet:px-8 tablet:py-20">
         <FadeUp className="relative isolate mx-auto max-w-330 overflow-hidden rounded-[32px] bg-revora-slate px-8 py-14 text-center text-white tablet:px-14 tablet:py-20">
           <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(11,74,143,0.85),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(215,38,46,0.25),transparent_55%)]" />
           <Tick className="mx-auto h-10 w-12 text-revora-crimson" />
@@ -158,7 +158,7 @@ function PromiseStatement() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.85', 'end 0.45'] });
   const words = PROMISE.split(' ');
   return (
-    <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+    <section className="px-5 py-14 tablet:px-8 tablet:py-20">
       <div className="mx-auto max-w-[1100px]">
         <h2 className="font-heading text-[clamp(2.6rem,6.4vw,5.6rem)] font-extrabold leading-[1] tracking-[-0.03em] text-revora-slate">
           <SplitWords text="Our promise." highlight={{ 'promise.': 'text-revora-cobalt' }} />

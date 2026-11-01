@@ -83,7 +83,7 @@ function OfficeCard() {
 /* ── which team to write to ───────────────────────────────── */
 function Desks() {
   return (
-    <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+    <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
       <div className="mx-auto max-w-330">
         <SectionHeading eyebrow="Write to the right team" lines={['Who should I contact?']} highlight={{ 'contact?': 'text-revora-cobalt' }} />
         <div className="mt-12 grid gap-4 tablet:grid-cols-2 desktop:grid-cols-3">
@@ -129,7 +129,7 @@ function MessageForm() {
   const label = 'mb-1.5 block font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-revora-slate-light';
 
   return (
-    <section id="message" className="scroll-mt-28 px-5 py-20 tablet:px-8 tablet:py-28">
+    <section id="message" className="scroll-mt-28 px-5 py-14 tablet:px-8 tablet:py-20">
       <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] gap-12 tablet-lg:grid-cols-[0.8fr_1.2fr] tablet-lg:gap-16">
         <div className="tablet-lg:sticky tablet-lg:top-32 tablet-lg:self-start desktop:top-48">
           <SectionHeading eyebrow="Send a message" lines={['How can we', 'help?']} highlight={{ 'help?': 'text-revora-cobalt' }} />
@@ -187,7 +187,7 @@ function MessageForm() {
 /* ── drug safety (pharmacovigilance) ─────────────────────── */
 function SafetyNote() {
   return (
-    <section className="px-5 pb-20 tablet:px-8 tablet:pb-28">
+    <section className="px-5 pb-14 tablet:px-8 tablet:pb-20">
       <FadeUp className="mx-auto flex max-w-330 flex-col gap-4 rounded-[28px] border border-revora-crimson/20 bg-revora-crimson-tint p-7 tablet:flex-row tablet:items-center tablet:p-9">
         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white text-revora-crimson">
           <AlertCircle className="h-5 w-5" />

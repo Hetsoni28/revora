@@ -33,7 +33,7 @@ export function InnovationClient() {
   const faqProduct = products.find((p) => p.id === faqFor) ?? products[0];
   if (!FEATURED) {
     return (
-      <section className="px-5 py-28 tablet:px-8">
+      <section className="px-5 py-20 tablet:px-8">
         <EmptyState icon={Sparkles} title="Innovation products coming soon" text="Our new range is being added. Check back shortly." action={<Button href="/channel-partner">Become a partner</Button>} />
       </section>
     );
@@ -43,7 +43,7 @@ export function InnovationClient() {
       <PromoBanner product={FEATURED} />
 
       {/* ── shop by need ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Shop by need" lines={['Made for extremes.']} highlight={{ 'extremes.': 'text-revora-cobalt' }} aside="Comfort and wellness, through innovation." />
           <div className="mt-12">
@@ -54,7 +54,7 @@ export function InnovationClient() {
 
       {/* ── our products — shown once there is more than one product to browse ── */}
       {products.length > 1 && (
-      <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Our products" lines={['New from Revora.']} highlight={{ 'Revora.': 'text-revora-crimson' }} />
           <div className="mt-12 space-y-12">
@@ -79,7 +79,7 @@ export function InnovationClient() {
       )}
 
       {/* ── experience each product ── */}
-      <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330 space-y-8">
           {products.map((p, i) => (
             <div key={p.id}>
@@ -95,7 +95,7 @@ export function InnovationClient() {
       </section>
 
       {/* ── FAQs ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] gap-10 tablet-lg:grid-cols-[0.8fr_1.2fr] tablet-lg:gap-16">
           <SectionHeading eyebrow="FAQs" lines={['Good to know.']} highlight={{ 'know.': 'text-revora-cobalt' }} />
           <FadeUp delay={0.1}>
@@ -133,7 +133,7 @@ export function InnovationClient() {
       </section>
 
       {/* ── distributor CTA ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="px-5 py-14 tablet:px-8 tablet:py-20">
         <FadeUp className="relative isolate mx-auto flex max-w-330 flex-col gap-8 overflow-hidden rounded-[32px] bg-revora-slate p-8 text-white tablet:p-14 desktop:flex-row desktop:items-center desktop:justify-between">
           <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(255,122,47,0.35),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(11,74,143,0.6),transparent_55%)]" />
           <div>

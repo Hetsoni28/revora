@@ -74,7 +74,7 @@ export function ChannelPartnerClient() {
       />
 
       {/* ── why partner ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Why partner with us" lines={['Everything you need', 'to grow.']} highlight={{ 'grow.': 'text-revora-crimson' }} />
           <div className="mt-12 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-5">
@@ -95,7 +95,7 @@ export function ChannelPartnerClient() {
       </section>
 
       {/* ── the ranges ── */}
-      <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="What you’ll carry" lines={['Our ranges.', 'One partner.']} highlight={{ 'One': 'text-revora-crimson' }} />
           <div className={`mt-12 grid gap-5 ${RANGES.length > 2 ? 'tablet-lg:grid-cols-3' : 'tablet-lg:grid-cols-2'}`}>
@@ -120,7 +120,7 @@ export function ChannelPartnerClient() {
       </section>
 
       {/* ── how it works ── */}
-      <section className="relative isolate overflow-hidden bg-revora-cobalt-deep px-5 py-20 text-white tablet:px-8 tablet:py-28">
+      <section className="relative isolate overflow-hidden bg-revora-cobalt-deep px-5 py-14 text-white tablet:px-8 tablet:py-20">
         <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(58,130,200,0.5),transparent_60%)]" />
         <div className="mx-auto max-w-330">
           <SectionHeading tone="light" eyebrow="How it works" lines={['Four simple steps.']} highlight={{ 'steps.': 'text-revora-cobalt-pale' }} />
@@ -170,7 +170,7 @@ function ApplyForm() {
   const label = 'mb-1.5 block font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-revora-slate-light';
 
   return (
-    <section id="apply" className="px-5 py-20 tablet:px-8 tablet:py-28">
+    <section id="apply" className="px-5 py-14 tablet:px-8 tablet:py-20">
       <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] gap-12 tablet-lg:grid-cols-[0.8fr_1.2fr] tablet-lg:gap-16">
         <div className="tablet-lg:sticky tablet-lg:top-32 tablet-lg:self-start desktop:top-48">
           <SectionHeading eyebrow="Apply" lines={['Let’s grow', 'together.']} highlight={{ 'together.': 'text-revora-cobalt' }} />

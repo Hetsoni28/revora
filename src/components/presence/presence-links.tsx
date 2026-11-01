@@ -17,7 +17,7 @@ export function PresenceLinks({ current, title = 'Explore our presence' }: { cur
   const reduce = useReducedMotion();
   const pages = PAGES.filter((p) => p.href !== current);
   return (
-    <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+    <section className="px-5 py-14 tablet:px-8 tablet:py-20">
       <div className="mx-auto max-w-330">
         <h2 className="font-heading text-[clamp(1.8rem,3.4vw,2.6rem)] font-extrabold tracking-[-0.02em] text-revora-slate">{title}</h2>
         <div className={`mt-10 grid gap-5 ${pages.length === 3 ? 'tablet:grid-cols-3' : 'tablet:grid-cols-2'}`}>

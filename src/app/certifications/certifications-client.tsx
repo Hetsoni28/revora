@@ -54,7 +54,7 @@ export function CertificationsClient() {
       />
 
       {/* ── certificates ── */}
-      <section id="certificates" className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+      <section id="certificates" className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading
             eyebrow="Our certifications"
@@ -109,7 +109,7 @@ export function CertificationsClient() {
       </section>
 
       {/* ── quality photos ── */}
-      <section className="px-5 pt-20 tablet:px-8 tablet:pt-28">
+      <section className="px-5 pt-14 tablet:px-8 tablet:pt-20">
         <div className="mx-auto grid max-w-330 gap-5 tablet:grid-cols-[1.2fr_0.8fr]">
           <FadeUp>
             <MediaFrame src="/images/photos/lab-scientist.webp" alt="Scientist in protective gear working with samples" aspect="aspect-[4/3]" sizes="(min-width: 768px) 60vw, 100vw" caption={<b className="font-semibold">Quality first</b>} />
@@ -121,7 +121,7 @@ export function CertificationsClient() {
       </section>
 
       {/* ── the plant ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] items-center gap-12 tablet-lg:grid-cols-2 tablet-lg:gap-20">
           <PlantLine />
           <div>
@@ -150,7 +150,7 @@ export function CertificationsClient() {
       </section>
 
       {/* ── request copies ── */}
-      <section className="px-5 pb-20 tablet:px-8 tablet:pb-28">
+      <section className="px-5 pb-14 tablet:px-8 tablet:pb-20">
         <FadeUp className="relative isolate mx-auto flex max-w-330 flex-col gap-8 overflow-hidden rounded-[32px] bg-revora-cobalt-deep p-8 text-white tablet:p-14 desktop:flex-row desktop:items-center desktop:justify-between">
           <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(58,130,200,0.55),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(215,38,46,0.2),transparent_55%)]" />
           <div className="flex items-start gap-5">

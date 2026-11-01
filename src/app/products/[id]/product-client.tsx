@@ -163,7 +163,7 @@ export function ProductClient({ product, category }: ProductClientProps) {
       </section>
 
       {/* ── details ── */}
-      <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-24">
+      <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <Eyebrow>Product details</Eyebrow>
           <div className="mt-8 grid gap-5 tablet-lg:grid-cols-2">
@@ -222,7 +222,7 @@ export function ProductClient({ product, category }: ProductClientProps) {
       </section>
 
       {/* ── more products ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-24">
+      <section className="px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <Eyebrow>{sameArea.length ? `More in ${category.shortName}` : 'More from Revora'}</Eyebrow>
           {related.length ? (

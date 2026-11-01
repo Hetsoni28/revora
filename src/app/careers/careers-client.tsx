@@ -141,7 +141,7 @@ function Hero() {
 /* ── why join ─────────────────────────────────────────────── */
 function Values() {
   return (
-    <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+    <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
       <div className="mx-auto max-w-330">
         <SectionHeading eyebrow="Why join us" lines={['Small team. Clear focus.']} highlight={{ 'focus.': 'text-revora-crimson' }} />
         <div className="mt-12 grid gap-5 tablet:grid-cols-3">
@@ -168,7 +168,7 @@ function Values() {
 /* ── how we hire ───────────────────────────────────────────── */
 function HowWeHire() {
   return (
-    <section id="how-we-hire" className="px-5 py-20 tablet:px-8 tablet:py-28">
+    <section id="how-we-hire" className="px-5 py-14 tablet:px-8 tablet:py-20">
       <div className="mx-auto max-w-330">
         <SectionHeading
           eyebrow="How we hire"
@@ -226,7 +226,7 @@ function Apply() {
   const label = 'mb-1.5 block font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-revora-slate-light';
 
   return (
-    <section id="apply" className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+    <section id="apply" className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
       <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] gap-12 tablet-lg:grid-cols-[0.8fr_1.2fr] tablet-lg:gap-16">
         <div className="tablet-lg:sticky tablet-lg:top-32 tablet-lg:self-start desktop:top-48">
           <SectionHeading eyebrow="Apply" lines={['Send us your CV.']} highlight={{ 'CV.': 'text-revora-cobalt' }} />

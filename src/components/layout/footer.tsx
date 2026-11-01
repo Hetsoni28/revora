@@ -80,7 +80,7 @@ export function Footer() {
   const wordY = useTransform(scrollYProgress, [0, 0.9], ['30%', '0%']);
 
   return (
-    <footer ref={ref} className="relative overflow-hidden bg-revora-slate text-white">
+    <footer ref={ref} className="relative overflow-hidden bg-revora-cobalt-deep text-white">
       <div className="mx-auto max-w-330 px-5 pt-16 tablet:px-8 tablet:pt-24">
         {/* ── pharmacovigilance & patient safety ── */}
         <div className="flex flex-col gap-4 rounded-[28px] border border-white/10 bg-white/4 p-6 tablet:flex-row tablet:items-center tablet:justify-between tablet:p-7">

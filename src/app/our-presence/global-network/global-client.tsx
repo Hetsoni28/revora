@@ -106,7 +106,7 @@ export function GlobalClient() {
       </section>
 
       {/* ── Global reach map ── */}
-      <section className="relative isolate overflow-hidden bg-revora-cobalt-deep px-5 py-20 text-white tablet:px-8 tablet:py-28">
+      <section className="relative isolate overflow-hidden bg-revora-cobalt-deep px-5 py-14 text-white tablet:px-8 tablet:py-20">
         <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(58,130,200,0.45),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(215,38,46,0.18),transparent_55%)]" />
         <div className="mx-auto max-w-330">
           <SectionHeading
@@ -145,7 +145,7 @@ export function GlobalClient() {
       </section>
 
       {/* ── Global Capabilities ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading
             eyebrow="Export Readiness"
@@ -176,7 +176,7 @@ export function GlobalClient() {
       </section>
 
       {/* ── Worldwide Inquiry Form ── */}
-      <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330 grid gap-12 tablet-lg:grid-cols-2 items-center">
           <div>
             <span className="font-sans text-[12px] font-semibold uppercase tracking-[0.2em] text-revora-crimson">

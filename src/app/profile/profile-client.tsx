@@ -126,7 +126,7 @@ export function ProfileClient() {
       />
 
       {/* ── company details ── */}
-      <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Company details" lines={['On the record.']} highlight={{ 'record.': 'text-revora-cobalt' }} />
           <div className="mt-12 grid gap-4 tablet:grid-cols-2">
@@ -148,7 +148,7 @@ export function ProfileClient() {
       </section>
 
       {/* ── what we do ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="What we do" lines={['Three lines of business.']} highlight={{ 'business.': 'text-revora-crimson' }} />
           <div className="mt-12 grid gap-5 tablet:grid-cols-3">
@@ -176,7 +176,7 @@ export function ProfileClient() {
       </section>
 
       {/* ── portfolio at a glance ── */}
-      <section id="portfolio" className="scroll-mt-32 bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+      <section id="portfolio" className="scroll-mt-32 bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Portfolio" lines={['Every product,', 'one table.']} highlight={{ 'one': 'text-revora-crimson' }} aside="Grouped by therapy area and range." />
           <FadeUp className="mt-12 overflow-hidden rounded-[28px] border border-revora-cobalt/10">
@@ -204,7 +204,7 @@ export function ProfileClient() {
       </section>
 
       {/* ── request profile ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="px-5 py-14 tablet:px-8 tablet:py-20">
         <FadeUp className="relative isolate mx-auto flex max-w-330 flex-col gap-8 overflow-hidden rounded-[32px] bg-revora-slate p-8 text-white tablet:p-14 desktop:flex-row desktop:items-center desktop:justify-between">
           <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(11,74,143,0.85),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(215,38,46,0.22),transparent_55%)]" />
           <div>

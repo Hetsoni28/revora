@@ -47,7 +47,7 @@ const PATHS = [
 export function ContactBand() {
   const reduce = useReducedMotion();
   return (
-    <section id="contact" className="relative bg-white px-5 py-24 tablet:px-8 tablet:py-36">
+    <section id="contact" className="relative bg-white px-5 py-16 tablet:px-8 tablet:py-24">
       <div className="mx-auto max-w-[1320px]">
         <div className="text-center">
           <Eyebrow>Work with us</Eyebrow>

@@ -83,7 +83,7 @@ export function DomesticClient() {
       />
 
       {/* ── across India map ── */}
-      <section className="px-5 pb-20 tablet:px-8 tablet:pb-28">
+      <section className="px-5 pb-14 tablet:px-8 tablet:pb-20">
         <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] items-center gap-12 overflow-hidden rounded-[32px] border border-revora-cobalt/10 bg-white p-6 tablet:p-12 tablet-lg:grid-cols-[0.9fr_1.1fr] tablet-lg:gap-16">
           <div>
             <SectionHeading eyebrow="Our network" lines={['Launching in 6 states.', 'Expanding across India.']} highlight={{ 'India.': 'text-revora-cobalt' }} />
@@ -127,7 +127,7 @@ export function DomesticClient() {
 
       <WhoWeServe />
       {/* ── partner CTA ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="px-5 py-14 tablet:px-8 tablet:py-20">
         <FadeUp className="relative isolate mx-auto flex max-w-330 flex-col gap-8 overflow-hidden rounded-[32px] bg-revora-slate p-8 text-white tablet:p-14 desktop:flex-row desktop:items-center desktop:justify-between">
           <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(11,74,143,0.85),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(215,38,46,0.22),transparent_55%)]" />
           <div>
@@ -176,7 +176,7 @@ function WhoWeServe() {
   }, [active, reduce]);
 
   return (
-    <section ref={sectionRef} id="who" className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+    <section ref={sectionRef} id="who" className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
       <div
         className="mx-auto max-w-330"
         onPointerEnter={(e) => e.pointerType === 'mouse' && setHold(true)}

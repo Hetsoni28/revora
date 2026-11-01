@@ -51,7 +51,7 @@ export function ManufacturingClient() {
       />
 
       {/* ── dosage forms ── */}
-      <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Capabilities" lines={['Four dosage forms.']} highlight={{ 'forms.': 'text-revora-cobalt' }} aside="Made at our WHO-GMP manufacturing facility in Paonta Sahib, Himachal Pradesh." />
           <div className="mt-12 grid gap-4 tablet:grid-cols-2 desktop:grid-cols-4">
@@ -71,7 +71,7 @@ export function ManufacturingClient() {
       </section>
 
       {/* ── why partner ── */}
-      <section className="px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Why Revora" lines={['Quality under', 'one roof.']} highlight={{ 'roof.': 'text-revora-crimson' }} />
           <div className="mt-12 grid gap-4 tablet:grid-cols-2">
@@ -126,7 +126,7 @@ function EnquiryForm() {
   const label = 'mb-1.5 block font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-revora-slate-light';
 
   return (
-    <section id="enquiry" className="scroll-mt-28 bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+    <section id="enquiry" className="scroll-mt-28 bg-white px-5 py-14 tablet:px-8 tablet:py-20">
       <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] gap-12 tablet-lg:grid-cols-[0.8fr_1.2fr] tablet-lg:gap-16">
         <div className="tablet-lg:sticky tablet-lg:top-32 tablet-lg:self-start desktop:top-48">
           <SectionHeading eyebrow="Manufacture with us" lines={['Tell us about', 'your product.']} highlight={{ 'product.': 'text-revora-cobalt' }} />

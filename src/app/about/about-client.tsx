@@ -73,7 +73,7 @@ export function AboutClient() {
       </section>
 
       {/* ── mission & vision ── */}
-      <section className="px-5 pb-20 tablet:px-8 tablet:pb-28">
+      <section className="px-5 pb-14 tablet:px-8 tablet:pb-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Why we exist" lines={['Mission & vision.']} highlight={{ 'vision.': 'text-revora-cobalt' }} />
           <div className="mt-12 grid gap-5 tablet-lg:grid-cols-2">
@@ -98,7 +98,7 @@ export function AboutClient() {
       </section>
 
       {/* ── our journey ── */}
-      <section className="bg-white px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading
             eyebrow="Our journey"
@@ -128,7 +128,7 @@ export function AboutClient() {
       </section>
 
       {/* ── leadership & vision (founder) ── */}
-      <section className="border-b border-revora-cobalt/10 px-5 py-20 tablet:px-8 tablet:py-28">
+      <section className="border-b border-revora-cobalt/10 px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading
             eyebrow="Leadership & Direction"
