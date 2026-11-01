@@ -86,6 +86,13 @@ const WASH = {
     'bg-[linear-gradient(to_top,rgba(30,36,43,0.96)_0%,rgba(30,36,43,0.75)_45%,rgba(30,36,43,0.15)_100%)]',
 };
 
+/** The darkest stop of each wash: the solid panel behind the copy on phones, and the fade into it. */
+const SOLID = {
+  cobalt: { bg: 'bg-[#083468]', fade: 'from-[#083468]' },
+  navy: { bg: 'bg-[#091426]', fade: 'from-[#091426]' },
+  slate: { bg: 'bg-[#1E242B]', fade: 'from-[#1E242B]' },
+};
+
 function PillarCard({ p, i, body }: { p: (typeof PILLARS)[number]; i: number; body: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
@@ -112,31 +119,39 @@ function PillarCard({ p, i, body }: { p: (typeof PILLARS)[number]; i: number; bo
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '-10% 0px' }}
       transition={{ duration: 0.9, delay: (i % 2) * 0.12, ease: expoOut }}
-      className={`group relative isolate flex min-h-105 flex-col overflow-hidden rounded-[28px] bg-revora-slate p-7 text-white tablet:min-h-115 tablet:p-10 ${
+      // phones: photo on top in a landscape frame (the photos are landscape, so nothing important is cropped),
+      // copy below on the card's solid tone. From tablet up the photo fills the card behind the copy.
+      className={`group relative isolate flex flex-col overflow-hidden rounded-[28px] ${SOLID[p.tone].bg} text-white tablet:min-h-115 tablet:p-10 ${
         wide ? 'tablet-lg:min-h-100' : ''
       } ${p.span}`}
     >
-      {/* photo fills the card, with a slow zoom on hover */}
-      <Image
-        src={p.image}
-        alt={p.imageAlt}
-        fill
-        // the top row can be the largest thing on screen when the page opens, so don't lazy-load it
-        loading={wide ? 'lazy' : 'eager'}
-        sizes={wide ? '(min-width: 1024px) 1320px, 100vw' : '(min-width: 1024px) 60vw, 100vw'}
-        className={`-z-30 object-cover ${p.focus} transition-transform duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]`}
-      />
-      <div aria-hidden className={`absolute inset-0 -z-20 ${WASH[p.tone]}`} />
+      {/* photo: its own frame on phones, filling the card from tablet up, with a slow zoom on hover */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden tablet:absolute tablet:inset-0 tablet:-z-30 tablet:aspect-auto">
+        <Image
+          src={p.image}
+          alt={p.imageAlt}
+          fill
+          // the top row can be the largest thing on screen when the page opens, so don't lazy-load it
+          loading={wide ? 'lazy' : 'eager'}
+          sizes={wide ? '(min-width: 1024px) 1320px, 100vw' : '(min-width: 1024px) 60vw, 100vw'}
+          className={`object-cover ${p.focus} transition-transform duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]`}
+        />
+        {/* phones: a soft fade from the photo into the copy panel */}
+        <div aria-hidden className={`absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t ${SOLID[p.tone].fade} to-transparent tablet:hidden`} />
+      </div>
+      <div aria-hidden className={`absolute inset-0 -z-20 hidden tablet:block ${WASH[p.tone]}`} />
       <motion.div aria-hidden className="pointer-events-none absolute inset-0 -z-10" style={{ background: spot }} />
 
-      <div className="flex items-center justify-between">
-        <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/85">{p.kicker}</span>
+      <div className="absolute inset-x-6 top-6 z-10 flex items-center justify-between tablet:static">
+        <span className="rounded-full bg-black/30 px-2.5 py-1 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur-sm tablet:bg-transparent tablet:p-0 tablet:text-white/85 tablet:backdrop-blur-none">
+          {p.kicker}
+        </span>
         <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/15 text-white backdrop-blur-md transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:-rotate-12 group-hover:scale-110">
           <Icon className="h-5 w-5" />
         </span>
       </div>
 
-      <div className={`mt-auto pt-24 ${wide ? 'tablet-lg:max-w-xl' : ''}`}>
+      <div className={`flex flex-1 flex-col px-6 pb-7 pt-2 tablet:mt-auto tablet:block tablet:flex-none tablet:p-0 tablet:pt-24 ${wide ? 'tablet-lg:max-w-xl' : ''}`}>
         <h3 className="font-heading text-[clamp(1.9rem,3.2vw,2.9rem)] font-extrabold leading-[1.02] tracking-[-0.02em]">{p.title}</h3>
         <p className="mt-4 max-w-md font-sans text-[15.5px] leading-[1.7] text-white/85">{body}</p>
         <Link
