@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button';
 import { useEnquiry } from '@/lib/use-enquiry';
 import { Honeypot } from '@/components/ui/honeypot';
 
-const PARTNER_EMAIL = 'depot@revorahealthcare.com';
+const PARTNER_EMAIL = 'info@revorahealthcare.com';
 
 const benefitsFor = (brands: number, orthopaedics: boolean) => [
   { icon: Layers, title: 'A specialty range', text: `${brands} brands across ophthalmology${orthopaedics ? ' and orthopaedics' : ''}.` },

@@ -92,8 +92,8 @@ export function Footer() {
             <p className="max-w-3xl font-sans text-[14px] leading-[1.7] text-white/70">
               <span className="font-semibold text-white">Pharmacovigilance &amp; Patient Safety. </span>
               To report a side effect or a product quality issue, email our Drug Safety Team at{' '}
-              <a href="mailto:safety@revorahealthcare.com" className="font-medium text-revora-cobalt-pale hover:underline">
-                safety@revorahealthcare.com
+              <a href="mailto:info@revorahealthcare.com" className="font-medium text-revora-cobalt-pale hover:underline">
+                info@revorahealthcare.com
               </a>{' '}
               or call{' '}
               <a href="tel:+918866644642" className="font-medium text-revora-cobalt-pale hover:underline">
@@ -106,7 +106,7 @@ export function Footer() {
             <Button href="/pharmacovigilance-policy#report" variant="outline-light" arrow="up-right">
               Report online
             </Button>
-            <Button href="mailto:safety@revorahealthcare.com?subject=Adverse%20drug%20reaction%20report" variant="outline-light">
+            <Button href="mailto:info@revorahealthcare.com?subject=Adverse%20drug%20reaction%20report" variant="outline-light">
               Email Drug Safety Team
             </Button>
           </div>

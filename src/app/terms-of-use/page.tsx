@@ -140,7 +140,7 @@ export default function TermsOfUsePage() {
             <p>
               If you have a side effect or product quality issue to report, please use the{' '}
               <Link href="/pharmacovigilance-policy">Pharmacovigilance Policy</Link> page or email{' '}
-              <a href="mailto:safety@revorahealthcare.com">safety@revorahealthcare.com</a>. Do not rely on these Terms of Use as a substitute for
+              <a href="mailto:info@revorahealthcare.com">info@revorahealthcare.com</a>. Do not rely on these Terms of Use as a substitute for
               reporting a safety concern.
             </p>
           ),

@@ -12,10 +12,10 @@ import { Honeypot } from '@/components/ui/honeypot';
 
 /** Who to write to. Each enquiry type in the form goes to the matching inbox. */
 const DESKS = [
-  { id: 'products', icon: Stethoscope, title: 'Product enquiry', text: 'Doctors and hospitals: samples, literature or a visit from our representative.', email: 'depot@revorahealthcare.com' },
-  { id: 'distribution', icon: Truck, title: 'Distributor enquiry', text: 'Distributors, stockists and institutional supply in India.', email: 'depot@revorahealthcare.com' },
+  { id: 'products', icon: Stethoscope, title: 'Product enquiry', text: 'Doctors and hospitals: samples, literature or a visit from our representative.', email: 'info@revorahealthcare.com' },
+  { id: 'distribution', icon: Truck, title: 'Distributor enquiry', text: 'Distributors, stockists and institutional supply in India.', email: 'info@revorahealthcare.com' },
   { id: 'manufacturing', icon: Factory, title: 'Manufacturing enquiry', text: 'Third-party and contract manufacturing under WHO-GMP.', email: 'info@revorahealthcare.com' },
-  { id: 'exports', icon: Globe2, title: 'Export enquiry', text: 'Importers and distribution partners outside India.', email: 'export@revorahealthcare.com' },
+  { id: 'exports', icon: Globe2, title: 'Export enquiry', text: 'Importers and distribution partners outside India.', email: 'info@revorahealthcare.com' },
   { id: 'careers', icon: Briefcase, title: 'Careers', text: 'Send your CV — we’ll be in touch.', email: 'info@revorahealthcare.com' },
   { id: 'general', icon: Mail, title: 'General & corporate', text: 'Company information, certificates and media.', email: 'info@revorahealthcare.com' },
 ] as const;
@@ -194,7 +194,7 @@ function SafetyNote() {
         </span>
         <p className="font-sans text-[15px] leading-[1.7] text-revora-slate">
           <span className="font-semibold">Reporting a side effect or a product quality problem?</span> Please write to our Drug Safety Team at{' '}
-          <a href="mailto:safety@revorahealthcare.com" className="font-semibold text-revora-crimson-dark hover:underline">safety@revorahealthcare.com</a>.
+          <a href="mailto:info@revorahealthcare.com" className="font-semibold text-revora-crimson-dark hover:underline">info@revorahealthcare.com</a>.
         </p>
       </FadeUp>
     </section>

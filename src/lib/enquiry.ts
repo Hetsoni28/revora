@@ -22,10 +22,12 @@ interface EnquiryKind {
   cv?: boolean;
 }
 
+// Only info@ exists today, so every form goes there (the subject line says which form it came from).
+// When depot@, export@ or safety@ are created in cPanel, point the matching constant at it.
 const INFO = 'info@revorahealthcare.com';
-const DEPOT = 'depot@revorahealthcare.com';
-const EXPORTS = 'export@revorahealthcare.com';
-const SAFETY = 'safety@revorahealthcare.com';
+const DEPOT = INFO;
+const EXPORTS = INFO;
+const SAFETY = INFO;
 
 const NAME: EnquiryField = { name: 'name', label: 'Name', required: true, max: 100 };
 const EMAIL: EnquiryField = { name: 'email', label: 'Email', required: true, max: 160 };

@@ -142,7 +142,7 @@ export function InnovationClient() {
           </div>
           <div className="flex flex-wrap gap-3 desktop:shrink-0">
             <Button href="/channel-partner" variant="light" arrow="up-right" magnetic>Become a partner</Button>
-            <Button href={`mailto:depot@revorahealthcare.com?subject=${encodeURIComponent('Bulk enquiry — innovation products')}`} variant="outline-light">Bulk enquiry</Button>
+            <Button href={`mailto:info@revorahealthcare.com?subject=${encodeURIComponent('Bulk enquiry — innovation products')}`} variant="outline-light">Bulk enquiry</Button>
           </div>
         </FadeUp>
       </section>

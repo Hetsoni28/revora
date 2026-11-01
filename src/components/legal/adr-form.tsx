@@ -48,7 +48,7 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 
 /* ════════════════════════════════════════════════════════
    ADR Online Reporting Form
-   Submits to /api/enquiry → safety@revorahealthcare.com
+   Submits to /api/enquiry → info@revorahealthcare.com
    ════════════════════════════════════════════════════════ */
 export function AdrForm() {
   /* form state */
@@ -260,7 +260,7 @@ export function AdrForm() {
       {/* Footer row */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <p className="font-sans text-[13px] text-revora-slate-muted">
-          {packPhoto ? `Attached: ${packPhoto.name}` : 'Sent to safety@revorahealthcare.com'}
+          {packPhoto ? `Attached: ${packPhoto.name}` : 'Sent to info@revorahealthcare.com'}
         </p>
         <Button type="submit" arrow="up-right" magnetic icon={<Send />} disabled={sending}>
           {sending ? 'Submitting…' : 'Submit safety report'}

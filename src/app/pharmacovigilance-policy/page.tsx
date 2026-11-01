@@ -10,7 +10,7 @@ export const metadata: Metadata = pageMetadata({
   path: '/pharmacovigilance-policy',
 });
 
-const SAFETY = 'safety@revorahealthcare.com';
+const SAFETY = 'info@revorahealthcare.com';
 const SAFETY_PHONE = '+91 88666 44642';
 const SAFETY_PHONE_HREF = 'tel:+918866644642';
 

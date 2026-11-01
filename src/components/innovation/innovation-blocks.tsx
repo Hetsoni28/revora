@@ -180,7 +180,7 @@ export function InnovationProductCard({ product: p, index = 0, as: Heading = 'h3
             View details <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />
           </Link>
           <a
-            href={`mailto:depot@revorahealthcare.com?subject=${encodeURIComponent(`Enquiry — Revora ${p.name} ${p.accent ?? ''}`.trim())}`}
+            href={`mailto:info@revorahealthcare.com?subject=${encodeURIComponent(`Enquiry — Revora ${p.name} ${p.accent ?? ''}`.trim())}`}
             className="rounded-full border border-revora-cobalt/20 px-4 py-2 font-sans text-[13px] font-semibold text-revora-cobalt transition-colors hover:bg-revora-cobalt hover:text-white"
           >
             Enquire

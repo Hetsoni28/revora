@@ -126,7 +126,7 @@ export function ProductShowcase({ product: p, flip = false, as: Heading = 'h3' }
           </div>
           <div className="mt-9 flex flex-wrap gap-3">
             <Button
-              href={`mailto:depot@revorahealthcare.com?subject=${encodeURIComponent(`Enquiry — Revora ${p.name} ${p.accent ?? ''}`.trim())}`}
+              href={`mailto:info@revorahealthcare.com?subject=${encodeURIComponent(`Enquiry — Revora ${p.name} ${p.accent ?? ''}`.trim())}`}
               arrow="up-right"
               magnetic
             >

@@ -196,7 +196,7 @@ export default function PrivacyPolicyPage() {
                 {address}, India
                 <br />
                 Email:{' '}
-                <a href="mailto:privacy@revorahealthcare.com">privacy@revorahealthcare.com</a>
+                <a href="mailto:info@revorahealthcare.com">info@revorahealthcare.com</a>
                 <br />
                 Phone: <a href="tel:+918866644642">+91 88666 44642</a>
               </p>
