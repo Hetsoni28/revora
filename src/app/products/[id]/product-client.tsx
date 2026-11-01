@@ -318,36 +318,125 @@ function DetailCard({ icon: Icon, title, kicker, color, children }: { icon: type
 }
 
 /** Product photo that reveals with a wipe and magnifies under the cursor. */
-function ZoomStage({ product, reduce }: { product: Product; reduce: boolean }) {
+const HOVER_ZOOM = 1.8;
+const TAP_ZOOM = 2.2;
+
+/**
+ * Mouse: zooms while the pointer is over the photo, magnifying the spot under it.
+ * Touch: tap to zoom in, drag to look around, tap again to zoom out (the page doesn't scroll while zoomed).
+ * Keyboard: Enter or Space toggles the zoom.
+ */
+function useZoom(reduce: boolean) {
   const ox = useMotionValue(0.5);
   const oy = useMotionValue(0.5);
-  const scale = useSpring(1, { stiffness: 200, damping: 26 });
+  // with reduced motion the zoom still works, it just snaps instead of easing
+  const scale = useSpring(1, reduce ? { stiffness: 2000, damping: 100 } : { stiffness: 200, damping: 26 });
+  const [zoomed, setZoomed] = useState(false);
+  const tap = useRef<{ x: number; y: number } | null>(null);
+
+  const aim = (e: React.PointerEvent<HTMLElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    ox.set(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)));
+    oy.set(Math.min(1, Math.max(0, (e.clientY - r.top) / r.height)));
+  };
+  const zoom = (on: boolean, level = TAP_ZOOM) => {
+    setZoomed(on);
+    scale.set(on ? level : 1);
+    if (!on) {
+      ox.set(0.5);
+      oy.set(0.5);
+    }
+  };
+
+  const handlers = {
+    onPointerEnter: (e: React.PointerEvent<HTMLElement>) => {
+      if (e.pointerType !== 'touch') {
+        aim(e);
+        zoom(true, HOVER_ZOOM);
+      }
+    },
+    onPointerMove: (e: React.PointerEvent<HTMLElement>) => {
+      if (e.pointerType !== 'touch') {
+        aim(e);
+        // the pointer may already be over the photo when the page loads, so moving starts the zoom too
+        if (!zoomed) zoom(true, HOVER_ZOOM);
+      } else if (zoomed) aim(e);
+    },
+    onPointerLeave: (e: React.PointerEvent<HTMLElement>) => {
+      // touch pointers "leave" after every tap, so only a mouse leaving ends the zoom
+      if (e.pointerType !== 'touch') zoom(false);
+    },
+    onPointerDown: (e: React.PointerEvent<HTMLElement>) => {
+      if (e.pointerType === 'touch') tap.current = { x: e.clientX, y: e.clientY };
+    },
+    onPointerUp: (e: React.PointerEvent<HTMLElement>) => {
+      if (e.pointerType !== 'touch' || !tap.current) return;
+      const moved = Math.hypot(e.clientX - tap.current.x, e.clientY - tap.current.y);
+      tap.current = null;
+      if (moved > 10) return; // a drag, not a tap
+      if (zoomed) zoom(false);
+      else {
+        aim(e);
+        zoom(true);
+      }
+    },
+    onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        zoom(!zoomed);
+      } else if (e.key === 'Escape' && zoomed) zoom(false);
+    },
+    onBlur: () => zoomed && zoom(false),
+  };
+
+  return { ox, oy, scale, zoomed, handlers };
+}
+
+function ZoomStage({ product, reduce }: { product: Product; reduce: boolean }) {
+  const { ox, oy, scale, zoomed, handlers } = useZoom(reduce);
 
   return (
     <motion.div
-      className="relative mx-auto aspect-square w-full max-w-140 overflow-hidden rounded-3xl bg-white shadow-[0_40px_80px_-40px_rgba(11,74,143,0.45)] tablet:rounded-4xl tablet-lg:max-w-none"
-      onPointerMove={(e) => {
-        if (reduce || e.pointerType !== 'mouse') return;
-        const r = e.currentTarget.getBoundingClientRect();
-        ox.set((e.clientX - r.left) / r.width);
-        oy.set((e.clientY - r.top) / r.height);
-      }}
-      onPointerEnter={(e) => !reduce && e.pointerType === 'mouse' && scale.set(1.7)}
-      onPointerLeave={() => scale.set(1)}
+      role="button"
+      tabIndex={0}
+      aria-pressed={zoomed}
+      aria-label={`${zoomed ? 'Zoom out of' : 'Zoom into'} the ${product.name} pack photo`}
+      {...handlers}
+      // while zoomed on a phone, a drag pans the photo instead of scrolling the page
+      style={{ touchAction: zoomed ? 'none' : 'pan-y' }}
+      data-lenis-prevent={zoomed ? '' : undefined}
+      className={`relative mx-auto aspect-square w-full max-w-140 select-none overflow-hidden rounded-3xl bg-white shadow-[0_40px_80px_-40px_rgba(11,74,143,0.45)] outline-none focus-visible:ring-4 focus-visible:ring-revora-cobalt/40 tablet:rounded-4xl tablet-lg:max-w-none ${
+        zoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'
+      }`}
     >
-      <motion.div className="absolute inset-0" style={{ scale, originX: ox, originY: oy }}>
+      <motion.div className="pointer-events-none absolute inset-0" style={{ scale, originX: ox, originY: oy }}>
         <Image
           src={product.image}
           alt={`${product.name} (${product.genericName}) — ${product.volume} pack`}
           fill
           loading="eager"
+          draggable={false}
           sizes="(max-width: 1023px) min(100vw, 560px), 50vw"
           className="object-cover"
         />
       </motion.div>
-      <span className="pointer-events-none absolute bottom-5 left-5 hidden rounded-full bg-white/90 px-3.5 py-1.5 font-sans text-[12px] font-semibold text-revora-slate-light backdrop-blur desktop:inline-block">
-        Hover to zoom
+      <span
+        aria-hidden
+        className={`pointer-events-none absolute bottom-4 left-4 rounded-full bg-white/90 px-3.5 py-1.5 font-sans text-[12px] font-semibold text-revora-slate-light shadow-sm backdrop-blur transition-opacity duration-300 tablet:bottom-5 tablet:left-5 ${
+          zoomed ? 'opacity-0' : 'opacity-100'
+        }`}
+      >
+        <span className="[@media(hover:none)]:hidden">Hover to zoom</span>
+        <span className="hidden [@media(hover:none)]:inline">Tap to zoom</span>
       </span>
+      {zoomed && (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute bottom-4 left-4 rounded-full bg-revora-slate/80 px-3.5 py-1.5 font-sans text-[12px] font-semibold text-white backdrop-blur [@media(hover:hover)]:hidden"
+        >
+          Drag to look around · tap to close
+        </span>
+      )}
     </motion.div>
   );
 }
