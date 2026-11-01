@@ -12,6 +12,7 @@ import { Counter, FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
+import { WhoGmpIcon } from '@/components/ui/who-gmp-seal';
 
 const EMAIL = 'info@revorahealthcare.com';
 const REQUEST = `mailto:${EMAIL}?subject=${encodeURIComponent('Request for company profile')}`;
@@ -28,7 +29,7 @@ const DETAILS = [
   { icon: CalendarDays, k: 'Incorporated', v: '10 March 2026' },
   { icon: Globe2, k: 'Market', v: 'India + export partnerships (Asia & Africa)' },
   { icon: Factory, k: 'Manufacturing facility', v: 'Paonta Sahib, H.P. (WHO-GMP)' },
-  { icon: ShieldCheck, k: 'Quality', v: 'WHO-GMP certified manufacturing' },
+  { icon: WhoGmpIcon, k: 'Quality', v: 'WHO-GMP certified manufacturing' },
   { icon: MapPin, k: 'Registered office', v: 'A-303, 3rd Floor, S.G. Business Hub, B/s Bhagvat Petrol Pump, Nr. Gota Over Bridge, S.G. Highway, Ahmedabad, Gujarat 382470', wide: true },
   { icon: Phone, k: 'Phone', v: SITE.phone.label },
   { icon: Mail, k: 'Email', v: EMAIL },

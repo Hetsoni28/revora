@@ -162,7 +162,7 @@ export function QualitySeal() {
   const rim = ring(48, 176, 260, 250);
   const scallops = ring(24, 150, 260, 250);
   return (
-    <Frame label="Illustration of a quality seal with a shield and tick">
+    <Frame label="Illustration of a WHO-GMP certified quality seal">
       <svg viewBox="0 0 520 520" className="absolute inset-0 h-full w-full" aria-hidden>
         <defs>
           <radialGradient id="qs-bg" cx="50%" cy="45%" r="65%">
@@ -196,13 +196,15 @@ export function QualitySeal() {
           ))}
           <circle cx="260" cy="250" r="150" fill="url(#qs-face)" />
           <circle cx="260" cy="250" r="128" fill="none" stroke="#FFFFFF" strokeOpacity="0.35" strokeWidth="2" strokeDasharray="3 7" />
-          {/* shield */}
-          <path d="M260 162 L328 188 L328 244 C328 292 298 322 260 338 C222 322 192 292 192 244 L192 188 Z" fill="#FFFFFF" />
+          {/* WHO-GMP lettering (a generic certification seal, not the WHO emblem) */}
+          <text x="260" y="196" textAnchor="middle" fill={C.pale} fontSize="26" fontWeight="700" letterSpacing="6">WHO</text>
+          <text x="260" y="262" textAnchor="middle" fill="#FFFFFF" fontSize="72" fontWeight="800" letterSpacing="2">GMP</text>
+          <text x="260" y="296" textAnchor="middle" fill={C.pale} fontSize="17" fontWeight="700" letterSpacing="5">CERTIFIED</text>
           <motion.path
-            d="M228 250 L252 274 L296 222"
+            d="M236 326 L254 344 L288 308"
             fill="none"
-            stroke={C.cobalt}
-            strokeWidth="14"
+            stroke={C.crimson}
+            strokeWidth="11"
             strokeLinecap="round"
             strokeLinejoin="round"
             initial={reduce ? false : { pathLength: 0 }}

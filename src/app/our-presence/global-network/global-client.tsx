@@ -14,6 +14,7 @@ import { Honeypot } from '@/components/ui/honeypot';
 import { PresenceLinks } from '@/components/presence/presence-links';
 import { WorldDotMap } from '@/components/maps/world-dot-map';
 import { GLOBAL_NETWORK } from '@/lib/network';
+import { WhoGmpIcon } from '@/components/ui/who-gmp-seal';
 
 
 const REGIONS = (['Asia', 'Africa'] as const).map((region) => ({ region, countries: GLOBAL_NETWORK.filter((m) => m.region === region) }));
@@ -26,7 +27,7 @@ const STATS = [
 
 const CAPABILITIES = [
   {
-    icon: ShieldCheck,
+    icon: WhoGmpIcon,
     title: 'WHO-GMP manufacturing',
     desc: 'Eye drops, ointments, nasal sprays and tablets from a WHO-GMP certified facility, released by an in-house QC lab.',
   },

@@ -19,7 +19,7 @@ export default function PharmacovigilancePolicyPage() {
     <LegalPage
       title="Pharmacovigilance Policy"
       path="/pharmacovigilance-policy"
-      updated="[Date of Going Live]"
+      summary="How to report a suspected side effect or product quality issue with a Revora product, and what our Drug Safety Team does with every report."
       sections={[
         {
           heading: '1. Our commitment to patient safety',
@@ -80,7 +80,7 @@ export default function PharmacovigilancePolicyPage() {
                 <b>Phone:</b>{' '}
                 <a href={SAFETY_PHONE_HREF}>{SAFETY_PHONE}</a>
                 <br />
-                <b>Hours:</b> [Monday to Saturday, 10 am to 6 pm IST]
+                <b>Hours:</b> Monday to Saturday, 10 am to 6 pm IST
               </p>
               <p>
                 <b>Postal / in-person:</b>

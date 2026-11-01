@@ -8,13 +8,14 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
 import { PlantLine, QualitySeal } from '@/components/illustrations/illustrations';
 import { MediaFrame } from '@/components/ui/media-frame';
+import { WhoGmpIcon, WhoGmpSeal } from '@/components/ui/who-gmp-seal';
 
 const EMAIL = 'info@revorahealthcare.com';
 const REQUEST = `mailto:${EMAIL}?subject=${encodeURIComponent('Request for certificate copies')}`;
 
 const CERTS = [
   {
-    icon: ShieldCheck,
+    icon: WhoGmpIcon,
     name: 'WHO-GMP',
     scope: 'Manufacturing facility',
     text: 'Our products are made at a WHO-GMP certified facility, with in-house quality control.',
@@ -85,9 +86,13 @@ export function CertificationsClient() {
                     }`}
                   />
                   <div className="flex items-start justify-between gap-4">
-                    <span className="grid h-14 w-14 place-items-center rounded-2xl bg-revora-slate/45 ring-1 ring-white/20 backdrop-blur-md transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-105">
-                      <c.icon className="h-6 w-6" />
-                    </span>
+                    {c.featured ? (
+                      <WhoGmpSeal className="h-24 w-24 drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-105 tablet:h-28 tablet:w-28" />
+                    ) : (
+                      <span className="grid h-14 w-14 place-items-center rounded-2xl bg-revora-slate/45 ring-1 ring-white/20 backdrop-blur-md transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-105">
+                        <c.icon className="h-6 w-6" />
+                      </span>
+                    )}
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-revora-slate/55 px-3 py-1.5 font-sans text-[12px] font-semibold text-white ring-1 ring-white/15 backdrop-blur-md">
                       <MapPin className="h-3.5 w-3.5 text-revora-cobalt-pale" /> {c.where}
                     </span>
@@ -133,7 +138,7 @@ export function CertificationsClient() {
               <ul className="mt-8 space-y-3">
                 {[
                   { icon: MapPin, t: 'Paonta Sahib, Himachal Pradesh' },
-                  { icon: ShieldCheck, t: 'WHO-GMP facility' },
+                  { icon: WhoGmpIcon, t: 'WHO-GMP facility' },
                   { icon: FileCheck2, t: 'In-house quality control lab' },
                 ].map((x) => (
                   <li key={x.t} className="flex items-center gap-3 font-sans text-[15.5px] font-semibold text-revora-slate">

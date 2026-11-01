@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, ChevronDown, ChevronRight, Globe, Mail, Menu, Phone, ShieldCheck, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronDown, ChevronRight, Globe, Mail, Menu, Phone, X } from 'lucide-react';
 import { useLenis } from 'lenis/react';
 import { expoOut } from '@/lib/easings';
 import { useCatalogue } from '@/components/catalogue/catalogue-context';
@@ -13,6 +13,7 @@ import { productKind, SITE } from '@/lib/seo';
 import { PARTNER_CATEGORIES, partnerHref } from '@/lib/partner-categories';
 import { AnchorLink, Magnetic, Tick } from '@/components/ui/primitives';
 import { useFocusTrap } from '@/lib/a11y';
+import { WhoGmpIcon } from '@/components/ui/who-gmp-seal';
 
 type NavItem = {
   label: string;
@@ -139,7 +140,7 @@ export function Navbar() {
             <div className="mx-auto flex max-w-330 items-center justify-between px-8 py-2 font-sans text-[11.5px] text-revora-slate-light">
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1.5 font-medium text-revora-slate">
-                  <ShieldCheck className="h-3.5 w-3.5 text-revora-cobalt" />
+                  <WhoGmpIcon className="h-4 w-4 text-revora-cobalt" />
                   WHO-GMP manufacturing
                 </span>
                 <span className="h-3 w-px bg-revora-cobalt/15" />
@@ -418,7 +419,7 @@ export function Navbar() {
 
             <div className="mt-8 flex flex-col gap-3 font-sans text-[14px] text-revora-slate-light">
               <span className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 shrink-0 text-revora-cobalt" /> WHO-GMP manufacturing
+                <WhoGmpIcon className="h-4 w-4 shrink-0 text-revora-cobalt" /> WHO-GMP manufacturing
               </span>
               <a href={`mailto:${EMAIL}`} className="flex items-center gap-2">
                 <Mail className="h-4 w-4 shrink-0 text-revora-cobalt" /> {EMAIL}

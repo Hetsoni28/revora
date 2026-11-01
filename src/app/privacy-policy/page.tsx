@@ -16,7 +16,7 @@ export default function PrivacyPolicyPage() {
     <LegalPage
       title="Privacy Policy"
       path="/privacy-policy"
-      updated="[Date of Going Live]"
+      summary="What personal information we collect through this website, why we use it, who we share it with, and the rights you have under Indian law."
       sections={[
         {
           heading: '1. Who we are',
@@ -189,7 +189,7 @@ export default function PrivacyPolicyPage() {
           body: (
             <address className="not-italic">
               <p>
-                <b>[Grievance Officer Name]</b>, Grievance Officer
+                <b>Grievance Officer</b>
                 <br />
                 {SITE.legalName}
                 <br />

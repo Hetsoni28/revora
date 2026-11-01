@@ -9,6 +9,7 @@ import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
 import { Honeypot } from '@/components/ui/honeypot';
+import { WhoGmpIcon } from '@/components/ui/who-gmp-seal';
 
 const DOSAGE_FORMS = [
   { icon: Droplets, title: 'Sterile eye drops', text: 'Ophthalmic solutions and suspensions in dropper vials.' },
@@ -18,7 +19,7 @@ const DOSAGE_FORMS = [
 ];
 
 const STRENGTHS = [
-  { icon: ShieldCheck, title: 'WHO-GMP certified facility', text: 'Manufacturing at Paonta Sahib, Himachal Pradesh.' },
+  { icon: WhoGmpIcon, title: 'WHO-GMP certified facility', text: 'Manufacturing at Paonta Sahib, Himachal Pradesh.' },
   { icon: ClipboardCheck, title: 'In-house QC lab', text: 'Every batch released only after testing by our quality control lab.' },
   { icon: Tag, title: 'Your brand or ours', text: 'Third-party manufacturing under your label, or supply under the Revora brand.' },
   { icon: Package, title: 'Four dosage forms, one roof', text: 'Eye drops, ointments, nasal sprays and tablets from one facility.' },

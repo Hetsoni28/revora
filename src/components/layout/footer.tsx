@@ -4,11 +4,12 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { AlertCircle, ArrowUpRight, Globe, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
+import { AlertCircle, ArrowUpRight, Globe, Mail, MapPin, Phone } from 'lucide-react';
 import { SITE } from '@/lib/seo';
 import { AnchorLink, Tick } from '@/components/ui/primitives';
 import { Button } from '@/components/ui/button';
 import { CookieSettingsLink } from '@/components/consent/cookie-settings-link';
+import { WhoGmpIcon } from '@/components/ui/who-gmp-seal';
 
 const COLUMNS: { title: string; href?: string; links: [string, string | null][] }[] = [
   {
@@ -44,7 +45,7 @@ const COLUMNS: { title: string; href?: string; links: [string, string | null][] 
 ];
 
 const BADGES = [
-  { icon: ShieldCheck, label: 'WHO-GMP' },
+  { icon: WhoGmpIcon, label: 'WHO-GMP' },
   { icon: Globe, label: 'Serving Across India' },
 ];
 

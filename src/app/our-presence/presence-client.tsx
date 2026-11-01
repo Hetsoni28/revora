@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { SupplyFlow } from '@/components/presence/supply-flow';
 import { PresenceLinks } from '@/components/presence/presence-links';
 import { HeroBackdrop } from '@/components/ui/hero-backdrop';
+import { WhoGmpIcon } from '@/components/ui/who-gmp-seal';
 
 const mapsUrl = (q: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 
@@ -243,7 +244,7 @@ function RouteCard() {
       <div className="absolute inset-x-5 top-5 flex items-center justify-between tablet:inset-x-7 tablet:top-7">
         <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-revora-cobalt-pale">Plant → Patient</span>
         <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 font-sans text-[11px] font-semibold text-white backdrop-blur">
-          <ShieldCheck className="h-3.5 w-3.5 text-revora-cobalt-pale" /> WHO-GMP
+          <WhoGmpIcon className="h-4 w-4 text-revora-cobalt-pale" /> WHO-GMP
         </span>
       </div>
       <p className="absolute bottom-5 right-5 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45 tablet:bottom-7 tablet:right-7">

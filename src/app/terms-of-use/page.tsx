@@ -14,7 +14,7 @@ export default function TermsOfUsePage() {
     <LegalPage
       title="Terms of Use"
       path="/terms-of-use"
-      updated="[Date of Going Live]"
+      summary="The terms that apply when you use this website, including who the product information is for, intellectual property and governing law."
       sections={[
         {
           heading: '1. Accepting these terms',
