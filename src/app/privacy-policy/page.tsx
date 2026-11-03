@@ -53,7 +53,7 @@ export default function PrivacyPolicyPage() {
                       ['Send an export or manufacturing enquiry', 'Name, company, business email, country, products of interest, your message'],
                       ['Apply for a job', 'Name, email, phone, city, experience, your CV and anything you write about yourself'],
                       ['Report a side effect or product complaint', 'Your contact details, and the patient and medicine details you share (see section 5)'],
-                      ['Browse the site', 'Necessary cookies only, as explained in our Cookie Policy'],
+                      ['Browse the site', 'Necessary cookies only (see our Cookie Policy), and anonymous visit statistics such as pages viewed, country and device type. These statistics use no cookies and cannot identify you.'],
                     ].map(([when, what], i) => (
                       <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
                         <td className="border border-slate-200 px-4 py-2.5">{when}</td>
@@ -114,7 +114,7 @@ export default function PrivacyPolicyPage() {
               <ul>
                 <li>Our employees who handle your enquiry, application or report.</li>
                 <li>
-                  Service providers who host this website and run our email, under contracts that require them to protect your data.
+                  Service providers who host this website, run our email and store the enquiries you send (in a private system only our team can access), under contracts that require them to protect your data.
                 </li>
                 <li>Regulators and authorities, when the law requires it.</li>
                 <li>Our manufacturing partners, for product quality complaints about their products.</li>

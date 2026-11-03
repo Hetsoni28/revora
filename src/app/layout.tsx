@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import { Providers } from "@/components/providers";
 import { WithCatalogue } from "@/components/catalogue/catalogue-data";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
+import { Analytics } from "@vercel/analytics/next";
 import { JsonLd } from "@/components/seo/json-ld";
 import { KEYWORDS, SITE, SITE_URL, organizationLd, websiteLd } from "@/lib/seo";
 import "./globals.css";
@@ -119,6 +120,8 @@ export default function RootLayout({
             </Suspense>
           </WithCatalogue>
         </Providers>
+        {/* Vercel Web Analytics: visitor counts and top pages, no cookies and no personal data */}
+        <Analytics />
       </body>
     </html>
   );

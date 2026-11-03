@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import nodemailer from 'nodemailer';
 import { CV_MAX_BYTES, CV_TYPES, ENQUIRIES, enquiryLines, isEnquiryKind, type EnquiryField } from '@/lib/enquiry';
 import { SITE, SITE_URL } from '@/lib/seo';
+import { canSave, saveEnquiry } from '@/lib/sanity-write';
 
 /**
  * POST /api/enquiry — every form on the site sends here. The email goes out through the cPanel
@@ -14,7 +15,10 @@ import { SITE, SITE_URL } from '@/lib/seo';
  *   MAIL_FROM   optional sender, defaults to SMTP_USER
  *   ENQUIRY_TO  optional: send every enquiry to this one address instead (handy for testing)
  *
- * Until those are set the route answers 503 and the forms open the visitor's email app instead.
+ * Every enquiry is also saved to the Studio inbox (Studio → Enquiries) when SANITY_API_WRITE_TOKEN
+ * is set (see lib/sanity-write.ts), so a lead survives even if an email is lost. The visitor sees
+ * success when either the email or the save worked. With neither set up the route answers 503 and
+ * the forms open the visitor's email app instead.
  */
 
 const smtp = () => {
@@ -46,7 +50,7 @@ const fail = (status: number, error: string) => NextResponse.json({ ok: false, e
 
 export async function POST(request: NextRequest) {
   const transport = smtp();
-  if (!transport) return fail(503, 'not-configured');
+  if (!transport && !canSave) return fail(503, 'not-configured');
 
   let form: FormData;
   try {
@@ -104,31 +108,60 @@ export async function POST(request: NextRequest) {
   </div>`;
 
   const from = process.env.MAIL_FROM || process.env.SMTP_USER!;
-  try {
-    await transport.sendMail({
-      from: { name: `${SITE.name} website`, address: from },
-      to: process.env.ENQUIRY_TO || kind.to,
-      replyTo: { name: values.name, address: values.email },
-      subject: oneLine(kind.subject(values)).slice(0, 200),
-      text,
-      html,
-      attachments: attachment ? [attachment] : undefined,
-    });
-  } catch (err) {
-    console.error('[enquiry] sending failed:', (err as Error).message);
-    return fail(502, 'We couldn’t send your message just now. Please try again, or email us directly.');
+  let emailSent = false;
+  if (transport) {
+    try {
+      await transport.sendMail({
+        from: { name: `${SITE.name} website`, address: from },
+        to: process.env.ENQUIRY_TO || kind.to,
+        replyTo: values.email ? { name: values.name, address: values.email } : undefined,
+        subject: oneLine(kind.subject(values)).slice(0, 200),
+        text,
+        html,
+        attachments: attachment ? [attachment] : undefined,
+      });
+      emailSent = true;
+    } catch (err) {
+      console.error('[enquiry] sending failed:', (err as Error).message);
+    }
+  }
+
+  // Into the Studio inbox as "New" (the attachment itself stays in the email only).
+  const saved = await saveEnquiry({
+    kind: kindId,
+    form: kind.title,
+    name: values.name ?? '',
+    email: values.email || undefined,
+    phone: values.phone || undefined,
+    organisation: values.organisation || values.company || undefined,
+    details: lines.map((l) => {
+      const [label, ...rest] = l.split(': ');
+      return { label, value: rest.join(': ') };
+    }),
+    message: values.message || undefined,
+    page: page || undefined,
+    attachment: attachment?.filename,
+    emailSent,
+  });
+
+  if (!emailSent && !saved) {
+    return transport
+      ? fail(502, 'We couldn’t send your message just now. Please try again, or email us directly.')
+      : fail(503, 'not-configured');
   }
 
   // A short confirmation to the visitor (awaited: serverless work can stop once we reply).
   // If it fails, their enquiry has still reached us.
-  await transport
-    .sendMail({
-      from: { name: SITE.name, address: from },
-      to: { name: values.name, address: values.email },
-      subject: `We’ve received your ${kind.title.toLowerCase()}`,
-      text: `Dear ${values.name},\n\nThank you for contacting ${SITE.name}. We’ve received your ${kind.title.toLowerCase()} and our team will get back to you soon.\n\nRegards,\n${SITE.legalName}\n${SITE_URL}`,
-    })
-    .catch((err) => console.warn('[enquiry] confirmation email failed:', (err as Error).message));
+  if (transport && emailSent && values.email) {
+    await transport
+      .sendMail({
+        from: { name: SITE.name, address: from },
+        to: { name: values.name, address: values.email },
+        subject: `We’ve received your ${kind.title.toLowerCase()}`,
+        text: `Dear ${values.name},\n\nThank you for contacting ${SITE.name}. We’ve received your ${kind.title.toLowerCase()} and our team will get back to you soon.\n\nRegards,\n${SITE.legalName}\n${SITE_URL}`,
+      })
+      .catch((err) => console.warn('[enquiry] confirmation email failed:', (err as Error).message));
+  }
 
   return NextResponse.json({ ok: true });
 }
