@@ -31,6 +31,9 @@ const nextConfig: NextConfig = {
       { source: "/our-offerings/:path*", destination: "/profile#portfolio", permanent: true },
       // The separate Ahmedabad page was folded into Our Presence.
       { source: "/our-presence/ahmedabad", destination: "/our-presence#ahmedabad", permanent: true },
+      // Product URLs first published with a spelling mistake (see RENAMED_SLUGS in lib/catalogue.ts).
+      { source: "/products/revgel", destination: "/products/revogel", statusCode: 301 },
+      { source: "/products/revfresh", destination: "/products/revofresh", statusCode: 301 },
     ];
   },
   async headers() {

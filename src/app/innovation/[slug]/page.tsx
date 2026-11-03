@@ -1,10 +1,8 @@
-import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { JsonLd } from '@/components/seo/json-ld';
-import { PageLoader } from '@/components/ui/states';
 import { getCatalogue } from '@/lib/sanity';
 import { breadcrumbLd, faqLd, innovationLd, innovationMetadata, innovationName } from '@/lib/seo';
 import { InnovationProductClient } from './innovation-product-client';
@@ -26,9 +24,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return innovationMetadata(product);
 }
 
-async function ProductDetails({ params }: { params: Promise<{ slug: string }> }) {
-  const product = await findInnovationProduct((await params).slug);
-  if (!product) notFound();
+/** Page body plus its structured data (product, breadcrumb trail, FAQs). */
+function ProductDetails({ product }: { product: NonNullable<Awaited<ReturnType<typeof findInnovationProduct>>> }) {
   const name = innovationName(product);
   return (
     <>
@@ -44,14 +41,16 @@ async function ProductDetails({ params }: { params: Promise<{ slug: string }> })
   );
 }
 
-export default function InnovationProductPage({ params }: { params: Promise<{ slug: string }> }) {
+// The catalogue is cached, so the product is in the prerendered HTML straight away (no "Loading" fallback),
+// and an unknown slug answers with a real 404.
+export default async function InnovationProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const product = await findInnovationProduct((await params).slug);
+  if (!product) notFound();
   return (
     <div className="flex min-h-screen flex-col bg-[#F6F9FC]">
       <Navbar />
       <main id="main" tabIndex={-1} className="flex-1">
-        <Suspense fallback={<PageLoader label="Loading product…" />}>
-          <ProductDetails params={params} />
-        </Suspense>
+        <ProductDetails product={product} />
       </main>
       <Footer />
     </div>

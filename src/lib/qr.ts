@@ -1,5 +1,6 @@
 import { getCatalogue } from '@/lib/sanity';
 import { SITE_URL } from '@/lib/seo';
+import { RENAMED_SLUGS } from '@/lib/catalogue';
 
 /**
  * Pack QR codes hold a short, permanent link — /p/<slug> — instead of the page address, so packs
@@ -11,7 +12,9 @@ export const qrLink = (slug: string) => `${SITE_URL}/p/${slug}`;
 export const cleanSlug = (raw: string) => raw.toLowerCase().replace(/[^a-z0-9-]/g, '');
 
 /** The page a slug belongs to — an eye-care product or an innovation product — or null. */
-export async function findProductPage(slug: string): Promise<{ path: string; name: string } | null> {
+export async function findProductPage(raw: string): Promise<{ path: string; name: string } | null> {
+  // packs printed before a slug was corrected still land on the right product
+  const slug = RENAMED_SLUGS[raw] ?? raw;
   const { products, innovation } = await getCatalogue();
   const eyeCare = products.find((p) => p.id === slug);
   if (eyeCare) return { path: `/products/${eyeCare.id}`, name: eyeCare.name };

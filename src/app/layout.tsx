@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     template: '%s | Revora Healthcare',
   },
   description:
-    'Revora Healthcare is an Ahmedabad pharmaceutical company: specialty brands in ophthalmology and orthopaedics, WHO-GMP manufacturing for partners, and exports.',
+    'Revora Healthcare is an Ahmedabad pharmaceutical company: its own ophthalmic brands, distribution of orthopaedic products, WHO-GMP manufacturing for partners, and exports.',
   applicationName: SITE.name,
   keywords: KEYWORDS,
   authors: [{ name: SITE.legalName, url: SITE_URL }],

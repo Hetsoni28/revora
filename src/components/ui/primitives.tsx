@@ -136,24 +136,45 @@ export function Magnetic({
   );
 }
 
+/** Is this element on screen and actually visible (not inside something still faded out)? */
+function isShowing(el: HTMLElement) {
+  const r = el.getBoundingClientRect();
+  if (r.bottom <= 0 || r.top >= window.innerHeight) return false;
+  for (let n: HTMLElement | null = el; n; n = n.parentElement) if (parseFloat(getComputedStyle(n).opacity) < 0.05) return false;
+  return true;
+}
+
 /* ─────────────────────────────────────────────────────────────
-   Counter — counts up once when visible.
+   Counter — counts up once when visible. The real number is in the
+   HTML (search engines, slow phones and no-JS visitors see it); the
+   count-up only plays when the number hasn't been seen yet.
    ───────────────────────────────────────────────────────────── */
 export function Counter({ to, duration = 1.8 }: { to: number; duration?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: '-10% 0px' });
   const reduce = useReducedMotion();
-  const [val, setVal] = useState(reduce ? to : 0);
+  const [val, setVal] = useState(to);
+  const [armed, setArmed] = useState(false);
+
+  // after hydration: arm the count-up only if the number isn't on show yet (below the fold or still fading in)
+  useEffect(() => {
+    if (reduce || !ref.current || isShowing(ref.current)) return;
+    const id = requestAnimationFrame(() => {
+      setVal(0);
+      setArmed(true);
+    });
+    return () => cancelAnimationFrame(id);
+  }, [reduce]);
 
   useEffect(() => {
-    if (!inView || reduce) return;
+    if (!armed || !inView) return;
     const controls = animate(0, to, {
       duration,
       ease: expoOut,
       onUpdate: (v) => setVal(Math.round(v)),
     });
     return () => controls.stop();
-  }, [inView, to, duration, reduce]);
+  }, [armed, inView, to, duration]);
 
   return <span ref={ref}>{val}</span>;
 }

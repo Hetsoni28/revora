@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { Fragment, useRef } from 'react';
 import Image from 'next/image';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { Eye, Factory, HeartHandshake, ShieldCheck, Users } from 'lucide-react';
@@ -164,11 +164,13 @@ function PromiseStatement() {
           <SplitWords text="Our promise." highlight={{ 'promise.': 'text-revora-cobalt' }} />
         </h2>
         <p ref={ref} className="mt-8 max-w-3xl font-heading text-[clamp(1.15rem,1.9vw,1.6rem)] font-semibold leading-[1.5] tracking-[-0.01em] text-revora-slate">
-          <span className="sr-only">{PROMISE}</span>
+          {/* real spaces between the words: the sentence reads (and indexes) once, as words */}
           {words.map((w, i) => (
-            <Word key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} reduce={!!reduce} emphasis={EMPHASIS.has(w)}>
-              {w}
-            </Word>
+            <Fragment key={i}>
+              <Word progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} reduce={!!reduce} emphasis={EMPHASIS.has(w)}>
+                {w}
+              </Word>{' '}
+            </Fragment>
           ))}
         </p>
       </div>
@@ -187,10 +189,9 @@ function Word({ children, progress, range, reduce, emphasis }: {
   const opacity = useTransform(progress, (v) => 0.15 + 0.85 * Math.min(Math.max((v - range[0]) / (range[1] - range[0]), 0), 1));
   return (
     <motion.span
-      aria-hidden
       style={reduce ? undefined : { opacity }}
       transition={{ ease: expoOut }}
-      className={`mr-[0.25em] inline-block ${emphasis ? 'text-revora-crimson' : ''}`}
+      className={`inline-block ${emphasis ? 'text-revora-crimson' : ''}`}
     >
       {children}
     </motion.span>

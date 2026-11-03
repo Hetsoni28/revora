@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { Navbar } from '@/components/layout/navbar';
@@ -7,7 +6,6 @@ import type { Product, TherapyCategory } from '@/lib/catalogue';
 import { getCatalogue } from '@/lib/sanity';
 import { ProductClient } from './product-client';
 import { JsonLd } from '@/components/seo/json-ld';
-import { PageLoader } from '@/components/ui/states';
 import { breadcrumbLd, productLd, productMetadata } from '@/lib/seo';
 
 /** The product and its therapy area from Sanity, or nothing if either is missing. */
@@ -53,24 +51,20 @@ function ProductWithSchema({ product, category }: { product: Product; category: 
   );
 }
 
-async function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
-  const found = await findProduct((await params).id);
-  if (!found) notFound();
-  return <ProductWithSchema product={found.product} category={found.category} />;
-}
-
-export default function ProductPage({
+// The catalogue is cached, so the product is in the prerendered HTML straight away (no "Loading" fallback),
+// and an unknown id answers with a real 404 rather than a "not found" page sent as 200.
+export default async function ProductPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const found = await findProduct((await params).id);
+  if (!found) notFound();
   return (
     <div className="min-h-screen flex flex-col bg-[#F6F9FC]">
       <Navbar />
       <main id="main" tabIndex={-1} className="flex-1">
-        <Suspense fallback={<PageLoader label="Loading product…" />}>
-          <ProductDetails params={params} />
-        </Suspense>
+        <ProductWithSchema product={found.product} category={found.category} />
       </main>
       <Footer />
     </div>

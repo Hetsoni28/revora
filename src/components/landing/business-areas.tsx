@@ -9,7 +9,7 @@ const AREAS = [
   { icon: Stethoscope, title: 'India Business', text: 'Specialty brands for doctors, hospitals and pharmacies.', href: '/profile#portfolio' },
   { icon: ShieldCheck, title: 'Institutional & Defence', text: 'Reliable supply where failure is not an option.', href: '/our-presence/domestic-network' },
   { icon: Factory, title: 'Manufacturing & CDMO', text: 'WHO-GMP manufacturing for partners.', href: '/manufacturing' },
-  { icon: Globe2, title: 'International Business', text: 'Export partnerships across Asia and Africa.', href: '/our-presence/global-network' },
+  { icon: Globe2, title: 'International Business', text: 'Seeking importer and distributor partners in Asia and Africa.', href: '/our-presence/global-network' },
 ];
 
 /** The four business areas, side by side. */

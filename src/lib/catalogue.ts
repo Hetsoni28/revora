@@ -59,4 +59,14 @@ export interface Catalogue {
   innovation: InnovationProduct[];
 }
 
+/**
+ * Product URLs that were first published with a spelling mistake, mapped to the correct brand name.
+ * The site always uses the corrected slug; the old one redirects (next.config.ts) and old pack QR
+ * codes still resolve (lib/qr.ts). Once the slug is also corrected in Sanity the entry does nothing.
+ */
+export const RENAMED_SLUGS: Record<string, string> = {
+  revgel: 'revogel',
+  revfresh: 'revofresh',
+};
+
 export const EMPTY_CATALOGUE: Catalogue = { categories: [], products: [], innovation: [] };

@@ -27,7 +27,7 @@ const atAGlance = ({ products, categories, innovation }: Catalogue) => [
 const DETAILS = [
   { icon: Building2, k: 'Company', v: 'Revora Healthcare Private Limited' },
   { icon: CalendarDays, k: 'Incorporated', v: '10 March 2026' },
-  { icon: Globe2, k: 'Market', v: 'India + export partnerships (Asia & Africa)' },
+  { icon: Globe2, k: 'Market', v: 'India, plus priority export markets in Asia & Africa' },
   { icon: Factory, k: 'Manufacturing facility', v: 'Paonta Sahib, H.P. (WHO-GMP)' },
   { icon: WhoGmpIcon, k: 'Quality', v: 'WHO-GMP certified manufacturing' },
   { icon: MapPin, k: 'Registered office', v: 'A-303, 3rd Floor, S.G. Business Hub, B/s Bhagvat Petrol Pump, Nr. Gota Over Bridge, S.G. Highway, Ahmedabad, Gujarat 382470', wide: true },
@@ -39,7 +39,7 @@ const BUSINESS = [
   {
     icon: Layers,
     title: 'India Business',
-    text: 'Specialty brands across ophthalmology, orthopaedics and nutrition, plus the thermal innovation range.',
+    text: 'Our ophthalmic and nutrition brands, orthopaedic products we distribute, and the thermal innovation range.',
     tag: 'Core',
     image: '/images/photos/business-ophthalmic.webp',
     imageAlt: 'Eye-drop bottles on a laboratory bench',
@@ -55,7 +55,7 @@ const BUSINESS = [
   {
     icon: Globe2,
     title: 'International Business',
-    text: 'Export partnerships with importers and distributors across Asia and Africa.',
+    text: 'Seeking importers and distributors in priority markets across Asia and Africa.',
     tag: 'Growing',
     image: '/images/photos/warehouse-dispatch.webp',
     imageAlt: 'Cartons being prepared for dispatch in a warehouse',

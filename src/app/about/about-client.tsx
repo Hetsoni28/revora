@@ -32,7 +32,7 @@ const journeyFor = (brands: number, areas: number) => [
   { icon: Layers, when: 'Portfolio', title: `${brands} healthcare brands`, text: `Across ${areas} therapy areas.` },
   { icon: Bone, when: 'Orthopaedics', title: 'Entry with HYSTRIDE', text: 'Our first step into joint care.' },
   { icon: Sparkles, when: 'Innovation', title: 'Thermal care range', text: 'Warmers, cooling and field-care products for extreme conditions.' },
-  { icon: Globe2, when: 'Now', title: 'Manufacturing & export', text: 'Third-party manufacturing and export partnerships.' },
+  { icon: Globe2, when: 'Now', title: 'Manufacturing & export', text: 'Third-party manufacturing, and appointing export partners.' },
   { icon: Rocket, when: 'Next', title: 'New therapy areas', text: 'Specialty healthcare and medical devices.', next: true },
 ];
 

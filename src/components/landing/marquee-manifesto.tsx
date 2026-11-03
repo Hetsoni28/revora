@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { Fragment, useRef } from 'react';
 import {
   motion,
   useScroll,
@@ -99,7 +99,7 @@ function Word({
   // Function form keeps this on the JS path (see hero.tsx) so it survives client-side navigation.
   const opacity = useTransform(progress, (v) => 0.14 + 0.86 * Math.min(Math.max((v - range[0]) / (range[1] - range[0]), 0), 1));
   return (
-    <span className="relative mr-[0.25em] inline-block">
+    <span className="relative inline-block">
       <motion.span style={{ opacity }} className={emphasis ? 'text-revora-crimson' : undefined}>
         {children}
       </motion.span>
@@ -138,18 +138,16 @@ export function Manifesto() {
           {reduce ? (
             <p>{MANIFESTO}</p>
           ) : (
-            <p aria-label={MANIFESTO}>
+            <p>
               {words.map((w, i) => {
                 const start = i / words.length;
+                // a real space between words, so the sentence reads (and indexes) as words, not one long string
                 return (
-                  <Word
-                    key={i}
-                    progress={scrollYProgress}
-                    range={[start, start + 1 / words.length]}
-                    emphasis={EMPHASIS.has(w)}
-                  >
-                    {w}
-                  </Word>
+                  <Fragment key={i}>
+                    <Word progress={scrollYProgress} range={[start, start + 1 / words.length]} emphasis={EMPHASIS.has(w)}>
+                      {w}
+                    </Word>{' '}
+                  </Fragment>
                 );
               })}
             </p>

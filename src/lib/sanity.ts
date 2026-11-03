@@ -1,7 +1,7 @@
 import { createClient } from 'next-sanity';
 import { cacheLife } from 'next/cache';
 import { createImageUrlBuilder } from '@sanity/image-url';
-import { EMPTY_CATALOGUE, type Catalogue, type Product, type SeoFields, type TherapyCategory } from '@/lib/catalogue';
+import { EMPTY_CATALOGUE, RENAMED_SLUGS, type Catalogue, type Product, type SeoFields, type TherapyCategory } from '@/lib/catalogue';
 import { INNOVATION_CATEGORIES, type InnovationProduct } from '@/lib/innovation-products';
 
 // Use a broad type since @sanity/image-url sub-path types vary by version
@@ -149,7 +149,7 @@ function adaptCategory(c: SanityTherapyCategory): TherapyCategory {
 function adaptProduct(p: SanityProduct, categories: TherapyCategory[]): Product {
   const image = urlFor(p.image).width(800).height(800).url();
   return {
-    id: p.id,
+    id: RENAMED_SLUGS[p.id] ?? p.id,
     name: p.name,
     genericName: p.genericName ?? '',
     categorySlug: p.categorySlug ?? '',
