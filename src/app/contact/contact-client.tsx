@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { SITE } from '@/lib/seo';
 import { useEnquiry } from '@/lib/use-enquiry';
 import { Honeypot } from '@/components/ui/honeypot';
+import { OfficeMap } from '@/components/ui/office-map';
 
 /**
  * Who to write to. Picking a card selects that team in the message form below (each is its own
@@ -27,7 +28,8 @@ const DESKS = [
 type DeskId = (typeof DESKS)[number]['id'];
 
 const ADDRESS = [SITE.address.streetAddress, `${SITE.address.addressLocality}, ${SITE.address.addressRegion} ${SITE.address.postalCode}`];
-const MAP_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${SITE.legalName}, ${ADDRESS.join(', ')}`)}`;
+// the office's Google Maps business listing
+const MAP_URL = SITE.map.url;
 
 export function ContactClient() {
   const [desk, setDesk] = useState<DeskId>('products');
@@ -50,6 +52,7 @@ export function ContactClient() {
       />
       <Desks selected={desk} onPick={setDesk} />
       <MessageForm desk={desk} onDesk={setDesk} />
+      <VisitUs />
       <SafetyNote />
     </>
   );
@@ -219,6 +222,20 @@ function MessageForm({ desk: deskId, onDesk }: { desk: DeskId; onDesk: (id: Desk
               <Button type="submit" arrow="up-right" magnetic icon={<Send />} disabled={sending}>{sending ? 'Sending…' : 'Send message'}</Button>
             </div>
           </form>
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+/* ── visit us: the office on the map ──────────────────────── */
+function VisitUs() {
+  return (
+    <section id="visit" className="scroll-mt-28 px-5 pb-14 tablet:px-8 tablet:pb-20">
+      <div className="mx-auto max-w-330">
+        <SectionHeading eyebrow="Visit us" lines={['Find our office.']} highlight={{ 'office.': 'text-revora-cobalt' }} />
+        <FadeUp delay={0.1} className="mt-10">
+          <OfficeMap />
         </FadeUp>
       </div>
     </section>

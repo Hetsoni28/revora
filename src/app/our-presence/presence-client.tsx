@@ -12,6 +12,7 @@ import { SupplyFlow } from '@/components/presence/supply-flow';
 import { PresenceLinks } from '@/components/presence/presence-links';
 import { HeroBackdrop } from '@/components/ui/hero-backdrop';
 import { WhoGmpIcon } from '@/components/ui/who-gmp-seal';
+import { SITE } from '@/lib/seo';
 
 const mapsUrl = (q: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 
@@ -26,7 +27,8 @@ const FACILITIES = [
     detail: 'Sales, distribution, partnerships and export, run from Ahmedabad.',
     roles: ['Sales & marketing', 'Distribution & supply planning', 'Partnerships & institutional supply', 'Pharmacovigilance'],
     facts: [['Role', 'Head office'], ['Reach', 'India + export markets']],
-    mapQuery: 'S.G. Business Hub, Nr. Gota Over Bridge, S.G. Highway, Ahmedabad, Gujarat 382470',
+    // navigation straight to the office's Google Maps listing
+    directions: SITE.map.directions,
     images: ['/images/photos/ahmedabad-skyline.webp'],
     logos: false,
     second: { label: 'Contact us', href: '/contact', icon: undefined },
@@ -41,7 +43,7 @@ const FACILITIES = [
     detail: 'Our manufacturing facility: WHO-GMP certified, with in-house quality control.',
     roles: ['Sterile eye drops', 'Ophthalmic ointments', 'Nasal sprays', 'Tablets', 'In-house QC & release'],
     facts: [['Standard', 'WHO-GMP'], ['Quality control', 'In-house QC']],
-    mapQuery: 'Paonta Sahib, Himachal Pradesh',
+    directions: mapsUrl('Paonta Sahib, Himachal Pradesh'),
     images: ['/images/site/eye-drop-filling-line.webp'],
     logos: false,
     second: { label: 'Certifications', href: '/certifications', icon: undefined },
@@ -175,7 +177,7 @@ function FacilityCard({ f }: { f: (typeof FACILITIES)[number] }) {
           ))}
         </dl>
         <div className="mt-auto flex flex-wrap gap-3 pt-8">
-          <Button href={mapsUrl(f.mapQuery)} icon={<Navigation />}>Get directions</Button>
+          <Button href={f.directions} icon={<Navigation />}>Get directions</Button>
           <Button href={f.second.href} variant="outline" icon={f.second.icon}>{f.second.label}</Button>
         </div>
       </div>

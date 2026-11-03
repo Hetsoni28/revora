@@ -21,6 +21,15 @@ export const SITE = {
     postalCode: '382470',
     addressCountry: 'IN',
   },
+  /** The office's Google Maps business listing (Revora Healthcare Private Limited). */
+  map: {
+    url: 'https://maps.google.com/?cid=773330115797080267',
+    directions: 'https://www.google.com/maps/dir/?api=1&destination=23.092248,72.5285102',
+    // embeddable map centred on the listing (no API key needed)
+    embed: 'https://maps.google.com/maps?q=Revora%20Healthcare%20Private%20Limited&ll=23.092248,72.5285102&z=17&output=embed',
+    latitude: 23.092248,
+    longitude: 72.5285102,
+  },
 } as const;
 
 /** Site-wide search terms — what the company actually makes and where. */
@@ -172,6 +181,14 @@ export const organizationLd = {
   foundingDate: SITE.foundingDate,
   founder: { '@type': 'Person', name: SITE.founder.name, jobTitle: SITE.founder.title },
   address: { '@type': 'PostalAddress', ...SITE.address },
+  // the office as a place on the map (the Google Maps business listing)
+  location: {
+    '@type': 'Place',
+    name: SITE.legalName,
+    address: { '@type': 'PostalAddress', ...SITE.address },
+    geo: { '@type': 'GeoCoordinates', latitude: SITE.map.latitude, longitude: SITE.map.longitude },
+    hasMap: SITE.map.url,
+  },
   areaServed: { '@type': 'Country', name: 'India' },
   knowsAbout: ['Ophthalmic pharmaceuticals', 'Eye drops', 'Dry eye treatment', 'Ocular anti-infectives', 'Retinal nutrition'],
 };

@@ -75,7 +75,11 @@ export default function CookiePolicyPage() {
                     </tbody>
                   </table>
                 </div>
-                <p className="mt-4">We don’t use analytics or marketing cookies at the moment. If we add them, they will appear here and only run with your consent.</p>
+                <p className="mt-4">We don’t set any analytics or marketing cookies ourselves. Our visit statistics (Vercel Web Analytics) use no cookies and can’t identify you.</p>
+                <p className="mt-3">
+                  <b className="text-revora-slate">Google Maps.</b> The map on our Contact page is provided by Google, which may set its own cookies when the map loads.
+                  It loads automatically only if you allow <b className="text-revora-slate">Marketing</b> cookies; otherwise it stays off until you choose “Show map”.
+                </p>
               </section>
 
               <section>
