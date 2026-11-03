@@ -39,8 +39,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
     >
       <ReactLenis root options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}>
         {children}
-        {/* on phones, sit above the product page's sticky "Request samples" bar */}
-        <Toaster richColors position="bottom-right" closeButton mobileOffset={{ bottom: 96 }} />
+        {/* above the WhatsApp button, and on phones above the product page's sticky "Request samples" bar */}
+        <Toaster richColors position="bottom-right" closeButton offset={{ bottom: 96, right: 24 }} mobileOffset={{ bottom: 164 }} />
         <NetworkStatus />
         <HydrationMark />
         <CookieConsent />

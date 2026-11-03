@@ -53,10 +53,23 @@ export interface TherapyCategory {
 }
 
 /** Everything the site lists — all of it edited in Sanity. */
+/** The floating WhatsApp button, edited in Sanity Studio → WhatsApp chat. */
+export interface WhatsAppSettings {
+  enabled: boolean;
+  number: string;
+  label: string;
+  productMessage?: string;
+  innovationMessage?: string;
+  pages: { path: string; message: string }[];
+  defaultMessage: string;
+}
+
 export interface Catalogue {
   categories: TherapyCategory[];
   products: Product[];
   innovation: InnovationProduct[];
+  /** Missing until the settings are published; the button stays hidden without them. */
+  whatsapp?: WhatsAppSettings;
 }
 
 /**

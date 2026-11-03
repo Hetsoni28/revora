@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import { Inter, Geist_Mono, Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import { Providers } from "@/components/providers";
 import { WithCatalogue } from "@/components/catalogue/catalogue-data";
+import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { JsonLd } from "@/components/seo/json-ld";
 import { KEYWORDS, SITE, SITE_URL, organizationLd, websiteLd } from "@/lib/seo";
 import "./globals.css";
@@ -109,7 +111,13 @@ export default function RootLayout({
         </a>
         <JsonLd data={[organizationLd, websiteLd]} />
         <Providers>
-          <WithCatalogue>{children}</WithCatalogue>
+          <WithCatalogue>
+            {children}
+            {/* reads the URL for its message, so it waits in its own boundary (it carries no content) */}
+            <Suspense fallback={null}>
+              <WhatsAppButton />
+            </Suspense>
+          </WithCatalogue>
         </Providers>
       </body>
     </html>

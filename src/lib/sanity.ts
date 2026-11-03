@@ -1,7 +1,7 @@
 import { createClient } from 'next-sanity';
 import { cacheLife } from 'next/cache';
 import { createImageUrlBuilder } from '@sanity/image-url';
-import { EMPTY_CATALOGUE, RENAMED_SLUGS, type Catalogue, type Product, type SeoFields, type TherapyCategory } from '@/lib/catalogue';
+import { EMPTY_CATALOGUE, RENAMED_SLUGS, type WhatsAppSettings, type Catalogue, type Product, type SeoFields, type TherapyCategory } from '@/lib/catalogue';
 import { INNOVATION_CATEGORIES, type InnovationProduct } from '@/lib/innovation-products';
 
 // Use a broad type since @sanity/image-url sub-path types vary by version
@@ -111,7 +111,8 @@ const CATALOGUE_QUERY = `{
     highlight,
     faqs[] { q, a },
     seo
-  }
+  },
+  "whatsapp": *[_id == "whatsappSettings"][0] { enabled, number, label, productMessage, innovationMessage, pages[] { path, message }, defaultMessage }
 }`;
 
 // ─── Sanity → site shapes ─────────────────────────────────────────────────────
@@ -204,7 +205,12 @@ function adaptInnovationProduct(p: SanityInnovationProduct): InnovationProduct {
 export async function getCatalogue(): Promise<Catalogue> {
   'use cache';
   cacheLife('minutes');
-  let raw: { categories: SanityTherapyCategory[]; products: SanityProduct[]; innovation: SanityInnovationProduct[] };
+  let raw: {
+    categories: SanityTherapyCategory[];
+    products: SanityProduct[];
+    innovation: SanityInnovationProduct[];
+    whatsapp: Partial<WhatsAppSettings> | null;
+  };
   try {
     raw = await sanityClient.fetch(CATALOGUE_QUERY);
   } catch (err) {
@@ -225,5 +231,21 @@ export async function getCatalogue(): Promise<Catalogue> {
     categories,
     products: raw.products.map((p) => adaptProduct(p, categories)),
     innovation: raw.innovation.map(adaptInnovationProduct).sort((a, b) => rank(a.category) - rank(b.category)),
+    whatsapp: adaptWhatsApp(raw.whatsapp),
+  };
+}
+
+/** Published, switched on and with a number and a default message, or nothing (the button hides). */
+function adaptWhatsApp(w: Partial<WhatsAppSettings> | null): WhatsAppSettings | undefined {
+  const number = w?.number?.replace(/\D/g, '');
+  if (!w || w.enabled === false || !number || !w.defaultMessage) return undefined;
+  return {
+    enabled: true,
+    number,
+    label: w.label || 'Chat on WhatsApp',
+    productMessage: w.productMessage || undefined,
+    innovationMessage: w.innovationMessage || undefined,
+    pages: (w.pages ?? []).filter((p) => p?.path && p.message),
+    defaultMessage: w.defaultMessage,
   };
 }
