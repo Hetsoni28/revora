@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Building2, Factory, MapPin, Navigation, ShieldCheck } from 'lucide-react';
+import { Building2, Factory, MapPin, Navigation } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { FadeUp } from '@/components/ui/primitives';
 import { Breadcrumb } from '@/components/ui/breadcrumb';

@@ -247,7 +247,7 @@ export function AdrForm() {
           type="checkbox"
           checked={consent}
           onChange={(e) => setConsent(e.target.checked)}
-          className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-revora-cobalt"
+          className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-revora-cobalt"
         />
         <span className="font-sans text-[13.5px] leading-[1.65] text-revora-slate-light">
           I consent to Revora Healthcare Private Limited using the details I have provided for the purpose of assessing and acting on this report,

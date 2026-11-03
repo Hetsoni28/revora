@@ -3,7 +3,7 @@
 import { useId, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { toast } from 'sonner';
-import { Globe, ShieldCheck, Award, Ship, Plane, FileCheck } from 'lucide-react';
+import { Globe, Award, Ship, Plane, FileCheck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { Counter, FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
@@ -218,7 +218,7 @@ export function GlobalClient() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Dr. Alex Morgan"
-                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-sm focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
+                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-[16px] tablet:text-sm focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
                 />
               </div>
 
@@ -231,7 +231,7 @@ export function GlobalClient() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="alex@company.com"
-                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-sm focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
+                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-[16px] tablet:text-sm focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
                 />
               </div>
 
@@ -243,7 +243,7 @@ export function GlobalClient() {
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
                   placeholder="e.g. UAE, Vietnam, Kenya"
-                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-sm focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
+                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-[16px] tablet:text-sm focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
                 />
               </div>
 
@@ -255,7 +255,7 @@ export function GlobalClient() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Tell us about your distribution reach or formulation needs..."
-                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-sm focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
+                  className="mt-1 w-full rounded-xl border border-revora-cobalt/15 bg-white px-4 py-2.5 font-sans text-[16px] tablet:text-sm focus:border-revora-cobalt focus:outline-none focus:shadow-[0_0_0_4px_rgba(11,74,143,0.12)]"
                 />
               </div>
 

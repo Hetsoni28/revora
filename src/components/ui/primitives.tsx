@@ -48,7 +48,8 @@ export function SplitWords({
       {words.map((w, i) => (
         <span
           key={i}
-          className="inline-block overflow-hidden align-bottom pb-[0.08em] mb-[-0.08em]"
+          // a little room on every side so tight tracking never clips the last letter or punctuation
+          className="inline-block overflow-hidden align-bottom -mx-[0.06em] mb-[-0.08em] px-[0.06em] pb-[0.08em]"
         >
           <motion.span
             data-reveal

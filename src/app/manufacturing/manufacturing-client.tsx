@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ClipboardCheck, Droplets, FlaskConical, Handshake, MessageSquare, Package, Pill, Send, ShieldCheck, SprayCan, Tag } from 'lucide-react';
+import { ClipboardCheck, Droplets, FlaskConical, Handshake, MessageSquare, Package, Pill, Send, SprayCan, Tag } from 'lucide-react';
 import { SITE } from '@/lib/seo';
 import { useEnquiry } from '@/lib/use-enquiry';
 import { FadeUp } from '@/components/ui/primitives';

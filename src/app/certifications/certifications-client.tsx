@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Building2, FileCheck2, Mail, MapPin, ShieldCheck } from 'lucide-react';
+import { Building2, FileCheck2, Mail, MapPin } from 'lucide-react';
 import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
 import { SectionHeading } from '@/components/ui/section-heading';

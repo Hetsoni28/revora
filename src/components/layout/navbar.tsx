@@ -77,6 +77,8 @@ export function Navbar() {
   const [dropdown, setDropdown] = useState<string | null>(null);
   const [mobileGroup, setMobileGroup] = useState<string | null>('Our Products');
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // the last press on a top item: was it a finger, and was that item's dropdown already open?
+  const press = useRef<{ touch: boolean; wasOpen: boolean }>({ touch: false, wasOpen: false });
 
   // Close menus whenever the page changes — including the browser's Back button.
   const [lastPath, setLastPath] = useState(pathname);
@@ -98,6 +100,16 @@ export function Navbar() {
       document.documentElement.style.overflow = '';
     };
   }, [open, lenis]);
+
+  // Touch screens (tablets in landscape get the desktop bar): a tap outside the open dropdown closes it.
+  useEffect(() => {
+    if (!dropdown) return;
+    const onDown = (e: PointerEvent) => {
+      if (!(e.target as Element | null)?.closest?.('[data-menu]')) setDropdown(null);
+    };
+    document.addEventListener('pointerdown', onDown);
+    return () => document.removeEventListener('pointerdown', onDown);
+  }, [dropdown]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -187,9 +199,13 @@ export function Navbar() {
                     key={item.label}
                     className={item.mega ? '' : 'relative'}
                     data-menu
-                    onMouseEnter={() => hasMenu && openMenu(item.label)}
-                    onMouseLeave={() => hasMenu && closeMenu()}
-                    onFocus={() => hasMenu && openMenu(item.label)}
+                    // hover opens the dropdown for a mouse only; a finger's tap is handled in onClick below
+                    onPointerEnter={(e) => e.pointerType === 'mouse' && hasMenu && openMenu(item.label)}
+                    onPointerLeave={(e) => e.pointerType === 'mouse' && hasMenu && closeMenu()}
+                    onPointerDown={(e) => {
+                      press.current = { touch: e.pointerType !== 'mouse', wasOpen: isOpen };
+                    }}
+                    onFocus={() => hasMenu && !press.current.touch && openMenu(item.label)}
                     onBlur={(e) => {
                       if (!e.currentTarget.contains(e.relatedTarget as Node)) closeMenu();
                     }}
@@ -199,7 +215,17 @@ export function Navbar() {
                       aria-current={active ? 'page' : undefined}
                       aria-haspopup={hasMenu || undefined}
                       aria-expanded={hasMenu ? isOpen : undefined}
-                      onClick={() => setDropdown(item.mega && !isOpen ? item.label : null)}
+                      onClick={(e: React.MouseEvent) => {
+                        // a finger can't hover: the first tap opens the dropdown, a second tap follows the link
+                        const { touch, wasOpen } = press.current;
+                        press.current = { touch: false, wasOpen: false };
+                        if (touch && hasMenu && !wasOpen) {
+                          e.preventDefault();
+                          openMenu(item.label);
+                          return;
+                        }
+                        setDropdown(item.mega && !isOpen ? item.label : null);
+                      }}
                       className={`group relative flex items-center gap-1 overflow-hidden whitespace-nowrap rounded-full px-2.5 py-2 font-sans text-[13.5px] font-medium desktop-lg:gap-1.5 desktop-lg:px-4 desktop-lg:text-[14px] transition-colors hover:text-revora-cobalt ${
                         active || isOpen ? 'text-revora-cobalt' : 'text-revora-slate'
                       }`}
@@ -457,7 +483,7 @@ type TopLinkProps = {
   href: string;
   className?: string;
   children: React.ReactNode;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   'aria-current'?: 'page';
   'aria-haspopup'?: boolean;
   'aria-expanded'?: boolean;

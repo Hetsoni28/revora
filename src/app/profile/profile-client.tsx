@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Building2, CalendarDays, Factory, Globe2, Layers, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
+import { Building2, CalendarDays, Factory, Globe2, Layers, Mail, MapPin, Phone } from 'lucide-react';
 import { SITE } from '@/lib/seo';
 import { expoOut } from '@/lib/easings';
 import { INNOVATION_CATEGORIES } from '@/lib/innovation-products';
@@ -130,7 +130,7 @@ export function ProfileClient() {
       <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Company details" lines={['On the record.']} highlight={{ 'record.': 'text-revora-cobalt' }} />
-          <div className="mt-12 grid gap-4 tablet:grid-cols-2">
+          <div className="mt-12 grid grid-cols-[minmax(0,1fr)] gap-4 tablet:grid-cols-2">
             {DETAILS.map((d, i) => (
               <FadeUp key={d.k} delay={(i % 2) * 0.08} className={d.wide ? 'tablet:col-span-2' : undefined}>
                 <div className="group flex h-full items-start gap-4 rounded-[22px] border border-revora-cobalt/10 bg-[#F6F9FC] p-6 transition-shadow duration-500 hover:shadow-[0_20px_44px_-26px_rgba(11,74,143,0.5)]">
@@ -139,7 +139,7 @@ export function ProfileClient() {
                   </span>
                   <div className="min-w-0">
                     <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-revora-slate-muted">{d.k}</p>
-                    <p className={`mt-1 wrap-break-word font-heading text-[16px] font-bold leading-snug text-revora-slate`}>{d.v}</p>
+                    <p className="mt-1 font-heading text-[16px] font-bold leading-snug text-revora-slate [overflow-wrap:anywhere]">{d.v}</p>
                   </div>
                 </div>
               </FadeUp>
