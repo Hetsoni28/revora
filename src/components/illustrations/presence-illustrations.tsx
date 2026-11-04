@@ -2,15 +2,16 @@
 
 /* Animated illustrations for the Our Presence pages (same palette and frame as illustrations.tsx). */
 import { motion, useReducedMotion } from 'framer-motion';
+import { Hospital, Pill, Stethoscope, Truck } from 'lucide-react';
 import { expoOut } from '@/lib/easings';
 import { C, Frame, ring } from './illustration-kit';
 
 /* ── Domestic network: a hub with pulses travelling out to the people we serve ── */
 const NODES = [
-  { x: 110, y: 120, label: 'Doctors' },
-  { x: 410, y: 120, label: 'Hospitals' },
-  { x: 110, y: 380, label: 'Pharmacies' },
-  { x: 410, y: 380, label: 'Distributors' },
+  { x: 110, y: 120, label: 'Doctors', Icon: Stethoscope },
+  { x: 410, y: 120, label: 'Hospitals', Icon: Hospital },
+  { x: 110, y: 380, label: 'Pharmacies', Icon: Pill },
+  { x: 410, y: 380, label: 'Distributors', Icon: Truck },
 ];
 
 export function NetworkHub() {
@@ -58,7 +59,7 @@ export function NetworkHub() {
                 transition={{ duration: 0.7, delay: 0.9 + i * 0.15, ease: [0.34, 1.56, 0.64, 1] }}
               >
                 <circle cx={n.x} cy={n.y} r="34" fill={C.cobalt} stroke="rgba(255,255,255,0.25)" strokeWidth="2" />
-                <circle cx={n.x} cy={n.y} r="10" fill={i % 2 ? C.pale : '#FFFFFF'} />
+                <n.Icon x={n.x - 16} y={n.y - 16} size={32} color="#FFFFFF" strokeWidth={2} />
                 <text x={n.x} y={n.y + 58} textAnchor="middle" fill="#FFFFFF" fontSize="17" fontWeight="700">
                   {n.label}
                 </text>
