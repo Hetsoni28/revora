@@ -116,6 +116,11 @@ function FrameVideo({ video, poster, label, reduce }: { video: { mp4: string; we
         {video.webm && <source src={video.webm} type="video/webm" />}
         <source src={video.mp4} type="video/mp4" />
       </video>
+      {/* brand mark on every video, top left (the play button sits bottom right). Solid white: logo.png has
+          its own white background, so a see-through badge would show the logo's box as an inner edge. */}
+      <span className="pointer-events-none absolute left-4 top-4 z-10 rounded-xl bg-white px-3 py-2 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)] tablet:left-5 tablet:top-5">
+        <Image src="/logo.png" alt="Revora" width={1024} height={341} className="h-5 w-auto tablet:h-6" />
+      </span>
       <button
         type="button"
         onClick={toggle}

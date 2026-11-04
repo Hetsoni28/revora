@@ -48,13 +48,15 @@ export function SplitWords({
       {words.map((w, i) => (
         <span
           key={i}
-          // a little room on every side so tight tracking never clips the last letter or punctuation
-          className="inline-block overflow-hidden align-bottom -mx-[0.06em] mb-[-0.08em] px-[0.06em] pb-[0.08em]"
+          // room on every side, cancelled by negative margins so spacing is unchanged: tight tracking never clips the
+          // last letter or punctuation, and the bottom fits descenders (g, p, y, j) in both heading fonts
+          className="inline-block overflow-hidden align-bottom -mx-[0.06em] mb-[-0.25em] px-[0.06em] pb-[0.25em]"
         >
           <motion.span
             data-reveal
             className={`inline-block will-change-transform ${wordClassName ?? ''} ${highlight[w] ?? ''}`}
-            initial={reduce ? false : { y: '110%', rotate: 4 }}
+            // starts fully below the (taller) box, so no part of the word shows before it rises
+            initial={reduce ? false : { y: '135%', rotate: 4 }}
             // reduced motion is only known after hydration, so words may already sit hidden: show them at once
             animate={play || reduce ? { y: '0%', rotate: 0 } : undefined}
             transition={reduce ? { duration: 0 } : { duration: 1, ease: expoOut, delay: delay + i * stagger }}
