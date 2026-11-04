@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { ClipboardCheck, Droplets, FlaskConical, Handshake, MessageSquare, Package, Pill, Send, SprayCan, Tag } from 'lucide-react';
+import { ArrowUpRight, ClipboardCheck, Droplets, FlaskConical, Handshake, MessageSquare, Package, Pill, Send, SprayCan, Tag } from 'lucide-react';
 import { SITE } from '@/lib/seo';
+import { FORMULATIONS, FORMULATION_TOTAL } from '@/lib/formulations';
+import { FormulationsDialog } from '@/components/manufacturing/formulations-dialog';
 import { useEnquiry } from '@/lib/use-enquiry';
 import { FadeUp } from '@/components/ui/primitives';
 import { PageHero } from '@/components/ui/page-hero';
@@ -11,12 +13,39 @@ import { Button } from '@/components/ui/button';
 import { Honeypot } from '@/components/ui/honeypot';
 import { WhoGmpIcon } from '@/components/ui/who-gmp-seal';
 
+/** Each card opens the full list for its dosage form (lib/formulations.ts); counts come from those lists. */
 const DOSAGE_FORMS = [
-  { icon: Droplets, title: 'Sterile eye drops', text: 'Ophthalmic solutions and suspensions in dropper vials.' },
-  { icon: FlaskConical, title: 'Ophthalmic ointments', text: 'Eye ointments in tubes.' },
-  { icon: SprayCan, title: 'Nasal sprays', text: 'Metered nasal sprays.' },
-  { icon: Pill, title: 'Tablets', text: 'Oral tablets, including nutraceuticals.' },
-];
+  {
+    key: 'drops',
+    icon: Droplets,
+    title: 'Sterile eye drops',
+    text: 'Solutions, suspensions and emulsions in dropper vials, with BKC-free, preservative-free and ionic-buffer preserved options.',
+    groups: ['Antibiotics', 'Glaucoma', 'Dry eye', 'Anti-allergy', 'Anti-inflammatory', 'Ear drops'],
+  },
+  {
+    key: 'ointments',
+    icon: FlaskConical,
+    title: 'Ophthalmic ointments',
+    text: 'Eye ointments and ophthalmic gels in tubes, for night-time protection and longer contact.',
+    groups: ['Antibiotics', 'Antivirals', 'Steroids', 'Lubricating gels'],
+  },
+  {
+    key: 'nasal',
+    icon: SprayCan,
+    title: 'Nasal sprays',
+    text: 'Metered-dose nasal sprays and nasal drops for allergy, congestion and hormone therapy.',
+    groups: ['Steroid sprays', 'Antihistamine', 'Decongestants', 'Saline'],
+  },
+  {
+    key: 'oral',
+    icon: Pill,
+    title: 'Tablets & capsules',
+    text: 'Film-coated, dispersible, mouth-dissolving and sustained-release tablets, capsules and nutraceuticals.',
+    groups: ['Pain & ortho', 'Neuro', 'Cardio & diabetes', 'Anti-infectives', 'Gastro', 'Nutrition'],
+  },
+] as const;
+
+type FormKey = (typeof DOSAGE_FORMS)[number]['key'];
 
 const STRENGTHS = [
   { icon: WhoGmpIcon, title: 'WHO-GMP certified facility', text: 'Manufacturing at Paonta Sahib, Himachal Pradesh.' },
@@ -34,6 +63,16 @@ const STEPS = [
 
 /** Manufacturing & CDMO: what the facility makes, why partner with us, and an enquiry form. */
 export function ManufacturingClient() {
+  // which dosage form's list is showing; `shown` stays set while the dialog animates out
+  const [shown, setShown] = useState<FormKey | null>(null);
+  const [open, setOpen] = useState(false);
+  const [opens, setOpens] = useState(0);
+  const openList = (key: FormKey) => {
+    setShown(key);
+    setOpens((n) => n + 1);
+    setOpen(true);
+  };
+
   return (
     <>
       <PageHero
@@ -55,19 +94,63 @@ export function ManufacturingClient() {
       <section className="bg-white px-5 py-14 tablet:px-8 tablet:py-20">
         <div className="mx-auto max-w-330">
           <SectionHeading eyebrow="Capabilities" lines={['Four dosage forms.']} highlight={{ 'forms.': 'text-revora-cobalt' }} aside="Made at our WHO-GMP manufacturing facility in Paonta Sahib, Himachal Pradesh." />
-          <div className="mt-12 grid gap-4 tablet:grid-cols-2 desktop:grid-cols-4">
-            {DOSAGE_FORMS.map((d, i) => (
-              <FadeUp key={d.title} delay={i * 0.08}>
-                <div className="flex h-full flex-col rounded-[24px] border border-revora-cobalt/10 bg-[#F6F9FC] p-7">
-                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white text-revora-cobalt shadow-sm">
-                    <d.icon className="h-5 w-5" />
-                  </span>
-                  <h3 className="mt-6 font-heading text-[1.3rem] font-extrabold text-revora-slate">{d.title}</h3>
-                  <p className="mt-2 font-sans text-[15px] leading-[1.65] text-revora-slate-light">{d.text}</p>
-                </div>
-              </FadeUp>
-            ))}
+          <div className="mt-12 grid gap-4 tablet:grid-cols-2">
+            {DOSAGE_FORMS.map((d, i) => {
+              const total = FORMULATIONS[d.key].reduce((n, l) => n + l.items.length, 0);
+              return (
+                <FadeUp key={d.key} delay={(i % 2) * 0.08} className="h-full">
+                  <button
+                    type="button"
+                    onClick={() => openList(d.key)}
+                    className="group flex h-full w-full flex-col rounded-[24px] border border-revora-cobalt/10 bg-[#F6F9FC] p-7 text-left transition-[border-color,box-shadow,background-color] duration-300 hover:border-revora-cobalt/30 hover:bg-white hover:shadow-[0_24px_50px_-28px_rgba(11,74,143,0.45)] focus-visible:border-revora-cobalt tablet:p-8"
+                  >
+                    <span className="flex w-full items-start justify-between gap-4">
+                      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white text-revora-cobalt shadow-sm transition-colors group-hover:bg-revora-cobalt group-hover:text-white">
+                        <d.icon className="h-5 w-5" />
+                      </span>
+                      <span className="text-right">
+                        <span className="block font-heading text-[2rem] font-extrabold leading-none tracking-[-0.02em] text-revora-cobalt">{total}</span>
+                        <span className="mt-1 block font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-revora-slate-muted">formulations</span>
+                      </span>
+                    </span>
+                    <span className="mt-6 block font-heading text-[1.3rem] font-extrabold text-revora-slate">{d.title}</span>
+                    <span className="mt-2 block font-sans text-[15px] leading-[1.65] text-revora-slate-light">{d.text}</span>
+                    <span className="mt-5 flex flex-wrap gap-2">
+                      {d.groups.map((g) => (
+                        <span key={g} className="rounded-full border border-revora-cobalt/10 bg-white px-3 py-1 font-sans text-[12.5px] font-medium text-revora-slate-light">
+                          {g}
+                        </span>
+                      ))}
+                    </span>
+                    <span className="mt-auto inline-flex items-center gap-2 pt-7 font-sans text-[14.5px] font-semibold text-revora-cobalt">
+                      View all {total} formulations
+                      <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    </span>
+                  </button>
+                </FadeUp>
+              );
+            })}
           </div>
+          <FadeUp delay={0.1}>
+            <p className="mt-6 font-sans text-[14px] text-revora-slate-muted">
+              {FORMULATION_TOTAL} approved formulations in all. Tap a dosage form to search its full list.
+            </p>
+          </FadeUp>
+          {shown && (
+            <FormulationsDialog
+              key={`${shown}-${opens}`}
+              open={open}
+              onClose={() => setOpen(false)}
+              icon={DOSAGE_FORMS.find((d) => d.key === shown)!.icon}
+              title={DOSAGE_FORMS.find((d) => d.key === shown)!.title}
+              lists={FORMULATIONS[shown]}
+              onEnquire={() => {
+                setOpen(false);
+                // after the dialog has closed and page scrolling is unlocked again
+                setTimeout(() => document.getElementById('enquiry')?.scrollIntoView({ behavior: 'smooth' }), 350);
+              }}
+            />
+          )}
         </div>
       </section>
 
