@@ -20,7 +20,7 @@ export default function PharmacovigilancePolicyPage() {
       title="Pharmacovigilance Policy"
       path="/pharmacovigilance-policy"
       summary="How to report a suspected side effect or product quality issue with a Revora product, and what our Drug Safety Team does with every report."
-      heroImage={{ src: '/images/heroes/hero-pharmacovigilance.jpg', alt: 'Pharmaceutical scientist in lab coat carefully inspecting a medicine vial' }}
+      heroImage={{ src: '/images/heroes/hero-pharmacovigilance.webp', alt: 'Pharmaceutical scientist in lab coat carefully inspecting a medicine vial' }}
       sections={[
         {
           heading: '1. Our commitment to patient safety',

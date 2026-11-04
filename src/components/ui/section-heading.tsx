@@ -37,8 +37,10 @@ export function SectionHeading({ eyebrow, lines, highlight, aside, tone = 'dark'
           </span>
         )}
         {lines.map((line, i) => (
-          <span key={line}>
-            {i > 0 && <>{' '}<br /></>}
+          // each line is its own block (a <br> after a word wider than the column would leave an empty
+          // line); the leading space keeps the words apart in the text search engines read
+          <span key={line} className="block">
+            {i > 0 && ' '}
             <SplitWords text={line} trigger={trigger} delay={0.1 + i * 0.2} highlight={highlight} />
           </span>
         ))}

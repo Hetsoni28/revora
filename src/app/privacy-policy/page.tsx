@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
       title="Privacy Policy"
       path="/privacy-policy"
       summary="What personal information we collect through this website, why we use it, who we share it with, and the rights you have under Indian law."
-      heroImage={{ src: '/images/heroes/hero-privacy-policy.jpg', alt: 'Healthcare professional working securely on a laptop with encrypted data shield' }}
+      heroImage={{ src: '/images/heroes/hero-privacy-policy.webp', alt: 'Healthcare professional working securely on a laptop with encrypted data shield' }}
       sections={[
         {
           heading: '1. Who we are',

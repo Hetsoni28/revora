@@ -80,7 +80,7 @@ export function AboutClient() {
             {PURPOSE.map((p, i) => (
               <FadeUp key={p.tag} delay={i * 0.1}>
                 <div
-                  className={`group relative isolate flex h-full min-h-70 flex-col overflow-hidden rounded-[28px] p-8 tablet:p-10 ${
+                  className={`group relative isolate flex h-full flex-col overflow-hidden rounded-[28px] p-8 tablet:p-10 ${
                     p.filled ? 'bg-revora-cobalt text-white' : 'border border-revora-cobalt/10 bg-white'
                   }`}
                 >
@@ -88,8 +88,9 @@ export function AboutClient() {
                   <span className={`grid h-12 w-12 place-items-center rounded-2xl transition-transform duration-500 group-hover:rotate-[-8deg] ${p.filled ? 'bg-white/15' : 'bg-revora-sky text-revora-cobalt'}`}>
                     <p.icon className="h-5 w-5" />
                   </span>
-                  <p className={`mt-auto pt-12 font-sans text-[11px] font-semibold uppercase tracking-[0.16em] ${p.filled ? 'text-white/80' : 'text-revora-crimson'}`}>{p.tag}</p>
-                  <p className={`mt-2 font-heading text-[clamp(1.4rem,2.4vw,1.9rem)] font-extrabold leading-snug tracking-[-0.01em] ${p.filled ? '' : 'text-revora-slate'}`}>{p.text}</p>
+                  {/* label and statement sit right under the icon, so neither box has an empty middle */}
+                  <p className={`mt-8 font-sans text-[11px] font-semibold uppercase tracking-[0.16em] ${p.filled ? 'text-white/80' : 'text-revora-crimson'}`}>{p.tag}</p>
+                  <p className={`mt-3 font-heading text-[clamp(1.2rem,1.8vw,1.5rem)] font-bold leading-[1.45] tracking-[-0.01em] ${p.filled ? '' : 'text-revora-slate'}`}>{p.text}</p>
                 </div>
               </FadeUp>
             ))}
