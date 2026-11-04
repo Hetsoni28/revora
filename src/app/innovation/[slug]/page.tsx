@@ -12,6 +12,11 @@ async function findInnovationProduct(slug: string) {
   return innovation.find((p) => p.id === slug) ?? null;
 }
 
+// The page waits for its product (cached catalogue) before rendering, on purpose: that puts the real content in
+// the HTML instead of a "Loading" placeholder. So opt out of the dev-only instant-navigation check, which
+// expects a placeholder shell; it changes nothing in production.
+export const instant = false;
+
 // One page per published innovation product (also where its pack QR code lands).
 export async function generateStaticParams() {
   const { innovation } = await getCatalogue();

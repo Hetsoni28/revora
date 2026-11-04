@@ -16,6 +16,11 @@ async function findProduct(id: string) {
   return product && category ? { product, category } : null;
 }
 
+// The page waits for its product (cached catalogue) before rendering, on purpose: that puts the real content in
+// the HTML instead of a "Loading" placeholder. So opt out of the dev-only instant-navigation check, which
+// expects a placeholder shell; it changes nothing in production.
+export const instant = false;
+
 // One page per published product.
 export async function generateStaticParams() {
   const { products } = await getCatalogue();
