@@ -21,6 +21,14 @@ export const SITE = {
     postalCode: '382470',
     addressCountry: 'IN',
   },
+  /** Official social profiles (footer links and the organisation's sameAs for search engines). */
+  // leave a link empty ('') and its icon stays hidden
+  social: {
+    instagram: 'https://www.instagram.com/revoraconnect/',
+    linkedin: '',
+    facebook: '',
+    youtube: '',
+  },
   /** The office's Google Maps business listing (Revora Healthcare Private Limited). */
   map: {
     url: 'https://maps.google.com/?cid=773330115797080267',
@@ -189,6 +197,8 @@ export const organizationLd = {
     geo: { '@type': 'GeoCoordinates', latitude: SITE.map.latitude, longitude: SITE.map.longitude },
     hasMap: SITE.map.url,
   },
+  // the official profiles that belong to this company
+  sameAs: [...Object.values(SITE.social).filter(Boolean), SITE.map.url],
   areaServed: { '@type': 'Country', name: 'India' },
   knowsAbout: ['Ophthalmic pharmaceuticals', 'Eye drops', 'Dry eye treatment', 'Ocular anti-infectives', 'Retinal nutrition'],
 };

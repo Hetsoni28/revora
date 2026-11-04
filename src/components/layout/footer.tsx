@@ -9,6 +9,7 @@ import { SITE } from '@/lib/seo';
 import { AnchorLink, Tick } from '@/components/ui/primitives';
 import { Button } from '@/components/ui/button';
 import { CookieSettingsLink } from '@/components/consent/cookie-settings-link';
+import { SocialLinks } from '@/components/layout/social-links';
 import { WhoGmpIcon } from '@/components/ui/who-gmp-seal';
 
 const COLUMNS: { title: string; href?: string; links: [string, string | null][] }[] = [
@@ -154,6 +155,9 @@ export function Footer() {
                 </span>
               ))}
             </div>
+
+            {/* official social profiles (an icon appears once its link is set in SITE.social) */}
+            <SocialLinks className="mt-5" />
 
             <div className="mt-8">
               <Button href="/channel-partner" variant="primary" arrow="up-right" magnetic>
