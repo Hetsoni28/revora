@@ -279,7 +279,7 @@ Azithromycin 1% Eye Ointment
 Carboxymethylcellulose Sodium 0.3% & Glycerin 1% Eye Ointment
 Chloramphenicol 1% Eye Ointment
 Chloramphenicol 1% & Hydrocortisone Acetate 0.5% Eye Ointment
-Chloramphenicol 1% & Polymyxin B Sulphate 10000 IU Eye Ointment
+Chloramphenicol 1% & Polymyxin B Sulphate 10000 Eye Ointment
 Dexpanthenol 5% Ophthalmic Gel
 Fluorometholone 0.1% Eye Ointment
 Ganciclovir 0.15% Eye Gel
@@ -375,7 +375,7 @@ Calcium Aspartate 500 mg, Calcium Orotate 500 mg, Calcitriol 0.25 mcg, Zinc 7.5 
 Calcium Citrate Malate 1000 mg, Vitamin D3 1000 IU, Vitamin K2-7 50 mcg, Magnesium 50 mg & Zinc 15 mg Tablets
 Cetirizine Hydrochloride 5 mg, Phenylephrine Hydrochloride 5 mg & Paracetamol 325 mg Tablets
 Cetirizine Hydrochloride 5 mg, Phenylephrine Hydrochloride 5 mg & Paracetamol 500 mg Tablets
-Cholecalciferol 60,000 IU Chewable Tablets
+Cholecalciferol Chewable 60,000 Tablets
 Cilnidipine 5 mg Tablets
 Cilnidipine 10 mg Tablets
 Cinnarizine 20 mg & Dimenhydrinate 40 mg Tablets
@@ -464,7 +464,7 @@ Fluvoxamine Maleate 50 mg Tablets
 Fluvoxamine Maleate 100 mg Tablets
 Gabapentin 100 mg Tablets
 Gabapentin 300 mg Tablets
-Gabapentin 300 mg & Methylcobalamin 500 mcg Tablets
+Gabapentin 300 mg & Methylcobalamin 500 mg Tablets
 Gabapentin 400 mg & Nortriptyline 10 mg Tablets
 Gliclazide 80 mg & Metformin Hydrochloride 500 mg Tablets
 Glucosamine 750 mg, Methyl Sulfonyl Methane 250 mg & Diacerein 50 mg Tablets
@@ -482,7 +482,7 @@ Ketorolac Tromethamine 10 mg Dispersible Tablets
 Labetalol 100 mg Tablets
 L-Carnitine 500 mg, Co-Enzyme Q10 100 mg, Alpha Lipoic Acid 100 mg, Vitamin E 150 IU & Mixed Carotenoids 40 mg Tablets
 L-Carnitine L-Tartrate 500 mg & Folic Acid 1.5 mg Tablets
-L-Carnitine L-Tartrate 500 mg, Methylcobalamin 1500 mcg & Folic Acid 1.5 mg Tablets
+L-Carnitine L-Tartrate 500 mg, Methylcobalamin 1500 mg & Folic Acid 1.5 mg Tablets
 Levetiracetam 500 mg Tablets
 Levetiracetam 750 mg Tablets
 Levetiracetam 250 mg Tablets IP
@@ -518,7 +518,7 @@ Methylcobalamin 500 mcg Tablets
 Methylcobalamin 1500 mcg (Extended Release) Tablets
 Methylcobalamin 1500 mcg, Alpha Lipoic Acid 100 mg, Pyridoxine Hydrochloride 3 mg, Folic Acid 1.5 mg, Benfotiamine 50 mg, Biotin 5 mg & Chromium 200 mcg Tablets
 Mecobalamin 1500 mcg, Alpha Lipoic Acid 200 mg, Myo-Inositol 100 mg, Folic Acid 1.5 mg, Pyridoxine Hydrochloride 3 mg, Chromium 200 mcg & Benfotiamine 200 mg Tablets
-Methylcobalamin 1500 mcg, Alpha Lipoic Acid 100 mg, Pyridoxine Hydrochloride 3 mg & Folic Acid 1.5 mg Tablets
+Methylcobalamin 1500 mg, Alpha Lipoic Acid 100 mg, Pyridoxine Hydrochloride 3 mg & Folic Acid 1.5 mg Tablets
 Methylcobalamin 1500 mcg, Alpha Lipoic Acid 100 mg, Vitamin D3 1000 IU, Pyridoxine Hydrochloride 3 mg & Folic Acid 1.5 mg Tablets
 Mecobalamin 750 mcg, Pyridoxine 1.5 mg, Nicotinamide 45 mg & Benfotiamine 150 mg Tablets
 Methylprednisolone 4 mg Tablets
@@ -627,8 +627,8 @@ Tranexamic Acid 500 mg & Mefenamic Acid 250 mg Tablets
 Trihexyphenidyl 2 mg Tablets
 Trihexyphenidyl 5 mg Tablets
 Trypsin 48 mg, Bromelain 90 mg, Rutoside 100 mg & Diclofenac Sodium 50 mg Tablets
-Trypsin & Chymotrypsin Tablets (1,00,000 Armour Units)
-Trypsin-Chymotrypsin (50,000 Armour Units), Paracetamol 325 mg & Aceclofenac 100 mg Tablets
+Trypsin & Chymotrypsin Tablets (1,00,000 Armour units of enzymatic activity)
+Trypsin-Chymotrypsin (50,000 Armour units enzymatic activity) with Paracetamol 325 mg & Aceclofenac 100 mg Tablets
 Ursodeoxycholic Acid 150 mg Tablets
 Ursodeoxycholic Acid 300 mg Tablets
 Ursodeoxycholic Acid 450 mg Tablets
@@ -656,8 +656,8 @@ Itraconazole 50 mg Capsules
 Itraconazole 100 mg Capsules
 Itraconazole 200 mg Capsules
 L-Carnitine 500 mg, Coenzyme Q10 100 mg, Vitamin K2-7 50 mcg, Astaxanthin 8 mg, Magnesium Sulphate 50 mg & Zinc Sulphate Monohydrate 7.5 mg Capsules
-Methylcobalamin 1500 mcg, Alpha Lipoic Acid 100 mg, Inositol 100 mg, Benfotiamine 150 mg, Folic Acid 1.5 mg, Chromium 200 mcg & Selenium 55 mcg Capsules
-Methylcobalamin 750 mcg, Pregabalin 75 mg, Vitamin B6 1.5 mg, Folic Acid 750 mcg & Benfotiamine 7.5 mg Capsules
+Methylcobalamin 1500 mcg, Alpha Lipoic Acid 100 mg, Inositol 100 mg, Benfotiamine 150 mg, Folic Acid 1.5 mg, Chromium 200 mg & Selenium 55 mg Capsules
+Methylcobalamin 750 mg, Pregabalin 75 mg, Vitamin B6 1.5 mg, Folic Acid 750 mcg & Benfotiamine 7.5 mg Capsules
 Mecobalamin 500 mcg with Gabapentin 300 mg Capsules
 Omeprazole 20 mg Capsules
 Omeprazole 20 mg (EC) & Domperidone 30 mg (SR) Capsules
