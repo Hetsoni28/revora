@@ -46,7 +46,8 @@ const NAV_ITEMS: NavItem[] = [
       { label: 'Export markets', href: '/our-presence/global-network' },
     ],
   },
-  { label: 'Channel Partner', href: '/channel-partner', categories: true },
+  // Channel Partner is out of the menu for now; the page and its other links stay. Restore with
+  // { label: 'Channel Partner', href: '/channel-partner', categories: true },
   { label: 'Careers', href: '/careers' },
 ];
 
