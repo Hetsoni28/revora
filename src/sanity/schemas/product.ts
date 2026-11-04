@@ -44,6 +44,36 @@ export const product = defineType({
       description: 'Transparent PNG or WebP. Shown on the homepage and product cards.',
       type: 'image',
     }),
+    defineField({
+      name: 'brandColor',
+      title: 'Brand colour',
+      description: 'Hex code of the brand name colour on the logo, e.g. #DA3A82. Colours the product name and accents on its page. Empty: the therapy area colour is used.',
+      type: 'string',
+      validation: (r) => r.regex(/^#[0-9A-Fa-f]{6}$/, { name: 'hex colour' }).error('Use a 6-digit hex code like #DA3A82'),
+    }),
+    defineField({
+      name: 'nameColors',
+      title: 'Name colours',
+      description:
+        'For two-tone logos: the name split into parts in order, each with its logo colour, e.g. "Rev" #102572 + "oGel" #48C18A. The parts must spell the product name. Empty: the whole name uses the brand colour.',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'namePart',
+          fields: [
+            defineField({ name: 'text', title: 'Letters', type: 'string', validation: (r) => r.required() }),
+            defineField({
+              name: 'color',
+              title: 'Colour',
+              type: 'string',
+              validation: (r) => r.required().regex(/^#[0-9A-Fa-f]{6}$/, { name: 'hex colour' }).error('Use a 6-digit hex code like #DA3A82'),
+            }),
+          ],
+          preview: { select: { title: 'text', subtitle: 'color' } },
+        },
+      ],
+    }),
     defineField({ name: 'badge', title: 'Type', description: 'e.g. Antibacterial + Steroid', type: 'string', validation: (r) => r.max(40) }),
     defineField({ name: 'volume', title: 'Pack size', description: 'e.g. 5 ml Sterile Dropper Vial', type: 'string', validation: (r) => r.max(50) }),
     defineField({

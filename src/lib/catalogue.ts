@@ -22,6 +22,8 @@ export interface Product {
   /** Official brand logo (transparent). */
   logo: string;
   color: string;
+  /** The name in its logo colours (two-tone logos), e.g. Rev (navy) + oGel (green). Parts spell `name` exactly. */
+  nameParts?: { text: string; color: string }[];
   summary: string;
   composition: string[];
   indications: string[];

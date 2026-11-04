@@ -14,6 +14,7 @@ import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { EmptyState } from '@/components/ui/states';
 import { ProductLogo, ProductLogoLink } from '@/components/offerings/product-logo';
+import { BrandName } from '@/components/offerings/brand-name';
 import { LazyFormularyModal as FormularyModal } from '@/components/offerings/lazy-formulary-modal';
 import { HcpGate } from '@/components/offerings/hcp-gate';
 
@@ -103,7 +104,8 @@ export function ProductClient({ product, category }: ProductClientProps) {
               <h1
                 className="mt-4 font-heading text-[clamp(2.8rem,6vw,5rem)] font-extrabold leading-[0.95] tracking-[-0.035em] text-revora-slate"
               >
-                {product.name}
+                {/* the brand name in its own logo colours */}
+                <BrandName product={product} />
                 {/* the generic name belongs to the H1: it's what doctors and pharmacists search for */}
                 <span className="sr-only"> — </span>
                 <span className="mt-4 block font-heading text-[clamp(1.1rem,1.8vw,1.3rem)] font-semibold leading-snug tracking-normal text-revora-cobalt">{product.genericName}</span>
@@ -259,7 +261,9 @@ export function ProductClient({ product, category }: ProductClientProps) {
                     {dir} product
                     {dir === 'Next' && <Icon className="h-3.5 w-3.5" />}
                   </span>
-                  <span className="mt-1 block font-heading text-[18px] font-extrabold text-revora-slate transition-colors group-hover:text-revora-cobalt">{p.name}</span>
+                  <span className="mt-1 block font-heading text-[18px] font-extrabold">
+                    <BrandName product={p} />
+                  </span>
                 </span>
               </Link>
             ))}
@@ -278,7 +282,9 @@ export function ProductClient({ product, category }: ProductClientProps) {
             className="fixed inset-x-3 bottom-3 z-80 flex items-center justify-between gap-3 rounded-2xl border border-revora-cobalt/10 bg-white/95 p-3 pl-5 shadow-[0_20px_50px_-20px_rgba(11,74,143,0.45)] backdrop-blur desktop:hidden"
           >
             <span className="min-w-0">
-              <span className="block truncate font-heading text-[16px] font-extrabold text-revora-slate">{product.name}</span>
+              <span className="block truncate font-heading text-[16px] font-extrabold">
+                <BrandName product={product} />
+              </span>
               <span className="block truncate font-sans text-[12px] text-revora-slate-muted">{product.volume}</span>
             </span>
             <button

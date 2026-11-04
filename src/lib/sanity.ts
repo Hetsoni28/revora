@@ -55,6 +55,8 @@ interface SanitySeo {
 
 interface SanityProduct {
   id: string;
+  brandColor?: string;
+  nameColors?: { text?: string; color?: string }[];
   distributed?: boolean;
   fssaiLicence?: string;
   seo?: SanitySeo;
@@ -99,7 +101,7 @@ const CATALOGUE_QUERY = `{
   },
   "products": *[_type == "product" && defined(id.current) && defined(category->slug.current) && defined(image.asset)] | order(category->order asc, order asc, name asc) {
     "id": id.current, name, genericName, "categorySlug": category->slug.current,
-    badge, volume, image, logo, summary, composition, indications, dosage, storage, schedule, seo, distributed, fssaiLicence,
+    badge, volume, image, logo, brandColor, nameColors[] { text, color }, summary, composition, indications, dosage, storage, schedule, seo, distributed, fssaiLicence,
     "pi": prescribingInfo { "url": asset->url, "size": asset->size, updated }
   },
   "innovation": *[_type == "innovationProduct" && defined(slug.current) && defined(category) && defined(image.asset)] | order(order asc, name asc) {
@@ -147,8 +149,39 @@ function adaptCategory(c: SanityTherapyCategory): TherapyCategory {
   };
 }
 
+const HEX = /^#[0-9a-f]{6}$/i;
+
+/**
+ * The name cut into its coloured parts, in the name's own letters and spacing. Parts are matched in order,
+ * ignoring case and spaces; letters left over take `rest`. If the parts don't spell the name, nothing (one colour).
+ */
+function adaptNameParts(name: string, parts: SanityProduct['nameColors'], rest: string): Product['nameParts'] {
+  const valid = (parts ?? []).filter((s): s is { text: string; color: string } => !!s.text?.trim() && !!s.color && HEX.test(s.color));
+  if (!valid.length) return undefined;
+  const out: { text: string; color: string }[] = [];
+  let pos = 0;
+  for (const s of valid) {
+    const text = s.text.replace(/\s+/g, '').toLowerCase();
+    let start = pos;
+    while (name[start] === ' ') start++;
+    let end = start;
+    let letters = '';
+    while (end < name.length && letters.length < text.length) {
+      if (name[end] !== ' ') letters += name[end].toLowerCase();
+      end++;
+    }
+    if (letters !== text) return undefined;
+    out.push({ text: name.slice(pos, end), color: s.color });
+    pos = end;
+  }
+  if (pos < name.length) out.push({ text: name.slice(pos), color: rest });
+  return out;
+}
+
 function adaptProduct(p: SanityProduct, categories: TherapyCategory[]): Product {
   const image = urlFor(p.image).width(800).height(800).url();
+  // the brand's own colour (from its logo) when set, otherwise its therapy area's
+  const color = (p.brandColor && HEX.test(p.brandColor) ? p.brandColor : undefined) ?? categories.find((c) => c.slug === p.categorySlug)?.color ?? DEFAULT_COLOR;
   return {
     id: RENAMED_SLUGS[p.id] ?? p.id,
     name: p.name,
@@ -159,8 +192,8 @@ function adaptProduct(p: SanityProduct, categories: TherapyCategory[]): Product 
     image,
     // no logo uploaded yet → show the product photo instead
     logo: p.logo?.asset ? urlFor(p.logo).width(800).fit('max').url() : image,
-    // a brand takes its therapy area's colour
-    color: categories.find((c) => c.slug === p.categorySlug)?.color ?? DEFAULT_COLOR,
+    color,
+    nameParts: adaptNameParts(p.name, p.nameColors, color),
     summary: p.summary ?? '',
     composition: p.composition ?? [],
     indications: p.indications ?? [],
