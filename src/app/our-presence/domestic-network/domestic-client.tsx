@@ -86,7 +86,7 @@ export function DomesticClient() {
       <section className="px-5 pb-14 tablet:px-8 tablet:pb-20">
         <div className="mx-auto grid max-w-330 grid-cols-[minmax(0,1fr)] items-center gap-12 overflow-hidden rounded-[32px] border border-revora-cobalt/10 bg-white p-6 tablet:p-12 tablet-lg:grid-cols-[0.9fr_1.1fr] tablet-lg:gap-16">
           <div>
-            <SectionHeading eyebrow="Our network" lines={['Launching in 6 states.', 'Expanding across India.']} highlight={{ 'India.': 'text-revora-cobalt' }} />
+            <SectionHeading eyebrow="Our network" lines={[`Launching in ${DOMESTIC_NETWORK.length} states.`, 'Expanding across India.']} highlight={{ 'India.': 'text-revora-cobalt' }} />
             <FadeUp delay={0.15}>
               <p className="mt-6 max-w-md font-sans text-[16.5px] leading-[1.75] text-revora-slate-light">
                 Made in Paonta Sahib (Himachal Pradesh), run from Ahmedabad, with our field team in {DOMESTIC_NETWORK.length} states.
