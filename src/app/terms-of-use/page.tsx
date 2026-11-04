@@ -15,6 +15,7 @@ export default function TermsOfUsePage() {
       title="Terms of Use"
       path="/terms-of-use"
       summary="The terms that apply when you use this website, including who the product information is for, intellectual property and governing law."
+      heroImage={{ src: '/images/heroes/hero-terms-of-use.jpg', alt: 'Pharmaceutical legal contract with pen and stethoscope on executive desk' }}
       sections={[
         {
           heading: '1. Accepting these terms',

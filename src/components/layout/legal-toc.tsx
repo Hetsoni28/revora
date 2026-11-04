@@ -174,12 +174,16 @@ export function SectionLink({ id, label }: { id: string; label: string }) {
   );
 }
 
-export function PrintButton() {
+export function PrintButton({ light = false }: { light?: boolean }) {
   return (
     <button
       type="button"
       onClick={() => window.print()}
-      className="inline-flex min-h-10 items-center gap-2 rounded-full border border-revora-cobalt/20 bg-white px-4 font-sans text-[13.5px] font-semibold text-revora-cobalt transition-colors hover:border-revora-cobalt hover:bg-revora-cobalt hover:text-white print:hidden"
+      className={`inline-flex min-h-10 items-center gap-2 rounded-full px-4 font-sans text-[13.5px] font-semibold transition-colors print:hidden ${
+        light
+          ? 'border border-white/25 bg-white/15 text-white backdrop-blur-sm hover:bg-white/25'
+          : 'border border-revora-cobalt/20 bg-white text-revora-cobalt hover:border-revora-cobalt hover:bg-revora-cobalt hover:text-white'
+      }`}
     >
       <Printer className="h-4 w-4" /> Print or save as PDF
     </button>

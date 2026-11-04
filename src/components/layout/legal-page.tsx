@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight, CalendarDays, FileText, ListOrdered, Mail, Phone, ShieldAlert, Cookie, Scale, Lock } from 'lucide-react';
 import { Navbar } from '@/components/layout/navbar';
@@ -59,12 +60,15 @@ export function LegalPage({
   path,
   summary,
   updated = POLICIES_UPDATED,
+  heroImage,
   sections,
 }: {
   title: string;
   path: string;
   summary: string;
   updated?: string;
+  /** Full-width background hero photo. When supplied the header becomes a photo hero with white text. */
+  heroImage?: { src: string; alt: string };
   sections: LegalSection[];
 }) {
   const items = sections.map((s) => ({
@@ -86,28 +90,70 @@ export function LegalPage({
         />
 
         {/* ── header ── */}
-        <header className="relative isolate overflow-hidden border-b border-revora-cobalt/10 bg-[linear-gradient(180deg,#FFFFFF_0%,#EEF4FB_100%)] px-5 pb-12 pt-32 tablet:px-8 tablet:pb-16 tablet:pt-40 print:pt-6">
-          <div aria-hidden className="absolute -right-32 -top-32 -z-10 h-120 w-120 rounded-full bg-revora-cobalt/6 blur-3xl" />
-          <div className="mx-auto max-w-330">
-            <div className="print:hidden">
-              <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: title }]} />
+        {heroImage ? (
+          /* ── full-width photo hero ── */
+          <header className="relative isolate flex min-h-[52vh] items-end overflow-hidden px-5 pb-12 pt-28 tablet:min-h-[58vh] tablet:px-8 tablet:pb-16 tablet:pt-32 desktop:min-h-[62vh] print:pt-6">
+            {/* background photo */}
+            <Image
+              src={heroImage.src}
+              alt={heroImage.alt}
+              fill
+              priority
+              sizes="100vw"
+              className="-z-20 object-cover object-center"
+            />
+            {/* navy gradient — mobile: bottom-up; desktop: left-to-right */}
+            <div
+              aria-hidden
+              className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(6,27,56,0.35)_0%,rgba(6,27,56,0.82)_55%,rgba(6,27,56,0.95)_100%)] tablet-lg:bg-[linear-gradient(100deg,rgba(6,27,56,0.95)_0%,rgba(6,27,56,0.80)_42%,rgba(6,27,56,0.30)_72%,rgba(6,27,56,0.05)_100%)]"
+            />
+            <div className="mx-auto w-full max-w-330">
+              <div className="print:hidden">
+                <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: title }]} tone="light" />
+              </div>
+              <p className="mt-6 inline-flex items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/70">
+                <FileText className="h-3.5 w-3.5" /> Legal
+              </p>
+              <h1 className="mt-2 font-heading text-[clamp(2.4rem,5vw,4rem)] font-extrabold leading-[1.04] tracking-[-0.03em] text-white">
+                {title}
+              </h1>
+              <p className="mt-4 max-w-2xl font-sans text-[17px] leading-[1.7] text-white/80">{summary}</p>
+              <div className="mt-7 flex flex-wrap items-center gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 font-sans text-[13px] font-medium text-white backdrop-blur-sm">
+                  <CalendarDays className="h-4 w-4 text-revora-cobalt-pale" /> Last updated {updated}
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 font-sans text-[13px] font-medium text-white backdrop-blur-sm">
+                  <ListOrdered className="h-4 w-4 text-revora-cobalt-pale" /> {sections.length} sections
+                </span>
+                <PrintButton light />
+              </div>
             </div>
-            <p className="mt-8 inline-flex items-center gap-2 font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-revora-cobalt">
-              <FileText className="h-4 w-4" /> Legal
-            </p>
-            <h1 className="mt-3 font-heading text-[clamp(2.4rem,5vw,3.8rem)] font-extrabold leading-[1.04] tracking-[-0.03em] text-revora-slate">{title}</h1>
-            <p className="mt-4 max-w-2xl font-sans text-[17px] leading-[1.7] text-revora-slate-light">{summary}</p>
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-sans text-[13px] font-medium text-revora-slate ring-1 ring-revora-cobalt/10">
-                <CalendarDays className="h-4 w-4 text-revora-cobalt" /> Last updated {updated}
-              </span>
-              <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-sans text-[13px] font-medium text-revora-slate ring-1 ring-revora-cobalt/10">
-                <ListOrdered className="h-4 w-4 text-revora-cobalt" /> {sections.length} sections
-              </span>
-              <PrintButton />
+          </header>
+        ) : (
+          /* ── plain gradient header (no image) ── */
+          <header className="relative isolate overflow-hidden border-b border-revora-cobalt/10 bg-[linear-gradient(180deg,#FFFFFF_0%,#EEF4FB_100%)] px-5 pb-12 pt-32 tablet:px-8 tablet:pb-16 tablet:pt-40 print:pt-6">
+            <div aria-hidden className="absolute -right-32 -top-32 -z-10 h-120 w-120 rounded-full bg-revora-cobalt/6 blur-3xl" />
+            <div className="mx-auto max-w-330">
+              <div className="print:hidden">
+                <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: title }]} />
+              </div>
+              <p className="mt-8 inline-flex items-center gap-2 font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-revora-cobalt">
+                <FileText className="h-4 w-4" /> Legal
+              </p>
+              <h1 className="mt-3 font-heading text-[clamp(2.4rem,5vw,3.8rem)] font-extrabold leading-[1.04] tracking-[-0.03em] text-revora-slate">{title}</h1>
+              <p className="mt-4 max-w-2xl font-sans text-[17px] leading-[1.7] text-revora-slate-light">{summary}</p>
+              <div className="mt-7 flex flex-wrap items-center gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-sans text-[13px] font-medium text-revora-slate ring-1 ring-revora-cobalt/10">
+                  <CalendarDays className="h-4 w-4 text-revora-cobalt" /> Last updated {updated}
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-sans text-[13px] font-medium text-revora-slate ring-1 ring-revora-cobalt/10">
+                  <ListOrdered className="h-4 w-4 text-revora-cobalt" /> {sections.length} sections
+                </span>
+                <PrintButton />
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
+        )}
 
         {/* ── contents + policy ── */}
         <div className="px-5 py-12 tablet:px-8 tablet:py-16">
