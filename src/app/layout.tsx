@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import { Providers } from "@/components/providers";
 import { WithCatalogue } from "@/components/catalogue/catalogue-data";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
+import { ContactNudge } from "@/components/layout/contact-nudge";
 import { Analytics } from "@vercel/analytics/next";
 import { JsonLd } from "@/components/seo/json-ld";
 import { KEYWORDS, SITE, SITE_URL, organizationLd, websiteLd } from "@/lib/seo";
@@ -117,6 +118,7 @@ export default function RootLayout({
             {/* reads the URL for its message, so it waits in its own boundary (it carries no content) */}
             <Suspense fallback={null}>
               <WhatsAppButton />
+              <ContactNudge />
             </Suspense>
           </WithCatalogue>
         </Providers>

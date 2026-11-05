@@ -10,6 +10,7 @@ import { AnchorLink, Tick } from '@/components/ui/primitives';
 import { Button } from '@/components/ui/button';
 import { CookieSettingsLink } from '@/components/consent/cookie-settings-link';
 import { SocialLinks } from '@/components/layout/social-links';
+import { openCallback } from '@/components/layout/contact-nudge';
 import { WhoGmpIcon } from '@/components/ui/who-gmp-seal';
 
 const COLUMNS: { title: string; href?: string; links: [string, string | null][] }[] = [
@@ -132,9 +133,14 @@ export function Footer() {
               </li>
               <li className="flex gap-3">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
-                <a href={SITE.phone.href} className="inline-flex min-h-6 items-center hover:text-white">
-                  Phone: {SITE.phone.label}
-                </a>
+                <span className="flex flex-wrap items-center gap-x-3">
+                  <a href={SITE.phone.href} className="inline-flex min-h-6 items-center hover:text-white">
+                    Phone: {SITE.phone.label}
+                  </a>
+                  <button type="button" onClick={openCallback} className="inline-flex min-h-6 items-center font-semibold text-revora-cobalt-pale hover:text-white hover:underline">
+                    Request a call back
+                  </button>
+                </span>
               </li>
               <li className="flex gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />

@@ -18,6 +18,8 @@ const enquiryList = (S: StructureBuilder, title: string, filter: string) =>
         .title(title)
         .schemaType('enquiry')
         .filter(`_type == "enquiry" && ${filter}`)
+        // same API version the site reads with; Sanity requires one for custom filters
+        .apiVersion('2024-10-01')
         .defaultOrdering([{ field: 'receivedAt', direction: 'desc' }])
     );
 

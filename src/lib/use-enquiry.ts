@@ -9,7 +9,7 @@ import { ENQUIRIES, enquiryLines, type EnquiryKindId } from '@/lib/enquiry';
  * it falls back to opening the visitor's email app with the same message filled in, so a form never
  * dead-ends. Render <Honeypot inputRef={honeypot} /> inside the form for the spam check.
  */
-export function useEnquiry(kind: EnquiryKindId) {
+export function useEnquiry(kind: EnquiryKindId, { successToast = true }: { successToast?: boolean } = {}) {
   const [sending, setSending] = useState(false);
   // when the form appeared (bots submit instantly), and a hidden field only bots fill in
   const startedAt = useRef(0);
@@ -40,7 +40,8 @@ export function useEnquiry(kind: EnquiryKindId) {
       const res = await fetch('/api/enquiry', { method: 'POST', body: data });
       const json = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
       if (res.ok && json.ok) {
-        toast.success('Thank you — your message has been sent', { description: 'We’ve emailed you a confirmation and will reply soon.' });
+        // forms with their own thank-you screen skip the toast
+        if (successToast) toast.success('Thank you — your message has been sent', { description: 'We’ve emailed you a confirmation and will reply soon.' });
         return true;
       }
       if (res.status === 503) {

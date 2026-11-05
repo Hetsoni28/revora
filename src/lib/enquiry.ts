@@ -10,7 +10,13 @@ export interface EnquiryField {
   required?: boolean;
   /** Longest accepted value (characters). */
   max?: number;
+  /** The value must match (checked on the server too). */
+  pattern?: RegExp;
 }
+
+/** A phone number: Indian mobile (10 digits, optional 0 / +91 / 91) or any international number starting with +. */
+export const PHONE_RE = /^(?:(?:\+?91|0)?[6-9]\d{9}|\+[1-9]\d{6,14})$/;
+export const normalisePhone = (v: string) => v.replace(/[\s()-]/g, '');
 
 interface EnquiryKind {
   /** Shown in the email and the visitor's confirmation, e.g. "Channel partner enquiry". */
@@ -96,6 +102,17 @@ export const ENQUIRIES = {
     to: DEPOT,
     fields: [NAME, EMAIL, { name: 'country', label: 'Country', max: 80 }, { name: 'type', label: 'Partner type', max: 60 }, MESSAGE],
     subject: (v) => `International partnership enquiry — ${v.name}${v.country ? ` (${v.country})` : ''}`,
+  },
+  callback: {
+    title: 'Callback request',
+    to: INFO,
+    fields: [
+      NAME,
+      { name: 'phone', label: 'Phone', required: true, max: 20, pattern: PHONE_RE },
+      { name: 'interest', label: 'Interested in', max: 60 },
+      { name: 'time', label: 'Best time to call', max: 40 },
+    ],
+    subject: (v) => `Call back request — ${v.name} (${v.phone})${v.interest ? ` — ${v.interest}` : ''}`,
   },
   samples: {
     title: 'Sample request',

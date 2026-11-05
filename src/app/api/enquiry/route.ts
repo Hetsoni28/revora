@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import nodemailer from 'nodemailer';
-import { CV_MAX_BYTES, CV_TYPES, ENQUIRIES, enquiryLines, isEnquiryKind, type EnquiryField } from '@/lib/enquiry';
+import { CV_MAX_BYTES, CV_TYPES, ENQUIRIES, enquiryLines, isEnquiryKind, normalisePhone, type EnquiryField } from '@/lib/enquiry';
 import { SITE, SITE_URL } from '@/lib/seo';
 import { canSave, saveEnquiry } from '@/lib/sanity-write';
 
@@ -77,6 +77,7 @@ export async function POST(request: NextRequest) {
     const v = String(form.get(f.name) ?? '').trim();
     if (f.required && !v) return fail(400, `Please fill in ${f.label.toLowerCase()}.`);
     if (f.max && v.length > f.max) return fail(400, `${f.label} is too long.`);
+    if (v && f.pattern && !f.pattern.test(normalisePhone(v))) return fail(400, `Please enter a valid ${f.label.toLowerCase()} number.`);
     values[f.name] = f.name === 'message' ? v : oneLine(v);
   }
   if (values.email && !EMAIL_RE.test(values.email)) return fail(400, 'Please enter a valid email address.');
