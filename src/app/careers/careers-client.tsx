@@ -15,7 +15,7 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
 import { HeroBackdrop } from '@/components/ui/hero-backdrop';
 
-const CAREERS_EMAIL = 'info@revorahealthcare.com';
+const CAREERS_EMAIL = 'hr@revorahealthcare.com';
 
 /** Teams an applicant can pick in the form — not a list of live vacancies. */
 const TEAMS = ['Sales & Marketing', 'Manufacturing & QA/QC', 'Export & International Business', 'Medical & Regulatory', 'Accounts & Admin'];

@@ -22,11 +22,11 @@ interface EnquiryKind {
   cv?: boolean;
 }
 
-// Only info@ exists today, so every form goes there (the subject line says which form it came from).
-// When depot@, export@ or safety@ are created in cPanel, point the matching constant at it.
+// Careers go to HR, export and manufacturing to the depot, everything else to info@
+// (the subject line says which form it came from).
 const INFO = 'info@revorahealthcare.com';
-const DEPOT = INFO;
-const EXPORTS = INFO;
+const HR = 'hr@revorahealthcare.com';
+const DEPOT = 'depot@revorahealthcare.com';
 const SAFETY = INFO;
 
 const NAME: EnquiryField = { name: 'name', label: 'Name', required: true, max: 100 };
@@ -43,14 +43,14 @@ const contact = (title: string, to: string): EnquiryKind => ({
 
 export const ENQUIRIES = {
   'contact-general': contact('General & corporate enquiry', INFO),
-  'contact-products': contact('Doctors & products enquiry', DEPOT),
-  'contact-distribution': contact('Distribution in India enquiry', DEPOT),
-  'contact-exports': contact('Exports enquiry', EXPORTS),
-  'contact-careers': contact('Careers enquiry', INFO),
-  'contact-manufacturing': contact('Manufacturing (CDMO) enquiry', INFO),
+  'contact-products': contact('Doctors & products enquiry', INFO),
+  'contact-distribution': contact('Distribution in India enquiry', INFO),
+  'contact-exports': contact('Exports enquiry', DEPOT),
+  'contact-careers': contact('Careers enquiry', HR),
+  'contact-manufacturing': contact('Manufacturing (CDMO) enquiry', DEPOT),
   manufacturing: {
     title: 'Manufacturing (CDMO) enquiry',
-    to: INFO,
+    to: DEPOT,
     fields: [
       NAME,
       { name: 'company', label: 'Company', required: true, max: 160 },
@@ -64,7 +64,7 @@ export const ENQUIRIES = {
   },
   partner: {
     title: 'Channel partner enquiry',
-    to: DEPOT,
+    to: INFO,
     fields: [
       { name: 'type', label: 'Partner type', max: 60 },
       NAME,
@@ -78,7 +78,7 @@ export const ENQUIRIES = {
   },
   career: {
     title: 'Job application',
-    to: INFO,
+    to: HR,
     cv: true,
     fields: [
       { name: 'team', label: 'Team', max: 80 },
@@ -93,13 +93,13 @@ export const ENQUIRIES = {
   },
   export: {
     title: 'International partnership enquiry',
-    to: EXPORTS,
+    to: DEPOT,
     fields: [NAME, EMAIL, { name: 'country', label: 'Country', max: 80 }, { name: 'type', label: 'Partner type', max: 60 }, MESSAGE],
     subject: (v) => `International partnership enquiry — ${v.name}${v.country ? ` (${v.country})` : ''}`,
   },
   samples: {
     title: 'Sample request',
-    to: DEPOT,
+    to: INFO,
     fields: [
       { name: 'product', label: 'Product', max: 200 },
       NAME,
