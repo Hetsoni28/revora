@@ -73,6 +73,8 @@ export const metadata: Metadata = {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
       { url: '/icon.svg', type: 'image/svg+xml' },
+      // Google Search wants a square icon in a multiple of 48 px
+      { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
       { url: '/icon.png', type: 'image/png', sizes: '512x512' },
     ],
     apple: [
