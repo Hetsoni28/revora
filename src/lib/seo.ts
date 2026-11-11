@@ -180,12 +180,27 @@ export const organizationLd = {
   '@type': 'Corporation',
   '@id': `${SITE_URL}/#organization`,
   name: SITE.name,
+  // the other ways people write the name, so a search for any of them finds this site
+  alternateName: ['Revora', 'Revora Healthcare Pvt. Ltd.', 'Revora Healthcare Pvt Ltd', SITE.legalName],
   legalName: SITE.legalName,
+  description:
+    'Revora Healthcare Private Limited is a pharmaceutical company in Ahmedabad, Gujarat: ophthalmic brands, orthopaedic distribution, thermal care products, WHO-GMP third-party manufacturing and exports.',
   slogan: SITE.tagline,
   url: SITE_URL,
-  logo: abs(SITE.logo),
+  logo: { '@type': 'ImageObject', url: abs(SITE.logo), width: 1024, height: 341 },
+  image: abs(SITE.logo),
   email: SITE.email,
   telephone: SITE.phone.label,
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      telephone: SITE.phone.label,
+      email: SITE.email,
+      areaServed: 'IN',
+      availableLanguage: ['English', 'Hindi', 'Gujarati'],
+    },
+  ],
   foundingDate: SITE.foundingDate,
   founder: { '@type': 'Person', name: SITE.founder.name, jobTitle: SITE.founder.title },
   address: { '@type': 'PostalAddress', ...SITE.address },
@@ -199,16 +214,35 @@ export const organizationLd = {
   },
   // the official profiles that belong to this company
   sameAs: [...Object.values(SITE.social).filter(Boolean), SITE.map.url],
-  areaServed: { '@type': 'Country', name: 'India' },
-  knowsAbout: ['Ophthalmic pharmaceuticals', 'Eye drops', 'Dry eye treatment', 'Ocular anti-infectives', 'Retinal nutrition'],
+  areaServed: [
+    { '@type': 'Country', name: 'India' },
+    { '@type': 'Place', name: 'Asia' },
+    { '@type': 'Place', name: 'Africa' },
+  ],
+  knowsAbout: [
+    'Pharmaceuticals',
+    'Ophthalmic pharmaceuticals',
+    'Eye drops',
+    'Dry eye treatment',
+    'Ocular anti-infectives',
+    'Retinal nutrition',
+    'Orthopaedic products',
+    'Third-party pharmaceutical manufacturing',
+    'Contract manufacturing (CDMO)',
+    'WHO-GMP manufacturing',
+    'Pharmaceutical exports',
+    'Thermal care products',
+  ],
 };
 
 export const websiteLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   '@id': `${SITE_URL}/#website`,
+  // Google shows this as the site name above the result (instead of the bare domain)
   name: SITE.name,
-  url: SITE_URL,
+  alternateName: ['Revora', 'Revora Healthcare Pvt. Ltd.', 'revorahealthcare.com'],
+  url: `${SITE_URL}/`,
   inLanguage: 'en-IN',
   publisher: { '@id': `${SITE_URL}/#organization` },
 };

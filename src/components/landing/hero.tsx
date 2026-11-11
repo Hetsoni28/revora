@@ -57,6 +57,8 @@ export function LandingHero({ startDelay = 0 }: { startDelay?: number }) {
       <div className="mx-auto grid w-full max-w-[1320px] items-center gap-10 px-5 tablet:px-8 tablet-lg:grid-cols-[1.1fr_0.9fr] desktop:gap-4">
         <motion.div style={parallax ? { y: copyY } : undefined} className="relative z-10">
           <h1 className="font-heading text-[clamp(3rem,8.4vw,7.4rem)] font-extrabold leading-[0.95] tracking-[-0.03em] text-revora-slate">
+            {/* the company name opens the H1 for search engines and screen readers; the logo shows it on screen */}
+            <span className="sr-only">Revora Healthcare — </span>
             {/* the label is part of the H1, so search engines read what we do with the headline */}
             <motion.span
               className="mb-6 block leading-none"

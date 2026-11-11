@@ -6,7 +6,7 @@ import { Footer } from '@/components/layout/footer';
 import { ManufacturingClient } from './manufacturing-client';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Manufacturing & CDMO — WHO-GMP Third-Party Manufacturing',
+  title: 'WHO-GMP Third-Party Manufacturing (CDMO)',
   description:
     'Third-party and contract manufacturing of eye drops, ointments, nasal sprays and tablets at a WHO-GMP certified facility, with in-house QC. Send an enquiry.',
   path: '/manufacturing',
